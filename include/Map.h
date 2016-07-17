@@ -7,7 +7,7 @@
 class Map
 {
     public:
-        enum TileType {Wall, Space};
+        enum TileType {Wall, Space, InteractableWall, BlockingItem, WalkthroughItem};
 
 
         Map(int width, int height, int layerNr);
@@ -15,7 +15,10 @@ class Map
         bool IsTileWall(unsigned int x, unsigned int y);
         void SetTileToWall(unsigned int x, unsigned int y);
         void SetTileToSpace(unsigned int x, unsigned int y);
+
+        void SetTileToType(unsigned int x, unsigned int y, TileType type);
         TileType GetTileType(unsigned int x, unsigned int y);
+
 
         void SetRoomNr(unsigned int x, unsigned int y,  int roomNr);
         int GetRoomNr(unsigned int x, unsigned int y);
@@ -23,6 +26,7 @@ class Map
         void writeToTileMap(TileMap& in, int layerId);
 
         void SetTileId(unsigned int x, unsigned int y, int TileIdTL, int TileIdTR, int TileIdBL, int TileIdBR, int layerId);
+        void SetTileId(unsigned int x, unsigned int y, int TileId, int layerId);
 
 
         int GetWidth();

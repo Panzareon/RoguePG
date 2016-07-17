@@ -1,4 +1,5 @@
 #include "TileMap.h"
+#include <iostream>
 
 TileMap::TileMap()
 {
@@ -13,6 +14,11 @@ TileMap::~TileMap()
 {
     //dtor
 }
+int TileMap::GetTileMapWith()
+{
+    return 32;
+}
+
 void TileMap::load(int** tiles, unsigned int width, unsigned int height)
 {
 
@@ -31,8 +37,8 @@ void TileMap::load(int** tiles, unsigned int width, unsigned int height)
                 int tileNumber = tiles[i*2 + k/2][j*2 + k%2];
 
                 // find its position in the tileset texture
-                int tu = (tileNumber % (m_tileset.getSize().x / m_halfTileWidth)) * 2 + k/2;
-                int tv = (tileNumber / (m_tileset.getSize().x / m_halfTileWidth)) * 2 + k%2;
+                int tu = (tileNumber % (m_tileset.getSize().x / m_tileWidth)) * 2 + k/2;
+                int tv = (tileNumber / (m_tileset.getSize().x / m_tileWidth)) * 2 + k%2;
 
                 // get a pointer to the current tile's quad
                 sf::Vertex* quad = &m_vertices[((i + j * width) * 4 + k) * 4];

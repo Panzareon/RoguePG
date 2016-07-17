@@ -42,6 +42,7 @@
 			<Add directory="SFML-2.3.2/build/lib" />
 		</Linker>
 		<Unit filename="include/DrawableNode.h" />
+		<Unit filename="include/FillItem.h" />
 		<Unit filename="include/Map.h" />
 		<Unit filename="include/MapFill.h" />
 		<Unit filename="include/MapFillDungeon.h" />
@@ -51,6 +52,7 @@
 		<Unit filename="include/TileMap.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/DrawableNode.cpp" />
+		<Unit filename="src/FillItem.cpp" />
 		<Unit filename="src/Map.cpp" />
 		<Unit filename="src/MapFill.cpp" />
 		<Unit filename="src/MapFillDungeon.cpp" />

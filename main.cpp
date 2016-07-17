@@ -11,10 +11,13 @@ int main()
 
 
     TileMap tileMap;
+    TileMap tileMapItems;
+    TileMap tileMapAboveHero;
     tileMap.setTexture("texture/TileMap.png");
+    tileMapItems.setTexture("texture/TileMap.png");
+    tileMapAboveHero.setTexture("texture/TileMap.png");
  //   tileMap.scale(0.2,0.2);
 
-    Map map(30,30,1);
 
 
     while (window.isOpen())
@@ -50,6 +53,7 @@ int main()
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
         {
+            Map map(30,30,3);
             MapGenerator generator(&map);
 
             generator.CellularAutomata(0.45f);
@@ -58,13 +62,18 @@ int main()
 
             MapFillDungeon mapFill(&map);
             mapFill.FillLayer(0);
+            mapFill.FillLayer(1,2);
 
             map.writeToTileMap(tileMap,0);
+            map.writeToTileMap(tileMapItems,1);
+            map.writeToTileMap(tileMapAboveHero,2);
 
         }
 
         window.clear();
         window.draw(tileMap);
+        window.draw(tileMapItems);
+        window.draw(tileMapAboveHero);
         window.display();
     }
 

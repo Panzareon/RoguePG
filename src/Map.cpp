@@ -66,6 +66,11 @@ void Map::SetTileToSpace(unsigned int x, unsigned int y)
     m_tiles[x][y] = Space;
 }
 
+void Map::SetTileToType(unsigned int x, unsigned int y, TileType type)
+{
+    m_tiles[x][y] = type;
+}
+
 bool Map::IsTileWall(unsigned int x, unsigned int y)
 {
     return m_tiles[x][y] == Wall;
@@ -80,15 +85,30 @@ int Map::GetRoomNr(unsigned int x, unsigned int y)
 {
     return m_roomNr[x][y];
 }
+void Map::SetTileId(unsigned int x, unsigned int y, int TileId, int layerId)
+{
+    SetTileId(x,y,TileId,TileId,TileId,TileId,layerId);
+}
+
 void Map::SetTileId(unsigned int x, unsigned int y, int TileIdTL, int TileIdTR, int TileIdBL, int TileIdBR, int layerId)
 {
-    m_layers[layerId][x*2][y*2] = TileIdTL;
-    m_layers[layerId][x*2+1][y*2] = TileIdTR;
-    m_layers[layerId][x*2][y*2+1] = TileIdBL;
-    m_layers[layerId][x*2+1][y*2+1] = TileIdBR;
+    if(x >= 0 && y >= 0 && x < m_width && y < m_height)
+    {
+        m_layers[layerId][x*2][y*2] = TileIdTL;
+        m_layers[layerId][x*2+1][y*2] = TileIdTR;
+        m_layers[layerId][x*2][y*2+1] = TileIdBL;
+        m_layers[layerId][x*2+1][y*2+1] = TileIdBR;
+    }
 }
 Map::TileType Map::GetTileType(unsigned int x, unsigned int y)
 {
-    return (TileType)m_tiles[x][y];
+    if(x >= 0 && y >= 0 && x < m_width && y < m_height)
+    {
+        return (TileType)m_tiles[x][y];
+    }
+    else
+    {
+        return Wall;
+    }
 }
 

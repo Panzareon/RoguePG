@@ -10,11 +10,11 @@ class MapFillDungeon : public MapFill
         MapFillDungeon(Map* map);
         virtual ~MapFillDungeon();
 
-        virtual void FillLayer(int LayerId);
+        virtual void FillLayer(int LayerId, int LayerAboveHeroId = 0);
     protected:
     private:
         void FillBaseLayer(int LayerId);
-        void FillWithItems(int LayerId);
+        void InitItemChances();
 };
 
 #endif // MAPFILLDUNGEON_H

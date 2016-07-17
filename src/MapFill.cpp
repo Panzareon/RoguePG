@@ -1,9 +1,13 @@
 #include "MapFill.h"
 
+#include <cstdlib>
+
 MapFill::MapFill(Map* map) : m_MGUtil(map->GetWidth(), map->GetHeight())
 {
     //ctor
     m_map = map;
+
+    m_maxTries = 50;
 
     m_width = m_map->GetWidth();
     m_height = m_map->GetHeight();
@@ -23,7 +27,7 @@ void MapFill::FillLayerByTiles(Map::TileType checkTile, int LayerId, int TileId,
             {
                 if(fillType == Simple)
                 {
-                    m_map->SetTileId(i,j,TileId,TileId,TileId,TileId,LayerId);
+                    m_map->SetTileId(i,j,TileId,LayerId);
                 }
                 else if(fillType == WithAdjacent)
                 {
@@ -70,6 +74,124 @@ void MapFill::FillLayerByTiles(Map::TileType checkTile, int LayerId, int TileId,
                     m_map->SetTileId(i,j,newTileIdTL,newTileIdTR,newTileIdBL,newTileIdBR,LayerId);
                 }
             }
+        }
+    }
+}
+bool MapFill::CanBlockBeFilled(int x, int y)
+{
+    Map::TileType** toCheck = new Map::TileType*[3];
+    int nrWall = 0;
+    for(int i = 0; i < 3; i++)
+    {
+        toCheck[i] = new Map::TileType[3];
+        for(int j = 0; j < 3; j++)
+        {
+            int x2 = x - 1 + i;
+            int y2 = y - 1 + j;
+            toCheck[i][j] = m_map->GetTileType(x2,y2);
+            if(toCheck[i][j] != Map::Space)
+            {
+                nrWall++;
+            }
+        }
+    }
+    //Check Blockable States
+    if(nrWall <= 1)
+        return true;
+    //Check if it would Block a Corner
+    if(toCheck[0][1] != Map::Wall && toCheck[1][0] != Map::Wall)
+        if(toCheck[0][0] != Map::Space)
+            return false;
+    if(toCheck[2][1] != Map::Wall && toCheck[1][0] != Map::Wall)
+        if(toCheck[2][0] != Map::Space)
+            return false;
+    if(toCheck[0][1] != Map::Wall && toCheck[1][2] != Map::Wall)
+        if(toCheck[0][2] != Map::Space)
+            return false;
+    if(toCheck[2][1] != Map::Wall && toCheck[1][2] != Map::Wall)
+        if(toCheck[2][2] != Map::Space)
+            return false;
+
+    //Check direct path
+    if(toCheck[0][1] != Map::Wall && toCheck[2][1] != Map::Wall)
+    {
+        bool ok = false;
+        for(int i = 0; i < 3; i++)
+        {
+            int freeSpaces = 0;
+            for(int j = 0; j < 3; j += 2)
+            {
+                if(toCheck[i][j] == Map::Space)
+                    freeSpaces++;
+            }
+            if(freeSpaces >= 3)
+                ok = true;
+        }
+        if(!ok)
+            return false;
+
+    }
+    if(toCheck[1][0] != Map::Wall && toCheck[1][2] != Map::Wall)
+    {
+        bool ok = false;
+        for(int i = 0; i < 3; i += 2)
+        {
+            int freeSpaces = 0;
+            for(int j = 0; j < 3; j++)
+            {
+                if(toCheck[i][j] == Map::Space)
+                    freeSpaces++;
+            }
+            if(freeSpaces >= 3)
+                ok = true;
+        }
+        if(!ok)
+            return false;
+
+    }
+    return true;
+
+}
+
+void MapFill::FillWithItems(int LayerId, int LayerAboveHeroId, int index)
+{
+    int maxChance = 0.0f;
+    for(int i = 0; i < m_chanceForTile[index].size(); i++)
+    {
+        maxChance += m_chanceForTile[index][i].GetChance();
+    }
+
+    for(int times = 0; times < 100; times++)
+    {
+        int i = 0;
+        int newRand = rand() % maxChance;
+        do
+        {
+            newRand -= m_chanceForTile[index][i].GetChance();
+            i++;
+        }
+        while(newRand > 0);
+        i--;
+        FillItem* newItem = &(m_chanceForTile[index][i]);
+
+        int x,y;
+        int tryNr = 0;
+        do
+        {
+            x = rand() % m_width;
+            y = rand() % m_height;
+            tryNr++;
+        }
+        while((m_map->GetTileType(x,y) != Map::Space || !newItem->CanInsertAt(m_map, x, y)) && tryNr < m_maxTries);
+
+        if(tryNr < m_maxTries)
+        {
+            if(newItem->GetType() == FillItem::Blocking)
+            {
+                if(!CanBlockBeFilled(x,y))
+                    continue;
+            }
+            newItem->Insert(m_map,x,y,LayerId, LayerAboveHeroId);
         }
     }
 }
