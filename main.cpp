@@ -2,6 +2,7 @@
 #include "MapGenerator.h"
 #include "MapFillDungeon.h"
 
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(640, 480), "SFML works!");
@@ -11,9 +12,11 @@ int main()
 
 
     TileMap tileMap;
+    TileMap tileMapWall;
     TileMap tileMapItems;
     TileMap tileMapAboveHero;
     tileMap.setTexture("texture/TileMap.png");
+    tileMapWall.setTexture("texture/TileMap.png");
     tileMapItems.setTexture("texture/TileMap.png");
     tileMapAboveHero.setTexture("texture/TileMap.png");
  //   tileMap.scale(0.2,0.2);
@@ -30,7 +33,7 @@ int main()
         }
 
         //Movement for now
-        float MoveSpeed = 0.3f;
+        float MoveSpeed = 5.0f;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
         {
             view.move(-MoveSpeed,0);
@@ -53,7 +56,7 @@ int main()
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
         {
-            Map map(30,30,3);
+            Map map(100,100,4);
             MapGenerator generator(&map);
 
             generator.CellularAutomata(0.45f);
@@ -62,19 +65,23 @@ int main()
 
             MapFillDungeon mapFill(&map);
             mapFill.FillLayer(0);
-            mapFill.FillLayer(1,2);
+            mapFill.FillLayer(1);
+            mapFill.FillLayer(2,3);
 
             map.writeToTileMap(tileMap,0);
-            map.writeToTileMap(tileMapItems,1);
-            map.writeToTileMap(tileMapAboveHero,2);
+            map.writeToTileMap(tileMapWall,1);
+            map.writeToTileMap(tileMapItems,2);
+            map.writeToTileMap(tileMapAboveHero,3);
 
         }
 
         window.clear();
         window.draw(tileMap);
         window.draw(tileMapItems);
+        window.draw(tileMapWall);
         window.draw(tileMapAboveHero);
         window.display();
+
     }
 
     return 0;

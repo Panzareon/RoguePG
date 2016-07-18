@@ -28,6 +28,9 @@ class Map
         void SetTileId(unsigned int x, unsigned int y, int TileIdTL, int TileIdTR, int TileIdBL, int TileIdBR, int layerId);
         void SetTileId(unsigned int x, unsigned int y, int TileId, int layerId);
 
+        //Get Top Left Tile Id of given Position
+        int GetTileId(unsigned int x, unsigned int y, int layerId);
+
 
         int GetWidth();
         int GetHeight();

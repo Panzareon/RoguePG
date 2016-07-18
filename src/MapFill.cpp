@@ -77,6 +77,33 @@ void MapFill::FillLayerByTiles(Map::TileType checkTile, int LayerId, int TileId,
         }
     }
 }
+void MapFill::FillLayerWallByTiles(Map::TileType checkTile, int LayerId, int TileId)
+{
+    for(int i = 0; i < m_width; i++)
+    {
+        for(int j = 0; j < m_height; j++)
+        {
+            if(m_map->GetTileType(i,j) == checkTile && m_map->GetTileType(i,j-1) != checkTile)
+            {
+                int left = 0;
+                int right = 0;
+                if(m_map->GetTileType(i-1,j) != checkTile || m_map->GetTileType(i-1,j-1) == checkTile)
+                    left = 1;
+                if(m_map->GetTileType(i+1,j) != checkTile || m_map->GetTileType(i+1,j-1) == checkTile)
+                    right = 1;
+
+                int id = TileId;
+                for(int k = 1; k <= 2; k++)
+                {
+                    m_map->SetTileId(i, j-k,id + left, id + right, id + left, id + right, LayerId);
+                    id += 2;
+                }
+
+            }
+        }
+    }
+}
+
 bool MapFill::CanBlockBeFilled(int x, int y)
 {
     Map::TileType** toCheck = new Map::TileType*[3];
@@ -153,15 +180,15 @@ bool MapFill::CanBlockBeFilled(int x, int y)
 
 }
 
-void MapFill::FillWithItems(int LayerId, int LayerAboveHeroId, int index)
+void MapFill::FillWithItems(int LayerId, int LayerAboveHeroId, int index, int NrItems)
 {
     int maxChance = 0.0f;
-    for(int i = 0; i < m_chanceForTile[index].size(); i++)
+    for(unsigned int i = 0; i < m_chanceForTile[index].size(); i++)
     {
         maxChance += m_chanceForTile[index][i].GetChance();
     }
 
-    for(int times = 0; times < 100; times++)
+    for(int times = 0; times < NrItems; times++)
     {
         int i = 0;
         int newRand = rand() % maxChance;
@@ -182,7 +209,7 @@ void MapFill::FillWithItems(int LayerId, int LayerAboveHeroId, int index)
             y = rand() % m_height;
             tryNr++;
         }
-        while((m_map->GetTileType(x,y) != Map::Space || !newItem->CanInsertAt(m_map, x, y)) && tryNr < m_maxTries);
+        while(!newItem->CanInsertAt(m_map, x, y, LayerId, LayerAboveHeroId) && tryNr < m_maxTries);
 
         if(tryNr < m_maxTries)
         {

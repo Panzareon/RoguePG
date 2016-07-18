@@ -100,6 +100,17 @@ void Map::SetTileId(unsigned int x, unsigned int y, int TileIdTL, int TileIdTR, 
         m_layers[layerId][x*2+1][y*2+1] = TileIdBR;
     }
 }
+
+int Map::GetTileId(unsigned int x, unsigned int y, int layerId)
+{
+    if(x >= 0 && y >= 0 && x < m_width && y < m_height)
+    {
+        return m_layers[layerId][x*2][y*2];
+    }
+    return 0;
+}
+
+
 Map::TileType Map::GetTileType(unsigned int x, unsigned int y)
 {
     if(x >= 0 && y >= 0 && x < m_width && y < m_height)

@@ -13,10 +13,30 @@ MapFillDungeon::~MapFillDungeon()
 }
 void MapFillDungeon::InitItemChances()
 {
-    m_chanceForTile[0].push_back(FillItem(512,5));
-    m_chanceForTile[0].push_back(FillItem(544,5,FillItem::Walkable));
-    m_chanceForTile[0].push_back(FillItem(576,5));
-    m_chanceForTile[0].push_back(FillItem(640,5,FillItem::Blocking,FillItem::AndOneAbove));
+    //Defining all Items vor Layer 0
+    //Small Rock
+    m_chanceForTile[0].push_back(FillItem(512,50));
+    //Small Stones
+    m_chanceForTile[0].push_back(FillItem(544,40,FillItem::Walkable));
+    //Small wide Rock
+    m_chanceForTile[0].push_back(FillItem(576,50));
+    //Tall Rock
+    m_chanceForTile[0].push_back(FillItem(640,50,FillItem::Blocking,FillItem::AndOneAbove));
+    //Small Crack
+    m_chanceForTile[0].push_back(FillItem(546,5,FillItem::Wall,FillItem::AtWallDouble));
+    //Medium Crack
+    m_chanceForTile[0].push_back(FillItem(547,5,FillItem::Wall,FillItem::AtWallDouble));
+    //Wide Crack
+    m_chanceForTile[0].push_back(FillItem(548,1,FillItem::Wall,FillItem::AtWallDouble));
+    //Brown Plant
+    m_chanceForTile[0].push_back(FillItem(549,5,FillItem::Wall,FillItem::AtWallDouble));
+    //Green Plants
+    m_chanceForTile[0].push_back(FillItem(550,5,FillItem::Wall,FillItem::AtWallDouble));
+    m_chanceForTile[0].push_back(FillItem(551,5,FillItem::Wall,FillItem::AtWallDouble));
+    //Cracked Barrel
+    m_chanceForTile[0].push_back(FillItem(578,50,FillItem::Blocking,FillItem::Single, FillItem::AtWall));
+    //Cracked Pot
+    m_chanceForTile[0].push_back(FillItem(579,50,FillItem::Blocking,FillItem::Single, FillItem::AtWall));
 }
 
 
@@ -26,9 +46,14 @@ void MapFillDungeon::FillLayer(int LayerId, int LayerAboveHeroId)
     {
         FillBaseLayer(LayerId);
     }
+    else if(LayerId == 1)
+    {
+        FillLayerWallByTiles(Map::Space,LayerId, 256);
+    }
     else
     {
-        FillWithItems(LayerId, LayerAboveHeroId, 0);
+        //Nr of items to Place: Width of Map times 2
+        FillWithItems(LayerId, LayerAboveHeroId, 0, m_width * 2);
     }
 }
 void MapFillDungeon::FillBaseLayer(int LayerId)
