@@ -48,12 +48,16 @@ void MapFillDungeon::FillLayer(int LayerId, int LayerAboveHeroId)
     }
     else if(LayerId == 1)
     {
-        FillLayerWallByTiles(Map::Space,LayerId, 256);
+        FillLayerWallByTiles(Map::Space,LayerId, 256,2);
+    }
+    else if(LayerId == 4)
+    {
+        FillLayerWallAbove(Map::Space, LayerId, 288,2);
     }
     else
     {
-        //Nr of items to Place: Width of Map times 2
-        FillWithItems(LayerId, LayerAboveHeroId, 0, m_width * 2);
+        //Nr of items to Place: Width of Map times Height of Map / 50
+        FillWithItems(LayerId, LayerAboveHeroId, 0, m_width * m_height / 50);
     }
 }
 void MapFillDungeon::FillBaseLayer(int LayerId)

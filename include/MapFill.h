@@ -32,7 +32,8 @@ class MapFill
         bool CanBlockBeFilled(int x, int y);
 
         void FillLayerByTiles(Map::TileType checkTile, int LayerId, int TileId, FillType fillType);
-        void FillLayerWallByTiles(Map::TileType checkTile, int LayerId, int TileId);
+        void FillLayerWallByTiles(Map::TileType checkTile, int LayerId, int TileId, int wallHeight);
+        void FillLayerWallAbove(Map::TileType checkTile, int LayerId, int TileId, int wallHeight);
         //index of m_chanceForTile
         void FillWithItems(int LayerId, int LayerAboveHeroId, int index, int NrItems);
     private:

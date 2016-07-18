@@ -23,7 +23,7 @@ class Map
         void SetRoomNr(unsigned int x, unsigned int y,  int roomNr);
         int GetRoomNr(unsigned int x, unsigned int y);
 
-        void writeToTileMap(TileMap& in, int layerId);
+        void writeToTileMap(TileMap& in, int layerId, sf::Color color = sf::Color::White);
 
         void SetTileId(unsigned int x, unsigned int y, int TileIdTL, int TileIdTR, int TileIdBL, int TileIdBR, int layerId);
         void SetTileId(unsigned int x, unsigned int y, int TileId, int layerId);

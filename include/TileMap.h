@@ -11,7 +11,7 @@ class TileMap : public sf::Drawable, public sf::Transformable
         TileMap();
         virtual ~TileMap();
         bool setTexture(const std::string& tileset);
-        void load(int** tiles, unsigned int width, unsigned int height);
+        void load(int** tiles, unsigned int width, unsigned int height, sf::Color color = sf::Color::White);
     protected:
     private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

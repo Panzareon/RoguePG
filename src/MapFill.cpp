@@ -77,7 +77,7 @@ void MapFill::FillLayerByTiles(Map::TileType checkTile, int LayerId, int TileId,
         }
     }
 }
-void MapFill::FillLayerWallByTiles(Map::TileType checkTile, int LayerId, int TileId)
+void MapFill::FillLayerWallByTiles(Map::TileType checkTile, int LayerId, int TileId, int wallHeight)
 {
     for(int i = 0; i < m_width; i++)
     {
@@ -93,7 +93,7 @@ void MapFill::FillLayerWallByTiles(Map::TileType checkTile, int LayerId, int Til
                     right = 1;
 
                 int id = TileId;
-                for(int k = 1; k <= 2; k++)
+                for(int k = 1; k <= wallHeight; k++)
                 {
                     m_map->SetTileId(i, j-k,id + left, id + right, id + left, id + right, LayerId);
                     id += 2;
@@ -103,6 +103,60 @@ void MapFill::FillLayerWallByTiles(Map::TileType checkTile, int LayerId, int Til
         }
     }
 }
+void MapFill::FillLayerWallAbove(Map::TileType checkTile, int LayerId, int TileId, int wallHeight)
+{
+    for(int i = 0; i < m_width; i++)
+    {
+        for(int j = 0; j < m_height; j++)
+        {
+            if(m_map->GetTileType(i,j) == Map::Wall)
+            {
+                int newTileIdTL = TileId;
+                if(m_map->GetTileType(i-1,j) == checkTile)
+                    newTileIdTL += 2;
+                if(m_map->GetTileType(i,j-1) == checkTile)
+                    newTileIdTL += 1;
+                if(newTileIdTL == TileId && i > 0 && j > 0)
+                    if(m_map->GetTileType(i-1,j-1) == checkTile)
+                        newTileIdTL +=4;
+
+                int newTileIdTR = TileId;
+                if(m_map->GetTileType(i+1,j) == checkTile)
+                    newTileIdTR += 2;
+                if(m_map->GetTileType(i,j-1) == checkTile)
+                    newTileIdTR += 1;
+                if(newTileIdTR == TileId && i < m_width - 1 && j > 0)
+                    if(m_map->GetTileType(i+1,j-1) == checkTile)
+                        newTileIdTR +=4;
+
+
+                int newTileIdBL = TileId;
+                if(m_map->GetTileType(i-1,j) == checkTile)
+                    newTileIdBL += 2;
+                if(m_map->GetTileType(i,j+1) == checkTile)
+                    newTileIdBL += 1;
+                if(newTileIdBL == TileId && i > 0 && j < m_height - 1)
+                    if(m_map->GetTileType(i-1,j+1) == checkTile)
+                        newTileIdBL +=4;
+
+                int newTileIdBR = TileId;
+                if(m_map->GetTileType(i+1,j) == checkTile)
+                    newTileIdBR += 2;
+                if(m_map->GetTileType(i,j+1) == checkTile)
+                    newTileIdBR += 1;
+                if(newTileIdBR == TileId && i < m_width - 1 && j < m_height - 1)
+                    if(m_map->GetTileType(i+1,j+1) == checkTile)
+                        newTileIdBR +=4;
+
+
+
+                if(m_map->GetTileType(i,j-wallHeight) != Map::Wall || newTileIdBL != TileId || newTileIdBR != TileId || newTileIdTL != TileId || newTileIdTR != TileId)
+                    m_map->SetTileId(i,j-wallHeight,newTileIdTL,newTileIdTR,newTileIdBL,newTileIdBR,LayerId);
+            }
+        }
+    }
+}
+
 
 bool MapFill::CanBlockBeFilled(int x, int y)
 {

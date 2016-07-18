@@ -51,9 +51,9 @@ int Map::GetHeight()
 }
 
 
-void Map::writeToTileMap(TileMap& in, int layer)
+void Map::writeToTileMap(TileMap& in, int layer, sf::Color color)
 {
-    in.load(m_layers.at(layer), m_width, m_height);
+    in.load(m_layers.at(layer), m_width, m_height, color);
 }
 
 void Map::SetTileToWall(unsigned int x, unsigned int y)
