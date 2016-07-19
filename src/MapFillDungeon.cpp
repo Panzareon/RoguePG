@@ -13,7 +13,7 @@ MapFillDungeon::~MapFillDungeon()
 }
 void MapFillDungeon::InitItemChances()
 {
-    //Defining all Items vor Layer 0
+    //Defining all Items for Layer 0
     //Small Rock
     m_chanceForTile[0].push_back(FillItem(512,50));
     //Small Stones

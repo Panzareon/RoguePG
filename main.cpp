@@ -4,12 +4,14 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(640, 480), "SFML works!");
-    sf::View view(sf::FloatRect(0,0,640,480));
+    int width = 640;
+    int height = 480;
+    sf::RenderWindow window(sf::VideoMode(width, height), "SFML works!");
+    sf::View view(sf::FloatRect(0,0,width,height));
     window.setView(view);
     window.setVerticalSyncEnabled(true);
 
-    SceneManagerDungeon sceneManager(&window);
+    SceneManagerDungeon sceneManager(&window,width,height);
 
 
 

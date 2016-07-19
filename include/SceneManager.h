@@ -6,7 +6,7 @@
 class SceneManager
 {
     public:
-        SceneManager(sf::RenderTarget * target);
+        SceneManager(sf::RenderTarget * target, int windowWidth, int windowHeight);
         virtual ~SceneManager();
         virtual void NextTick();
     protected:
@@ -19,6 +19,9 @@ class SceneManager
 
         float m_posx;
         float m_posy;
+
+        int m_windowWidth;
+        int m_windowHeight;
     private:
 };
 

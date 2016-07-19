@@ -41,7 +41,6 @@ void MapGenerator::CellularAutomata(float startPercent)
         ConnectAllRooms(false);
     }
 
-
           //AlternativeImplementation
 /*            generator.CellularAutomataStart(0.45f);
             for(int i = 0; i < 5; i++)
@@ -726,4 +725,18 @@ void MapGenerator::CheckTiles(int** checkArray, int x, int y, bool straight)
     }
 }
 
+void MapGenerator::PlaceStartingPosition()
+{
+    int x,y;
+    int maxPos = 3;
+    do
+    {
+        x = (std::rand() % maxPos) % m_width;
+        y = (std::rand() % maxPos) % m_height;
+        maxPos++;
+    }
+    while(m_map->GetTileType(x,y) != Map::Space);
+    m_map->m_startX = x;
+    m_map->m_startY = y;
+}
 

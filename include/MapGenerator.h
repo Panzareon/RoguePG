@@ -28,6 +28,8 @@ class MapGenerator
 
         void NumberRooms();
 
+        void PlaceStartingPosition();
+
     protected:
     private:
         int m_width;

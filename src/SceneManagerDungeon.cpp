@@ -4,7 +4,7 @@
 #include "TileMap.h"
 #include "MapFillDungeon.h"
 
-SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target): SceneManager(target), m_map(30,30,5), m_generator(&m_map)
+SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWidth, int windowHeight): SceneManager(target, windowWidth, windowHeight), m_map(30,30,5), m_generator(&m_map)
 {
     //ctor
     //Define Tile Maps
@@ -41,6 +41,7 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target): SceneManage
 
     m_generator.CellularAutomata(0.45f);
 
+    m_generator.PlaceStartingPosition();
     //m_generator.NumberRooms();
 
     MapFillDungeon mapFill(&m_map);

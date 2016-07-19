@@ -3,6 +3,7 @@
 
 #include "TileMap.h"
 #include <vector>
+#include "SFML/Graphics.hpp"
 
 class Map
 {
@@ -31,9 +32,15 @@ class Map
         //Get Top Left Tile Id of given Position
         int GetTileId(unsigned int x, unsigned int y, int layerId);
 
+        bool DoesCollide(sf::Rect<float> rect);
+        bool DoesCollide(unsigned int x, unsigned int y);
+
 
         int GetWidth();
         int GetHeight();
+
+        int m_startX;
+        int m_startY;
     protected:
     private:
         int** m_tiles;

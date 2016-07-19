@@ -9,7 +9,7 @@
 class SceneManagerDungeon: public SceneManager
 {
     public:
-        SceneManagerDungeon(sf::RenderTarget * target);
+        SceneManagerDungeon(sf::RenderTarget * target, int windowWidth, int windowHeight);
         virtual ~SceneManagerDungeon();
     protected:
         virtual void Tick();

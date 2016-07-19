@@ -1,12 +1,15 @@
 #include "SceneManager.h"
 #include <cmath>
 
-SceneManager::SceneManager(sf::RenderTarget* target)
+SceneManager::SceneManager(sf::RenderTarget* target, int windowWidth, int windowHeight)
 {
     //ctor
     m_target = target;
-    m_posx = 320;
-    m_posy = 240;
+    m_windowWidth = windowWidth;
+    m_windowHeight = windowHeight;
+
+    m_posx = m_windowWidth / 2;
+    m_posy = m_windowHeight / 2;
 }
 
 SceneManager::~SceneManager()

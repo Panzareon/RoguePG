@@ -1,4 +1,5 @@
 #include "Map.h"
+#include <cmath>
 
 Map::Map(int width, int height, int nrLayers)
 {
@@ -22,6 +23,9 @@ Map::Map(int width, int height, int nrLayers)
     m_roomNr = new int*[m_width];
     for(int j = 0; j < m_width; j++)
         m_roomNr[j] = new int[m_height];
+
+    m_startX = -1;
+    m_startY = -1;
 }
 
 Map::~Map()
@@ -121,5 +125,25 @@ Map::TileType Map::GetTileType(unsigned int x, unsigned int y)
     {
         return Wall;
     }
+}
+bool Map::DoesCollide(unsigned int x, unsigned int y)
+{
+    TileType type = GetTileType(x,y);
+    if(type == Wall || type == InteractableWall || type == BlockingItem)
+        return true;
+    return false;
+}
+
+bool Map::DoesCollide(sf::Rect<float> rect)
+{
+    for(int x = std::floor(rect.left); x <= std::ceil(rect.left + rect.width); x++)
+    {
+        for(int y = std::floor(rect.top); y <= std::ceil(rect.top + rect.height); y++)
+        {
+            if(DoesCollide(x,y))
+                return true;
+        }
+    }
+    return false;
 }
 
