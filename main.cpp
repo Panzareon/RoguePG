@@ -1,9 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "SceneManagerDungeon.h"
 
-#include <cmath>
-
-#include "DrawableNode.h"
 
 int main()
 {
@@ -12,18 +9,12 @@ int main()
     window.setView(view);
     window.setVerticalSyncEnabled(true);
 
-    SceneManagerDungeon sceneManager;
+    SceneManagerDungeon sceneManager(&window);
 
 
-    sf::Clock clock;
-    sf::Time FrameTime;
-    float posx = 320;
-    float posy = 240;
 
     while (window.isOpen())
     {
-        FrameTime = clock.getElapsedTime();
-        clock.restart();
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -31,33 +22,8 @@ int main()
                 window.close();
         }
 
-        //Movement for now
-        float MoveSpeed = 256.0f;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        {
-            posx -= MoveSpeed * FrameTime.asSeconds();
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        {
-            posx += MoveSpeed * FrameTime.asSeconds();
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        {
-            posy -= MoveSpeed * FrameTime.asSeconds();
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        {
-            posy += MoveSpeed * FrameTime.asSeconds();
-        }
-        view.setCenter(std::floor(posx), std::floor(posy));
-        window.setView(view);
-
-
-
-        window.clear();
-        sceneManager.DrawScene(window);
+        sceneManager.NextTick();
         window.display();
-
     }
 
     return 0;

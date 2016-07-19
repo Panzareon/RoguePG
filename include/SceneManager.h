@@ -6,12 +6,19 @@
 class SceneManager
 {
     public:
-        SceneManager();
+        SceneManager(sf::RenderTarget * target);
         virtual ~SceneManager();
-
-        void DrawScene(sf::RenderTarget& target);
+        virtual void NextTick();
     protected:
+        virtual void Tick() = 0;
+        void DrawScene();
         Node * m_mainNode;
+        sf::RenderTarget* m_target;
+        sf::Clock m_clock;
+        sf::Time m_frameTime;
+
+        float m_posx;
+        float m_posy;
     private:
 };
 

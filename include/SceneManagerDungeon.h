@@ -9,9 +9,11 @@
 class SceneManagerDungeon: public SceneManager
 {
     public:
-        SceneManagerDungeon();
+        SceneManagerDungeon(sf::RenderTarget * target);
         virtual ~SceneManagerDungeon();
     protected:
+        virtual void Tick();
+
         Map m_map;
         MapGenerator m_generator;
 

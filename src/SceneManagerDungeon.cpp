@@ -4,7 +4,7 @@
 #include "TileMap.h"
 #include "MapFillDungeon.h"
 
-SceneManagerDungeon::SceneManagerDungeon(): m_map(30,30,5), m_generator(&m_map)
+SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target): SceneManager(target), m_map(30,30,5), m_generator(&m_map)
 {
     //ctor
     //Define Tile Maps
@@ -60,4 +60,27 @@ SceneManagerDungeon::SceneManagerDungeon(): m_map(30,30,5), m_generator(&m_map)
 SceneManagerDungeon::~SceneManagerDungeon()
 {
     //dtor
+}
+void SceneManagerDungeon::Tick()
+{
+    //Calculations fore every tick
+
+    //Movement for now
+    float MoveSpeed = 256.0f;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    {
+        m_posx -= MoveSpeed * m_frameTime.asSeconds();
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    {
+        m_posx += MoveSpeed * m_frameTime.asSeconds();
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+    {
+        m_posy -= MoveSpeed * m_frameTime.asSeconds();
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+    {
+        m_posy += MoveSpeed * m_frameTime.asSeconds();
+    }
 }
