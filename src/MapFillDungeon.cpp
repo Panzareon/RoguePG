@@ -23,16 +23,16 @@ void MapFillDungeon::InitItemChances()
     //Tall Rock
     m_chanceForTile[0].push_back(FillItem(640,50,FillItem::Blocking,FillItem::AndOneAbove));
     //Small Crack
-    m_chanceForTile[0].push_back(FillItem(546,5,FillItem::Wall,FillItem::AtWallDouble));
+    m_chanceForTile[0].push_back(FillItem(546,20,FillItem::Wall,FillItem::AtWallDouble));
     //Medium Crack
-    m_chanceForTile[0].push_back(FillItem(547,5,FillItem::Wall,FillItem::AtWallDouble));
+    m_chanceForTile[0].push_back(FillItem(547,20,FillItem::Wall,FillItem::AtWallDouble));
     //Wide Crack
-    m_chanceForTile[0].push_back(FillItem(548,1,FillItem::Wall,FillItem::AtWallDouble));
+    m_chanceForTile[0].push_back(FillItem(548,5,FillItem::Wall,FillItem::AtWallDouble));
     //Brown Plant
-    m_chanceForTile[0].push_back(FillItem(549,5,FillItem::Wall,FillItem::AtWallDouble));
+    m_chanceForTile[0].push_back(FillItem(549,20,FillItem::Wall,FillItem::AtWallDouble));
     //Green Plants
-    m_chanceForTile[0].push_back(FillItem(550,5,FillItem::Wall,FillItem::AtWallDouble));
-    m_chanceForTile[0].push_back(FillItem(551,5,FillItem::Wall,FillItem::AtWallDouble));
+    m_chanceForTile[0].push_back(FillItem(550,20,FillItem::Wall,FillItem::AtWallDouble));
+    m_chanceForTile[0].push_back(FillItem(551,20,FillItem::Wall,FillItem::AtWallDouble));
     //Cracked Barrel
     m_chanceForTile[0].push_back(FillItem(578,50,FillItem::Blocking,FillItem::Single, FillItem::AtWall));
     //Cracked Pot
@@ -48,10 +48,12 @@ void MapFillDungeon::FillLayer(int LayerId, int LayerAboveHeroId)
     }
     else if(LayerId == 1)
     {
+        //Fill Wall Tiles
         FillLayerWallByTiles(Map::Space,LayerId, 256,2);
     }
     else if(LayerId == 4)
     {
+        //Fill Tiles above Wall
         FillLayerWallAbove(Map::Space, LayerId, 288,2);
     }
     else

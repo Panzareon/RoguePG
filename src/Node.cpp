@@ -1,4 +1,5 @@
 #include "Node.h"
+#include <algorithm>
 
 Node::Node()
 {
@@ -9,6 +10,8 @@ Node::Node()
 Node::~Node()
 {
     //dtor
+    for (std::size_t i = 0; i < m_children.size(); ++i)
+        delete m_children[i];
 }
 
 void Node::draw(sf::RenderTarget& target, const sf::Transform& parentTransform) const
@@ -37,4 +40,13 @@ sf::Transform Node::getTransform()
 void Node::setTransform(sf::Transform newTransform)
 {
     m_transform = newTransform;
+}
+void Node::addChild(Node* child)
+{
+    m_children.push_back(child);
+}
+
+void Node::removeChild(Node* child)
+{
+    m_children.erase(std::remove(m_children.begin(), m_children.end(), child));
 }

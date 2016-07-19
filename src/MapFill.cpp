@@ -107,7 +107,7 @@ void MapFill::FillLayerWallAbove(Map::TileType checkTile, int LayerId, int TileI
 {
     for(int i = 0; i < m_width; i++)
     {
-        for(int j = 0; j < m_height; j++)
+        for(int j = wallHeight; j < m_height + wallHeight; j++)
         {
             if(m_map->GetTileType(i,j) == Map::Wall)
             {

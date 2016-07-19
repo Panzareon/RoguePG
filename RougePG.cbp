@@ -49,6 +49,8 @@
 		<Unit filename="include/MapGenerator.h" />
 		<Unit filename="include/MapGeneratorUtil.h" />
 		<Unit filename="include/Node.h" />
+		<Unit filename="include/SceneManager.h" />
+		<Unit filename="include/SceneManagerDungeon.h" />
 		<Unit filename="include/TileMap.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/DrawableNode.cpp" />
@@ -59,6 +61,8 @@
 		<Unit filename="src/MapGenerator.cpp" />
 		<Unit filename="src/MapGeneratorUtil.cpp" />
 		<Unit filename="src/Node.cpp" />
+		<Unit filename="src/SceneManager.cpp" />
+		<Unit filename="src/SceneManagerDungeon.cpp" />
 		<Unit filename="src/TileMap.cpp" />
 		<Extensions>
 			<code_completion />

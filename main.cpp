@@ -1,8 +1,9 @@
 #include <SFML/Graphics.hpp>
-#include "MapGenerator.h"
-#include "MapFillDungeon.h"
+#include "SceneManagerDungeon.h"
 
 #include <cmath>
+
+#include "DrawableNode.h"
 
 int main()
 {
@@ -11,19 +12,8 @@ int main()
     window.setView(view);
     window.setVerticalSyncEnabled(true);
 
+    SceneManagerDungeon sceneManager;
 
-
-    TileMap tileMap;
-    TileMap tileMapWall;
-    TileMap tileMapItems;
-    TileMap tileMapAboveHero;
-    TileMap tileMapAboveWall;
-    tileMap.setTexture("texture/TileMap.png");
-    tileMapWall.setTexture("texture/TileMap.png");
-    tileMapItems.setTexture("texture/TileMap.png");
-    tileMapAboveHero.setTexture("texture/TileMap.png");
-    tileMapAboveWall.setTexture("texture/TileMap.png");
- //   tileMap.scale(0.2,0.2);
 
     sf::Clock clock;
     sf::Time FrameTime;
@@ -64,36 +54,8 @@ int main()
 
 
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
-        {
-            Map map(100,100,5);
-            MapGenerator generator(&map);
-
-            generator.CellularAutomata(0.45f);
-
-            //generator.NumberRooms();
-
-            MapFillDungeon mapFill(&map);
-            mapFill.FillLayer(0);
-            mapFill.FillLayer(1);
-            mapFill.FillLayer(4);
-            mapFill.FillLayer(2,3);
-
-            map.writeToTileMap(tileMap,0);
-            map.writeToTileMap(tileMapWall,1);
-            map.writeToTileMap(tileMapItems,2);
-            map.writeToTileMap(tileMapAboveHero,3);
-            sf::Color halfTransparent(255,255,255,220);
-            map.writeToTileMap(tileMapAboveWall,4, halfTransparent);
-
-        }
-
         window.clear();
-        window.draw(tileMap);
-        window.draw(tileMapItems);
-        window.draw(tileMapWall);
-        window.draw(tileMapAboveHero);
-        window.draw(tileMapAboveWall);
+        sceneManager.DrawScene(window);
         window.display();
 
     }

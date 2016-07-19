@@ -13,6 +13,9 @@ class Node
 
         sf::Transform getTransform();
         void setTransform(sf::Transform newTransform);
+
+        void addChild(Node* child);
+        void removeChild(Node* child);
     protected:
     private:
         virtual void onDraw(sf::RenderTarget& target, const sf::Transform& transform) const;
