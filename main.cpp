@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include "SceneManagerDungeon.h"
 
+#include <iostream>
+#include "AnimatedNode.h"
 
 int main()
 {
@@ -13,7 +15,17 @@ int main()
 
     SceneManagerDungeon sceneManager(&window,width,height);
 
-
+//
+//        sf::Texture heroTexture;
+//        sf::String texturePath = "texture/skeleton-large.png";
+//        if(!heroTexture.loadFromFile(texturePath))
+//        {
+//            std::cout << "Could not load Texture: " << texturePath.toAnsiString() << std::endl;
+//        }
+//        sf::Sprite hero;
+//        hero.setTexture(heroTexture);
+//        hero.setTextureRect(sf::IntRect(0,0,63,63));
+//        AnimatedNode* heroNode = new AnimatedNode(hero);
 
     while (window.isOpen())
     {
@@ -25,6 +37,9 @@ int main()
         }
 
         sceneManager.NextTick();
+//
+//        heroNode->Tick(.01f);
+//        heroNode->draw(window,sf::Transform::Identity);
         window.display();
     }
 

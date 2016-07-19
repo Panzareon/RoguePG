@@ -26,6 +26,11 @@ void Node::draw(sf::RenderTarget& target, const sf::Transform& parentTransform) 
     for (std::size_t i = 0; i < m_children.size(); ++i)
         m_children[i]->draw(target, combinedTransform);
 }
+void Node::Tick(float seconds)
+{
+    for (std::size_t i = 0; i < m_children.size(); ++i)
+        m_children[i]->Tick(seconds);
+}
 
 void Node::onDraw(sf::RenderTarget& target, const sf::Transform& transform) const
 {

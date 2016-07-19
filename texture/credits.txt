@@ -1,0 +1,4 @@
+skeleton-large.png
+from: http://opengameart.org/content/pseudo-a-25d-roguelike-skeleton-sprite-sheet
+TileMap.png
+from: http://telles0808.deviantart.com/art/RPG-Maker-VX-RTP-Tileset-159218223

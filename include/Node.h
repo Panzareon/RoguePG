@@ -16,6 +16,8 @@ class Node
 
         void addChild(Node* child);
         void removeChild(Node* child);
+
+        virtual void Tick(float seconds);
     protected:
     private:
         virtual void onDraw(sf::RenderTarget& target, const sf::Transform& transform) const;

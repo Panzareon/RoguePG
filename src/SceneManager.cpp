@@ -27,7 +27,7 @@ void SceneManager::NextTick()
     m_frameTime = m_clock.getElapsedTime();
     m_clock.restart();
 
-
+    m_mainNode->Tick(m_frameTime.asSeconds());
     Tick();
 
     sf::View view = m_target->getDefaultView();
