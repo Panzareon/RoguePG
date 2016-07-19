@@ -41,6 +41,7 @@
 			<Add library="sfml-system" />
 			<Add directory="SFML-2.3.2/build/lib" />
 		</Linker>
+		<Unit filename="include/AnimatedNode.h" />
 		<Unit filename="include/DrawableNode.h" />
 		<Unit filename="include/FillItem.h" />
 		<Unit filename="include/Map.h" />
@@ -53,6 +54,7 @@
 		<Unit filename="include/SceneManagerDungeon.h" />
 		<Unit filename="include/TileMap.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/AnimatedNode.cpp" />
 		<Unit filename="src/DrawableNode.cpp" />
 		<Unit filename="src/FillItem.cpp" />
 		<Unit filename="src/Map.cpp" />

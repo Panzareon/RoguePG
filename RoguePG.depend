@@ -1,8 +1,7 @@
 # depslib dependency file v1.0
-1468624060 source:d:\programme\projekte\rougepg\main.cpp
+1468954896 source:d:\programme\projekte\rougepg\main.cpp
 	<SFML/Graphics.hpp>
-	"MapGenerator.h"
-	"MapFillDungeon.h"
+	"SceneManagerDungeon.h"
 
 1468429577 d:\programme\projekte\rougepg\sfml-2.3.2\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -382,10 +381,11 @@
 	<string>
 	<vector>
 
-1468494973 source:d:\programme\projekte\rougepg\src\node.cpp
+1468950176 source:d:\programme\projekte\rougepg\src\node.cpp
 	"Node.h"
+	<algorithm>
 
-1468493025 d:\programme\projekte\rougepg\include\node.h
+1468950163 d:\programme\projekte\rougepg\include\node.h
 	<SFML/Graphics.hpp>
 	<vector>
 
@@ -395,24 +395,25 @@
 1468494872 d:\programme\projekte\rougepg\include\spritenode.h
 	<Node.h>
 
-1468624041 source:d:\programme\projekte\rougepg\src\tilemap.cpp
+1468882031 source:d:\programme\projekte\rougepg\src\tilemap.cpp
 	"TileMap.h"
+	<iostream>
 
-1468620251 d:\programme\projekte\rougepg\include\tilemap.h
+1468881758 d:\programme\projekte\rougepg\include\tilemap.h
 	<SFML/Graphics.hpp>
 
-1468602962 d:\programme\projekte\rougepg\include\mapgenerator.h
+1468954970 d:\programme\projekte\rougepg\include\mapgenerator.h
 	"TileMap.h"
 	"MapGeneratorUtil.h"
 	"Map.h"
 
-1468501230 source:d:\programme\projekte\rougepg\src\drawablenode.cpp
+1468950155 source:d:\programme\projekte\rougepg\src\drawablenode.cpp
 	"DrawableNode.h"
 
-1468495493 d:\programme\projekte\rougepg\include\drawablenode.h
+1468950159 d:\programme\projekte\rougepg\include\drawablenode.h
 	<Node.h>
 
-1468580902 source:d:\programme\projekte\rougepg\src\mapgenerator.cpp
+1468955385 source:d:\programme\projekte\rougepg\src\mapgenerator.cpp
 	"MapGenerator.h"
 	<cstdlib>
 	<ctime>
@@ -426,23 +427,59 @@
 1468605954 source:d:\programme\projekte\rougepg\src\mapgeneratorutil.cpp
 	"MapGeneratorUtil.h"
 
-1468621672 d:\programme\projekte\rougepg\include\map.h
+1468954812 d:\programme\projekte\rougepg\include\map.h
 	"TileMap.h"
 	<vector>
+	"SFML/Graphics.hpp"
 
-1468619973 source:d:\programme\projekte\rougepg\src\map.cpp
+1468954845 source:d:\programme\projekte\rougepg\src\map.cpp
 	"Map.h"
+	<cmath>
 
-1468624223 source:d:\programme\projekte\rougepg\src\mapfill.cpp
+1468952264 source:d:\programme\projekte\rougepg\src\mapfill.cpp
 	"MapFill.h"
+	<cstdlib>
 
-1468619070 d:\programme\projekte\rougepg\include\mapfill.h
+1468880874 d:\programme\projekte\rougepg\include\mapfill.h
 	"Map.h"
 	"MapGeneratorUtil.h"
+	<vector>
+	"FillItem.h"
 
-1468619159 d:\programme\projekte\rougepg\include\mapfilldungeon.h
+1468863178 d:\programme\projekte\rougepg\include\mapfilldungeon.h
 	<MapFill.h>
 
-1468619154 source:d:\programme\projekte\rougepg\src\mapfilldungeon.cpp
+1468960368 source:d:\programme\projekte\rougepg\src\mapfilldungeon.cpp
 	"MapFillDungeon.h"
+
+1468863178 d:\programme\projekte\rougepg\include\fillitem.h
+	"Map.h"
+
+1468954446 source:d:\programme\projekte\rougepg\src\fillitem.cpp
+	"FillItem.h"
+	"TileMap.h"
+
+1468954587 source:d:\programme\projekte\rougepg\src\scenemanager.cpp
+	"SceneManager.h"
+	<cmath>
+
+1468954561 d:\programme\projekte\rougepg\include\scenemanager.h
+	"Node.h"
+
+1468954612 d:\programme\projekte\rougepg\include\scenemanagerdungeon.h
+	"SceneManager.h"
+	"Map.h"
+	"MapGenerator.h"
+
+1468955310 source:d:\programme\projekte\rougepg\src\scenemanagerdungeon.cpp
+	"SceneManagerDungeon.h"
+	"DrawableNode.h"
+	"TileMap.h"
+	"MapFillDungeon.h"
+
+1468956343 source:d:\programme\projekte\rougepg\src\animatednode.cpp
+	"AnimatedNode.h"
+
+1468956363 d:\programme\projekte\rougepg\include\animatednode.h
+	"Node.h"
 
