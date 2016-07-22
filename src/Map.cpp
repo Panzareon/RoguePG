@@ -141,9 +141,9 @@ bool Map::DoesCollide(unsigned int x, unsigned int y)
 
 bool Map::DoesCollide(sf::Rect<float> rect)
 {
-    for(int x = std::floor(rect.left / TileMap::GetTileMapWith()); x <= std::floor((rect.left + rect.width) / TileMap::GetTileMapWith()); x++)
+    for(int x = std::floor(rect.left / TileMap::GetTileWith()); x <= std::floor((rect.left + rect.width) / TileMap::GetTileWith()); x++)
     {
-        for(int y = std::floor(rect.top / TileMap::GetTileMapWith()); y <= std::floor((rect.top + rect.height) / TileMap::GetTileMapWith()); y++)
+        for(int y = std::floor(rect.top / TileMap::GetTileWith()); y <= std::floor((rect.top + rect.height) / TileMap::GetTileWith()); y++)
         {
             if(DoesCollide(x,y))
                 return true;
