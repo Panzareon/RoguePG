@@ -5,6 +5,7 @@ Node::Node()
 {
     //ctor
     m_transform = sf::Transform::Identity;
+    m_parent = 0;
 }
 
 Node::~Node()
@@ -36,6 +37,39 @@ void Node::onDraw(sf::RenderTarget& target, const sf::Transform& transform) cons
 {
     //NOOP
 }
+void Node::setBoundingBox(sf::FloatRect bb)
+{
+    m_boundingBox = bb;
+}
+
+sf::FloatRect Node::getBoundingBox()
+{
+    return m_boundingBox;
+}
+
+sf::FloatRect Node::getGlobalBoundingBox()
+{
+    sf::Transform tf = getGlobalTransform();
+    sf::Vector2f v = tf.transformPoint(1.0f,1.0f);
+    return tf.transformRect(getBoundingBox());
+}
+
+sf::Transform Node::getGlobalTransform()
+{
+    if(m_parent == 0)
+    {
+        return getTransform();
+    }
+    else
+    {
+        return m_parent->getGlobalTransform() * getTransform();
+    }
+}
+
+void Node::moveNode(float x, float y)
+{
+    m_transform.translate(x,y);
+}
 
 sf::Transform Node::getTransform()
 {
@@ -46,8 +80,15 @@ void Node::setTransform(sf::Transform newTransform)
 {
     m_transform = newTransform;
 }
+void Node::setParent(Node* parent)
+{
+    m_parent = parent;
+}
+
+
 void Node::addChild(Node* child)
 {
+    child->setParent(this);
     m_children.push_back(child);
 }
 

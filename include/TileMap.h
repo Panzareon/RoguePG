@@ -22,6 +22,7 @@ class TileMap : public sf::Drawable, public sf::Transformable
         unsigned int m_tileHeight;
         unsigned int m_halfTileWidth;
         unsigned int m_halfTileHeight;
+
 };
 
 #endif // TILEMAP_H

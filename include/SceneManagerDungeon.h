@@ -1,20 +1,17 @@
 #ifndef SCENEMANAGERDUNGEON_H
 #define SCENEMANAGERDUNGEON_H
 
-#include "SceneManager.h"
-#include "Map.h"
+#include "SceneManagerMoveable.h"
 #include "MapGenerator.h"
 
 
-class SceneManagerDungeon: public SceneManager
+class SceneManagerDungeon: public SceneManagerMoveable
 {
     public:
-        SceneManagerDungeon(sf::RenderTarget * target, int windowWidth, int windowHeight);
+        SceneManagerDungeon(sf::RenderTarget * target, int windowWidth, int windowHeight, int tileWidth, int tileHeight);
         virtual ~SceneManagerDungeon();
     protected:
-        virtual void Tick();
 
-        Map m_map;
         MapGenerator m_generator;
 
         TileMap* m_tileMap;

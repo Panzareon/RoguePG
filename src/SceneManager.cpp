@@ -8,6 +8,7 @@ SceneManager::SceneManager(sf::RenderTarget* target, int windowWidth, int window
     m_windowWidth = windowWidth;
     m_windowHeight = windowHeight;
 
+
     m_posx = m_windowWidth / 2;
     m_posy = m_windowHeight / 2;
 }

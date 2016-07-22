@@ -59,7 +59,7 @@ void MapFillDungeon::FillLayer(int LayerId, int LayerAboveHeroId)
     else
     {
         //Nr of items to Place: Width of Map times Height of Map / 50
-        FillWithItems(LayerId, LayerAboveHeroId, 0, m_width * m_height / 50);
+        FillWithItems(LayerId, LayerAboveHeroId, 0, m_width * m_height / 20);
     }
 }
 void MapFillDungeon::FillBaseLayer(int LayerId)

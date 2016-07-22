@@ -13,7 +13,7 @@ int main()
     window.setView(view);
     window.setVerticalSyncEnabled(true);
 
-    SceneManagerDungeon sceneManager(&window,width,height);
+    SceneManagerDungeon sceneManager(&window,width,height, 30,30);
 
 //
 //        sf::Texture heroTexture;

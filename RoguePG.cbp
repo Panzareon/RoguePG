@@ -52,6 +52,7 @@
 		<Unit filename="include/Node.h" />
 		<Unit filename="include/SceneManager.h" />
 		<Unit filename="include/SceneManagerDungeon.h" />
+		<Unit filename="include/SceneManagerMoveable.h" />
 		<Unit filename="include/TileMap.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/AnimatedNode.cpp" />
@@ -65,6 +66,7 @@
 		<Unit filename="src/Node.cpp" />
 		<Unit filename="src/SceneManager.cpp" />
 		<Unit filename="src/SceneManagerDungeon.cpp" />
+		<Unit filename="src/SceneManagerMoveable.cpp" />
 		<Unit filename="src/TileMap.cpp" />
 		<Extensions>
 			<code_completion />

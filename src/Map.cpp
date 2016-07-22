@@ -1,31 +1,21 @@
 #include "Map.h"
 #include <cmath>
 
-Map::Map(int width, int height, int nrLayers)
+Map::Map(int width, int height)
 {
-    //ctor
-    m_nrLayers = nrLayers;
+    m_nrLayers = 0;
+
+    m_startX = -1;
+    m_startY = -1;
     m_width = width;
     m_height = height;
-    for(int i = 0; i < m_nrLayers; i++)
-    {
-        m_layers.push_back(new int*[m_width*2]);
-        for(int j = 0; j < m_width*2; j++)
-        {
-            m_layers[i][j] = new int[m_height*2];
-            for(int k = 0; k < m_height*2; k++)
-                m_layers[i][j][k] = 0;
-        }
-    }
+
     m_tiles = new int*[m_width];
     for(int j = 0; j < m_width; j++)
         m_tiles[j] = new int[m_height];
     m_roomNr = new int*[m_width];
     for(int j = 0; j < m_width; j++)
         m_roomNr[j] = new int[m_height];
-
-    m_startX = -1;
-    m_startY = -1;
 }
 
 Map::~Map()
@@ -43,6 +33,21 @@ Map::~Map()
     for(int j = 0; j < m_width; j++)
         delete[] m_roomNr[j];
     delete[] m_roomNr;
+}
+void Map::init(int nrLayers)
+{
+    //ctor
+    m_nrLayers = nrLayers;
+    for(int i = 0; i < m_nrLayers; i++)
+    {
+        m_layers.push_back(new int*[m_width*2]);
+        for(int j = 0; j < m_width*2; j++)
+        {
+            m_layers[i][j] = new int[m_height*2];
+            for(int k = 0; k < m_height*2; k++)
+                m_layers[i][j][k] = 0;
+        }
+    }
 }
 int Map::GetWidth()
 {
@@ -136,9 +141,9 @@ bool Map::DoesCollide(unsigned int x, unsigned int y)
 
 bool Map::DoesCollide(sf::Rect<float> rect)
 {
-    for(int x = std::floor(rect.left); x <= std::ceil(rect.left + rect.width); x++)
+    for(int x = std::floor(rect.left / TileMap::GetTileMapWith()); x <= std::floor((rect.left + rect.width) / TileMap::GetTileMapWith()); x++)
     {
-        for(int y = std::floor(rect.top); y <= std::ceil(rect.top + rect.height); y++)
+        for(int y = std::floor(rect.top / TileMap::GetTileMapWith()); y <= std::floor((rect.top + rect.height) / TileMap::GetTileMapWith()); y++)
         {
             if(DoesCollide(x,y))
                 return true;

@@ -10,6 +10,7 @@ class AnimatedNode : public Node
         virtual ~AnimatedNode();
         virtual void onDraw(sf::RenderTarget& target, const sf::Transform& transform) const;
 
+
         void Tick(float seconds);
     protected:
         static sf::Shader* m_shader;

@@ -11,8 +11,9 @@ class Map
         enum TileType {Wall, Space, InteractableWall, BlockingItem, WalkthroughItem};
 
 
-        Map(int width, int height, int layerNr);
+        Map(int width, int height);
         virtual ~Map();
+        void init(int layerNr);
         bool IsTileWall(unsigned int x, unsigned int y);
         void SetTileToWall(unsigned int x, unsigned int y);
         void SetTileToSpace(unsigned int x, unsigned int y);

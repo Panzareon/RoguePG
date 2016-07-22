@@ -8,10 +8,11 @@
 #include <iostream>
 
 
-SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWidth, int windowHeight): SceneManager(target, windowWidth, windowHeight), m_map(30,30,5), m_generator(&m_map)
+SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWidth, int windowHeight, int tileWidth, int tileHeight): SceneManagerMoveable(target, windowWidth, windowHeight, tileWidth, tileHeight), m_generator(&m_map)
 {
     //ctor
     //Define Tile Maps
+    m_map.init(5);
     m_tileMap = new TileMap();
     m_tileMapWall = new TileMap();
     m_tileMapItems = new TileMap();
@@ -69,9 +70,10 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     }
     sf::Sprite hero;
     hero.setTexture(*heroTexture);
-    hero.setTextureRect(sf::IntRect(0,0,63,63));
-    AnimatedNode* heroNode = new AnimatedNode(hero);
-    m_eventLayer->addChild(heroNode);
+    hero.setTextureRect(sf::IntRect(15,13,32,36));
+    m_hero = new AnimatedNode(hero);
+    m_hero->setBoundingBox(sf::FloatRect(8.0f,22.0f,16.0f,16.0f));
+    m_eventLayer->addChild(m_hero);
 
     //Generate Map
 
@@ -80,7 +82,7 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     m_generator.PlaceStartingPosition();
     sf::Transform heroTransform;
     heroTransform.translate(m_map.m_startX * TileMap::GetTileMapWith(), m_map.m_startY * TileMap::GetTileMapWith());
-    heroNode->setTransform(heroTransform);
+    m_hero->setTransform(heroTransform);
     //m_generator.NumberRooms();
 
     MapFillDungeon mapFill(&m_map);
@@ -100,27 +102,4 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
 SceneManagerDungeon::~SceneManagerDungeon()
 {
     //dtor
-}
-void SceneManagerDungeon::Tick()
-{
-    //Calculations fore every tick
-
-    //Movement for now
-    float MoveSpeed = 256.0f;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-    {
-        m_posx -= MoveSpeed * m_frameTime.asSeconds();
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-    {
-        m_posx += MoveSpeed * m_frameTime.asSeconds();
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-    {
-        m_posy -= MoveSpeed * m_frameTime.asSeconds();
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-    {
-        m_posy += MoveSpeed * m_frameTime.asSeconds();
-    }
 }
