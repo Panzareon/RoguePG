@@ -8,6 +8,7 @@ class TileMap : public sf::Drawable, public sf::Transformable
 {
     public:
         static int GetTileMapWith();
+        static int GetTileWith();
         TileMap();
         virtual ~TileMap();
         bool setTexture(const std::string& tileset);

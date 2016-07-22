@@ -6,8 +6,8 @@ SceneManagerMoveable::SceneManagerMoveable(sf::RenderTarget * target, int window
     m_minViewPosX = m_windowWidth / 2;
     m_minViewPosY = m_windowHeight / 2;
 
-    m_maxViewPosX = m_map.GetWidth() * TileMap::GetTileMapWith() - m_windowWidth / 2;
-    m_maxViewPosY = m_map.GetHeight() * TileMap::GetTileMapWith() - m_windowHeight / 2;
+    m_maxViewPosX = m_map.GetWidth() * TileMap::GetTileWith() - m_windowWidth / 2;
+    m_maxViewPosY = m_map.GetHeight() * TileMap::GetTileWith() - m_windowHeight / 2;
 }
 
 SceneManagerMoveable::~SceneManagerMoveable()

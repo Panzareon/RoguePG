@@ -77,6 +77,7 @@ void FillItem::Insert(Map* map, int x, int y, int layerId, int layerAboveHero)
             if(m_type == Blocking)
                 map->SetTileToType(x,y, Map::BlockingItem);
             map->SetTileId(x,y-1, m_itemId - TileMap::GetTileMapWith(), layerAboveHero);
+        break;
         case AtWallDouble:
             map->SetTileId(x,y,m_itemId,layerAboveHero);
             map->SetTileId(x,y-1, m_itemId - TileMap::GetTileMapWith(), layerAboveHero);

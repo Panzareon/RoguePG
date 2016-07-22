@@ -81,7 +81,7 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
 
     m_generator.PlaceStartingPosition();
     sf::Transform heroTransform;
-    heroTransform.translate(m_map.m_startX * TileMap::GetTileMapWith(), m_map.m_startY * TileMap::GetTileMapWith());
+    heroTransform.translate(m_map.m_startX * TileMap::GetTileWith(), m_map.m_startY * TileMap::GetTileWith());
     m_hero->setTransform(heroTransform);
     //m_generator.NumberRooms();
 

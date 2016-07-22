@@ -18,6 +18,10 @@ int TileMap::GetTileMapWith()
 {
     return 32;
 }
+int TileMap::GetTileWith()
+{
+    return 32;
+}
 
 void TileMap::load(int** tiles, unsigned int width, unsigned int height, sf::Color color)
 {
