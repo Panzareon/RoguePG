@@ -46,8 +46,8 @@ void TileMap::load(int** tiles, unsigned int width, unsigned int height, sf::Col
                 {
 
                     // find its position in the tileset texture
-                    int tu = (tileNumber % (m_tileset.getSize().x / m_tileWidth));
-                    int tv = (tileNumber / (m_tileset.getSize().x / m_tileWidth));
+                    int tu = (tileNumber % (m_tileset->getSize().x / m_tileWidth));
+                    int tv = (tileNumber / (m_tileset->getSize().x / m_tileWidth));
 
                     // get a pointer to the current tile's quad
                     sf::Vertex* quad = &m_vertices[id];
@@ -85,8 +85,8 @@ void TileMap::load(int** tiles, unsigned int width, unsigned int height, sf::Col
                     {
 
                         // find its position in the tileset texture
-                        int tu = (tileNumber % (m_tileset.getSize().x / m_tileWidth)) * 2 + k/2;
-                        int tv = (tileNumber / (m_tileset.getSize().x / m_tileWidth)) * 2 + k%2;
+                        int tu = (tileNumber % (m_tileset->getSize().x / m_tileWidth)) * 2 + k/2;
+                        int tv = (tileNumber / (m_tileset->getSize().x / m_tileWidth)) * 2 + k%2;
 
                         // get a pointer to the current tile's quad
                         sf::Vertex* quad = &m_vertices[id];
@@ -119,9 +119,9 @@ void TileMap::load(int** tiles, unsigned int width, unsigned int height, sf::Col
     m_vertices.resize(id);
 }
 
-bool TileMap::setTexture(const std::string& tileset)
+void TileMap::setTexture(sf::Texture* texture)
 {
-    return m_tileset.loadFromFile(tileset);
+    m_tileset = texture;
 }
 
 void TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -130,7 +130,7 @@ void TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
     states.transform *= getTransform();
 
     // apply the tileset texture
-    states.texture = &m_tileset;
+    states.texture = m_tileset;
 
     // draw the vertex array
     target.draw(m_vertices, states);

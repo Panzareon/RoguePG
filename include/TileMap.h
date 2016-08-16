@@ -11,13 +11,13 @@ class TileMap : public sf::Drawable, public sf::Transformable
         static int GetTileWith();
         TileMap();
         virtual ~TileMap();
-        bool setTexture(const std::string& tileset);
+        void setTexture(sf::Texture* texture);
         void load(int** tiles, unsigned int width, unsigned int height, sf::Color color = sf::Color::White);
     protected:
     private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         sf::VertexArray m_vertices;
-        sf::Texture m_tileset;
+        sf::Texture* m_tileset;
 
         unsigned int m_tileWidth;
         unsigned int m_tileHeight;

@@ -4,6 +4,7 @@
 #include "AnimatedNode.h"
 #include "TileMap.h"
 #include "MapFillDungeon.h"
+#include "TextureList.h"
 
 #include <iostream>
 
@@ -19,27 +20,11 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     m_tileMapAboveHero = new TileMap();
     m_tileMapAboveWall = new TileMap();
 
-    sf::String tileMapTexture = "texture/TileMap.png";
-    if(!m_tileMap->setTexture(tileMapTexture))
-    {
-        std::cout << "Could not load Texture: " << tileMapTexture.toAnsiString() << std::endl;
-    }
-    if(!m_tileMapWall->setTexture("texture/TileMap.png"))
-    {
-        std::cout << "Could not load Texture: " << tileMapTexture.toAnsiString() << std::endl;
-    }
-    if(!m_tileMapItems->setTexture("texture/TileMap.png"))
-    {
-        std::cout << "Could not load Texture: " << tileMapTexture.toAnsiString() << std::endl;
-    }
-    if(!m_tileMapAboveHero->setTexture("texture/TileMap.png"))
-    {
-        std::cout << "Could not load Texture: " << tileMapTexture.toAnsiString() << std::endl;
-    }
-    if(!m_tileMapAboveWall->setTexture("texture/TileMap.png"))
-    {
-        std::cout << "Could not load Texture: " << tileMapTexture.toAnsiString() << std::endl;
-    }
+    m_tileMap->setTexture(TextureList::getTexture(TextureList::m_dungeonTileMap));
+    m_tileMapWall->setTexture(TextureList::getTexture(TextureList::m_dungeonTileMap));
+    m_tileMapItems->setTexture(TextureList::getTexture(TextureList::m_dungeonTileMap));
+    m_tileMapAboveHero->setTexture(TextureList::getTexture(TextureList::m_dungeonTileMap));
+    m_tileMapAboveWall->setTexture(TextureList::getTexture(TextureList::m_dungeonTileMap));
 
     //Build Scene Graph
     m_mainNode = new Node();
@@ -61,15 +46,8 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
 
 
     //Add Hero
-    //Todo: create and save Textures somewhere else
-    sf::Texture* heroTexture = new sf::Texture();
-    sf::String texturePath = "texture/skeleton-large.png";
-    if(!heroTexture->loadFromFile(texturePath))
-    {
-        std::cout << "Could not load Texture: " << texturePath.toAnsiString() << std::endl;
-    }
     sf::Sprite hero;
-    hero.setTexture(*heroTexture);
+    hero.setTexture(*TextureList::getTexture(TextureList::m_heroSpriteSheet));
     hero.setTextureRect(sf::IntRect(15,13,32,36));
     m_hero = new AnimatedNode(hero);
     m_hero->setBoundingBox(sf::FloatRect(8.0f,22.0f,16.0f,16.0f));
@@ -81,7 +59,8 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
 
     m_generator.PlaceStartingPosition();
     sf::Transform heroTransform;
-    heroTransform.translate(m_map.m_startX * TileMap::GetTileWith(), m_map.m_startY * TileMap::GetTileWith());
+    //Place Hero at Startposition
+    heroTransform.translate(m_map.m_startX * TileMap::GetTileWith(), m_map.m_startY * TileMap::GetTileWith() - 14);
     m_hero->setTransform(heroTransform);
     //m_generator.NumberRooms();
 
