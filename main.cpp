@@ -3,18 +3,29 @@
 
 #include <iostream>
 #include "AnimatedNode.h"
+#include "GameController.h"
 
 int main()
 {
-    int width = 640;
-    int height = 480;
+    GameController* controller = GameController::getInstance();
+    int width = controller->GetWindowWidth();
+    int height = controller->GetWindowHeight();
+
     sf::RenderWindow window(sf::VideoMode(width, height), "SFML works!");
     sf::View view(sf::FloatRect(0,0,width,height));
     window.setView(view);
     window.setVerticalSyncEnabled(true);
 
-    SceneManagerDungeon sceneManager(&window,width,height, 30,30);
+    controller->SetRenderTarget(&window);
+    SceneManagerDungeon* sceneManager = new SceneManagerDungeon(&window,width,height, 30,30);
+    controller->LoadSceneManager(sceneManager);
 
+
+    //TODO: create actual party
+    Party party;
+    PartyMember* member = new PartyMember();
+    party.AddPartyMember(member);
+    controller->setParty(&party);
 
     while (window.isOpen())
     {
@@ -25,7 +36,7 @@ int main()
                 window.close();
         }
 
-        sceneManager.NextTick();
+        controller->Tick();
         window.display();
     }
 

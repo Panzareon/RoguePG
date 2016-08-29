@@ -15,6 +15,8 @@ class Node
         sf::Transform getGlobalTransform();
         void setTransform(sf::Transform newTransform);
 
+        void setVisibility(bool visible);
+
 
         void moveNode(float x, float y);
 
@@ -36,6 +38,7 @@ class Node
 
         //Default: 0x0 at 0,0
         sf::FloatRect m_boundingBox;
+        bool m_visible;
 };
 
 #endif // NODE_H

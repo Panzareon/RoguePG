@@ -12,6 +12,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c++11" />
 					<Add option="-g" />
 					<Add directory="include" />
 				</Compiler>
@@ -41,7 +42,10 @@
 			<Add library="sfml-system" />
 			<Add directory="SFML-2.3.2/build/lib" />
 		</Linker>
+		<Unit filename="include/AIBase.h" />
+		<Unit filename="include/AIRandom.h" />
 		<Unit filename="include/AnimatedNode.h" />
+		<Unit filename="include/Configuration.h" />
 		<Unit filename="include/DrawableNode.h" />
 		<Unit filename="include/Entity.h" />
 		<Unit filename="include/FillItem.h" />
@@ -51,6 +55,7 @@
 		<Unit filename="include/MapFillDungeon.h" />
 		<Unit filename="include/MapGenerator.h" />
 		<Unit filename="include/MapGeneratorUtil.h" />
+		<Unit filename="include/MenuNode.h" />
 		<Unit filename="include/Node.h" />
 		<Unit filename="include/Party.h" />
 		<Unit filename="include/PartyMember.h" />
@@ -62,7 +67,10 @@
 		<Unit filename="include/TextureList.h" />
 		<Unit filename="include/TileMap.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/AIBase.cpp" />
+		<Unit filename="src/AIRandom.cpp" />
 		<Unit filename="src/AnimatedNode.cpp" />
+		<Unit filename="src/Configuration.cpp" />
 		<Unit filename="src/DrawableNode.cpp" />
 		<Unit filename="src/Entity.cpp" />
 		<Unit filename="src/FillItem.cpp" />
@@ -72,6 +80,7 @@
 		<Unit filename="src/MapFillDungeon.cpp" />
 		<Unit filename="src/MapGenerator.cpp" />
 		<Unit filename="src/MapGeneratorUtil.cpp" />
+		<Unit filename="src/MenuNode.cpp" />
 		<Unit filename="src/Node.cpp" />
 		<Unit filename="src/Party.cpp" />
 		<Unit filename="src/PartyMember.cpp" />

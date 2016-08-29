@@ -9,6 +9,7 @@ class SceneManager
         SceneManager(sf::RenderTarget * target, int windowWidth, int windowHeight);
         virtual ~SceneManager();
         virtual void NextTick();
+        virtual bool IsFinished();
     protected:
         virtual void Tick() = 0;
         void DrawScene();

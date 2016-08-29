@@ -79,18 +79,12 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     m_map.writeToTileMap(*m_tileMapAboveHero,2);
     sf::Color halfTransparent(255,255,255,220);
     m_map.writeToTileMap(*m_tileMapAboveWall,3, halfTransparent);
-    m_map.writeToTileMap(*m_tileMapWallDecoration,4, halfTransparent);
+    m_map.writeToTileMap(*m_tileMapWallDecoration,4);
 }
 
 SceneManagerDungeon::~SceneManagerDungeon()
 {
     //dtor
-    delete m_hero;
-    delete m_mainNode;
-    delete m_aboveHero;
-    delete m_eventLayer;
-    delete m_belowHero;
-
     delete m_tileMap;
     delete m_tileMapAboveHero;
     delete m_tileMapAboveWall;

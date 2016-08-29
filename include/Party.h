@@ -10,6 +10,8 @@ class Party
         Party();
         virtual ~Party();
         std::vector<PartyMember*> * GetActivePartyMembers();
+
+        void AddPartyMember(PartyMember* member);
     protected:
     private:
         std::vector<PartyMember*> m_partyMembers;

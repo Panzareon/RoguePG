@@ -6,6 +6,7 @@ Node::Node()
     //ctor
     m_transform = sf::Transform::Identity;
     m_parent = 0;
+    m_visible = true;
 }
 
 Node::~Node()
@@ -14,18 +15,26 @@ Node::~Node()
     for (std::size_t i = 0; i < m_children.size(); ++i)
         delete m_children[i];
 }
+void Node::setVisibility(bool visible)
+{
+    m_visible = visible;
+}
 
 void Node::draw(sf::RenderTarget& target, const sf::Transform& parentTransform) const
 {
-    // combine the parent transform with the node's one
-    sf::Transform combinedTransform = parentTransform * m_transform;
+    //NOOP if this Node is not visible
+    if(m_visible)
+    {
+        // combine the parent transform with the node's one
+        sf::Transform combinedTransform = parentTransform * m_transform;
 
-    // let the node draw itself
-    onDraw(target, combinedTransform);
+        // let the node draw itself
+        onDraw(target, combinedTransform);
 
-    // draw its children
-    for (std::size_t i = 0; i < m_children.size(); ++i)
-        m_children[i]->draw(target, combinedTransform);
+        // draw its children
+        for (std::size_t i = 0; i < m_children.size(); ++i)
+            m_children[i]->draw(target, combinedTransform);
+    }
 }
 void Node::Tick(float seconds)
 {
@@ -50,7 +59,6 @@ sf::FloatRect Node::getBoundingBox()
 sf::FloatRect Node::getGlobalBoundingBox()
 {
     sf::Transform tf = getGlobalTransform();
-    sf::Vector2f v = tf.transformPoint(1.0f,1.0f);
     return tf.transformRect(getBoundingBox());
 }
 

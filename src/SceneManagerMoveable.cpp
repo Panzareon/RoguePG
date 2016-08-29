@@ -1,4 +1,6 @@
 #include "SceneManagerMoveable.h"
+#include "Configuration.h"
+#include "GameController.h"
 
 SceneManagerMoveable::SceneManagerMoveable(sf::RenderTarget * target, int windowWidth, int windowHeight, int tileWidth, int tileHeight): SceneManager(target, windowWidth, windowHeight), m_map(tileWidth, tileHeight)
 {
@@ -18,26 +20,35 @@ void SceneManagerMoveable::Tick()
 {
     //Calculations fore every tick
 
-    //Movement for now
+    //Movement
+    //TODO: calculate movement Speed
     float MoveSpeed = 256.0f;
+    Configuration* conf = Configuration::GetInstance();
+
     float moveX = 0.0f;
     float moveY = 0.0f;
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    if (sf::Keyboard::isKeyPressed(conf->GetMoveLeftKey()))
     {
         moveX -= MoveSpeed * m_frameTime.asSeconds();
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    if (sf::Keyboard::isKeyPressed(conf->GetMoveRightKey()))
     {
         moveX += MoveSpeed * m_frameTime.asSeconds();
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+    if (sf::Keyboard::isKeyPressed(conf->GetMoveUpKey()))
     {
         moveY -= MoveSpeed * m_frameTime.asSeconds();
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+    if (sf::Keyboard::isKeyPressed(conf->GetMoveDownKey()))
     {
         moveY += MoveSpeed * m_frameTime.asSeconds();
+    }
+
+    //TODO: remove Debugkey
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
+    {
+        GameController::getInstance()->StartBattle();
     }
 
     if(moveX != 0.0f || moveY != 0.0f)

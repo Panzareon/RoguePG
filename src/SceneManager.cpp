@@ -41,3 +41,7 @@ void SceneManager::NextTick()
     DrawScene();
 
 }
+bool SceneManager::IsFinished()
+{
+    return false;
+}
