@@ -14,7 +14,7 @@ class FillItem
         virtual ~FillItem();
 
         bool CanInsertAt(Map* map, int x, int y, int LayerId, int LayerAboveHero);
-        void Insert(Map* map, int x, int y, int layerId, int layerAboveHero);
+        void Insert(Map* map, int x, int y, int layerId, int layerAboveHero, int LayerWallDecoration);
 
         int GetChance();
         Type GetType();

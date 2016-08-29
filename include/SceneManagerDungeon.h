@@ -15,10 +15,10 @@ class SceneManagerDungeon: public SceneManagerMoveable
         MapGenerator m_generator;
 
         TileMap* m_tileMap;
-        TileMap* m_tileMapWall;
         TileMap* m_tileMapItems;
         TileMap* m_tileMapAboveHero;
         TileMap* m_tileMapAboveWall;
+        TileMap* m_tileMapWallDecoration;
 
         Node* m_belowHero;
         Node* m_eventLayer;

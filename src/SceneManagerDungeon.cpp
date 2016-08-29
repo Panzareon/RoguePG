@@ -15,16 +15,16 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     //Define Tile Maps
     m_map.init(5);
     m_tileMap = new TileMap();
-    m_tileMapWall = new TileMap();
     m_tileMapItems = new TileMap();
     m_tileMapAboveHero = new TileMap();
     m_tileMapAboveWall = new TileMap();
+    m_tileMapWallDecoration = new TileMap();
 
     m_tileMap->setTexture(TextureList::getTexture(TextureList::m_dungeonTileMap));
-    m_tileMapWall->setTexture(TextureList::getTexture(TextureList::m_dungeonTileMap));
     m_tileMapItems->setTexture(TextureList::getTexture(TextureList::m_dungeonTileMap));
     m_tileMapAboveHero->setTexture(TextureList::getTexture(TextureList::m_dungeonTileMap));
     m_tileMapAboveWall->setTexture(TextureList::getTexture(TextureList::m_dungeonTileMap));
+    m_tileMapWallDecoration->setTexture(TextureList::getTexture(TextureList::m_dungeonTileMap));
 
     //Build Scene Graph
     m_mainNode = new Node();
@@ -39,10 +39,10 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
 
     m_belowHero->addChild(new DrawableNode(m_tileMap));
     m_belowHero->addChild(new DrawableNode(m_tileMapItems));
-    m_belowHero->addChild(new DrawableNode(m_tileMapWall));
 
     m_aboveHero->addChild(new DrawableNode(m_tileMapAboveHero));
     m_aboveHero->addChild(new DrawableNode(m_tileMapAboveWall));
+    m_aboveHero->addChild(new DrawableNode(m_tileMapWallDecoration));
 
 
     //Add Hero
@@ -65,20 +65,35 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     //m_generator.NumberRooms();
 
     MapFillDungeon mapFill(&m_map);
-    mapFill.FillLayer(0);
-    mapFill.FillLayer(1);
-    mapFill.FillLayer(4);
-    mapFill.FillLayer(2,3);
+    //Fill Base Layer with walkable Tile
+    mapFill.FillLayer(MapFill::Ground, 0);
+    //Fill Wall
+    mapFill.FillLayer(MapFill::Wall, 0,3);
+    //Fill Wall Topping
+    mapFill.FillLayer(MapFill::WallTopping, 3);
+    //Add random Items
+    mapFill.FillLayer(MapFill::AdditionalItems, 1,2,4);
 
     m_map.writeToTileMap(*m_tileMap,0);
-    m_map.writeToTileMap(*m_tileMapWall,1);
-    m_map.writeToTileMap(*m_tileMapItems,2);
-    m_map.writeToTileMap(*m_tileMapAboveHero,3);
+    m_map.writeToTileMap(*m_tileMapItems,1);
+    m_map.writeToTileMap(*m_tileMapAboveHero,2);
     sf::Color halfTransparent(255,255,255,220);
-    m_map.writeToTileMap(*m_tileMapAboveWall,4, halfTransparent);
+    m_map.writeToTileMap(*m_tileMapAboveWall,3, halfTransparent);
+    m_map.writeToTileMap(*m_tileMapWallDecoration,4, halfTransparent);
 }
 
 SceneManagerDungeon::~SceneManagerDungeon()
 {
     //dtor
+    delete m_hero;
+    delete m_mainNode;
+    delete m_aboveHero;
+    delete m_eventLayer;
+    delete m_belowHero;
+
+    delete m_tileMap;
+    delete m_tileMapAboveHero;
+    delete m_tileMapAboveWall;
+    delete m_tileMapItems;
+    delete m_tileMapWallDecoration;
 }

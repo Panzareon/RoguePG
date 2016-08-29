@@ -40,18 +40,18 @@ void MapFillDungeon::InitItemChances()
 }
 
 
-void MapFillDungeon::FillLayer(int LayerId, int LayerAboveHeroId)
+void MapFillDungeon::FillLayer(ToFillLayer type, int LayerId, int LayerAboveHeroId, int LayerWallDecoration)
 {
-    if(LayerId == 0)
+    if(type == Ground)
     {
         FillBaseLayer(LayerId);
     }
-    else if(LayerId == 1)
+    else if(type == Wall)
     {
         //Fill Wall Tiles
-        FillLayerWallByTiles(Map::Space,LayerId, 256,2);
+        FillLayerWallByTiles(Map::Space,LayerId, LayerAboveHeroId, 256,2);
     }
-    else if(LayerId == 4)
+    else if(type == WallTopping)
     {
         //Fill Tiles above Wall
         FillLayerWallAbove(Map::Space, LayerId, 288,2);
@@ -59,7 +59,7 @@ void MapFillDungeon::FillLayer(int LayerId, int LayerAboveHeroId)
     else
     {
         //Nr of items to Place: Width of Map times Height of Map / 50
-        FillWithItems(LayerId, LayerAboveHeroId, 0, m_width * m_height / 20);
+        FillWithItems(LayerId, LayerAboveHeroId,LayerWallDecoration , 0, m_width * m_height / 20);
     }
 }
 void MapFillDungeon::FillBaseLayer(int LayerId)

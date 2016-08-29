@@ -77,7 +77,7 @@ void MapFill::FillLayerByTiles(Map::TileType checkTile, int LayerId, int TileId,
         }
     }
 }
-void MapFill::FillLayerWallByTiles(Map::TileType checkTile, int LayerId, int TileId, int wallHeight)
+void MapFill::FillLayerWallByTiles(Map::TileType checkTile, int LayerId, int LayerAboveHeroId, int TileId, int wallHeight)
 {
     for(int i = 0; i < m_width; i++)
     {
@@ -95,7 +95,10 @@ void MapFill::FillLayerWallByTiles(Map::TileType checkTile, int LayerId, int Til
                 int id = TileId;
                 for(int k = 1; k <= wallHeight; k++)
                 {
-                    m_map->SetTileId(i, j-k,id + left, id + right, id + left, id + right, LayerId);
+                    if(k == 1)
+                        m_map->SetTileId(i, j-k,id + left, id + right, id + left, id + right, LayerId);
+                    else
+                        m_map->SetTileId(i, j-k,id + left, id + right, id + left, id + right, LayerAboveHeroId);
                     id += 2;
                 }
 
@@ -234,7 +237,7 @@ bool MapFill::CanBlockBeFilled(int x, int y)
 
 }
 
-void MapFill::FillWithItems(int LayerId, int LayerAboveHeroId, int index, int NrItems)
+void MapFill::FillWithItems(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, int index, int NrItems)
 {
     int maxChance = 0.0f;
     for(unsigned int i = 0; i < m_chanceForTile[index].size(); i++)
@@ -272,7 +275,7 @@ void MapFill::FillWithItems(int LayerId, int LayerAboveHeroId, int index, int Nr
                 if(!CanBlockBeFilled(x,y))
                     continue;
             }
-            newItem->Insert(m_map,x,y,LayerId, LayerAboveHeroId);
+            newItem->Insert(m_map,x,y,LayerId, LayerAboveHeroId, LayerWallDecoration);
         }
     }
 }

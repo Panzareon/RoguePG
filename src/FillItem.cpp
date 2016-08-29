@@ -58,7 +58,7 @@ bool FillItem::CanInsertAt(Map* map, int x, int y, int LayerId, int LayerAboveHe
     }
 }
 
-void FillItem::Insert(Map* map, int x, int y, int layerId, int layerAboveHero)
+void FillItem::Insert(Map* map, int x, int y, int layerId, int layerAboveHero, int LayerWallDecoration)
 {
     switch(m_size)
     {
@@ -79,8 +79,8 @@ void FillItem::Insert(Map* map, int x, int y, int layerId, int layerAboveHero)
             map->SetTileId(x,y-1, m_itemId - TileMap::GetTileMapWith(), layerAboveHero);
         break;
         case AtWallDouble:
-            map->SetTileId(x,y,m_itemId,layerAboveHero);
-            map->SetTileId(x,y-1, m_itemId - TileMap::GetTileMapWith(), layerAboveHero);
+            map->SetTileId(x,y,m_itemId,layerId);
+            map->SetTileId(x,y-1, m_itemId - TileMap::GetTileMapWith(), LayerWallDecoration);
 
 
     }
