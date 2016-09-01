@@ -82,6 +82,12 @@ Entity::ControllType Entity::GetControllType()
 {
     return m_controllTypeAtm;
 }
+std::vector<Skill>* Entity::GetSkillList()
+{
+    return &m_skills;
+}
+
+
 void Entity::CalculateMove()
 {
     //Check if controlled by AI

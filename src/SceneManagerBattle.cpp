@@ -3,10 +3,11 @@
 #include "SFML/Graphics.hpp"
 #include "TextureList.h"
 #include "Configuration.h"
+#include "Skill.h"
 
 namespace BattleFunctions
 {
-    void AttackOnTarget(SceneManagerBattle* sm, SceneManagerBattle::Target targetType, Entity* toAttack, Entity* attacking)
+    void AttackOnTarget(SceneManagerBattle* sm, BattleEnums::Target targetType, Entity* toAttack, Entity* attacking)
     {
         attacking->Attack();
         toAttack->GetHit(attacking->GetAttack(), attacking->GetAttackType());
@@ -14,8 +15,34 @@ namespace BattleFunctions
     }
     void Attack(SceneManagerBattle* sm, Entity* attacking)
     {
-        std::function<void(SceneManagerBattle::Target, Entity*)>* func = new std::function<void(SceneManagerBattle::Target, Entity*)>(std::bind(&AttackOnTarget, sm, std::placeholders::_1, std::placeholders::_2, attacking));
-        sm->UseOnTarget(func, SceneManagerBattle::TargetEnemyTeamEntity);
+        std::function<void(BattleEnums::Target, Entity*)>* func = new std::function<void(BattleEnums::Target, Entity*)>(std::bind(&AttackOnTarget, sm, std::placeholders::_1, std::placeholders::_2, attacking));
+        sm->UseOnTarget(func, BattleEnums::TargetEnemyTeamEntity);
+    }
+
+    void UseSkillOnTarget(SceneManagerBattle* sm, BattleEnums::Target targetType, Entity* toAttack, Entity* attacking, Skill* skill)
+    {
+        skill->Use(targetType, toAttack);
+        sm->TurnIsFinished();
+    }
+
+    void UseSkill(SceneManagerBattle* sm, Entity* attacking, Skill* skill)
+    {
+        std::function<void(BattleEnums::Target, Entity*)>* func = new std::function<void(BattleEnums::Target, Entity*)>(std::bind(&UseSkillOnTarget, sm, std::placeholders::_1, std::placeholders::_2, attacking, skill));
+        sm->UseOnTarget(func, skill->GetDefaultTarget());
+    }
+    void SkillList(SceneManagerBattle* sm, Entity* attacking)
+    {
+        //TODO: different width?
+        MenuNode* skillMenu = new MenuNode(GameController::getInstance()->GetWindowWidth());
+        skillMenu->CancelAvailable(true);
+
+        std::vector<Skill>* skillList = attacking->GetSkillList();
+        for(int i = 0; i < skillList->size(); i++)
+        {
+            skillMenu->AddOption(skillList->at(i).GetName(),std::function<void()>(std::bind(&UseSkill, sm, attacking, &skillList->at(i))));
+        }
+
+        sm->AddSubMenu(skillMenu);
     }
 }
 
@@ -50,7 +77,7 @@ SceneManagerBattle::~SceneManagerBattle()
     }
 }
 
-void SceneManagerBattle::UseOnTarget(std::function<void(Target, Entity*)>* func, Target defaultTarget)
+void SceneManagerBattle::UseOnTarget(std::function<void(BattleEnums::Target, Entity*)>* func, BattleEnums::Target defaultTarget)
 {
     if(m_useOnTarget != 0)
         delete m_useOnTarget;
@@ -58,11 +85,11 @@ void SceneManagerBattle::UseOnTarget(std::function<void(Target, Entity*)>* func,
     m_targetType = defaultTarget;
     m_targetEntity = 0;
     m_targetNr = 0;
-    if(m_targetType == TargetEnemyTeamEntity)
+    if(m_targetType == BattleEnums::TargetEnemyTeamEntity)
     {
         m_targetEntity = m_enemies[0];
     }
-    else if(m_targetType == TargetOwnTeamEntity)
+    else if(m_targetType == BattleEnums::TargetOwnTeamEntity)
     {
         m_targetEntity = m_party->GetActivePartyMembers()->at(0);
     }
@@ -71,15 +98,15 @@ void SceneManagerBattle::UseOnTarget(std::function<void(Target, Entity*)>* func,
 
 void SceneManagerBattle::Tick()
 {
-    Configuration* conf = Configuration::GetInstance();
+    GameController* controller = GameController::getInstance();
     //Battle Logic
     if(m_useOnTarget != 0)
     {
         //Selecting target
         //TODO: move only one target at a time and not one per tick
-        if(sf::Keyboard::isKeyPressed(conf->GetMoveDownKey()))
+        if(controller->IsKeyPressed(Configuration::MoveDown))
         {
-            if(m_targetType == TargetEnemyTeamEntity)
+            if(m_targetType == BattleEnums::TargetEnemyTeamEntity)
             {
                 if(m_targetNr < m_enemies.size() - 1)
                 {
@@ -87,7 +114,7 @@ void SceneManagerBattle::Tick()
                     m_targetEntity = m_enemies[m_targetNr];
                 }
             }
-            else if(m_targetType == TargetOwnTeamEntity)
+            else if(m_targetType == BattleEnums::TargetOwnTeamEntity)
             {
                 if(m_targetNr < m_party->GetActivePartyMembers()->size() - 1)
                 {
@@ -96,9 +123,9 @@ void SceneManagerBattle::Tick()
                 }
             }
         }
-        else if(sf::Keyboard::isKeyPressed(conf->GetMoveUpKey()))
+        else if(controller->IsKeyPressed(Configuration::MoveUp))
         {
-            if(m_targetType == TargetEnemyTeamEntity)
+            if(m_targetType == BattleEnums::TargetEnemyTeamEntity)
             {
                 if(m_targetNr > 0)
                 {
@@ -106,7 +133,7 @@ void SceneManagerBattle::Tick()
                     m_targetEntity = m_enemies[m_targetNr];
                 }
             }
-            else if(m_targetType == TargetOwnTeamEntity)
+            else if(m_targetType == BattleEnums::TargetOwnTeamEntity)
             {
                 if(m_targetNr > 0)
                 {
@@ -116,9 +143,9 @@ void SceneManagerBattle::Tick()
             }
         }
 
-        if(sf::Keyboard::isKeyPressed(conf->GetAcceptKey()))
+        if(controller->IsKeyPressed(Configuration::Accept))
         {
-            if(m_targetType == TargetOwnTeamEntity || m_targetType == TargetEnemyTeamEntity)
+            if(m_targetType == BattleEnums::TargetOwnTeamEntity || m_targetType == BattleEnums::TargetEnemyTeamEntity)
             {
                 (*m_useOnTarget)(m_targetType, m_targetEntity);
             }
@@ -129,7 +156,7 @@ void SceneManagerBattle::Tick()
             delete m_useOnTarget;
             m_useOnTarget = 0;
         }
-        else if(sf::Keyboard::isKeyPressed(conf->GetCancelKey()))
+        else if(controller->IsKeyPressed(Configuration::Cancel))
         {
             delete m_useOnTarget;
             m_useOnTarget = 0;
@@ -157,6 +184,11 @@ void SceneManagerBattle::Tick()
 void SceneManagerBattle::AddEnemy(Entity* enemy)
 {
     m_enemies.push_back(enemy);
+}
+
+void SceneManagerBattle::AddSubMenu(MenuNode* menu)
+{
+    m_mainMenu->addChild(menu);
 }
 
 void SceneManagerBattle::TurnIsFinished()
@@ -204,6 +236,7 @@ void SceneManagerBattle::ShowMenuForNext()
     m_mainMenu->ResetOptions();
     //add new Battle options
     m_mainMenu->AddOption("Attack", std::function<void()>(std::bind(&BattleFunctions::Attack, this, m_next)));
+    m_mainMenu->AddOption("Skill", std::function<void()>(std::bind(&BattleFunctions::SkillList, this, m_next)));
     //TODO: add other Battle Options
 
     m_mainMenu->setVisibility(true);

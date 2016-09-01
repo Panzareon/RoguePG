@@ -6,19 +6,17 @@
 class Configuration
 {
     public:
+        enum Keys{MoveUp, MoveDown, MoveRight,MoveLeft,Accept,Cancel};
         virtual ~Configuration();
         static Configuration* GetInstance();
         sf::Font* GetFont();
 
-        sf::Keyboard::Key GetMoveUpKey();
-        sf::Keyboard::Key GetMoveDownKey();
-        sf::Keyboard::Key GetMoveRightKey();
-        sf::Keyboard::Key GetMoveLeftKey();
-        sf::Keyboard::Key GetAcceptKey();
-        sf::Keyboard::Key GetCancelKey();
 
+        sf::Keyboard::Key GetKey(Keys key);
 
         int GetMaxPartySize();
+
+        int GetNumberKeys();
 
     protected:
         Configuration();
@@ -26,13 +24,7 @@ class Configuration
     private:
         sf::Font m_font;
 
-        sf::Keyboard::Key m_moveUp;
-        sf::Keyboard::Key m_moveDown;
-        sf::Keyboard::Key m_moveRight;
-        sf::Keyboard::Key m_moveLeft;
-
-        sf::Keyboard::Key m_accept;
-        sf::Keyboard::Key m_cancel;
+        std::vector<sf::Keyboard::Key> m_keys;
 
         int m_maxPartySize;
 };

@@ -1,5 +1,6 @@
 #include "MenuNode.h"
 #include "Configuration.h"
+#include "GameController.h"
 
 
 MenuNode::MenuNode(int width)
@@ -9,6 +10,7 @@ MenuNode::MenuNode(int width)
     m_scrollPosition = 0;
     m_maxShownNumber = 4;
     m_width = width;
+    m_cancelAvailable = false;
     //TODO: set Color
     m_backgroundColor = sf::Color::Black;
     m_foregroundColor = sf::Color::White;
@@ -27,11 +29,20 @@ void MenuNode::AddOption(std::string name, std::function<void()> func)
     m_optionName.push_back(name);
     m_optionFunction.push_back(func);
 }
+void MenuNode::CancelAvailable(bool cancel)
+{
+    m_cancelAvailable = cancel;
+}
 
 void MenuNode::ResetOptions()
 {
     m_optionName.clear();
     m_optionFunction.clear();
+    for(int i = 0; i < m_children.size(); i++)
+    {
+        delete m_children[i];
+    }
+    m_children.clear();
 }
 void MenuNode::MoveUp()
 {
@@ -97,24 +108,47 @@ void MenuNode::onDraw(sf::RenderTarget& target, const sf::Transform& transformBa
 
 void MenuNode::CheckKeyboardInput()
 {
-    //TODO: if there is a active child call this function on it
-    Configuration* conf = Configuration::GetInstance();
+    //remove hidden sub menus
+    for(int i = 0; i < m_children.size(); i++)
+    {
+        if(!m_children[i]->IsVisible())
+        {
+            delete m_children[i];
+            m_children.erase(m_children.begin() + i);
+            i--;
+        }
+    }
 
-    if(sf::Keyboard::isKeyPressed(conf->GetMoveDownKey()))
+    //if there is a active child call this function on it
+    if(m_children.size() > 0)
     {
-        MoveDown();
+        ((MenuNode*)m_children.back())->CheckKeyboardInput();
     }
-    else if(sf::Keyboard::isKeyPressed(conf->GetMoveUpKey()))
+    else
     {
-        MoveUp();
-    }
+        GameController* controller = GameController::getInstance();
 
-    if(sf::Keyboard::isKeyPressed(conf->GetAcceptKey()))
-    {
-        Use();
-    }
-    else if(sf::Keyboard::isKeyPressed(conf->GetCancelKey()))
-    {
-        //TODO: Cancel Menu / check if menu can be canceled
+        if(controller->IsKeyPressed(Configuration::MoveDown))
+        {
+            MoveDown();
+        }
+        else if(controller->IsKeyPressed(Configuration::MoveUp))
+        {
+            MoveUp();
+        }
+
+        if(controller->IsKeyPressed(Configuration::Accept))
+        {
+            Use();
+        }
+        else if(controller->IsKeyPressed(Configuration::Cancel))
+        {
+            //Cancel Menu / check if menu can be canceled
+            if(m_cancelAvailable)
+            {
+                m_visible = false;
+            }
+        }
     }
 }
+

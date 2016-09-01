@@ -11,12 +11,14 @@ Configuration::Configuration()
 
     //Default keyconfig:
     //TODO: load from file
-    m_moveUp = sf::Keyboard::Up;
-    m_moveDown = sf::Keyboard::Down;
-    m_moveRight = sf::Keyboard::Right;
-    m_moveLeft = sf::Keyboard::Left;
-    m_accept = sf::Keyboard::Space;
-    m_cancel = sf::Keyboard::Delete;
+    int numberOfKeys = 6;
+    m_keys.resize(numberOfKeys);
+    m_keys.at(MoveUp) = sf::Keyboard::Up;
+    m_keys.at(MoveDown) = sf::Keyboard::Down;
+    m_keys.at(MoveRight) = sf::Keyboard::Right;
+    m_keys.at(MoveLeft) = sf::Keyboard::Left;
+    m_keys.at(Accept) = sf::Keyboard::Space;
+    m_keys.at(Cancel) = sf::Keyboard::Delete;
 
     m_maxPartySize = 4;
 }
@@ -37,34 +39,13 @@ sf::Font* Configuration::GetFont()
     return &m_font;
 }
 
-sf::Keyboard::Key Configuration::GetMoveUpKey()
+sf::Keyboard::Key Configuration::GetKey(Keys key)
 {
-    return m_moveUp;
+    return m_keys.at(key);
 }
-
-sf::Keyboard::Key Configuration::GetMoveDownKey()
+int Configuration::GetNumberKeys()
 {
-    return m_moveDown;
-}
-
-sf::Keyboard::Key Configuration::GetMoveRightKey()
-{
-    return m_moveRight;
-}
-
-sf::Keyboard::Key Configuration::GetMoveLeftKey()
-{
-    return m_moveLeft;
-}
-
-sf::Keyboard::Key Configuration::GetAcceptKey()
-{
-    return m_accept;
-}
-
-sf::Keyboard::Key Configuration::GetCancelKey()
-{
-    return m_cancel;
+    return m_keys.size();
 }
 
 

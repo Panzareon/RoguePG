@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include "Configuration.h"
 
 class GameController
 {
@@ -24,7 +25,7 @@ class GameController
         int GetWindowWidth();
         int GetWindowHeight();
 
-
+        bool IsKeyPressed(Configuration::Keys key);
 
         void setParty(Party* party);
         Party* getParty();
@@ -37,6 +38,7 @@ class GameController
         static GameController* m_instance;
         GameController();
 
+        std::vector<bool> m_keysPressed;
 
         std::vector<SceneManager*> m_sceneManager;
 };

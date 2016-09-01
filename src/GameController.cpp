@@ -7,6 +7,8 @@ GameController::GameController()
     //ctor
     m_party = 0;
     m_renderTarget = 0;
+    m_keysPressed.resize(Configuration::GetInstance()->GetNumberKeys());
+
     //TODO: load actual values
     m_windowWidth = 640;
     m_windowHeight = 480;
@@ -46,6 +48,17 @@ void GameController::LoadSceneManager(SceneManager* sm)
 }
 void GameController::Tick()
 {
+    Configuration* conf = Configuration::GetInstance();
+    //Check Keys
+    for(int i = 0; i < m_keysPressed.size(); i++)
+    {
+        if(m_keysPressed.at(i) && !sf::Keyboard::isKeyPressed(conf->GetKey((Configuration::Keys)i)))
+        {
+            m_keysPressed.at(i) = false;
+        }
+    }
+
+
     GetActiveSceneManager()->NextTick();
     if(GetActiveSceneManager()->IsFinished())
     {
@@ -79,6 +92,16 @@ int GameController::GetWindowWidth()
 int GameController::GetWindowHeight()
 {
     return m_windowHeight;
+}
+
+bool GameController::IsKeyPressed(Configuration::Keys key)
+{
+    if(!m_keysPressed.at(key) && sf::Keyboard::isKeyPressed(Configuration::GetInstance()->GetKey(key)))
+    {
+        m_keysPressed.at(key) = true;
+        return true;
+    }
+    return false;
 }
 
 

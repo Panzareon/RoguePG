@@ -28,19 +28,19 @@ void SceneManagerMoveable::Tick()
     float moveX = 0.0f;
     float moveY = 0.0f;
 
-    if (sf::Keyboard::isKeyPressed(conf->GetMoveLeftKey()))
+    if (sf::Keyboard::isKeyPressed(conf->GetKey(Configuration::MoveLeft)))
     {
         moveX -= MoveSpeed * m_frameTime.asSeconds();
     }
-    if (sf::Keyboard::isKeyPressed(conf->GetMoveRightKey()))
+    if (sf::Keyboard::isKeyPressed(conf->GetKey(Configuration::MoveRight)))
     {
         moveX += MoveSpeed * m_frameTime.asSeconds();
     }
-    if (sf::Keyboard::isKeyPressed(conf->GetMoveUpKey()))
+    if (sf::Keyboard::isKeyPressed(conf->GetKey(Configuration::MoveUp)))
     {
         moveY -= MoveSpeed * m_frameTime.asSeconds();
     }
-    if (sf::Keyboard::isKeyPressed(conf->GetMoveDownKey()))
+    if (sf::Keyboard::isKeyPressed(conf->GetKey(Configuration::MoveDown)))
     {
         moveY += MoveSpeed * m_frameTime.asSeconds();
     }

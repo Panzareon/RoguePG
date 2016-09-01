@@ -92,6 +92,10 @@ void Node::setParent(Node* parent)
 {
     m_parent = parent;
 }
+bool Node::IsVisible()
+{
+    return m_visible;
+}
 
 
 void Node::addChild(Node* child)

@@ -48,6 +48,7 @@
 		<Unit filename="include/Configuration.h" />
 		<Unit filename="include/DrawableNode.h" />
 		<Unit filename="include/Entity.h" />
+		<Unit filename="include/Enums.h" />
 		<Unit filename="include/FillItem.h" />
 		<Unit filename="include/GameController.h" />
 		<Unit filename="include/Map.h" />

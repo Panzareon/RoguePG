@@ -16,6 +16,7 @@ class Node
         void setTransform(sf::Transform newTransform);
 
         void setVisibility(bool visible);
+        bool IsVisible();
 
 
         void moveNode(float x, float y);
@@ -30,7 +31,6 @@ class Node
         sf::FloatRect getGlobalBoundingBox();
         sf::FloatRect getBoundingBox();
     protected:
-    private:
         virtual void onDraw(sf::RenderTarget& target, const sf::Transform& transform) const;
         sf::Transform m_transform;
         std::vector<Node*> m_children;
@@ -39,6 +39,7 @@ class Node
         //Default: 0x0 at 0,0
         sf::FloatRect m_boundingBox;
         bool m_visible;
+    private:
 };
 
 #endif // NODE_H

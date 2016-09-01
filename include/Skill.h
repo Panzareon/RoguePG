@@ -1,17 +1,20 @@
 #ifndef SKILL_H
 #define SKILL_H
+#include <string>
+#include "Enums.h"
 
 class Entity;
 
 class Skill
 {
     public:
-        enum Target{OwnTeam, EnemyTeam};
         Skill();
         virtual ~Skill();
-        void Use();
-        void Use(Entity* target);
-        void Use(Target target);
+        void Use(BattleEnums::Target targetType, Entity* target);
+
+
+        BattleEnums::Target GetDefaultTarget();
+        std::string GetName();
     protected:
     private:
         Entity* m_user;

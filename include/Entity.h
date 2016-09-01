@@ -33,6 +33,8 @@ class Entity
         virtual ControllType GetControllType();
         void CalculateMove();
 
+        std::vector<Skill>* GetSkillList();
+
     protected:
         std::vector<Skill> m_skills;
 
