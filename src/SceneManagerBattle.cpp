@@ -16,7 +16,7 @@ namespace BattleFunctions
     void Attack(SceneManagerBattle* sm, Entity* attacking)
     {
         std::function<void(BattleEnums::Target, Entity*)>* func = new std::function<void(BattleEnums::Target, Entity*)>(std::bind(&AttackOnTarget, sm, std::placeholders::_1, std::placeholders::_2, attacking));
-        sm->UseOnTarget(func, BattleEnums::TargetEnemyTeamEntity);
+        sm->UseOnTarget(func, BattleEnums::TargetEnemyTeamEntity, attacking);
     }
 
     void UseSkillOnTarget(SceneManagerBattle* sm, BattleEnums::Target targetType, Entity* toAttack, Entity* attacking, Skill* skill)
@@ -27,8 +27,17 @@ namespace BattleFunctions
 
     void UseSkill(SceneManagerBattle* sm, Entity* attacking, Skill* skill)
     {
-        std::function<void(BattleEnums::Target, Entity*)>* func = new std::function<void(BattleEnums::Target, Entity*)>(std::bind(&UseSkillOnTarget, sm, std::placeholders::_1, std::placeholders::_2, attacking, skill));
-        sm->UseOnTarget(func, skill->GetDefaultTarget());
+        BattleEnums::Target target = skill->GetDefaultTarget();
+        if(target == BattleEnums::TargetNone)
+        {
+            skill->Use(target,0);
+        }
+        else
+        {
+            std::function<void(BattleEnums::Target, Entity*)>* func = new std::function<void(BattleEnums::Target, Entity*)>(std::bind(&UseSkillOnTarget, sm, std::placeholders::_1, std::placeholders::_2, attacking, skill));
+            sm->UseOnTarget(func, target, attacking);
+        }
+        sm->TurnIsFinished();
     }
     void SkillList(SceneManagerBattle* sm, Entity* attacking)
     {
@@ -77,7 +86,7 @@ SceneManagerBattle::~SceneManagerBattle()
     }
 }
 
-void SceneManagerBattle::UseOnTarget(std::function<void(BattleEnums::Target, Entity*)>* func, BattleEnums::Target defaultTarget)
+void SceneManagerBattle::UseOnTarget(std::function<void(BattleEnums::Target, Entity*)>* func, BattleEnums::Target defaultTarget, Entity* attacker)
 {
     if(m_useOnTarget != 0)
         delete m_useOnTarget;
@@ -92,6 +101,10 @@ void SceneManagerBattle::UseOnTarget(std::function<void(BattleEnums::Target, Ent
     else if(m_targetType == BattleEnums::TargetOwnTeamEntity)
     {
         m_targetEntity = m_party->GetActivePartyMembers()->at(0);
+    }
+    else if(m_targetType == BattleEnums::TargetSelf)
+    {
+        m_targetEntity = attacker;
     }
 }
 
@@ -145,7 +158,7 @@ void SceneManagerBattle::Tick()
 
         if(controller->IsKeyPressed(Configuration::Accept))
         {
-            if(m_targetType == BattleEnums::TargetOwnTeamEntity || m_targetType == BattleEnums::TargetEnemyTeamEntity)
+            if(m_targetType == BattleEnums::TargetOwnTeamEntity || m_targetType == BattleEnums::TargetEnemyTeamEntity || m_targetType == BattleEnums::TargetSelf)
             {
                 (*m_useOnTarget)(m_targetType, m_targetEntity);
             }
@@ -168,7 +181,7 @@ void SceneManagerBattle::Tick()
     }
     else if(m_next != 0)
     {
-        m_next->CalculateMove();
+        m_next->CalculateMove(this);
         if(m_next->GetControllType() == Entity::ControllUser)
         {
             //Check controlls for gui
@@ -193,6 +206,7 @@ void SceneManagerBattle::AddSubMenu(MenuNode* menu)
 
 void SceneManagerBattle::TurnIsFinished()
 {
+    m_mainMenu->ResetOptions();
     m_next->FinishedTurn();
     CalculateNext();
 }

@@ -5,10 +5,11 @@
 #include "AIBase.h"
 #include <vector>
 
+class SceneManagerBattle;
+
 class Entity
 {
     public:
-        enum AttackType{Physical, Fire, Water, Earth, Air};
         enum ControllType{ControllAI, ControllUser};
         Entity();
         virtual ~Entity();
@@ -19,19 +20,21 @@ class Entity
         //Play attack animation
         void Attack();
         //Get damage and play get hit animation
-        void GetHit(int attack, AttackType type);
+        void GetHit(int attack, BattleEnums::AttackType type);
 
 
         //returns Attack Type of basic attack
-        AttackType GetAttackType();
+        BattleEnums::AttackType GetAttackType();
 
         bool IsDead();
 
         //Getter/Setter
         int GetAttack();
+        int GetInt();
         float GetTimeToNextAttack();
         virtual ControllType GetControllType();
-        void CalculateMove();
+        void CalculateMove(SceneManagerBattle* sm);
+        void AddSkill(Skill* skill);
 
         std::vector<Skill>* GetSkillList();
 
@@ -41,6 +44,7 @@ class Entity
         int m_maxHp;
         int m_hp;
         int m_attack;
+        int m_int;
         int m_defense;
         int m_speed;
         float m_toNextAttack;

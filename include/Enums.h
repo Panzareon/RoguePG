@@ -3,7 +3,8 @@
 
 namespace BattleEnums
 {
-    enum Target{TargetOwnTeamEntity, TargetEnemyTeamEntity, TargetOwnTeam, TargetEnemyTeam};
+    enum Target{TargetOwnTeamEntity, TargetEnemyTeamEntity, TargetOwnTeam, TargetEnemyTeam, TargetSelf, TargetNone, TargetAll};
+    enum AttackType{AttackTypePhysical, AttackTypeFire, AttackTypeWater, AttackTypeEarth, AttackTypeAir};
 }
 
 #endif // ENUMS_H_INCLUDED

@@ -47,6 +47,9 @@
 		<Unit filename="include/AnimatedNode.h" />
 		<Unit filename="include/Configuration.h" />
 		<Unit filename="include/DrawableNode.h" />
+		<Unit filename="include/Effect.h" />
+		<Unit filename="include/EffectFactory.h" />
+		<Unit filename="include/EffectFactoryList.h" />
 		<Unit filename="include/Entity.h" />
 		<Unit filename="include/Enums.h" />
 		<Unit filename="include/FillItem.h" />
@@ -73,6 +76,9 @@
 		<Unit filename="src/AnimatedNode.cpp" />
 		<Unit filename="src/Configuration.cpp" />
 		<Unit filename="src/DrawableNode.cpp" />
+		<Unit filename="src/Effect.cpp" />
+		<Unit filename="src/EffectFactory.cpp" />
+		<Unit filename="src/EffectFactoryList.cpp" />
 		<Unit filename="src/Entity.cpp" />
 		<Unit filename="src/FillItem.cpp" />
 		<Unit filename="src/GameController.cpp" />

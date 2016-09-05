@@ -4,6 +4,7 @@
 #include <iostream>
 #include "AnimatedNode.h"
 #include "GameController.h"
+#include "EffectFactoryList.h"
 
 int main()
 {
@@ -24,6 +25,10 @@ int main()
     //TODO: create actual party
     Party party;
     PartyMember* member = new PartyMember();
+
+    Skill* newSkill = new Skill(member);
+    newSkill->AddEffect(EffectFactoryList::GetInstance()->getRandom()->GetEffectWithValue(10.0f, BattleEnums::TargetEnemyTeamEntity));
+    member->AddSkill(newSkill);
     party.AddPartyMember(member);
     controller->setParty(&party);
 

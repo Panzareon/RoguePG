@@ -1,5 +1,6 @@
 #include "Entity.h"
 #include "AIRandom.h"
+#include "SceneManagerBattle.h"
 
 Entity::Entity()
 {
@@ -12,6 +13,7 @@ Entity::Entity()
     m_hp = m_maxHp;
     m_speed = 10;
     m_attack = 10;
+    m_int = 10;
     m_defense = 10;
 
 
@@ -30,7 +32,7 @@ void Entity::Attack()
     //TODO: play Attack animation
 }
 
-void Entity::GetHit(int attack, AttackType type)
+void Entity::GetHit(int attack, BattleEnums::AttackType type)
 {
     //TODO: maybe other dmg calculation?
     int dmg = attack - m_defense/2;
@@ -44,10 +46,10 @@ void Entity::GetHit(int attack, AttackType type)
     }
 }
 
-Entity::AttackType Entity::GetAttackType()
+BattleEnums::AttackType Entity::GetAttackType()
 {
     //TODO: get Attack Type of weapon / currently active buffs
-    return Physical;
+    return BattleEnums::AttackTypePhysical;
 }
 
 bool Entity::IsDead()
@@ -55,11 +57,20 @@ bool Entity::IsDead()
     return m_hp <= 0;
 }
 
+void Entity::AddSkill(Skill* skill)
+{
+    m_skills.push_back(*skill);
+}
 
 int Entity::GetAttack()
 {
     //TODO: return attack with buffs and debuffs
     return m_attack;
+}
+int Entity::GetInt()
+{
+    //TODO: return intelligence with buffs and debuffs
+    return m_int;
 }
 
 
@@ -88,15 +99,12 @@ std::vector<Skill>* Entity::GetSkillList()
 }
 
 
-void Entity::CalculateMove()
+void Entity::CalculateMove(SceneManagerBattle* sm)
 {
     //Check if controlled by AI
     if(m_controllTypeAtm == Entity::ControllAI)
     {
         m_AI->UseNextSkill();
-    }
-    else
-    {
-        //If controlled by User wait for GUI input
+        sm->TurnIsFinished();
     }
 }
