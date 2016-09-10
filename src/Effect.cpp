@@ -16,3 +16,8 @@ void Effect::UseEffectOn(Entity* user, std::vector<Entity* >* targets)
 {
     (*m_effectFunction)(m_strength, user, targets);
 }
+
+float Effect::GetValue(BattleEnums::Target target)
+{
+    return m_strengthCalculation->GetValue(m_strength, target);
+}

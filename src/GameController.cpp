@@ -50,7 +50,7 @@ void GameController::Tick()
 {
     Configuration* conf = Configuration::GetInstance();
     //Check Keys
-    for(int i = 0; i < m_keysPressed.size(); i++)
+    for(unsigned int i = 0; i < m_keysPressed.size(); i++)
     {
         if(m_keysPressed.at(i) && !sf::Keyboard::isKeyPressed(conf->GetKey((Configuration::Keys)i)))
         {

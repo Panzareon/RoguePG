@@ -10,7 +10,7 @@ namespace EffectFunctions
     //Strength: one value with strength of dmg
     void DealMagicDmg(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, BattleEnums::AttackType type = BattleEnums::AttackTypePhysical)
     {
-        for(int i = 0; i < targets->size(); i++)
+        for(unsigned int i = 0; i < targets->size(); i++)
         {
             targets->at(i)->GetHit(strength->at(0) * user->GetAttribute(BattleEnums::AttributeInt), type, false);
             //TODO: Animation
@@ -25,7 +25,6 @@ EffectFactoryList::EffectFactoryList()
     //ctor
     //Add all the Effects for the game
     std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>* func;
-    std::function<std::vector<float>*(float, BattleEnums::Target)>* valueToStrength;
     StrengthCalculation* calc;
     EffectFactory* newEffect;
 
@@ -73,7 +72,7 @@ EffectFactoryList::EffectFactoryList()
 EffectFactoryList::~EffectFactoryList()
 {
     //dtor
-    for(int i = 0; i < m_effects.size(); i++)
+    for(unsigned int i = 0; i < m_effects.size(); i++)
     {
         delete m_effects[i];
     }
@@ -83,7 +82,7 @@ EffectFactoryList::~EffectFactoryList()
 EffectFactory* EffectFactoryList::getRandom(BattleEnums::AttackType attackType)
 {
     int nr = 0;
-    for(int i = 0; i < m_effects.size(); i++)
+    for(unsigned int i = 0; i < m_effects.size(); i++)
     {
         if(m_effects[i]->DoesContainAttackType(attackType))
             nr++;
@@ -96,19 +95,20 @@ EffectFactory* EffectFactoryList::getRandom(BattleEnums::AttackType attackType)
         throw InvalidArgumentException(msg);
     }
     int j = rand() % nr;
-    for(int i = 0; i < m_effects.size(); i++)
+    for(unsigned int i = 0; i < m_effects.size(); i++)
     {
         if(m_effects[i]->DoesContainAttackType(attackType))
             if(j == 0)
                 return m_effects[i];
             j--;
     }
+    throw InvalidArgumentException("EffectFactory not found");
 }
 
 EffectFactory* EffectFactoryList::getRandom(BattleEnums::AttackType attackType, BattleEnums::EffectType effectType)
 {
     int nr = 0;
-    for(int i = 0; i < m_effects.size(); i++)
+    for(unsigned int i = 0; i < m_effects.size(); i++)
     {
         if(m_effects[i]->DoesContainAttackType(attackType) && m_effects[i]->DoesContainEffectType(effectType))
             nr++;
@@ -123,19 +123,20 @@ EffectFactory* EffectFactoryList::getRandom(BattleEnums::AttackType attackType, 
         throw InvalidArgumentException(msg);
     }
     int j = rand() % nr;
-    for(int i = 0; i < m_effects.size(); i++)
+    for(unsigned int i = 0; i < m_effects.size(); i++)
     {
         if(m_effects[i]->DoesContainAttackType(attackType) && m_effects[i]->DoesContainEffectType(effectType))
             if(j == 0)
                 return m_effects[i];
             j--;
     }
+    throw InvalidArgumentException("EffectFactory not found");
 }
 
 EffectFactory* EffectFactoryList::getRandom(BattleEnums::AttackType attackType, BattleEnums::EffectType effectType, bool needTarget)
 {
     int nr = 0;
-    for(int i = 0; i < m_effects.size(); i++)
+    for(unsigned int i = 0; i < m_effects.size(); i++)
     {
         if(m_effects[i]->DoesContainAttackType(attackType) && m_effects[i]->DoesContainEffectType(effectType) && m_effects[i]->DoesNeedTarget() == needTarget)
             nr++;
@@ -152,13 +153,14 @@ EffectFactory* EffectFactoryList::getRandom(BattleEnums::AttackType attackType, 
         throw InvalidArgumentException(msg);
     }
     int j = rand() % nr;
-    for(int i = 0; i < m_effects.size(); i++)
+    for(unsigned int i = 0; i < m_effects.size(); i++)
     {
         if(m_effects[i]->DoesContainAttackType(attackType) && m_effects[i]->DoesContainEffectType(effectType) && m_effects[i]->DoesNeedTarget() == needTarget)
             if(j == 0)
                 return m_effects[i];
             j--;
     }
+    throw InvalidArgumentException("EffectFactory not found");
 }
 
 

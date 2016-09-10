@@ -13,6 +13,8 @@ class Effect
 
         void UseEffectOn(Entity* user, std::vector<Entity*>* targets);
 
+        float GetValue(BattleEnums::Target target);
+
         virtual ~Effect();
     protected:
     private:

@@ -9,7 +9,7 @@ Party::Party()
 Party::~Party()
 {
     //dtor
-    for(int i = 0; i < m_partyMembers.size(); i++)
+    for(unsigned int i = 0; i < m_partyMembers.size(); i++)
     {
         delete m_partyMembers[i];
     }

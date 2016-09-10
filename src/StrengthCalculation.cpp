@@ -1,6 +1,10 @@
 #include "StrengthCalculation.h"
 #include <random>
 
+//Define Muliplier for Value if More Entities can be targeted
+float StrengthCalculation::TeamTargetMali = 3.0f;
+float StrengthCalculation::AllTargetMali = 6.0f;
+
 StrengthCalculation::StrengthCalculation()
 {
     //ctor
@@ -18,21 +22,41 @@ void StrengthCalculation::AddStrengthValue(float multiplyWith, float minValue, f
     m_maxValue.push_back(maxValue);
 }
 
+float StrengthCalculation::GetValue(std::vector<float>* strength, BattleEnums::Target target)
+{
+    float value = 0.0f;
+    for(unsigned int i = 0; i < m_multiplyWith.size(); i++)
+    {
+        value += strength->at(i) * m_multiplyWith.at(i);
+    }
+
+    if(target == BattleEnums::TargetEnemyTeam || target == BattleEnums::TargetOwnTeam)
+    {
+        value *= TeamTargetMali;
+    }
+    else if(target == BattleEnums::TargetAll)
+    {
+        value *= AllTargetMali;
+    }
+
+    return value;
+}
+
 std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEnums::Target target)
 {
     if(target == BattleEnums::TargetEnemyTeam || target == BattleEnums::TargetOwnTeam)
     {
-        value /= 3.0f;
+        value /= TeamTargetMali;
     }
     else if(target == BattleEnums::TargetAll)
     {
-        value /= 6.0f;
+        value /= AllTargetMali;
     }
 
     float minV = 0.0f;
     float maxV = 0.0f;
 
-    for(int i = 0; i < m_multiplyWith.size(); i++)
+    for(unsigned int i = 0; i < m_multiplyWith.size(); i++)
     {
         minV += m_minValue[i] * m_multiplyWith[i];
         maxV += m_maxValue[i] * m_multiplyWith[i];
