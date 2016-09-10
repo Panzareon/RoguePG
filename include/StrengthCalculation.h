@@ -10,7 +10,8 @@ class StrengthCalculation
         StrengthCalculation();
         virtual ~StrengthCalculation();
 
-        void AddStrengthValue(float multiplyWith, float minValue, float maxValue);
+        void SetMultiplier(float multiplyWith);
+        void AddStrengthValue(float minValue, float maxValue, float step = 0.0f);
 
         std::vector<float>* GetStrengthVector(float value, BattleEnums::Target target);
 
@@ -19,9 +20,10 @@ class StrengthCalculation
     protected:
 
     private:
-        std::vector<float> m_multiplyWith;
+        float m_multiplyWith;
         std::vector<float> m_minValue;
         std::vector<float> m_maxValue;
+        std::vector<float> m_step;
 
         static float TeamTargetMali;
         static float AllTargetMali;

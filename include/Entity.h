@@ -19,14 +19,15 @@ class Entity
         void PassTime(float Time);
         void FinishedTurn();
 
-        //Play attack animation
-        void Attack();
+        //Deal dmg and play Attack animation
+        void Attack(Entity* target);
         //Get damage and play get hit animation
         void GetHit(int attack, BattleEnums::AttackType type, bool physical);
 
 
         //returns Attack Type of basic attack
         BattleEnums::AttackType GetAttackType();
+        bool IsAttackPhysical();
 
         bool IsDead();
 

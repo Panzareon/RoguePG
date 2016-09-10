@@ -9,11 +9,11 @@
 class Effect
 {
     public:
-        Effect(std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets)>* func, std::vector<float> *strength, StrengthCalculation* strengthCalculation);
+        Effect(std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets)>* func, std::vector<float> *strength, StrengthCalculation* strengthCalculation, BattleEnums::Target target);
 
         void UseEffectOn(Entity* user, std::vector<Entity*>* targets);
 
-        float GetValue(BattleEnums::Target target);
+        float GetValue();
 
         virtual ~Effect();
     protected:
@@ -22,6 +22,7 @@ class Effect
 
         std::vector<float> *m_strength;
         StrengthCalculation* m_strengthCalculation;
+        BattleEnums::Target m_defaultTarget;
 };
 
 #endif // EFFECT_H

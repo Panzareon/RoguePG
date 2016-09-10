@@ -16,7 +16,7 @@ EffectFactory::~EffectFactory()
 
 Effect* EffectFactory::GetEffectWithValue(float value, BattleEnums::Target target)
 {
-    return new Effect(m_effectFunction, m_strengthCalculation.GetStrengthVector(value, target), &m_strengthCalculation);
+    return new Effect(m_effectFunction, m_strengthCalculation.GetStrengthVector(value, target), &m_strengthCalculation, target);
 }
 void EffectFactory::AddAttackType(BattleEnums::AttackType type)
 {

@@ -48,5 +48,5 @@ std::string Skill::GetName()
 void Skill::AddEffect(Effect* eff)
 {
     m_effects.push_back(eff);
-    m_manaUse += eff->GetValue(GetDefaultTarget());
+    m_manaUse += eff->GetValue();
 }

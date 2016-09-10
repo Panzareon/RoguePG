@@ -2,6 +2,7 @@
 #define PASSIVEEFFECT_H
 
 #include "Enums.h"
+#include <functional>
 class Entity;
 
 //Class for Buffs and Debuffs
@@ -17,6 +18,8 @@ class PassiveEffect
         bool IsStillActive();
 
         int GetActivationPriority();
+        void AddOnTurnEffect(std::function<void(Entity*,PassiveEffect*)>* onTurn);
+        void AddAttributeEffect(std::function<float(float,BattleEnums::Attribute)>* attributeFunction);
 
     protected:
         Entity* m_target;
@@ -24,6 +27,8 @@ class PassiveEffect
         int m_prio;
         //Number of Turns this Effect lasts, -1 means forever
         int m_duration;
+        std::function<void(Entity*,PassiveEffect*)>* m_onTurn;
+        std::function<float(float,BattleEnums::Attribute)>* m_attributeFunction;
     private:
 };
 

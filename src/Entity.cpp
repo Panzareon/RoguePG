@@ -29,9 +29,21 @@ Entity::~Entity()
     if(m_AI != 0)
         delete m_AI;
 }
-void Entity::Attack()
+void Entity::Attack(Entity* target)
 {
     //TODO: play Attack animation
+    //TODO: Get Weapon Dmg
+    int attack = 10;
+    bool isPhysical = IsAttackPhysical();
+    if(isPhysical)
+    {
+        attack *= GetAttribute(BattleEnums::AttributeStrength);
+    }
+    else
+    {
+        attack *= GetAttribute(BattleEnums::AttributeInt);
+    }
+    target->GetHit(attack, GetAttackType(), isPhysical);
 }
 
 void Entity::GetHit(int attack, BattleEnums::AttackType type, bool physical)
@@ -60,6 +72,12 @@ BattleEnums::AttackType Entity::GetAttackType()
 {
     //TODO: get Attack Type of weapon / currently active buffs
     return BattleEnums::AttackTypePhysical;
+}
+
+bool Entity::IsAttackPhysical()
+{
+    //TODO: Get Type of weapon / Buffs
+    return true;
 }
 
 bool Entity::IsDead()

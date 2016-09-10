@@ -4,9 +4,18 @@
 #include "Enums.h"
 #include <random>
 
+namespace PassiveEffectFunctions
+{
+    float BuffAttribute(float baseValue,BattleEnums::Attribute attr, float strength, BattleEnums::Attribute toBuff)
+    {
+        if(toBuff != attr)
+            return baseValue;
+        return baseValue * (1 + strength);
+    }
+}
+
 namespace EffectFunctions
 {
-    //targets:
     //Strength: one value with strength of dmg
     void DealMagicDmg(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, BattleEnums::AttackType type = BattleEnums::AttackTypePhysical)
     {
@@ -14,6 +23,17 @@ namespace EffectFunctions
         {
             targets->at(i)->GetHit(strength->at(0) * user->GetAttribute(BattleEnums::AttributeInt), type, false);
             //TODO: Animation
+        }
+    }
+
+    //Strength: two values, fist: duration in turns, second: strength of Buff
+    void BuffAttribute(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, BattleEnums::Attribute attribute)
+    {
+        for(unsigned int i = 0; i < targets->size(); i++)
+        {
+            PassiveEffect* eff = new PassiveEffect(targets->at(i), true, (int)strength->at(0));
+            eff->AddAttributeEffect(new std::function<float(float,BattleEnums::Attribute)>(
+                std::bind(&PassiveEffectFunctions::BuffAttribute,std::placeholders::_1,std::placeholders::_2,strength->at(1), attribute)));
         }
     }
 }
@@ -30,42 +50,124 @@ EffectFactoryList::EffectFactoryList()
 
     //Add Fire Damage
     func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DealMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeFire));
-
     newEffect = new EffectFactory(func);
     calc = newEffect->GetStrengthCalculation();
-    calc->AddStrengthValue(1.0f, 1.0f, 100.0f);
+    calc->AddStrengthValue(1.0f, 100.0f);
+    calc->SetMultiplier(1.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeFire);
     newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
     m_effects.push_back(newEffect);;
 
     //Add Air Damage
     func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DealMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeAir));
-
     newEffect = new EffectFactory(func);
     calc = newEffect->GetStrengthCalculation();
-    calc->AddStrengthValue(1.0f, 1.0f, 100.0f);
+    calc->AddStrengthValue(1.0f, 100.0f);
+    calc->SetMultiplier(1.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeAir);
     newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
     m_effects.push_back(newEffect);;
 
     //Add Water Damage
     func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DealMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeWater));
-
     newEffect = new EffectFactory(func);
     calc = newEffect->GetStrengthCalculation();
-    calc->AddStrengthValue(1.0f, 1.0f, 100.0f);
+    calc->AddStrengthValue(1.0f, 100.0f);
+    calc->SetMultiplier(1.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeWater);
     newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
     m_effects.push_back(newEffect);
 
     //Add Earth Damage
     func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DealMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeEarth));
-
     newEffect = new EffectFactory(func);
     calc = newEffect->GetStrengthCalculation();
-    calc->AddStrengthValue(1.0f, 1.0f, 100.0f);
+    calc->AddStrengthValue(1.0f, 100.0f);
+    calc->SetMultiplier(1.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
+    m_effects.push_back(newEffect);
+
+    //Add Strength Buff
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::BuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttributeStrength));
+    newEffect = new EffectFactory(func);
+    calc = newEffect->GetStrengthCalculation();
+    //Number of turns: from 2 to 10 with step of 1
+    calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
+    //Everything from 5% to 300% buff
+    calc->AddStrengthValue(0.05f, 3.0f);
+    calc->SetMultiplier(25.0f);
+    //Strength Buff fits Fire and Earth or Physical
+    newEffect->AddAttackType(BattleEnums::AttackTypeFire);
+    newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
+    newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
+    newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
+    newEffect->AddEffectType(BattleEnums::EffectTypeBuffOffense);
+    m_effects.push_back(newEffect);
+
+    //Add Defense Buff
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::BuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttributeDefense));
+    newEffect = new EffectFactory(func);
+    calc = newEffect->GetStrengthCalculation();
+    //Number of turns: from 2 to 10 with step of 1
+    calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
+    //Everything from 5% to 300% buff
+    calc->AddStrengthValue(0.05f, 3.0f);
+    calc->SetMultiplier(25.0f);
+    //Strength Buff fits Fire and Earth or Physical
+    newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
+    newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
+    newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
+    newEffect->AddEffectType(BattleEnums::EffectTypeBuffDefense);
+    m_effects.push_back(newEffect);
+
+    //Add Magic defense Buff
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::BuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttributeMagicDefense));
+    newEffect = new EffectFactory(func);
+    calc = newEffect->GetStrengthCalculation();
+    //Number of turns: from 2 to 10 with step of 1
+    calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
+    //Everything from 5% to 300% buff
+    calc->AddStrengthValue(0.05f, 3.0f);
+    calc->SetMultiplier(25.0f);
+    //Strength Buff fits Fire and Earth or Physical
+    newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
+    newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
+    newEffect->AddEffectType(BattleEnums::EffectTypeBuffDefense);
+    m_effects.push_back(newEffect);
+
+    //Add Int Buff
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::BuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttributeInt));
+    newEffect = new EffectFactory(func);
+    calc = newEffect->GetStrengthCalculation();
+    //Number of turns: from 2 to 10 with step of 1
+    calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
+    //Everything from 5% to 300% buff
+    calc->AddStrengthValue(0.05f, 3.0f);
+    calc->SetMultiplier(25.0f);
+    //Strength Buff fits Fire and Earth or Physical
+    newEffect->AddAttackType(BattleEnums::AttackTypeFire);
+    newEffect->AddAttackType(BattleEnums::AttackTypeWater);
+    newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
+    newEffect->AddEffectType(BattleEnums::EffectTypeBuffMagic);
+    m_effects.push_back(newEffect);
+
+    //Add Speed Buff
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::BuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttributeSpeed));
+    newEffect = new EffectFactory(func);
+    calc = newEffect->GetStrengthCalculation();
+    //Number of turns: from 2 to 10 with step of 1
+    calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
+    //Everything from 5% to 300% buff
+    calc->AddStrengthValue(0.05f, 3.0f);
+    calc->SetMultiplier(25.0f);
+    //Strength Buff fits Fire and Earth or Physical
+    newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
+    newEffect->AddAttackType(BattleEnums::AttackTypeAir);
+    newEffect->AddAttackType(BattleEnums::AttackTypeWater);
+    newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
+    newEffect->AddEffectType(BattleEnums::EffectTypeBuffOffense);
+    newEffect->AddEffectType(BattleEnums::EffectTypeBuffMagic);
     m_effects.push_back(newEffect);
 }
 
