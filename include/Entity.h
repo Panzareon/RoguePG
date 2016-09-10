@@ -2,8 +2,10 @@
 #define ENTITY_H
 
 #include "Skill.h"
+#include "PassiveEffect.h"
 #include "AIBase.h"
 #include <vector>
+#include <map>
 
 class SceneManagerBattle;
 
@@ -20,7 +22,7 @@ class Entity
         //Play attack animation
         void Attack();
         //Get damage and play get hit animation
-        void GetHit(int attack, BattleEnums::AttackType type);
+        void GetHit(int attack, BattleEnums::AttackType type, bool physical);
 
 
         //returns Attack Type of basic attack
@@ -29,8 +31,7 @@ class Entity
         bool IsDead();
 
         //Getter/Setter
-        int GetAttack();
-        int GetInt();
+        int GetAttribute(BattleEnums::Attribute attr);
         float GetTimeToNextAttack();
         virtual ControllType GetControllType();
         void CalculateMove(SceneManagerBattle* sm);
@@ -40,13 +41,11 @@ class Entity
 
     protected:
         std::vector<Skill> m_skills;
+        std::multimap<int, PassiveEffect*> m_passiveEffects;
 
-        int m_maxHp;
+        std::map<BattleEnums::Attribute, int> m_attributes;
+
         int m_hp;
-        int m_attack;
-        int m_int;
-        int m_defense;
-        int m_speed;
         float m_toNextAttack;
 
         ControllType m_controllTypeAtm;

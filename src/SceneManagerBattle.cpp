@@ -10,7 +10,7 @@ namespace BattleFunctions
     void AttackOnTarget(SceneManagerBattle* sm, BattleEnums::Target targetType, Entity* toAttack, Entity* attacking)
     {
         attacking->Attack();
-        toAttack->GetHit(attacking->GetAttack(), attacking->GetAttackType());
+        toAttack->GetHit(attacking->GetAttribute(BattleEnums::AttributeStrength), attacking->GetAttackType(), true);
         sm->TurnIsFinished();
     }
     void Attack(SceneManagerBattle* sm, Entity* attacking)

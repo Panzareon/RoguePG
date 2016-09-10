@@ -1,6 +1,8 @@
 #include "Entity.h"
 #include "AIRandom.h"
 #include "SceneManagerBattle.h"
+#include <math.h>
+#include <map>
 
 Entity::Entity()
 {
@@ -9,12 +11,12 @@ Entity::Entity()
     m_AI = new AIRandom();
 
     //TODO: add actual values
-    m_maxHp = 100;
-    m_hp = m_maxHp;
-    m_speed = 10;
-    m_attack = 10;
-    m_int = 10;
-    m_defense = 10;
+    for(int i = 0; i < BattleEnums::ATTRIBUTE_END; i++)
+    {
+        m_attributes.insert(std::pair<BattleEnums::Attribute, int>((BattleEnums::Attribute)i, 10));
+    }
+    m_attributes[BattleEnums::AttributeMaxHp] = 100;
+    m_hp = GetAttribute(BattleEnums::AttributeMaxHp);
 
 
 
@@ -32,10 +34,18 @@ void Entity::Attack()
     //TODO: play Attack animation
 }
 
-void Entity::GetHit(int attack, BattleEnums::AttackType type)
+void Entity::GetHit(int attack, BattleEnums::AttackType type, bool physical)
 {
     //TODO: maybe other dmg calculation?
-    int dmg = attack - m_defense/2;
+    int dmg;
+    if(physical)
+    {
+        dmg = attack - std::sqrt(GetAttribute(BattleEnums::AttributeDefense));
+    }
+    else
+    {
+        dmg = attack - std::sqrt(GetAttribute(BattleEnums::AttributeMagicDefense));
+    }
     //TODO: add resistance or weakness to Attack type
     m_hp -= dmg;
     //TODO: play get hit animation
@@ -62,32 +72,40 @@ void Entity::AddSkill(Skill* skill)
     m_skills.push_back(*skill);
 }
 
-int Entity::GetAttack()
+int Entity::GetAttribute(BattleEnums::Attribute attr)
 {
-    //TODO: return attack with buffs and debuffs
-    return m_attack;
-}
-int Entity::GetInt()
-{
-    //TODO: return intelligence with buffs and debuffs
-    return m_int;
+    float atmValue = (float)m_attributes[attr];
+    for(auto iter = m_passiveEffects.begin(); iter != m_passiveEffects.end(); iter++)
+    {
+        atmValue = iter->second->GetAttribute(atmValue, attr);
+    }
+    return (int)atmValue;
 }
 
 
 void Entity::PassTime(float Time)
 {
-    m_toNextAttack -= Time * m_speed;
+    m_toNextAttack -= Time * GetAttribute(BattleEnums::AttributeSpeed);
 }
 
 void Entity::FinishedTurn()
 {
-    m_toNextAttack = 1.0f;
+    m_toNextAttack += 1.0f;
+    auto iter = m_passiveEffects.begin();
+    while(iter != m_passiveEffects.end())
+    {
+        iter->second->OnTurn();
+        if(iter->second->IsStillActive())
+            iter++;
+        else
+            iter = m_passiveEffects.erase(iter);
+    }
 }
 
 
 float Entity::GetTimeToNextAttack()
 {
-    return m_toNextAttack / m_speed;
+    return m_toNextAttack / GetAttribute(BattleEnums::AttributeSpeed);
 }
 Entity::ControllType Entity::GetControllType()
 {
