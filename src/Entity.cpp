@@ -4,13 +4,14 @@
 #include <math.h>
 #include <map>
 
-Entity::Entity()
+Entity::Entity(int teamId)
 {
     //ctor
     m_controllTypeAtm = Entity::ControllAI;
-    m_AI = new AIRandom();
+    m_teamId = teamId;
 
     //TODO: add actual values
+    m_AI = new AIRandom(this);
     for(int i = 0; i < BattleEnums::ATTRIBUTE_END; i++)
     {
         m_attributes.insert(std::pair<BattleEnums::Attribute, int>((BattleEnums::Attribute)i, 10));
@@ -28,8 +29,10 @@ Entity::~Entity()
     //dtor
     if(m_AI != 0)
         delete m_AI;
+    for(auto iter = m_passiveEffects.begin(); iter != m_passiveEffects.end(); iter++)
+        delete iter->second;
 }
-void Entity::Attack(Entity* target)
+void Entity::AttackEntity(Entity* target)
 {
     //TODO: play Attack animation
     //TODO: Get Weapon Dmg
@@ -43,21 +46,36 @@ void Entity::Attack(Entity* target)
     {
         attack *= GetAttribute(BattleEnums::AttributeInt);
     }
-    target->GetHit(attack, GetAttackType(), isPhysical);
+    Attack att(attack, GetAttackType(), isPhysical);
+    AttackEntity(target, &att);
 }
 
-void Entity::GetHit(int attack, BattleEnums::AttackType type, bool physical)
+void Entity::AttackEntity(Entity* target, Attack* attack)
 {
-    //TODO: maybe other dmg calculation?
-    int dmg;
-    if(physical)
+    for(auto iter = m_passiveEffects.begin(); iter != m_passiveEffects.end(); iter++)
     {
-        dmg = attack - std::sqrt(GetAttribute(BattleEnums::AttributeDefense));
+        iter->second->AttackEntity(attack, target, this);
+    }
+    target->GetHit(attack, this);
+}
+
+void Entity::GetHit(Attack* attack, Entity* attacker)
+{
+    for(auto iter = m_passiveEffects.begin(); iter != m_passiveEffects.end(); iter++)
+    {
+        iter->second->GetAttacked(attack, this, attacker);
+    }
+    //TODO: maybe other dmg calculation?
+    int defense;
+    if(attack->m_physical)
+    {
+        defense = GetAttribute(BattleEnums::AttributeDefense);
     }
     else
     {
-        dmg = attack - std::sqrt(GetAttribute(BattleEnums::AttributeMagicDefense));
+        defense = GetAttribute(BattleEnums::AttributeMagicDefense);
     }
+    int dmg = attack->m_dmg / std::sqrt(defense);
     //TODO: add resistance or weakness to Attack type
     m_hp -= dmg;
     //TODO: play get hit animation
@@ -143,4 +161,9 @@ void Entity::CalculateMove(SceneManagerBattle* sm)
         m_AI->UseNextSkill();
         sm->TurnIsFinished();
     }
+}
+
+int Entity::GetTeamId()
+{
+    return m_teamId;
 }

@@ -69,7 +69,7 @@ void GameController::StartBattle()
 {
     SceneManagerBattle* newBattle = new SceneManagerBattle(GetRenderTarget(), GetWindowWidth(), GetWindowHeight());
 
-    Entity* enemy = new Entity();
+    Entity* enemy = new Entity(1);
     newBattle->AddEnemy(enemy);
     LoadSceneManager(newBattle);
 }

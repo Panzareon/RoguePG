@@ -26,7 +26,7 @@ int main()
 
     //TODO: create actual party
     Party party;
-    PartyMember* member = new PartyMember();
+    PartyMember* member = new PartyMember(0);
 
     BattleEnums::Target target = BattleEnums::TargetEnemyTeamEntity;
     Skill* newSkill = new Skill(member,target);

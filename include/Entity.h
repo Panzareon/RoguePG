@@ -4,6 +4,7 @@
 #include "Skill.h"
 #include "PassiveEffect.h"
 #include "AIBase.h"
+#include "Attack.h"
 #include <vector>
 #include <map>
 
@@ -13,16 +14,17 @@ class Entity
 {
     public:
         enum ControllType{ControllAI, ControllUser};
-        Entity();
+        Entity(int teamId);
         virtual ~Entity();
 
         void PassTime(float Time);
         void FinishedTurn();
 
         //Deal dmg and play Attack animation
-        void Attack(Entity* target);
+        void AttackEntity(Entity* target);
+        void AttackEntity(Entity* target, Attack* attack);
         //Get damage and play get hit animation
-        void GetHit(int attack, BattleEnums::AttackType type, bool physical);
+        void GetHit(Attack* attack, Entity* attacker);
 
 
         //returns Attack Type of basic attack
@@ -40,6 +42,8 @@ class Entity
 
         std::vector<Skill>* GetSkillList();
 
+        int GetTeamId();
+
     protected:
         std::vector<Skill> m_skills;
         std::multimap<int, PassiveEffect*> m_passiveEffects;
@@ -51,6 +55,8 @@ class Entity
 
         ControllType m_controllTypeAtm;
         AIBase* m_AI;
+
+        int m_teamId;
     private:
 };
 

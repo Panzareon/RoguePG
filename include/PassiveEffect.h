@@ -2,10 +2,10 @@
 #define PASSIVEEFFECT_H
 
 #include "Enums.h"
+#include "Attack.h"
 #include <functional>
 class Entity;
 
-//TODO: Add effect that is called when attacking / being attacked
 //Class for Buffs and Debuffs
 class PassiveEffect
 {
@@ -16,11 +16,15 @@ class PassiveEffect
         //For Effects that trigger every turn
         virtual void OnTurn();
         virtual float GetAttribute(float attributeValue, BattleEnums::Attribute attribute);
+        virtual void AttackEntity(Attack* att, Entity* target, Entity* attacker);
+        virtual void GetAttacked(Attack* att, Entity* target, Entity* attacker);
         bool IsStillActive();
 
         int GetActivationPriority();
         void AddOnTurnEffect(std::function<void(Entity*,PassiveEffect*)>* onTurn);
         void AddAttributeEffect(std::function<float(float,BattleEnums::Attribute)>* attributeFunction);
+        void AddAttack(std::function<void(Attack*, Entity*, Entity*)>* attack);
+        void AddOnAttacked(std::function<void(Attack*, Entity*, Entity*)>* onAttacked);
 
     protected:
         Entity* m_target;
@@ -30,6 +34,8 @@ class PassiveEffect
         int m_duration;
         std::function<void(Entity*,PassiveEffect*)>* m_onTurn;
         std::function<float(float,BattleEnums::Attribute)>* m_attributeFunction;
+        std::function<void(Attack*, Entity*, Entity*)>* m_attack;
+        std::function<void(Attack*, Entity*, Entity*)>* m_onAttacked;
     private:
 };
 

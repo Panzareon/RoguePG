@@ -45,6 +45,7 @@
 		<Unit filename="include/AIBase.h" />
 		<Unit filename="include/AIRandom.h" />
 		<Unit filename="include/AnimatedNode.h" />
+		<Unit filename="include/Attack.h" />
 		<Unit filename="include/Configuration.h" />
 		<Unit filename="include/DrawableNode.h" />
 		<Unit filename="include/Effect.h" />
@@ -78,6 +79,7 @@
 		<Unit filename="src/AIBase.cpp" />
 		<Unit filename="src/AIRandom.cpp" />
 		<Unit filename="src/AnimatedNode.cpp" />
+		<Unit filename="src/Attack.cpp" />
 		<Unit filename="src/Configuration.cpp" />
 		<Unit filename="src/DrawableNode.cpp" />
 		<Unit filename="src/Effect.cpp" />

@@ -20,6 +20,7 @@ class SceneManagerBattle : public SceneManager
         virtual bool IsFinished();
 
         void AddEnemy(Entity* enemy);
+        std::vector<Entity*>* GetEnemies();
 
         void TurnIsFinished();
         void AddSubMenu(MenuNode* menu);

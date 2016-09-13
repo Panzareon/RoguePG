@@ -7,7 +7,7 @@
 class AIRandom : public AIBase
 {
     public:
-        AIRandom();
+        AIRandom(Entity* entity);
         virtual ~AIRandom();
         virtual void UseNextSkill();
     protected:

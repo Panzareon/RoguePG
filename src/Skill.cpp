@@ -1,5 +1,5 @@
 #include "Skill.h"
-
+#include "InvalidArgumentException.h"
 #include "Effect.h"
 
 Skill::Skill(Entity* user, BattleEnums::Target target)
@@ -18,6 +18,8 @@ void Skill::Use(BattleEnums::Target targetType, Entity* target)
     std::vector<Entity*> targets;
     if(targetType == BattleEnums::TargetEnemyTeamEntity || targetType == BattleEnums::TargetOwnTeamEntity)
     {
+        if(target == nullptr)
+            throw InvalidArgumentException("Targeted Entity cannot be null");
         targets.push_back(target);
     }
     else if(targetType == BattleEnums::TargetSelf)

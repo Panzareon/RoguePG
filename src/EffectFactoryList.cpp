@@ -21,7 +21,8 @@ namespace EffectFunctions
     {
         for(unsigned int i = 0; i < targets->size(); i++)
         {
-            targets->at(i)->GetHit(strength->at(0) * user->GetAttribute(BattleEnums::AttributeInt), type, false);
+            Attack att(strength->at(0) + user->GetAttribute(BattleEnums::AttributeInt), type, false);
+            user->AttackEntity(targets->at(i), &att);
             //TODO: Animation
         }
     }
