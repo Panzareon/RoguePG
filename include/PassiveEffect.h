@@ -5,6 +5,7 @@
 #include <functional>
 class Entity;
 
+//TODO: Add effect that is called when attacking / being attacked
 //Class for Buffs and Debuffs
 class PassiveEffect
 {

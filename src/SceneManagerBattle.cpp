@@ -4,6 +4,7 @@
 #include "TextureList.h"
 #include "Configuration.h"
 #include "Skill.h"
+#include "Localization.h"
 
 namespace BattleFunctions
 {
@@ -248,8 +249,9 @@ void SceneManagerBattle::ShowMenuForNext()
     //Clear the menu and add menu Options for the next
     m_mainMenu->ResetOptions();
     //add new Battle options
-    m_mainMenu->AddOption("Attack", std::function<void()>(std::bind(&BattleFunctions::Attack, this, m_next)));
-    m_mainMenu->AddOption("Skill", std::function<void()>(std::bind(&BattleFunctions::SkillList, this, m_next)));
+    Localization* local = Localization::GetInstance();
+    m_mainMenu->AddOption(local->GetLocalization("battle_menu.attack"), std::function<void()>(std::bind(&BattleFunctions::Attack, this, m_next)));
+    m_mainMenu->AddOption(local->GetLocalization("battle_menu.skill"), std::function<void()>(std::bind(&BattleFunctions::SkillList, this, m_next)));
     //TODO: add other Battle Options
 
     m_mainMenu->setVisibility(true);

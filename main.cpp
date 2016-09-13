@@ -5,6 +5,7 @@
 #include "AnimatedNode.h"
 #include "GameController.h"
 #include "EffectFactoryList.h"
+#include "Localization.h"
 
 int main()
 {
@@ -12,7 +13,8 @@ int main()
     int width = controller->GetWindowWidth();
     int height = controller->GetWindowHeight();
 
-    sf::RenderWindow window(sf::VideoMode(width, height), "SFML works!");
+    Localization* local = Localization::GetInstance();
+    sf::RenderWindow window(sf::VideoMode(width, height), local->GetLocalization("main.window.title"));
     sf::View view(sf::FloatRect(0,0,width,height));
     window.setView(view);
     window.setVerticalSyncEnabled(true);

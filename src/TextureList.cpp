@@ -1,5 +1,5 @@
 #include "TextureList.h"
-#include <iostream>
+#include "InvalidArgumentException.h"
 
 TextureList::TextureList()
 {
@@ -28,7 +28,9 @@ sf::Texture* TextureList::getTexture(std::string filename)
         sf::Texture* newTexture = new sf::Texture();
         if(!newTexture->loadFromFile(texturePath))
         {
-            std::cout << "Could not load Texture: " << texturePath << std::endl;
+            std::string msg("Could not load Texture: ");
+            msg.append(texturePath);
+            throw InvalidArgumentException(msg);
             return 0;
         }
         m_textures.insert(std::make_pair(filename, newTexture));

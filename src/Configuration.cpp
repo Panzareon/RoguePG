@@ -1,13 +1,18 @@
 #include "Configuration.h"
 #include <iostream>
+#include "InvalidArgumentException.h"
 
 Configuration* Configuration::m_instance = 0;
 
 Configuration::Configuration()
 {
     //ctor
+    //TODO: get active font from somewhere else
     if(!m_font.loadFromFile("font/arial.ttf"))
-        std::cout << "Could not load font!";
+    {
+        std::string msg("Could not load font!");
+        throw InvalidArgumentException(msg);
+    }
 
     //Default keyconfig:
     //TODO: load from file
