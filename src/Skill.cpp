@@ -2,10 +2,11 @@
 
 #include "Effect.h"
 
-Skill::Skill(Entity* user)
+Skill::Skill(Entity* user, BattleEnums::Target target)
 {
     //ctor
     m_user = user;
+    m_defaultTarget = target;
 }
 
 Skill::~Skill()
@@ -28,7 +29,7 @@ void Skill::Use(BattleEnums::Target targetType, Entity* target)
         //TODO: fill targets vector depending on targetType
     }
     //Use this Skill + play animation
-    for(int i = 0; i < m_effects.size(); i++)
+    for(unsigned int i = 0; i < m_effects.size(); i++)
     {
         m_effects[i]->UseEffectOn(m_user, &targets);
     }
@@ -36,8 +37,7 @@ void Skill::Use(BattleEnums::Target targetType, Entity* target)
 
 BattleEnums::Target Skill::GetDefaultTarget()
 {
-    //TODO: return actual value
-    return BattleEnums::TargetEnemyTeamEntity;
+    return m_defaultTarget;
 }
 
 std::string Skill::GetName()
@@ -48,4 +48,5 @@ std::string Skill::GetName()
 void Skill::AddEffect(Effect* eff)
 {
     m_effects.push_back(eff);
+    m_manaUse += eff->GetValue();
 }

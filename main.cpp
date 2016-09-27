@@ -26,8 +26,9 @@ int main()
     Party party;
     PartyMember* member = new PartyMember();
 
-    Skill* newSkill = new Skill(member);
-    newSkill->AddEffect(EffectFactoryList::GetInstance()->getRandom()->GetEffectWithValue(10.0f, BattleEnums::TargetEnemyTeamEntity));
+    BattleEnums::Target target = BattleEnums::TargetEnemyTeamEntity;
+    Skill* newSkill = new Skill(member,target);
+    newSkill->AddEffect(EffectFactoryList::GetInstance()->getRandom(BattleEnums::AttackTypeFire, BattleEnums::EffectTypeDamage)->GetEffectWithValue(10.0f, target));
     member->AddSkill(newSkill);
     party.AddPartyMember(member);
     controller->setParty(&party);

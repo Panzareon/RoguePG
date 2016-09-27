@@ -9,8 +9,7 @@ namespace BattleFunctions
 {
     void AttackOnTarget(SceneManagerBattle* sm, BattleEnums::Target targetType, Entity* toAttack, Entity* attacking)
     {
-        attacking->Attack();
-        toAttack->GetHit(attacking->GetAttack(), attacking->GetAttackType());
+        attacking->Attack(toAttack);
         sm->TurnIsFinished();
     }
     void Attack(SceneManagerBattle* sm, Entity* attacking)
@@ -46,7 +45,7 @@ namespace BattleFunctions
         skillMenu->CancelAvailable(true);
 
         std::vector<Skill>* skillList = attacking->GetSkillList();
-        for(int i = 0; i < skillList->size(); i++)
+        for(unsigned int i = 0; i < skillList->size(); i++)
         {
             skillMenu->AddOption(skillList->at(i).GetName(),std::function<void()>(std::bind(&UseSkill, sm, attacking, &skillList->at(i))));
         }
@@ -80,7 +79,7 @@ SceneManagerBattle::SceneManagerBattle(sf::RenderTarget * target, int windowWidt
 SceneManagerBattle::~SceneManagerBattle()
 {
     //dtor
-    for(int i = 0; i < m_enemies.size(); i++)
+    for(unsigned int i = 0; i < m_enemies.size(); i++)
     {
         delete m_enemies[i];
     }
@@ -271,7 +270,7 @@ void SceneManagerBattle::PassTime(float Time)
 bool SceneManagerBattle::IsFinished()
 {
     bool finished = true;
-    for(int i = 0; i < m_enemies.size(); i++)
+    for(unsigned int i = 0; i < m_enemies.size(); i++)
     {
         if(!m_enemies[i]->IsDead())
         {
@@ -281,7 +280,7 @@ bool SceneManagerBattle::IsFinished()
     if(finished)
         return true;
     finished = true;
-    for(int i = 0; i < m_party->GetActivePartyMembers()->size(); i++)
+    for(unsigned int i = 0; i < m_party->GetActivePartyMembers()->size(); i++)
     {
         if(!m_party->GetActivePartyMembers()->at(i)->IsDead())
         {

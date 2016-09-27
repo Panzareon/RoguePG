@@ -38,7 +38,7 @@ void MenuNode::ResetOptions()
 {
     m_optionName.clear();
     m_optionFunction.clear();
-    for(int i = 0; i < m_children.size(); i++)
+    for(unsigned int i = 0; i < m_children.size(); i++)
     {
         delete m_children[i];
     }
@@ -109,7 +109,7 @@ void MenuNode::onDraw(sf::RenderTarget& target, const sf::Transform& transformBa
 void MenuNode::CheckKeyboardInput()
 {
     //remove hidden sub menus
-    for(int i = 0; i < m_children.size(); i++)
+    for(unsigned int i = 0; i < m_children.size(); i++)
     {
         if(!m_children[i]->IsVisible())
         {

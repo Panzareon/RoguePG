@@ -54,6 +54,7 @@
 		<Unit filename="include/Enums.h" />
 		<Unit filename="include/FillItem.h" />
 		<Unit filename="include/GameController.h" />
+		<Unit filename="include/InvalidArgumentException.h" />
 		<Unit filename="include/Map.h" />
 		<Unit filename="include/MapFill.h" />
 		<Unit filename="include/MapFillDungeon.h" />
@@ -63,11 +64,13 @@
 		<Unit filename="include/Node.h" />
 		<Unit filename="include/Party.h" />
 		<Unit filename="include/PartyMember.h" />
+		<Unit filename="include/PassiveEffect.h" />
 		<Unit filename="include/SceneManager.h" />
 		<Unit filename="include/SceneManagerBattle.h" />
 		<Unit filename="include/SceneManagerDungeon.h" />
 		<Unit filename="include/SceneManagerMoveable.h" />
 		<Unit filename="include/Skill.h" />
+		<Unit filename="include/StrengthCalculation.h" />
 		<Unit filename="include/TextureList.h" />
 		<Unit filename="include/TileMap.h" />
 		<Unit filename="main.cpp" />
@@ -82,6 +85,7 @@
 		<Unit filename="src/Entity.cpp" />
 		<Unit filename="src/FillItem.cpp" />
 		<Unit filename="src/GameController.cpp" />
+		<Unit filename="src/InvalidArgumentException.cpp" />
 		<Unit filename="src/Map.cpp" />
 		<Unit filename="src/MapFill.cpp" />
 		<Unit filename="src/MapFillDungeon.cpp" />
@@ -91,11 +95,13 @@
 		<Unit filename="src/Node.cpp" />
 		<Unit filename="src/Party.cpp" />
 		<Unit filename="src/PartyMember.cpp" />
+		<Unit filename="src/PassiveEffect.cpp" />
 		<Unit filename="src/SceneManager.cpp" />
 		<Unit filename="src/SceneManagerBattle.cpp" />
 		<Unit filename="src/SceneManagerDungeon.cpp" />
 		<Unit filename="src/SceneManagerMoveable.cpp" />
 		<Unit filename="src/Skill.cpp" />
+		<Unit filename="src/StrengthCalculation.cpp" />
 		<Unit filename="src/TextureList.cpp" />
 		<Unit filename="src/TileMap.cpp" />
 		<Extensions>
