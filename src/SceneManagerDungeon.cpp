@@ -49,7 +49,7 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     sf::Sprite hero;
     hero.setTexture(*TextureList::getTexture(TextureList::m_heroSpriteSheet));
     hero.setTextureRect(sf::IntRect(15,13,32,36));
-    m_hero = new AnimatedNode(hero);
+    m_hero = new AnimatedNode(&hero);
     m_hero->setBoundingBox(sf::FloatRect(8.0f,22.0f,16.0f,16.0f));
     m_eventLayer->addChild(m_hero);
 

@@ -2,11 +2,11 @@
 
 sf::Shader* AnimatedNode::m_shader = 0;
 
-AnimatedNode::AnimatedNode(sf::Sprite sprite)
+AnimatedNode::AnimatedNode(sf::Sprite* sprite)
 {
     //ctor
     m_elapsedSeconds = 0.0f;
-    m_sprite = sprite;
+    m_sprite = *sprite;
 
     if(m_shader == 0)
     {
