@@ -11,6 +11,7 @@ AnimatedNode::AnimatedNode(sf::Sprite* sprite)
     if(m_shader == 0)
     {
         m_shader = new sf::Shader();
+        //TODO: get Filename from somewhere else
         m_shader->loadFromFile("shader/spriteSheetAnimation.frag", sf::Shader::Fragment);
     }
 }

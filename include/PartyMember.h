@@ -7,7 +7,7 @@
 class PartyMember : public Entity
 {
     public:
-        PartyMember();
+        PartyMember(int teamId);
         virtual ~PartyMember();
     protected:
     private:

@@ -29,7 +29,7 @@ void StrengthCalculation::SetMultiplier(float multiplyWith)
 
 float StrengthCalculation::GetValue(std::vector<float>* strength, BattleEnums::Target target)
 {
-    float value = 0.0f;
+    float value = 1.0f;
     for(unsigned int i = 0; i < m_minValue.size(); i++)
     {
         value *= strength->at(i) * m_multiplyWith;
@@ -58,8 +58,8 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
         value /= AllTargetMali;
     }
 
-    float minV = 0.0f;
-    float maxV = 0.0f;
+    float minV = 1.0f;
+    float maxV = 1.0f;
 
     for(unsigned int i = 0; i < m_minValue.size(); i++)
     {
@@ -85,7 +85,7 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
     do
     {
         finished = true;
-        calculatedValue = 0.0f;
+        calculatedValue = 1.0f;
         for(int i = 0; i < lastValueId; i++)
         {
             if(m_step[i] == 0.0f)

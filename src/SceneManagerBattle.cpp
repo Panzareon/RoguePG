@@ -4,12 +4,13 @@
 #include "TextureList.h"
 #include "Configuration.h"
 #include "Skill.h"
+#include "Localization.h"
 
 namespace BattleFunctions
 {
     void AttackOnTarget(SceneManagerBattle* sm, BattleEnums::Target targetType, Entity* toAttack, Entity* attacking)
     {
-        attacking->Attack(toAttack);
+        attacking->AttackEntity(toAttack);
         sm->TurnIsFinished();
     }
     void Attack(SceneManagerBattle* sm, Entity* attacking)
@@ -29,7 +30,7 @@ namespace BattleFunctions
         BattleEnums::Target target = skill->GetDefaultTarget();
         if(target == BattleEnums::TargetNone)
         {
-            skill->Use(target,0);
+            skill->Use(target,nullptr);
         }
         else
         {
@@ -115,7 +116,6 @@ void SceneManagerBattle::Tick()
     if(m_useOnTarget != 0)
     {
         //Selecting target
-        //TODO: move only one target at a time and not one per tick
         if(controller->IsKeyPressed(Configuration::MoveDown))
         {
             if(m_targetType == BattleEnums::TargetEnemyTeamEntity)
@@ -206,6 +206,7 @@ void SceneManagerBattle::AddSubMenu(MenuNode* menu)
 void SceneManagerBattle::TurnIsFinished()
 {
     m_mainMenu->ResetOptions();
+    m_mainMenu->setVisibility(false);
     m_next->FinishedTurn();
     CalculateNext();
 }
@@ -248,8 +249,9 @@ void SceneManagerBattle::ShowMenuForNext()
     //Clear the menu and add menu Options for the next
     m_mainMenu->ResetOptions();
     //add new Battle options
-    m_mainMenu->AddOption("Attack", std::function<void()>(std::bind(&BattleFunctions::Attack, this, m_next)));
-    m_mainMenu->AddOption("Skill", std::function<void()>(std::bind(&BattleFunctions::SkillList, this, m_next)));
+    Localization* local = Localization::GetInstance();
+    m_mainMenu->AddOption(local->GetLocalization("battle_menu.attack"), std::function<void()>(std::bind(&BattleFunctions::Attack, this, m_next)));
+    m_mainMenu->AddOption(local->GetLocalization("battle_menu.skill"), std::function<void()>(std::bind(&BattleFunctions::SkillList, this, m_next)));
     //TODO: add other Battle Options
 
     m_mainMenu->setVisibility(true);
@@ -288,4 +290,9 @@ bool SceneManagerBattle::IsFinished()
         }
     }
     return finished;
+}
+
+std::vector<Entity*>* SceneManagerBattle::GetEnemies()
+{
+    return &m_enemies;
 }

@@ -1,6 +1,8 @@
 #include "AIRandom.h"
+#include "Entity.h"
+#include <random>
 
-AIRandom::AIRandom()
+AIRandom::AIRandom(Entity* entity) : AIBase(entity)
 {
     //ctor
 }
@@ -11,5 +13,26 @@ AIRandom::~AIRandom()
 }
 void AIRandom::UseNextSkill()
 {
-    //TODO: select random skill and use it
+    //select random skill and use it
+    std::vector<Skill>* skillList = m_entity->GetSkillList();
+    int nrSkills = skillList->size();
+    int skill = rand() % (nrSkills + 1);
+    if(skill < nrSkills)
+    {
+        Skill* toUse = &skillList->at(skill);
+        BattleEnums::Target target = toUse->GetDefaultTarget();
+        if(target == BattleEnums::TargetEnemyTeamEntity)
+            toUse->Use(target, GetRandomEntity(m_entity->GetTeamId(), true));
+        else if(target == BattleEnums::TargetOwnTeamEntity)
+            toUse->Use(target, GetRandomEntity(m_entity->GetTeamId(), false));
+        else
+            toUse->Use(target, nullptr);
+    }
+    else
+    {
+        //Use Basic Attack
+        m_entity->AttackEntity(GetRandomEntity(m_entity->GetTeamId(), true));
+    }
 }
+
+
