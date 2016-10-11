@@ -9,14 +9,14 @@ class Node
     public:
         Node();
         virtual ~Node();
-        void draw(sf::RenderTarget& target, const sf::Transform& parentTransform) const;
+        virtual void draw(sf::RenderTarget& target, const sf::Transform& parentTransform) const;
 
         sf::Transform getTransform();
         sf::Transform getGlobalTransform();
         void setTransform(sf::Transform newTransform);
 
         void setVisibility(bool visible);
-        bool IsVisible();
+        virtual bool IsVisible();
 
 
         void moveNode(float x, float y);

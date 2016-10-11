@@ -3,6 +3,7 @@
 #include "SceneManagerBattle.h"
 #include <math.h>
 #include <map>
+#include "TextureList.h"
 
 Entity::Entity(int teamId)
 {
@@ -19,6 +20,8 @@ Entity::Entity(int teamId)
     m_attributes[BattleEnums::AttributeMaxHp] = 100;
     m_hp = GetAttribute(BattleEnums::AttributeMaxHp);
 
+    m_battleSprite = new sf::Sprite();
+    m_battleSprite->setTexture(*TextureList::getTexture(TextureList::m_defaultBattleSprite));
 
 
     m_toNextAttack = 1.0f;
@@ -31,6 +34,7 @@ Entity::~Entity()
         delete m_AI;
     for(auto iter = m_passiveEffects.begin(); iter != m_passiveEffects.end(); iter++)
         delete iter->second;
+    delete m_battleSprite;
 }
 void Entity::AttackEntity(Entity* target)
 {
@@ -162,6 +166,12 @@ void Entity::CalculateMove(SceneManagerBattle* sm)
         sm->TurnIsFinished();
     }
 }
+
+sf::Sprite* Entity::GetBattleSprite()
+{
+    return m_battleSprite;
+}
+
 
 int Entity::GetTeamId()
 {

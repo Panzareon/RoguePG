@@ -71,6 +71,8 @@ void GameController::StartBattle()
 
     Entity* enemy = new Entity(1);
     newBattle->AddEnemy(enemy);
+    enemy = new Entity(1);
+    newBattle->AddEnemy(enemy);
     LoadSceneManager(newBattle);
 }
 

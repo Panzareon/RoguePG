@@ -5,6 +5,8 @@
 #include "Configuration.h"
 #include "Skill.h"
 #include "Localization.h"
+#include "EntityNode.h"
+#include <iostream>
 
 namespace BattleFunctions
 {
@@ -31,13 +33,13 @@ namespace BattleFunctions
         if(target == BattleEnums::TargetNone)
         {
             skill->Use(target,nullptr);
+            sm->TurnIsFinished();
         }
         else
         {
             std::function<void(BattleEnums::Target, Entity*)>* func = new std::function<void(BattleEnums::Target, Entity*)>(std::bind(&UseSkillOnTarget, sm, std::placeholders::_1, std::placeholders::_2, attacking, skill));
             sm->UseOnTarget(func, target, attacking);
         }
-        sm->TurnIsFinished();
     }
     void SkillList(SceneManagerBattle* sm, Entity* attacking)
     {
@@ -73,8 +75,23 @@ SceneManagerBattle::SceneManagerBattle(sf::RenderTarget * target, int windowWidt
 
     m_party = GameController::getInstance()->getParty();
 
+
     m_next = 0;
     m_useOnTarget = 0;
+
+    //Setting Startpositions for teams
+    //TODO: for more than 2 teams?
+    m_posPerTeam.push_back(sf::Vector2f(50,100));
+    m_posPerTeam.push_back(sf::Vector2f(GameController::getInstance()->GetWindowWidth() - 100,100));
+    m_posChangePerTeam.push_back(sf::Vector2f(40,40));
+    m_posChangePerTeam.push_back(sf::Vector2f(-40,40));
+
+
+
+    for(auto member : (*m_party->GetActivePartyMembers()))
+    {
+        AddSpriteForEntity(member);
+    }
 }
 
 SceneManagerBattle::~SceneManagerBattle()
@@ -167,15 +184,15 @@ void SceneManagerBattle::Tick()
             }
             delete m_useOnTarget;
             m_useOnTarget = 0;
+            m_targetEntity = nullptr;
+            m_targetType = BattleEnums::TARGET_END;
         }
         else if(controller->IsKeyPressed(Configuration::Cancel))
         {
             delete m_useOnTarget;
             m_useOnTarget = 0;
-        }
-        else
-        {
-            //TODO: Show which entities are targeted
+            m_targetEntity = nullptr;
+            m_targetType = BattleEnums::TARGET_END;
         }
     }
     else if(m_next != 0)
@@ -196,6 +213,7 @@ void SceneManagerBattle::Tick()
 void SceneManagerBattle::AddEnemy(Entity* enemy)
 {
     m_enemies.push_back(enemy);
+    AddSpriteForEntity(enemy);
 }
 
 void SceneManagerBattle::AddSubMenu(MenuNode* menu)
@@ -289,10 +307,58 @@ bool SceneManagerBattle::IsFinished()
             finished = false;
         }
     }
+    if(finished)
+    {
+        //TODO: show game over screen
+        std::cout << "Game Over!" << std::endl;
+    }
     return finished;
+}
+
+bool SceneManagerBattle::IsEntityTargeted(Entity* entity)
+{
+    if(m_targetEntity == entity)
+        return true;
+    if(m_targetType == BattleEnums::TargetAll)
+        return true;
+    //Only Player controlled Entities are targeting someone
+    if(m_targetType == BattleEnums::TargetOwnTeam)
+    {
+        std::vector<PartyMember*>* party = m_party->GetActivePartyMembers();
+        return std::find(party->begin(), party->end(), entity) != party->end();
+    }
+    if(m_targetType == BattleEnums::TargetOwnTeam)
+    {
+        return std::find(m_enemies.begin(), m_enemies.end(), entity) != m_enemies.end();
+    }
+    return false;
 }
 
 std::vector<Entity*>* SceneManagerBattle::GetEnemies()
 {
     return &m_enemies;
+}
+
+void SceneManagerBattle::AddSpriteForEntity(Entity* entity)
+{
+    //Adding Cursor if Entity is targeted
+    sf::Sprite* target = new sf::Sprite(*TextureList::getTexture(TextureList::m_targetCursor));
+    DrawableNode* targetNode = new DrawableNode(target);
+    //Moving Cursor
+    sf::Transform targetTransform;
+    targetTransform.translate(15, -10);
+    targetNode->setTransform(targetTransform);
+
+    //Create Node for Entity
+    EntityNode* node = new EntityNode(this, entity);
+    //Add Cursor to Entity
+    node->SetTargetedNode(targetNode);
+    sf::Transform trans;
+    //Place at Position depending on Team
+    int teamId = entity->GetTeamId();
+    trans.translate(m_posPerTeam[teamId]);
+    m_posPerTeam[teamId] += m_posChangePerTeam[teamId];
+    m_posChangePerTeam[teamId].x *= -1;
+    node->setTransform(trans);
+    m_eventLayer->addChild(node);
 }

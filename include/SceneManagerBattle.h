@@ -24,6 +24,10 @@ class SceneManagerBattle : public SceneManager
 
         void TurnIsFinished();
         void AddSubMenu(MenuNode* menu);
+
+        bool IsEntityTargeted(Entity* entity);
+
+        void AddSpriteForEntity(Entity* entity);
     protected:
         void CalculateNext();
         void ShowMenuForNext();
@@ -45,6 +49,9 @@ class SceneManagerBattle : public SceneManager
         Entity* m_targetEntity;
         BattleEnums::Target m_targetType;
         int m_targetNr;
+
+        std::vector<sf::Vector2f> m_posPerTeam;
+        std::vector<sf::Vector2f> m_posChangePerTeam;
     private:
 };
 

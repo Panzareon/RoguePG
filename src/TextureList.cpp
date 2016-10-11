@@ -15,6 +15,8 @@ std::map<std::string, sf::Texture*> TextureList::m_textures;
 std::string TextureList::m_dungeonTileMap = "TileMap.png";
 
 std::string TextureList::m_heroSpriteSheet = "skeleton-large.png";
+std::string TextureList::m_defaultBattleSprite = "rogue.png";
+std::string TextureList::m_targetCursor = "target.png";
 
 std::string TextureList::m_dungeonBattleBackground = "battle-background.png";
 

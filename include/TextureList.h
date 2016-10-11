@@ -14,6 +14,8 @@ class TextureList
         static std::string m_dungeonTileMap;
 
         static std::string m_heroSpriteSheet;
+        static std::string m_defaultBattleSprite;
+        static std::string m_targetCursor;
 
         static std::string m_dungeonBattleBackground;
 

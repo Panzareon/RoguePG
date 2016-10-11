@@ -5,6 +5,7 @@
 #include "PassiveEffect.h"
 #include "AIBase.h"
 #include "Attack.h"
+#include "SFML/Graphics.hpp"
 #include <vector>
 #include <map>
 
@@ -44,6 +45,8 @@ class Entity
 
         int GetTeamId();
 
+        sf::Sprite* GetBattleSprite();
+
     protected:
         std::vector<Skill> m_skills;
         std::multimap<int, PassiveEffect*> m_passiveEffects;
@@ -57,6 +60,8 @@ class Entity
         AIBase* m_AI;
 
         int m_teamId;
+
+        sf::Sprite* m_battleSprite;
     private:
 };
 

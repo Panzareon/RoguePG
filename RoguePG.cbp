@@ -52,6 +52,7 @@
 		<Unit filename="include/EffectFactory.h" />
 		<Unit filename="include/EffectFactoryList.h" />
 		<Unit filename="include/Entity.h" />
+		<Unit filename="include/EntityNode.h" />
 		<Unit filename="include/Enums.h" />
 		<Unit filename="include/FillItem.h" />
 		<Unit filename="include/GameController.h" />
@@ -86,6 +87,7 @@
 		<Unit filename="src/EffectFactory.cpp" />
 		<Unit filename="src/EffectFactoryList.cpp" />
 		<Unit filename="src/Entity.cpp" />
+		<Unit filename="src/EntityNode.cpp" />
 		<Unit filename="src/FillItem.cpp" />
 		<Unit filename="src/GameController.cpp" />
 		<Unit filename="src/InvalidArgumentException.cpp" />

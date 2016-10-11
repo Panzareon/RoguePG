@@ -15,6 +15,7 @@ class AnimatedNode : public Node
     protected:
         static sf::Shader* m_shader;
         float m_elapsedSeconds;
+        int m_numberFrames;
         sf::Sprite m_sprite;
     private:
 };

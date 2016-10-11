@@ -8,11 +8,14 @@
 class EntityNode : public AnimatedNode
 {
     public:
-        EntityNode(sf::Sprite* sprite, SceneManagerBattle* sm, Entity* entity);
+        EntityNode(SceneManagerBattle* sm, Entity* entity);
         virtual ~EntityNode();
+        virtual void draw(sf::RenderTarget& target, const sf::Transform& parentTransform) const;
+        void SetTargetedNode(Node* node);
     protected:
         SceneManagerBattle* m_smb;
         Entity* m_entity;
+        Node* m_targetedNode;
     private:
 };
 

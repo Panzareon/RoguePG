@@ -36,7 +36,12 @@ Entity* AIBase::GetRandomEntity(int teamId, bool enemy)
     }
     if(nr == 0)
     {
-        std::string msg("No Entity found without TeamId: ");
+        std::string msg("No Entity found ");
+        if(enemy)
+            msg.append("without");
+        else
+            msg.append("with");
+        msg.append(" TeamId: ");
         msg.append(std::to_string(teamId));
         throw InvalidArgumentException(msg);
     }
@@ -46,7 +51,7 @@ Entity* AIBase::GetRandomEntity(int teamId, bool enemy)
         //Check if teamIds are the same xor enemy is true
         if((enemies->at(i)->GetTeamId() == teamId) != enemy)
         {
-            if(ret == 1)
+            if(ret == 0)
                 return enemies->at(i);
             ret--;
         }
@@ -56,12 +61,17 @@ Entity* AIBase::GetRandomEntity(int teamId, bool enemy)
         //Check if teamIds are the same xor enemy is true
         if((party->at(i)->GetTeamId() == teamId) != enemy)
         {
-            if(ret == 1)
+            if(ret == 0)
                 return party->at(i);
             ret--;
         }
     }
-    std::string msg("No Entity found without TeamId: ");
+    std::string msg("No Entity found ");
+    if(enemy)
+        msg.append("without");
+    else
+        msg.append("with");
+    msg.append(" TeamId: ");
     msg.append(std::to_string(teamId));
     throw InvalidArgumentException(msg);
 }
