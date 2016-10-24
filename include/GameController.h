@@ -20,6 +20,8 @@ class GameController
         //TODO: Enemies as Parameter
         void StartBattle();
 
+        void GameOver();
+
         void SetRenderTarget(sf::RenderTarget* target);
         sf::RenderTarget* GetRenderTarget();
         int GetWindowWidth();

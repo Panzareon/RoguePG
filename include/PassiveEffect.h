@@ -18,6 +18,7 @@ class PassiveEffect
         virtual float GetAttribute(float attributeValue, BattleEnums::Attribute attribute);
         virtual void AttackEntity(Attack* att, Entity* target, Entity* attacker);
         virtual void GetAttacked(Attack* att, Entity* target, Entity* attacker);
+        virtual float GetExp(float exp);
         bool IsStillActive();
 
         int GetActivationPriority();
@@ -25,6 +26,7 @@ class PassiveEffect
         void AddAttributeEffect(std::function<float(float,BattleEnums::Attribute)>* attributeFunction);
         void AddAttack(std::function<void(Attack*, Entity*, Entity*)>* attack);
         void AddOnAttacked(std::function<void(Attack*, Entity*, Entity*)>* onAttacked);
+        void AddGetExp(std::function<float(float)>* getExp);
 
     protected:
         Entity* m_target;
@@ -36,6 +38,7 @@ class PassiveEffect
         std::function<float(float,BattleEnums::Attribute)>* m_attributeFunction;
         std::function<void(Attack*, Entity*, Entity*)>* m_attack;
         std::function<void(Attack*, Entity*, Entity*)>* m_onAttacked;
+        std::function<float(float)>* m_getExp;
     private:
 };
 

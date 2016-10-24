@@ -106,6 +106,20 @@ bool GameController::IsKeyPressed(Configuration::Keys key)
     return false;
 }
 
+void GameController::GameOver()
+{
+    m_party->UpdateActiveParty();
+    bool finished = true;
+    for(unsigned int i = 0; i < m_party->GetActivePartyMembers()->size(); i++)
+    {
+        if(!m_party->GetActivePartyMembers()->at(i)->IsDead())
+        {
+            finished = false;
+        }
+    }
+    //TODO: remove all SceneManager and display Game Over screen
+}
+
 
 
 

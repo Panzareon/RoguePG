@@ -50,6 +50,14 @@ float PassiveEffect::GetAttribute(float attributeValue, BattleEnums::Attribute a
     return (*m_attributeFunction)(attributeValue,attribute);
 }
 
+float PassiveEffect::GetExp(float exp)
+{
+    //this is called when the Entity gains Exp
+    if(m_getExp == nullptr)
+        return exp;
+    return (*m_getExp)(exp);
+}
+
 void PassiveEffect::AddAttributeEffect(std::function<float(float, BattleEnums::Attribute)>* attributeFunction)
 {
     if(m_attributeFunction != nullptr)
@@ -81,6 +89,12 @@ void PassiveEffect::AddOnAttacked(std::function<void(Attack*, Entity*, Entity*)>
         delete m_onAttacked;
     m_onAttacked = onAttacked;
 }
+
+void PassiveEffect::AddGetExp(std::function<float(float)>* getExp)
+{
+    m_getExp = getExp;
+}
+
 
 bool PassiveEffect::IsStillActive()
 {

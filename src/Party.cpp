@@ -28,3 +28,8 @@ void Party::AddPartyMember(PartyMember* member)
         m_activePartyMembers.push_back(member);
     }
 }
+
+void Party::UpdateActiveParty()
+{
+    //TODO: check if dead Member is in Party and if it is, set inactive Member to active
+}

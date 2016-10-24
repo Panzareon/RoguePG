@@ -298,7 +298,16 @@ bool SceneManagerBattle::IsFinished()
         }
     }
     if(finished)
+    {
+        //TODO: Calculate actual Exp from dead enemies
+        int exp = 100;
+        for(unsigned int i = 0; i < m_party->GetActivePartyMembers()->size(); i++)
+        {
+            m_party->GetActivePartyMembers()->at(i)->AddExp(exp);
+        }
         return true;
+    }
+    m_party->UpdateActiveParty();
     finished = true;
     for(unsigned int i = 0; i < m_party->GetActivePartyMembers()->size(); i++)
     {
@@ -309,8 +318,8 @@ bool SceneManagerBattle::IsFinished()
     }
     if(finished)
     {
-        //TODO: show game over screen
         std::cout << "Game Over!" << std::endl;
+        GameController::getInstance()->GameOver();
     }
     return finished;
 }
