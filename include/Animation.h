@@ -2,6 +2,7 @@
 #define ANIMATION_H
 
 #include "AnimationPart.h"
+#include "Node.h"
 #include <vector>
 
 

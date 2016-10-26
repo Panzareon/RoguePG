@@ -48,7 +48,12 @@ void SceneManagerMoveable::Tick()
     //TODO: remove Debugkey
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
     {
-        GameController::getInstance()->StartBattle();
+        std::vector<Entity*> enemies;
+        //TODO: get Entities of this Map from somewhere else
+        enemies.push_back(new Entity(1));
+        enemies.push_back(new Entity(1));
+
+        GameController::getInstance()->StartBattle(&enemies);
     }
 
     if(moveX != 0.0f || moveY != 0.0f)

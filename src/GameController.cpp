@@ -65,14 +65,14 @@ void GameController::Tick()
         CloseActiveSceneManger();
     }
 }
-void GameController::StartBattle()
+void GameController::StartBattle(std::vector<Entity*>* enemies)
 {
     SceneManagerBattle* newBattle = new SceneManagerBattle(GetRenderTarget(), GetWindowWidth(), GetWindowHeight());
 
-    Entity* enemy = new Entity(1);
-    newBattle->AddEnemy(enemy);
-    enemy = new Entity(1);
-    newBattle->AddEnemy(enemy);
+    for(auto it = enemies->begin(); it != enemies->end(); it++)
+    {
+        newBattle->AddEnemy((*it));
+    }
     LoadSceneManager(newBattle);
 }
 

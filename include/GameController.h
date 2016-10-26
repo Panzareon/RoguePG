@@ -17,8 +17,7 @@ class GameController
         SceneManager* GetActiveSceneManager();
         void CloseActiveSceneManger();
         void LoadSceneManager(SceneManager*);
-        //TODO: Enemies as Parameter
-        void StartBattle();
+        void StartBattle(std::vector<Entity*>* enemies);
 
         void GameOver();
 
