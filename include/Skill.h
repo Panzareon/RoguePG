@@ -14,15 +14,17 @@ class Skill
         virtual ~Skill();
         void Use(BattleEnums::Target targetType, Entity* target);
 
+        float GetManaUse();
 
         BattleEnums::Target GetDefaultTarget();
         std::string GetName();
 
 
-        void AddEffect(Effect* eff);
+        void AddEffect(Effect* eff, bool isPositive);
     protected:
     private:
         std::vector<Effect*> m_effects;
+        std::vector<bool> m_isPositive;
         Entity* m_user;
 
         float m_manaUse;

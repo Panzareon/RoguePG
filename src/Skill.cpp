@@ -47,8 +47,17 @@ std::string Skill::GetName()
     //TODO: return actual value
     return "Test-Skill";
 }
-void Skill::AddEffect(Effect* eff)
+void Skill::AddEffect(Effect* eff, bool isPositive)
 {
     m_effects.push_back(eff);
-    m_manaUse += eff->GetValue();
+    m_isPositive.push_back(isPositive);
+    if(isPositive)
+        m_manaUse += eff->GetValue();
+    else
+        m_manaUse -= 0.5 * eff->GetValue();
+}
+
+float Skill::GetManaUse()
+{
+    return m_manaUse;
 }

@@ -48,6 +48,7 @@
 		<Unit filename="include/Animation.h" />
 		<Unit filename="include/AnimationPart.h" />
 		<Unit filename="include/Attack.h" />
+		<Unit filename="include/CharacterClass.h" />
 		<Unit filename="include/Configuration.h" />
 		<Unit filename="include/DrawableNode.h" />
 		<Unit filename="include/Effect.h" />
@@ -86,6 +87,7 @@
 		<Unit filename="src/Animation.cpp" />
 		<Unit filename="src/AnimationPart.cpp" />
 		<Unit filename="src/Attack.cpp" />
+		<Unit filename="src/CharacterClass.cpp" />
 		<Unit filename="src/Configuration.cpp" />
 		<Unit filename="src/DrawableNode.cpp" />
 		<Unit filename="src/Effect.cpp" />

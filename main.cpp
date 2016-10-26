@@ -1,14 +1,18 @@
 #include <SFML/Graphics.hpp>
 #include "SceneManagerDungeon.h"
 
+#include <random>
+#include <time.h>
 #include <iostream>
 #include "AnimatedNode.h"
 #include "GameController.h"
 #include "EffectFactoryList.h"
 #include "Localization.h"
+#include "CharacterClass.h"
 
 int main()
 {
+    srand(time(NULL));
     GameController* controller = GameController::getInstance();
     int width = controller->GetWindowWidth();
     int height = controller->GetWindowHeight();
@@ -24,15 +28,13 @@ int main()
     controller->LoadSceneManager(sceneManager);
 
 
-    //TODO: create actual party
     Party party;
-    PartyMember* member = new PartyMember(0);
-
-    BattleEnums::Target target = BattleEnums::TargetEnemyTeamEntity;
-    Skill* newSkill = new Skill(member,target);
-    newSkill->AddEffect(EffectFactoryList::GetInstance()->getRandom(BattleEnums::AttackTypeFire, BattleEnums::EffectTypeDamage)->GetEffectWithValue(10.0f, target));
-    member->AddSkill(newSkill);
-    party.AddPartyMember(member);
+    //create party with 2 member
+    int partyInitialSize = 2;
+    for(int i = 0; i < partyInitialSize; i++)
+    {
+        party.AddPartyMember(CharacterClass::GetRandomCharacterClass()->GetNewPartyMember());
+    }
     controller->setParty(&party);
 
     while (window.isOpen())

@@ -1,9 +1,11 @@
 #include "PartyMember.h"
+#include "CharacterClass.h"
 
-PartyMember::PartyMember(int teamId): Entity(teamId)
+PartyMember::PartyMember(CharacterClass* chrClass, int teamId): Entity(teamId)
 {
     //ctor
     m_controllTypeAtm = Entity::ControllUser;
+    m_chrClass = chrClass;
 }
 
 PartyMember::~PartyMember()
@@ -20,7 +22,15 @@ void PartyMember::AddExp(int ammount)
             newAmmount = iter->second->GetExp(newAmmount);
     }
     if(newAmmount > 0)
+    {
         m_exp += newAmmount;
+        //Level up if enough Exp
+        //TODO: use an other calculation for needed exp
+        if(m_exp > m_lvl * m_lvl * 10)
+        {
+            LevelUp();
+        }
+    }
 }
 
 void PartyMember::BattleFinished()
@@ -33,4 +43,25 @@ void PartyMember::BattleFinished()
         else
             iter = m_passiveEffects.erase(iter);
     }
+}
+
+void PartyMember::LevelUp()
+{
+    m_lvl++;
+    float skillChance = m_chrClass->GetSkillChance();
+    float random = (rand() / (float)RAND_MAX);
+    if(skillChance > random)
+    {
+        Skill* newSkill = m_chrClass->GetNewSkill(this);
+        if(newSkill != nullptr)
+        {
+            AddSkill(newSkill);
+        }
+    }
+}
+
+
+int PartyMember::GetLevel()
+{
+    return m_lvl;
 }
