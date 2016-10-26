@@ -2,7 +2,7 @@
 #define ENTITY_H
 
 #include "Skill.h"
-#include "PassiveEffect.h"
+#include "IPassiveEffect.h"
 #include "AIBase.h"
 #include "Attack.h"
 #include "SFML/Graphics.hpp"
@@ -49,7 +49,7 @@ class Entity
 
     protected:
         std::vector<Skill> m_skills;
-        std::multimap<int, PassiveEffect*> m_passiveEffects;
+        std::multimap<int, IPassiveEffect*> m_passiveEffects;
 
         std::map<BattleEnums::Attribute, int> m_attributes;
 

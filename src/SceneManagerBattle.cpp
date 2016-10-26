@@ -66,6 +66,8 @@ SceneManagerBattle::SceneManagerBattle(sf::RenderTarget * target, int windowWidt
     m_background = new DrawableNode(backgroundSprite);
     m_mainNode->addChild(m_background);
     m_eventLayer = new Node();
+    m_animationNode = new Node();
+    m_eventLayer->addChild(m_animationNode);
     m_mainNode->addChild(m_eventLayer);
     m_gui = new Node();
     m_mainNode->addChild(m_gui);
@@ -294,17 +296,12 @@ bool SceneManagerBattle::IsFinished()
     {
         if(!m_enemies[i]->IsDead())
         {
+            Finished();
             finished = false;
         }
     }
     if(finished)
     {
-        //TODO: Calculate actual Exp from dead enemies
-        int exp = 100;
-        for(unsigned int i = 0; i < m_party->GetActivePartyMembers()->size(); i++)
-        {
-            m_party->GetActivePartyMembers()->at(i)->AddExp(exp);
-        }
         return true;
     }
     m_party->UpdateActiveParty();
@@ -322,6 +319,19 @@ bool SceneManagerBattle::IsFinished()
         GameController::getInstance()->GameOver();
     }
     return finished;
+}
+
+void SceneManagerBattle::Finished()
+{
+    //TODO: Calculate actual Exp from dead enemies
+    int exp = 100;
+    std::vector<PartyMember*> * activeParty = m_party->GetActivePartyMembers();
+    for(unsigned int i = 0; i < activeParty->size(); i++)
+    {
+        PartyMember* member = activeParty->at(i);
+        member->AddExp(exp);
+        member->BattleFinished();
+    }
 }
 
 bool SceneManagerBattle::IsEntityTargeted(Entity* entity)

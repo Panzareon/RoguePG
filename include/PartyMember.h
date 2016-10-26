@@ -10,6 +10,7 @@ class PartyMember : public Entity
         PartyMember(int teamId);
         virtual ~PartyMember();
         void AddExp(int ammount);
+        void BattleFinished();
     protected:
         int m_exp;
         int m_lvl;

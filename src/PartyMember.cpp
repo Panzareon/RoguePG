@@ -22,3 +22,15 @@ void PartyMember::AddExp(int ammount)
     if(newAmmount > 0)
         m_exp += newAmmount;
 }
+
+void PartyMember::BattleFinished()
+{
+    auto iter = m_passiveEffects.begin();
+    while(iter != m_passiveEffects.end())
+    {
+        if(iter->second->StaysAfterBattle())
+            iter++;
+        else
+            iter = m_passiveEffects.erase(iter);
+    }
+}

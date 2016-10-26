@@ -1,6 +1,6 @@
 #include "PassiveEffect.h"
 
-PassiveEffect::PassiveEffect(Entity* target, bool buff, int duration)
+PassiveEffect::PassiveEffect(Entity* target, bool buff, int duration, bool staysAfterBattle)
 {
     //ctor
     m_target = target;
@@ -10,6 +10,7 @@ PassiveEffect::PassiveEffect(Entity* target, bool buff, int duration)
     m_attributeFunction = nullptr;
     m_attack = nullptr;
     m_onAttacked = nullptr;
+    m_staysAfterBattle = staysAfterBattle;
 }
 
 PassiveEffect::~PassiveEffect()
@@ -95,10 +96,14 @@ void PassiveEffect::AddGetExp(std::function<float(float)>* getExp)
     m_getExp = getExp;
 }
 
-
 bool PassiveEffect::IsStillActive()
 {
     return m_duration != 0;
+}
+
+bool PassiveEffect::StaysAfterBattle()
+{
+    return m_staysAfterBattle;
 }
 
 int PassiveEffect::GetActivationPriority()

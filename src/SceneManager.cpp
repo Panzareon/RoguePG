@@ -29,6 +29,19 @@ void SceneManager::NextTick()
     m_clock.restart();
 
     m_mainNode->Tick(m_frameTime.asSeconds());
+    //Call Ticks on Animation
+    auto iter = m_animationList.begin();
+    while(iter != m_animationList.end())
+    {
+        (*iter)->PassTime(m_frameTime.asSeconds());
+        if((*iter)->IsFinished())
+        {
+            delete (*iter);
+            iter = m_animationList.erase(iter);
+        }
+        iter++;
+    }
+    //Call Ticks for derived Classes
     Tick();
 
     sf::View view = m_target->getDefaultView();
@@ -44,4 +57,14 @@ void SceneManager::NextTick()
 bool SceneManager::IsFinished()
 {
     return false;
+}
+
+void SceneManager::AddAnimation(Animation* anim)
+{
+    m_animationList.push_back(anim);
+}
+
+Node* SceneManager::GetAnimationNode()
+{
+    return m_animationNode;
 }

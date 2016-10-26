@@ -18,6 +18,7 @@ class SceneManagerBattle : public SceneManager
         virtual ~SceneManagerBattle();
         virtual void Tick();
         virtual bool IsFinished();
+        void Finished();
 
         void AddEnemy(Entity* enemy);
         std::vector<Entity*>* GetEnemies();

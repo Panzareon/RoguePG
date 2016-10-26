@@ -2,6 +2,7 @@
 #include "InvalidArgumentException.h"
 #include "Entity.h"
 #include "Enums.h"
+#include "PassiveEffect.h"
 #include <random>
 
 namespace PassiveEffectFunctions

@@ -117,7 +117,10 @@ void GameController::GameOver()
             finished = false;
         }
     }
-    //TODO: remove all SceneManager and display Game Over screen
+    if(finished)
+    {
+        //TODO: remove all SceneManager and display Game Over screen
+    }
 }
 
 
