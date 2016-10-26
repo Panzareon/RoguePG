@@ -62,7 +62,7 @@ SceneManagerBattle::SceneManagerBattle(sf::RenderTarget * target, int windowWidt
     //ctor
     //Build Scene Graph
     m_mainNode = new Node();
-    sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::m_dungeonBattleBackground));
+    sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::DungeonBattleBackground));
     m_background = new DrawableNode(backgroundSprite);
     m_mainNode->addChild(m_background);
     m_eventLayer = new Node();
@@ -361,7 +361,7 @@ std::vector<Entity*>* SceneManagerBattle::GetEnemies()
 void SceneManagerBattle::AddSpriteForEntity(Entity* entity)
 {
     //Adding Cursor if Entity is targeted
-    sf::Sprite* target = new sf::Sprite(*TextureList::getTexture(TextureList::m_targetCursor));
+    sf::Sprite* target = new sf::Sprite(*TextureList::getTexture(TextureList::TargetCursor));
     DrawableNode* targetNode = new DrawableNode(target);
     //Moving Cursor
     sf::Transform targetTransform;

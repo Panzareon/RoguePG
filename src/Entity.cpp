@@ -21,8 +21,9 @@ Entity::Entity(int teamId)
     m_hp = GetAttribute(BattleEnums::AttributeMaxHp);
 
     m_battleSprite = new sf::Sprite();
-    m_battleSprite->setTexture(*TextureList::getTexture(TextureList::m_defaultBattleSprite));
-
+    Texture* tex = TextureList::getTexture(TextureList::DefaultBattleSprite);
+    m_battleSprite->setTexture(*tex);
+    m_numberSprites = tex->GetNumberAnimationSteps();
 
     m_toNextAttack = 1.0f;
 }
@@ -172,6 +173,10 @@ sf::Sprite* Entity::GetBattleSprite()
     return m_battleSprite;
 }
 
+int Entity::GetNumberSprites()
+{
+    return m_numberSprites;
+}
 
 int Entity::GetTeamId()
 {

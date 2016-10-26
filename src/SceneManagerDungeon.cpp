@@ -20,11 +20,11 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     m_tileMapAboveWall = new TileMap();
     m_tileMapWallDecoration = new TileMap();
 
-    m_tileMap->setTexture(TextureList::getTexture(TextureList::m_dungeonTileMap));
-    m_tileMapItems->setTexture(TextureList::getTexture(TextureList::m_dungeonTileMap));
-    m_tileMapAboveHero->setTexture(TextureList::getTexture(TextureList::m_dungeonTileMap));
-    m_tileMapAboveWall->setTexture(TextureList::getTexture(TextureList::m_dungeonTileMap));
-    m_tileMapWallDecoration->setTexture(TextureList::getTexture(TextureList::m_dungeonTileMap));
+    m_tileMap->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
+    m_tileMapItems->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
+    m_tileMapAboveHero->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
+    m_tileMapAboveWall->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
+    m_tileMapWallDecoration->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
 
     //Build Scene Graph
     m_mainNode = new Node();
@@ -49,9 +49,10 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
 
     //Add Hero
     sf::Sprite hero;
-    hero.setTexture(*TextureList::getTexture(TextureList::m_heroSpriteSheet));
+    Texture* tex = TextureList::getTexture(TextureList::HeroSpriteSheet);
+    hero.setTexture(*tex);
     hero.setTextureRect(sf::IntRect(15,13,32,36));
-    m_hero = new AnimatedNode(&hero);
+    m_hero = new AnimatedNode(&hero, tex->GetNumberAnimationSteps());
     m_hero->setBoundingBox(sf::FloatRect(8.0f,22.0f,16.0f,16.0f));
     m_eventLayer->addChild(m_hero);
 

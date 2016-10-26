@@ -2,27 +2,28 @@
 #define TEXTURELIST_H
 
 #include <map>
-#include "SFML/Graphics/Texture.hpp"
+#include "Texture.h"
 
 class TextureList
 {
     public:
+        enum TextureFiles{
+            DungeonTileMap,
+
+            HeroSpriteSheet, DefaultBattleSprite,
+
+            TargetCursor,
+
+            DungeonBattleBackground
+        };
         virtual ~TextureList();
 
 
         //List of Texture file names
-        static std::string m_dungeonTileMap;
-
-        static std::string m_heroSpriteSheet;
-        static std::string m_defaultBattleSprite;
-        static std::string m_targetCursor;
-
-        static std::string m_dungeonBattleBackground;
-
-        static sf::Texture* getTexture(std::string filename);
+        static Texture* getTexture(TextureFiles file);
     protected:
     private:
-        static std::map<std::string, sf::Texture*> m_textures;
+        static std::map<TextureFiles, Texture*> m_textures;
         TextureList();
 };
 

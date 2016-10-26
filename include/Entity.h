@@ -46,7 +46,7 @@ class Entity
         int GetTeamId();
 
         sf::Sprite* GetBattleSprite();
-
+        int GetNumberSprites();
     protected:
         std::vector<Skill> m_skills;
         std::multimap<int, IPassiveEffect*> m_passiveEffects;
@@ -62,6 +62,7 @@ class Entity
         int m_teamId;
 
         sf::Sprite* m_battleSprite;
+        int m_numberSprites;
     private:
 };
 

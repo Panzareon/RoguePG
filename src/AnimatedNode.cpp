@@ -2,7 +2,7 @@
 
 sf::Shader* AnimatedNode::m_shader = 0;
 
-AnimatedNode::AnimatedNode(sf::Sprite* sprite)
+AnimatedNode::AnimatedNode(sf::Sprite* sprite, int numberFrames)
 {
     //ctor
     m_elapsedSeconds = 0.0f;
@@ -14,9 +14,7 @@ AnimatedNode::AnimatedNode(sf::Sprite* sprite)
         //TODO: get Filename from somewhere else
         m_shader->loadFromFile("shader/spriteSheetAnimation.frag", sf::Shader::Fragment);
     }
-
-    //TODO: get actual Sprite Number
-    m_numberFrames = 4;
+    m_numberFrames = numberFrames;
 }
 
 AnimatedNode::~AnimatedNode()

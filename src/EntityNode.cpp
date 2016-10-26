@@ -1,6 +1,6 @@
 #include "EntityNode.h"
 
-EntityNode::EntityNode(SceneManagerBattle* sm, Entity* entity): AnimatedNode(entity->GetBattleSprite())
+EntityNode::EntityNode(SceneManagerBattle* sm, Entity* entity): AnimatedNode(entity->GetBattleSprite(), entity->GetNumberSprites())
 {
     //ctor
     m_smb = sm;

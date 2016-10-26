@@ -10,24 +10,45 @@ TextureList::~TextureList()
 {
     //dtor
 }
-std::map<std::string, sf::Texture*> TextureList::m_textures;
-//List of Texture file names
-std::string TextureList::m_dungeonTileMap = "TileMap.png";
+std::map<TextureList::TextureFiles, Texture*> TextureList::m_textures;
 
-std::string TextureList::m_heroSpriteSheet = "skeleton-large.png";
-std::string TextureList::m_defaultBattleSprite = "rogue.png";
-std::string TextureList::m_targetCursor = "target.png";
-
-std::string TextureList::m_dungeonBattleBackground = "battle-background.png";
-
-
-sf::Texture* TextureList::getTexture(std::string filename)
+Texture* TextureList::getTexture(TextureFiles file)
 {
-    if(m_textures.find(filename) == m_textures.end())
+    if(m_textures.find(file) == m_textures.end())
     {
+        std::string filename;
         std::string texturePath = "texture/";
+        Texture* newTexture;
+
+        //Initialize all Textures
+        switch(file)
+        {
+        case DungeonTileMap:
+            newTexture = new Texture();
+            filename = "TileMap.png";
+            break;
+
+
+        case HeroSpriteSheet:
+            newTexture = new Texture(4);
+            filename = "skeleton-large.png";
+            break;
+        case DefaultBattleSprite:
+            newTexture = new Texture();
+            filename = "rogue.png";
+            break;
+        case TargetCursor:
+            newTexture = new Texture();
+            filename = "target.png";
+            break;
+
+
+        case DungeonBattleBackground:
+            newTexture = new Texture();
+            filename = "battle-background.png";
+            break;
+        }
         texturePath += filename;
-        sf::Texture* newTexture = new sf::Texture();
         if(!newTexture->loadFromFile(texturePath))
         {
             std::string msg("Could not load Texture: ");
@@ -35,7 +56,7 @@ sf::Texture* TextureList::getTexture(std::string filename)
             throw InvalidArgumentException(msg);
             return 0;
         }
-        m_textures.insert(std::make_pair(filename, newTexture));
+        m_textures.insert(std::make_pair(file, newTexture));
     }
-    return m_textures[filename];
+    return m_textures[file];
 }

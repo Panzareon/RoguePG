@@ -78,6 +78,7 @@
 		<Unit filename="include/SceneManagerMoveable.h" />
 		<Unit filename="include/Skill.h" />
 		<Unit filename="include/StrengthCalculation.h" />
+		<Unit filename="include/Texture.h" />
 		<Unit filename="include/TextureList.h" />
 		<Unit filename="include/TileMap.h" />
 		<Unit filename="main.cpp" />
@@ -116,6 +117,7 @@
 		<Unit filename="src/SceneManagerMoveable.cpp" />
 		<Unit filename="src/Skill.cpp" />
 		<Unit filename="src/StrengthCalculation.cpp" />
+		<Unit filename="src/Texture.cpp" />
 		<Unit filename="src/TextureList.cpp" />
 		<Unit filename="src/TileMap.cpp" />
 		<Extensions>

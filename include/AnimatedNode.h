@@ -6,7 +6,7 @@
 class AnimatedNode : public Node
 {
     public:
-        AnimatedNode(sf::Sprite* sprite);
+        AnimatedNode(sf::Sprite* sprite, int numberFrames);
         virtual ~AnimatedNode();
         virtual void onDraw(sf::RenderTarget& target, const sf::Transform& transform) const;
 
