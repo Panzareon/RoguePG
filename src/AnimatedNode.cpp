@@ -1,6 +1,5 @@
 #include "AnimatedNode.h"
-
-sf::Shader* AnimatedNode::m_shader = 0;
+#include "ShaderList.h"
 
 AnimatedNode::AnimatedNode(sf::Sprite* sprite, int numberFrames)
 {
@@ -8,12 +7,10 @@ AnimatedNode::AnimatedNode(sf::Sprite* sprite, int numberFrames)
     m_elapsedSeconds = 0.0f;
     m_sprite = *sprite;
 
-    if(m_shader == 0)
-    {
-        m_shader = new sf::Shader();
-        //TODO: get Filename from somewhere else
-        m_shader->loadFromFile("shader/spriteSheetAnimation.frag", sf::Shader::Fragment);
-    }
+    //Load shader
+    m_shader = ShaderList::GetShader(ShaderList::AnimatedSpriteShader);
+
+    //Set number of Frames to circle through
     m_numberFrames = numberFrames;
 }
 

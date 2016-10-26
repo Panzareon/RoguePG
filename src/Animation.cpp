@@ -1,16 +1,19 @@
 #include "Animation.h"
 
-Animation::Animation()
+Animation::Animation(float maxTime)
 {
     //ctor
     m_animationTime = 0.0f;
-    //TODO: get actual Value
-    m_maxTime = 2.0f;
+    m_maxTime = maxTime;
 }
 
 Animation::~Animation()
 {
     //dtor
+    for(auto it = m_animationParts.begin(); it != m_animationParts.end(); it++)
+    {
+        delete *it;
+    }
 }
 
 void Animation::PassTime(float Time)
@@ -19,11 +22,16 @@ void Animation::PassTime(float Time)
     //check if next Animation Step
     for(auto it = m_animationParts.begin(); it != m_animationParts.end(); it++)
     {
-        (*it).animate(m_animationTime);
+        (*it)->animate(m_animationTime);
     }
 }
 
 bool Animation::IsFinished()
 {
     return m_animationTime >= m_maxTime;
+}
+
+void Animation::AddStep(AnimationPart* part)
+{
+    m_animationParts.push_back(part);
 }

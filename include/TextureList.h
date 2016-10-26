@@ -7,6 +7,7 @@
 class TextureList
 {
     public:
+        //List of Texture file names
         enum TextureFiles{
             DungeonTileMap,
 
@@ -19,7 +20,6 @@ class TextureList
         virtual ~TextureList();
 
 
-        //List of Texture file names
         static Texture* getTexture(TextureFiles file);
     protected:
     private:

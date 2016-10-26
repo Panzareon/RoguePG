@@ -13,7 +13,7 @@ class AnimatedNode : public Node
 
         void Tick(float seconds);
     protected:
-        static sf::Shader* m_shader;
+        sf::Shader* m_shader;
         float m_elapsedSeconds;
         int m_numberFrames;
         sf::Sprite m_sprite;
