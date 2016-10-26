@@ -9,15 +9,16 @@
 class Animation
 {
     public:
-        Animation();
+        Animation(float maxTime);
         virtual ~Animation();
         void PassTime(float Time);
         bool IsFinished();
+        void AddStep(AnimationPart* part);
     protected:
     private:
         float m_animationTime;
         float m_maxTime;
-        std::vector<AnimationPart> m_animationParts;
+        std::vector<AnimationPart*> m_animationParts;
         std::vector<Node*> m_nodes;
 };
 
