@@ -10,6 +10,7 @@ class EffectFactoryList
     public:
         virtual ~EffectFactoryList();
         static EffectFactoryList* GetInstance();
+        EffectFactory* getWithId(int id);
         EffectFactory* getRandom(BattleEnums::AttackType attackType);
         EffectFactory* getRandom(BattleEnums::AttackType attackType, BattleEnums::EffectType effectType);
         EffectFactory* getRandom(BattleEnums::AttackType attackType, BattleEnums::EffectType effectType, bool needTarget);

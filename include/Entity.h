@@ -1,6 +1,7 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+#include "TextureList.h"
 #include "Skill.h"
 #include "IPassiveEffect.h"
 #include "AIBase.h"
@@ -15,7 +16,7 @@ class Entity
 {
     public:
         enum ControllType{ControllAI, ControllUser};
-        Entity(int teamId);
+        Entity();
         virtual ~Entity();
 
         void PassTime(float Time);
@@ -36,6 +37,8 @@ class Entity
 
         //Getter/Setter
         int GetAttribute(BattleEnums::Attribute attr);
+        void InitAttribute(BattleEnums::Attribute attr, int value);
+        void InitAllAttributes(int maxHp, int strength, int intelligence, int defense, int magicDefense);
         float GetTimeToNextAttack();
         virtual ControllType GetControllType();
         void CalculateMove(SceneManagerBattle* sm);
@@ -44,8 +47,10 @@ class Entity
         std::vector<Skill>* GetSkillList();
 
         int GetTeamId();
+        void SetTeamId(int id);
 
         sf::Sprite* GetBattleSprite();
+        void SetBattleSprite(TextureList::TextureFiles newSprite);
         int GetNumberSprites();
     protected:
         std::vector<Skill> m_skills;

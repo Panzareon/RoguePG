@@ -33,7 +33,9 @@ int main()
     int partyInitialSize = 2;
     for(int i = 0; i < partyInitialSize; i++)
     {
-        party.AddPartyMember(CharacterClass::GetRandomCharacterClass()->GetNewPartyMember());
+        PartyMember* p = CharacterClass::GetRandomCharacterClass()->GetNewPartyMember();
+        p->SetTeamId(0);
+        party.AddPartyMember(p);
     }
     controller->setParty(&party);
 

@@ -1,7 +1,7 @@
 #include "PartyMember.h"
 #include "CharacterClass.h"
 
-PartyMember::PartyMember(CharacterClass* chrClass, int teamId): Entity(teamId)
+PartyMember::PartyMember(CharacterClass* chrClass)
 {
     //ctor
     m_controllTypeAtm = Entity::ControllUser;

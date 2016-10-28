@@ -52,7 +52,7 @@ CharacterClass* CharacterClass::GetRandomCharacterClass()
 
 PartyMember* CharacterClass::GetNewPartyMember()
 {
-    return new PartyMember(this,0);
+    return new PartyMember(this);
 }
 
 Skill* CharacterClass::GetNewSkill(PartyMember* user)

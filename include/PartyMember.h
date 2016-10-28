@@ -9,7 +9,7 @@ class CharacterClass;
 class PartyMember : public Entity
 {
     public:
-        PartyMember(CharacterClass* chrClass, int teamId);
+        PartyMember(CharacterClass* chrClass);
         virtual ~PartyMember();
         void AddExp(int ammount);
         void BattleFinished();

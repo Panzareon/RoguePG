@@ -5,25 +5,21 @@
 #include <map>
 #include "TextureList.h"
 
-Entity::Entity(int teamId)
+Entity::Entity()
 {
     //ctor
     m_controllTypeAtm = Entity::ControllAI;
-    m_teamId = teamId;
+    m_teamId = -1;
 
-    //TODO: add actual values
     m_AI = new AIRandom(this);
+    //Setting attribute values to default: 0
     for(int i = 0; i < BattleEnums::ATTRIBUTE_END; i++)
     {
-        m_attributes.insert(std::pair<BattleEnums::Attribute, int>((BattleEnums::Attribute)i, 10));
+        m_attributes.insert(std::pair<BattleEnums::Attribute, int>((BattleEnums::Attribute)i, 0));
     }
-    m_attributes[BattleEnums::AttributeMaxHp] = 100;
-    m_hp = GetAttribute(BattleEnums::AttributeMaxHp);
 
     m_battleSprite = new sf::Sprite();
-    Texture* tex = TextureList::getTexture(TextureList::DefaultBattleSprite);
-    m_battleSprite->setTexture(*tex);
-    m_numberSprites = tex->GetNumberAnimationSteps();
+    SetBattleSprite(TextureList::DefaultBattleSprite);
 
     m_toNextAttack = 1.0f;
 }
@@ -123,6 +119,23 @@ int Entity::GetAttribute(BattleEnums::Attribute attr)
     return (int)atmValue;
 }
 
+void Entity::InitAttribute(BattleEnums::Attribute attr, int value)
+{
+    m_attributes[attr] = value;
+    if(attr == BattleEnums::AttributeMaxHp)
+    {
+        m_hp = attr;
+    }
+}
+
+void Entity::InitAllAttributes(int maxHp, int strength, int intelligence, int defense, int magicDefense)
+{
+    InitAttribute(BattleEnums::AttributeMaxHp, maxHp);
+    InitAttribute(BattleEnums::AttributeStrength, strength);
+    InitAttribute(BattleEnums::AttributeInt, intelligence);
+    InitAttribute(BattleEnums::AttributeDefense, defense);
+    InitAttribute(BattleEnums::AttributeMagicDefense, magicDefense);
+}
 
 void Entity::PassTime(float Time)
 {
@@ -173,6 +186,13 @@ sf::Sprite* Entity::GetBattleSprite()
     return m_battleSprite;
 }
 
+void Entity::SetBattleSprite(TextureList::TextureFiles newSprite)
+{
+    Texture* tex = TextureList::getTexture(newSprite);
+    m_battleSprite->setTexture(*tex);
+    m_numberSprites = tex->GetNumberAnimationSteps();
+}
+
 int Entity::GetNumberSprites()
 {
     return m_numberSprites;
@@ -182,3 +202,9 @@ int Entity::GetTeamId()
 {
     return m_teamId;
 }
+
+void Entity::SetTeamId(int id)
+{
+    m_teamId = id;
+}
+

@@ -267,6 +267,17 @@ EffectFactory* EffectFactoryList::getRandom(BattleEnums::AttackType attackType, 
     throw InvalidArgumentException("EffectFactory not found");
 }
 
+EffectFactory* EffectFactoryList::getWithId(int id)
+{
+    if(id < 0 || id >= m_effects.size())
+    {
+        std::string msg = "No Effect with id:";
+        msg.append(std::to_string(id));
+        throw InvalidArgumentException(msg);
+    }
+    return m_effects[id];
+}
+
 
 EffectFactoryList* EffectFactoryList::GetInstance()
 {

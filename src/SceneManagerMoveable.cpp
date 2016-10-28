@@ -2,6 +2,8 @@
 #include "Configuration.h"
 #include "GameController.h"
 
+#include "EnemyFactory.h"
+
 SceneManagerMoveable::SceneManagerMoveable(sf::RenderTarget * target, int windowWidth, int windowHeight, int tileWidth, int tileHeight): SceneManager(target, windowWidth, windowHeight), m_map(tileWidth, tileHeight)
 {
     //ctor
@@ -50,8 +52,12 @@ void SceneManagerMoveable::Tick()
     {
         std::vector<Entity*> enemies;
         //TODO: get Entities of this Map from somewhere else
-        enemies.push_back(new Entity(1));
-        enemies.push_back(new Entity(1));
+        Entity* e = EnemyFactory::GetEntity(EnemyFactory::EnemyListBat);
+        e->SetTeamId(1);
+        enemies.push_back(e);
+        e = EnemyFactory::GetEntity(EnemyFactory::EnemyListBat);
+        e->SetTeamId(1);
+        enemies.push_back(e);
 
         GameController::getInstance()->StartBattle(&enemies);
     }
