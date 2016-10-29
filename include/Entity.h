@@ -29,11 +29,10 @@ class Entity
         void GetHit(Attack* attack, Entity* attacker);
 
 
-        //returns Attack Type of basic attack
-        BattleEnums::AttackType GetAttackType();
         bool IsAttackPhysical();
 
         bool IsDead();
+        virtual void Died();
 
         //Getter/Setter
         float GetResistanceFor(BattleEnums::AttackType type);

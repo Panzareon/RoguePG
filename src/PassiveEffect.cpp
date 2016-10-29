@@ -78,6 +78,7 @@ void PassiveEffect::AddAttributeEffect(std::function<float(float, BattleEnums::A
 }
 void PassiveEffect::AttackEntity(Attack* att, Entity* target, Entity* attacker)
 {
+    //Change Attack Damage or add Attack Type
     if(m_attack != nullptr)
         (*m_attack)(att, target, attacker);
 }

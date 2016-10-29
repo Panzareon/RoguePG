@@ -14,6 +14,8 @@ class PartyMember : public Entity
         void AddExp(int ammount);
         void BattleFinished();
 
+        virtual void Died();
+
         void LevelUp();
         int GetLevel();
     protected:

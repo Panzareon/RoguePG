@@ -52,7 +52,7 @@ void Entity::AttackEntity(Entity* target)
     {
         attack *= GetAttribute(BattleEnums::AttributeInt);
     }
-    Attack att(attack, GetAttackType(), isPhysical);
+    Attack att(attack, isPhysical);
     AttackEntity(target, &att);
 }
 
@@ -92,14 +92,13 @@ void Entity::GetHit(Attack* attack, Entity* attacker)
     if(m_hp <= 0)
     {
         m_hp = 0;
-        //TODO: handle death + death animation
+        Died();
     }
 }
 
-BattleEnums::AttackType Entity::GetAttackType()
+void Entity::Died()
 {
-    //TODO: get Attack Type of weapon / currently active buffs
-    return BattleEnums::AttackTypePhysical;
+    //TODO: handle death + death animation
 }
 
 bool Entity::IsAttackPhysical()

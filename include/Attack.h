@@ -7,7 +7,8 @@
 class Attack
 {
     public:
-        Attack(int attack, BattleEnums::AttackType type, bool physical);
+        Attack(int attack, bool physical);
+        Attack(int attack, bool physical, BattleEnums::AttackType type);
         virtual ~Attack();
 
         int m_dmg;

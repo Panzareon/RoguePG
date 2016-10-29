@@ -22,7 +22,7 @@ namespace EffectFunctions
     {
         for(unsigned int i = 0; i < targets->size(); i++)
         {
-            Attack att(strength->at(0) + user->GetAttribute(BattleEnums::AttributeInt), type, false);
+            Attack att(strength->at(0) + user->GetAttribute(BattleEnums::AttributeInt), false, type);
             user->AttackEntity(targets->at(i), &att);
             //TODO: Animation
         }

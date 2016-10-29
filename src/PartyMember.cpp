@@ -1,5 +1,6 @@
 #include "PartyMember.h"
 #include "CharacterClass.h"
+#include "GameController.h"
 
 PartyMember::PartyMember(CharacterClass* chrClass)
 {
@@ -65,3 +66,13 @@ int PartyMember::GetLevel()
 {
     return m_lvl;
 }
+
+void PartyMember::Died()
+{
+    Entity::Died();
+
+    //Remove this from Party and maybe add new one from inactive Members
+    Party* p = GameController::getInstance()->getParty();
+    p->UpdateActiveParty();
+}
+

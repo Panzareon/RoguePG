@@ -4,6 +4,7 @@
 Party::Party()
 {
     //ctor
+    m_maxPartySize = 3;
 }
 
 Party::~Party()
@@ -12,6 +13,10 @@ Party::~Party()
     for(unsigned int i = 0; i < m_partyMembers.size(); i++)
     {
         delete m_partyMembers[i];
+    }
+    for(unsigned int i = 0; i < m_deadMembers.size(); i++)
+    {
+        delete m_deadMembers[i];
     }
 }
 std::vector<PartyMember*> * Party::GetActivePartyMembers()
@@ -31,5 +36,34 @@ void Party::AddPartyMember(PartyMember* member)
 
 void Party::UpdateActiveParty()
 {
-    //TODO: check if dead Member is in Party and if it is, set inactive Member to active
+    auto it = m_partyMembers.begin();
+    while(it != m_partyMembers.end())
+    {
+        if((*it)->IsDead())
+        {
+            m_deadMembers.push_back(*it);
+            it = m_partyMembers.erase(it);
+        }
+        else
+        {
+            it++;
+        }
+    }
+    //Check if there are Members that are not in the active Party
+    if(m_activePartyMembers.size() < m_maxPartySize && m_partyMembers.size() > m_activePartyMembers.size())
+    {
+        for(auto it = m_partyMembers.begin(); it != m_partyMembers.end(); it++)
+        {
+            if(std::find(m_activePartyMembers.begin(), m_activePartyMembers.end(), *it) == m_activePartyMembers.end())
+            {
+                //This Party Member is not in the active party
+                m_activePartyMembers.push_back(*it);
+                if(m_activePartyMembers.size() == m_maxPartySize)
+                {
+                    //Do not add more to active Party, if max active party size is reached
+                    break;
+                }
+            }
+        }
+    }
 }
