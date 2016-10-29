@@ -36,6 +36,7 @@ class Entity
         bool IsDead();
 
         //Getter/Setter
+        float GetResistanceFor(BattleEnums::AttackType type);
         int GetAttribute(BattleEnums::Attribute attr);
         void InitAttribute(BattleEnums::Attribute attr, int value);
         void InitAllAttributes(int maxHp, int strength, int intelligence, int defense, int magicDefense);
@@ -57,6 +58,7 @@ class Entity
         std::multimap<int, IPassiveEffect*> m_passiveEffects;
 
         std::map<BattleEnums::Attribute, int> m_attributes;
+        std::map<BattleEnums::AttackType, float> m_resistances;
 
         int m_hp;
         float m_toNextAttack;

@@ -16,6 +16,7 @@ class PassiveEffect: public IPassiveEffect
 
         //For Effects that trigger every turn
         virtual void OnTurn();
+        virtual float GetResistance(float resistanceValue, BattleEnums::AttackType type);
         virtual float GetAttribute(float attributeValue, BattleEnums::Attribute attribute);
         virtual void AttackEntity(Attack* att, Entity* target, Entity* attacker);
         virtual void GetAttacked(Attack* att, Entity* target, Entity* attacker);
@@ -38,6 +39,7 @@ class PassiveEffect: public IPassiveEffect
         int m_duration;
         bool m_staysAfterBattle;
         std::function<void(Entity*,PassiveEffect*)>* m_onTurn;
+        std::function<float(float,BattleEnums::AttackType)>* m_resistanceFunction;
         std::function<float(float,BattleEnums::Attribute)>* m_attributeFunction;
         std::function<void(Attack*, Entity*, Entity*)>* m_attack;
         std::function<void(Attack*, Entity*, Entity*)>* m_onAttacked;

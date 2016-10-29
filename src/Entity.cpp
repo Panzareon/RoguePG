@@ -17,6 +17,11 @@ Entity::Entity()
     {
         m_attributes.insert(std::pair<BattleEnums::Attribute, int>((BattleEnums::Attribute)i, 0));
     }
+    //Setting default resistances to 1
+    for(int i = 0; i < BattleEnums::ATTACK_TYPE_END; i++)
+    {
+        m_resistances.insert(std::pair<BattleEnums::AttackType, float>((BattleEnums::AttackType)i, 1.0f));
+    }
 
     m_battleSprite = new sf::Sprite();
     SetBattleSprite(TextureList::DefaultBattleSprite);
@@ -36,8 +41,8 @@ Entity::~Entity()
 void Entity::AttackEntity(Entity* target)
 {
     //TODO: play Attack animation
-    //TODO: Get Weapon Dmg
-    int attack = 10;
+    //TODO: maybe change base Attack dmg
+    int attack = 1;
     bool isPhysical = IsAttackPhysical();
     if(isPhysical)
     {
@@ -67,7 +72,7 @@ void Entity::GetHit(Attack* attack, Entity* attacker)
         iter->second->GetAttacked(attack, this, attacker);
     }
     //TODO: maybe other dmg calculation?
-    int defense;
+    float defense;
     if(attack->m_physical)
     {
         defense = GetAttribute(BattleEnums::AttributeDefense);
@@ -76,8 +81,12 @@ void Entity::GetHit(Attack* attack, Entity* attacker)
     {
         defense = GetAttribute(BattleEnums::AttributeMagicDefense);
     }
-    int dmg = attack->m_dmg / std::sqrt(defense);
-    //TODO: add resistance or weakness to Attack type
+    float dmg = attack->m_dmg / std::sqrt(defense);
+    //add resistance or weakness to Attack type
+    for(auto it = attack->m_type.begin(); it != attack->m_type.end(); it++)
+    {
+        dmg *= GetResistanceFor(*it);
+    }
     m_hp -= dmg;
     //TODO: play get hit animation
     if(m_hp <= 0)
@@ -107,6 +116,16 @@ bool Entity::IsDead()
 void Entity::AddSkill(Skill* skill)
 {
     m_skills.push_back(*skill);
+}
+
+float Entity::GetResistanceFor(BattleEnums::AttackType type)
+{
+    float atmValue = m_resistances[type];
+    for(auto iter = m_passiveEffects.begin(); iter != m_passiveEffects.end(); iter++)
+    {
+        atmValue = iter->second->GetResistance(atmValue, type);
+    }
+    return atmValue;
 }
 
 int Entity::GetAttribute(BattleEnums::Attribute attr)

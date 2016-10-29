@@ -8,6 +8,7 @@ PassiveEffect::PassiveEffect(Entity* target, bool buff, int duration, bool stays
     m_duration = duration;
     m_onTurn = nullptr;
     m_attributeFunction = nullptr;
+    m_resistanceFunction = nullptr;
     m_attack = nullptr;
     m_onAttacked = nullptr;
     m_staysAfterBattle = staysAfterBattle;
@@ -18,6 +19,8 @@ PassiveEffect::~PassiveEffect()
     //dtor
     if(m_onTurn != nullptr)
         delete m_onTurn;
+    if(m_resistanceFunction != nullptr)
+        delete m_resistanceFunction;
     if(m_attributeFunction != nullptr)
         delete m_attributeFunction;
     if(m_attack != nullptr)
@@ -41,6 +44,14 @@ void PassiveEffect::OnTurn()
     }
     if(m_onTurn != nullptr)
         (*m_onTurn)(m_target, this);
+}
+
+float PassiveEffect::GetResistance(float resistanceValue, BattleEnums::AttackType type)
+{
+    //If this Effect should change the resistance to a Attack Type, do it here
+    if(m_resistanceFunction == nullptr)
+        return resistanceValue;
+    return (*m_resistanceFunction)(resistanceValue,type);
 }
 
 float PassiveEffect::GetAttribute(float attributeValue, BattleEnums::Attribute attribute)

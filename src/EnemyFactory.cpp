@@ -1,4 +1,5 @@
 #include "EnemyFactory.h"
+#include "EffectFactoryList.h"
 #include "InvalidArgumentException.h"
 
 EnemyFactory::EnemyFactory()
@@ -24,7 +25,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type)
         BattleEnums::Target target = BattleEnums::TargetEnemyTeamEntity;
         Skill* sk = new Skill(ret,target);
         sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(3)->GetEffectWithValue(2,target),true);
-        ret->AddSkill()
+        ret->AddSkill(sk);
         break;
     }
 
