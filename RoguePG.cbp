@@ -58,10 +58,12 @@
 		<Unit filename="include/Entity.h" />
 		<Unit filename="include/EntityNode.h" />
 		<Unit filename="include/Enums.h" />
+		<Unit filename="include/Equipment.h" />
 		<Unit filename="include/FillItem.h" />
 		<Unit filename="include/GameController.h" />
 		<Unit filename="include/IPassiveEffect.h" />
 		<Unit filename="include/InvalidArgumentException.h" />
+		<Unit filename="include/Item.h" />
 		<Unit filename="include/Localization.h" />
 		<Unit filename="include/Map.h" />
 		<Unit filename="include/MapFill.h" />
@@ -99,10 +101,12 @@
 		<Unit filename="src/EnemyFactory.cpp" />
 		<Unit filename="src/Entity.cpp" />
 		<Unit filename="src/EntityNode.cpp" />
+		<Unit filename="src/Equipment.cpp" />
 		<Unit filename="src/FillItem.cpp" />
 		<Unit filename="src/GameController.cpp" />
 		<Unit filename="src/IPassiveEffect.cpp" />
 		<Unit filename="src/InvalidArgumentException.cpp" />
+		<Unit filename="src/Item.cpp" />
 		<Unit filename="src/Localization.cpp" />
 		<Unit filename="src/Map.cpp" />
 		<Unit filename="src/MapFill.cpp" />

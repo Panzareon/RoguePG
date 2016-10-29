@@ -12,7 +12,7 @@ Attack::Attack(int attack, bool physical, BattleEnums::AttackType type)
 {
     //ctor
     m_dmg = attack;
-    m_type.push_back(type);
+    m_type.insert(type);
     m_physical = physical;
 }
 

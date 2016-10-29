@@ -2,7 +2,7 @@
 #define ATTACK_H
 
 #include "Enums.h"
-#include <vector>
+#include <set>
 
 class Attack
 {
@@ -12,7 +12,7 @@ class Attack
         virtual ~Attack();
 
         int m_dmg;
-        std::vector<BattleEnums::AttackType> m_type;
+        std::set<BattleEnums::AttackType> m_type;
         bool m_physical;
 
     protected:
