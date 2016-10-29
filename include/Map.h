@@ -13,7 +13,7 @@ class Map
 
         Map(int width, int height);
         virtual ~Map();
-        void init(int layerNr);
+        void init(unsigned int layerNr);
         bool IsTileWall(unsigned int x, unsigned int y);
         void SetTileToWall(unsigned int x, unsigned int y);
         void SetTileToSpace(unsigned int x, unsigned int y);
@@ -47,9 +47,9 @@ class Map
         int** m_tiles;
         int** m_roomNr;
         std::vector<int**> m_layers;
-        int m_nrLayers;
-        int m_width;
-        int m_height;
+        unsigned int m_nrLayers;
+        unsigned int m_width;
+        unsigned int m_height;
 
 };
 

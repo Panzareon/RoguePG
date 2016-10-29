@@ -49,7 +49,7 @@ class SceneManagerBattle : public SceneManager
         std::function<void(BattleEnums::Target, Entity*)>* m_useOnTarget;
         Entity* m_targetEntity;
         BattleEnums::Target m_targetType;
-        int m_targetNr;
+        unsigned int m_targetNr;
 
         std::vector<sf::Vector2f> m_posPerTeam;
         std::vector<sf::Vector2f> m_posChangePerTeam;

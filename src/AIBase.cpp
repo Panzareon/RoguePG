@@ -22,13 +22,13 @@ Entity* AIBase::GetRandomEntity(int teamId, bool enemy)
     std::vector<Entity*>* enemies = sm->GetEnemies();
     std::vector<PartyMember*>* party = controller->getParty()->GetActivePartyMembers();
     int nr = 0;
-    for(int i = 0; i < enemies->size(); i++)
+    for(unsigned int i = 0; i < enemies->size(); i++)
     {
         //Check if teamIds are the same xor enemy is true
         if((enemies->at(i)->GetTeamId() == teamId) != enemy)
             nr++;
     }
-    for(int i = 0; i < party->size(); i++)
+    for(unsigned int i = 0; i < party->size(); i++)
     {
         //Check if teamIds are the same xor enemy is true
         if((party->at(i)->GetTeamId() == teamId) != enemy)
@@ -46,7 +46,7 @@ Entity* AIBase::GetRandomEntity(int teamId, bool enemy)
         throw InvalidArgumentException(msg);
     }
     int ret = rand() % nr;
-    for(int i = 0; i < enemies->size(); i++)
+    for(unsigned int i = 0; i < enemies->size(); i++)
     {
         //Check if teamIds are the same xor enemy is true
         if((enemies->at(i)->GetTeamId() == teamId) != enemy)
@@ -56,7 +56,7 @@ Entity* AIBase::GetRandomEntity(int teamId, bool enemy)
             ret--;
         }
     }
-    for(int i = 0; i < party->size(); i++)
+    for(unsigned int i = 0; i < party->size(); i++)
     {
         //Check if teamIds are the same xor enemy is true
         if((party->at(i)->GetTeamId() == teamId) != enemy)

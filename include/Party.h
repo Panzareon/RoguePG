@@ -18,7 +18,6 @@ class Party
         std::vector<PartyMember*> m_partyMembers;
         std::vector<PartyMember*> m_deadMembers;
         std::vector<PartyMember*> m_activePartyMembers;
-        int m_maxPartySize;
 };
 
 #endif // PARTY_H

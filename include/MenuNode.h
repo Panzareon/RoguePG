@@ -24,11 +24,11 @@ class MenuNode : public Node
         virtual void onDraw(sf::RenderTarget& target, const sf::Transform& transform) const;
 
 
-        int m_width;
-        int m_optionHeight;
-        int m_selected;
-        int m_scrollPosition;
-        int m_maxShownNumber;
+        unsigned int m_width;
+        unsigned int m_optionHeight;
+        unsigned int m_selected;
+        unsigned int m_scrollPosition;
+        unsigned int m_maxShownNumber;
 
         std::vector<std::string> m_optionName;
         std::vector<std::function<void()>> m_optionFunction;

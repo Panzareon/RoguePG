@@ -11,40 +11,40 @@ Map::Map(int width, int height)
     m_height = height;
 
     m_tiles = new int*[m_width];
-    for(int j = 0; j < m_width; j++)
+    for(unsigned int j = 0; j < m_width; j++)
         m_tiles[j] = new int[m_height];
     m_roomNr = new int*[m_width];
-    for(int j = 0; j < m_width; j++)
+    for(unsigned int j = 0; j < m_width; j++)
         m_roomNr[j] = new int[m_height];
 }
 
 Map::~Map()
 {
     //dtor
-    for(int i = 0; i < m_nrLayers; i++)
+    for(unsigned int i = 0; i < m_nrLayers; i++)
     {
-        for(int j = 0; j < m_width*2; j++)
+        for(unsigned int j = 0; j < m_width*2; j++)
             delete[] m_layers[i][j];
         delete[] m_layers[i];
     }
-    for(int j = 0; j < m_width; j++)
+    for(unsigned int j = 0; j < m_width; j++)
         delete[] m_tiles[j];
     delete[] m_tiles;
-    for(int j = 0; j < m_width; j++)
+    for(unsigned int j = 0; j < m_width; j++)
         delete[] m_roomNr[j];
     delete[] m_roomNr;
 }
-void Map::init(int nrLayers)
+void Map::init(unsigned int nrLayers)
 {
     //ctor
     m_nrLayers = nrLayers;
-    for(int i = 0; i < m_nrLayers; i++)
+    for(unsigned int i = 0; i < m_nrLayers; i++)
     {
         m_layers.push_back(new int*[m_width*2]);
-        for(int j = 0; j < m_width*2; j++)
+        for(unsigned int j = 0; j < m_width*2; j++)
         {
             m_layers[i][j] = new int[m_height*2];
-            for(int k = 0; k < m_height*2; k++)
+            for(unsigned int k = 0; k < m_height*2; k++)
                 m_layers[i][j][k] = 0;
         }
     }

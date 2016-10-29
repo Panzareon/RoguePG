@@ -4,7 +4,6 @@
 Party::Party()
 {
     //ctor
-    m_maxPartySize = 3;
 }
 
 Party::~Party()
@@ -50,7 +49,8 @@ void Party::UpdateActiveParty()
         }
     }
     //Check if there are Members that are not in the active Party
-    if(m_activePartyMembers.size() < m_maxPartySize && m_partyMembers.size() > m_activePartyMembers.size())
+    int maxPartySize = Configuration::GetInstance()->GetMaxPartySize();
+    if(m_activePartyMembers.size() < maxPartySize && m_partyMembers.size() > m_activePartyMembers.size())
     {
         for(auto it = m_partyMembers.begin(); it != m_partyMembers.end(); it++)
         {
@@ -58,7 +58,7 @@ void Party::UpdateActiveParty()
             {
                 //This Party Member is not in the active party
                 m_activePartyMembers.push_back(*it);
-                if(m_activePartyMembers.size() == m_maxPartySize)
+                if(m_activePartyMembers.size() == maxPartySize)
                 {
                     //Do not add more to active Party, if max active party size is reached
                     break;
