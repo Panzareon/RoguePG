@@ -30,6 +30,7 @@ class GameController
 
         void setParty(Party* party);
         Party* getParty();
+        std::default_random_engine* GetRandomGenerator();
     protected:
     private:
         Party* m_party;
@@ -42,6 +43,7 @@ class GameController
         std::vector<bool> m_keysPressed;
 
         std::vector<SceneManager*> m_sceneManager;
+        std::default_random_engine m_randomGenerator;
 };
 
 #endif // GAMECONTROLLER_H

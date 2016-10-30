@@ -6,9 +6,6 @@ EntityNode::EntityNode(SceneManagerBattle* sm, Entity* entity): AnimatedNode(ent
     m_smb = sm;
     m_entity = entity;
     m_targetedNode = nullptr;
-
-    //TODO: get actual Sprite Number
-    m_numberFrames = 1;
 }
 
 EntityNode::~EntityNode()

@@ -1,8 +1,9 @@
 #include "GameController.h"
 #include "SceneManagerBattle.h"
+#include <iostream>
 
 GameController* GameController::m_instance = 0;
-GameController::GameController()
+GameController::GameController() : m_randomGenerator(time(NULL))
 {
     //ctor
     m_party = 0;
@@ -123,6 +124,10 @@ void GameController::GameOver()
     }
 }
 
+std::default_random_engine* GameController::GetRandomGenerator()
+{
+    return &m_randomGenerator;
+}
 
 
 

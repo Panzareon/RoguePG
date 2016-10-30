@@ -59,6 +59,18 @@ void PartyMember::LevelUp()
             AddSkill(newSkill);
         }
     }
+    std::default_random_engine* generator = GameController::getInstance()->GetRandomGenerator();
+    for(int i = 0; i < BattleEnums::ATTRIBUTE_END; i++)
+    {
+        float chance = m_chrClass->GetAttributePerLevel((BattleEnums::Attribute)i);
+        std::normal_distribution<float> distribution(chance,0.5f);
+        float addf = distribution(*generator);
+        int add = (int)addf;
+        if(add > 0)
+        {
+            m_attributes[(BattleEnums::Attribute)i] += add;
+        }
+    }
 }
 
 

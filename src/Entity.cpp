@@ -164,7 +164,7 @@ void Entity::InitAttribute(BattleEnums::Attribute attr, int value)
     m_attributes[attr] = value;
     if(attr == BattleEnums::AttributeMaxHp)
     {
-        m_hp = attr;
+        m_hp = value;
     }
 }
 

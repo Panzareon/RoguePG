@@ -10,6 +10,11 @@ CharacterClass::CharacterClass(CharacterClassEnum chrClass, float skillChance)
     //ctor
     m_classType = chrClass;
     m_skillChance = skillChance;
+    //Set default Attribute increase per level to 1.0f
+    for(int i = 0; i < BattleEnums::ATTRIBUTE_END; i++)
+    {
+        m_attributesPerLevel[(BattleEnums::Attribute)i] = 1.0f;
+    }
 }
 
 CharacterClass::~CharacterClass()
@@ -25,6 +30,17 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         m_classes->resize(CHARACTER_CLASS_END);
         //TODO: initialize Character Classes
         CharacterClass * newClass = new CharacterClass(CharacterClassFireMage, 0.8f);
+
+        newClass->SetBaseAttribute(BattleEnums::AttributeMaxHp, 10);
+        newClass->SetBaseAttribute(BattleEnums::AttributeStrength, 5);
+        newClass->SetBaseAttribute(BattleEnums::AttributeInt, 12);
+        newClass->SetBaseAttribute(BattleEnums::AttributeDefense, 8);
+        newClass->SetBaseAttribute(BattleEnums::AttributeMagicDefense, 10);
+        newClass->SetBaseAttribute(BattleEnums::AttributeSpeed, 10);
+
+        //Set increased and decreased Attribute per Level values
+        newClass->SetAttributePerLevel(BattleEnums::AttributeStrength, 0.7f);
+        newClass->SetAttributePerLevel(BattleEnums::AttributeInt, 1.3f);
 
         newClass->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 1.0f);
         newClass->AddSkillAttackType(BattleEnums::AttackTypeFire, 1.0f);
@@ -52,7 +68,12 @@ CharacterClass* CharacterClass::GetRandomCharacterClass()
 
 PartyMember* CharacterClass::GetNewPartyMember()
 {
-    return new PartyMember(this);
+    PartyMember* ret = new PartyMember(this);
+    for(int i = 0; i < BattleEnums::ATTRIBUTE_END; i++)
+    {
+        ret->InitAttribute((BattleEnums::Attribute)i, m_baseAttributes[(BattleEnums::Attribute)i]);
+    }
+    return ret;
 }
 
 Skill* CharacterClass::GetNewSkill(PartyMember* user)
@@ -143,3 +164,19 @@ void CharacterClass::AddSkillEffectType(BattleEnums::EffectType effectType, floa
 {
     m_skillEffectType.insert(std::pair<float, BattleEnums::EffectType>(chance, effectType));
 }
+
+float CharacterClass::GetAttributePerLevel(BattleEnums::Attribute attr)
+{
+    return m_attributesPerLevel[attr];
+}
+
+void CharacterClass::SetBaseAttribute(BattleEnums::Attribute attr, int value)
+{
+    m_baseAttributes[attr] = value;
+}
+
+void CharacterClass::SetAttributePerLevel(BattleEnums::Attribute attr, float value)
+{
+    m_attributesPerLevel[attr] = value;
+}
+

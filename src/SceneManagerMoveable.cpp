@@ -61,6 +61,10 @@ void SceneManagerMoveable::Tick()
 
         GameController::getInstance()->StartBattle(&enemies);
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
+    {
+        GameController::getInstance()->getParty()->GetActivePartyMembers()->at(0)->LevelUp();
+    }
 
     if(moveX != 0.0f || moveY != 0.0f)
     {
