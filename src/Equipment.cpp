@@ -1,15 +1,34 @@
 #include "Equipment.h"
 #include "Attack.h"
+#include "Entity.h"
 
-Equipment::Equipment()
+Equipment::Equipment(int itemId) : Item(itemId)
 {
     //ctor
+    m_target = nullptr;
 }
 
 Equipment::~Equipment()
 {
     //dtor
 }
+
+void Equipment::OnEffectStart()
+{
+    //TODO: Add additional Effects of this Equipment to the target
+}
+
+void Equipment::EquipTo(Entity* target)
+{
+    m_target = target;
+    target->AddPassiveEffect(this);
+}
+
+void Equipment::UnEquip()
+{
+    m_target = nullptr;
+}
+
 
 bool Equipment::StaysAfterBattle()
 {
@@ -41,3 +60,9 @@ int Equipment::GetActivationPriority()
     //Default Prio for Equipment
     return 0;
 }
+
+bool Equipment::IsEquipment()
+{
+    return true;
+}
+

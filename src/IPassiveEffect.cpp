@@ -9,3 +9,13 @@ IPassiveEffect::~IPassiveEffect()
 {
     //dtor
 }
+
+bool IPassiveEffect::IsEquipment()
+{
+    return false;
+}
+
+void IPassiveEffect::OnEffectStart()
+{
+    //NOOP
+}

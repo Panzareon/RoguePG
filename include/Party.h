@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "PartyMember.h"
+#include "Item.h"
 
 class Party
 {
@@ -13,11 +14,18 @@ class Party
         void UpdateActiveParty();
 
         void AddPartyMember(PartyMember* member);
+
+        void AddItem(int itemId);
+        int GetNumberOfItem(int itemId);
+        bool RemoveItem(int itemId);
     protected:
     private:
         std::vector<PartyMember*> m_partyMembers;
         std::vector<PartyMember*> m_deadMembers;
         std::vector<PartyMember*> m_activePartyMembers;
+
+        //Number of Items and actual Item
+        std::vector<std::pair<int,Item*>> m_items;
 };
 
 #endif // PARTY_H

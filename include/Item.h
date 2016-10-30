@@ -5,10 +5,12 @@
 class Item
 {
     public:
-        Item();
+        Item(int itemId);
         virtual ~Item();
 
+        int GetItemId();
     protected:
+        int m_itemId;
 
     private:
 };

@@ -117,6 +117,28 @@ void Entity::AddSkill(Skill* skill)
     m_skills.push_back(*skill);
 }
 
+void Entity::AddPassiveEffect(IPassiveEffect* eff)
+{
+    m_passiveEffects.insert(std::pair<int, IPassiveEffect*>(eff->GetActivationPriority(), eff));
+    eff->OnEffectStart();
+}
+
+void Entity::RemovePassiveEffect(IPassiveEffect* eff)
+{
+    for(auto it = m_passiveEffects.begin(); it != m_passiveEffects.end();)
+    {
+        if(it->second == eff)
+        {
+            delete it->second;
+            it = m_passiveEffects.erase(it);
+        }
+        else
+        {
+            it++;
+        }
+    }
+}
+
 float Entity::GetResistanceFor(BattleEnums::AttackType type)
 {
     float atmValue = m_resistances[type];
@@ -170,7 +192,10 @@ void Entity::FinishedTurn()
         if(iter->second->IsStillActive())
             iter++;
         else
+        {
+            delete iter->second;
             iter = m_passiveEffects.erase(iter);
+        }
     }
 }
 

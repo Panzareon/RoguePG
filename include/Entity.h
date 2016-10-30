@@ -44,6 +44,9 @@ class Entity
         void CalculateMove(SceneManagerBattle* sm);
         void AddSkill(Skill* skill);
 
+        void AddPassiveEffect(IPassiveEffect* eff);
+        void RemovePassiveEffect(IPassiveEffect* eff);
+
         std::vector<Skill>* GetSkillList();
 
         int GetTeamId();
@@ -54,6 +57,7 @@ class Entity
         int GetNumberSprites();
     protected:
         std::vector<Skill> m_skills;
+        //Map of all Passive Effects including the equiped Weapons and Armor with Priority, in which order they are called
         std::multimap<int, IPassiveEffect*> m_passiveEffects;
 
         std::map<BattleEnums::Attribute, int> m_attributes;
