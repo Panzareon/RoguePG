@@ -17,8 +17,7 @@ sf::Shader* ShaderList::GetShader(ShaderFiles file)
     if(m_shaders.find(file) == m_shaders.end())
     {
         std::string filename;
-        std::string texturePath = "shader/";
-        std::string shaderPath;
+        std::string shaderPath = "shader/";
         sf::Shader* newShader = new sf::Shader();
         bool ret;
 
@@ -28,7 +27,7 @@ sf::Shader* ShaderList::GetShader(ShaderFiles file)
         case AnimatedSpriteShader:
             filename = "spriteSheetAnimation.frag";
             shaderPath += filename;
-            ret = !newShader->loadFromFile(shaderPath , sf::Shader::Fragment);
+            ret = newShader->loadFromFile(shaderPath , sf::Shader::Fragment);
             break;
         }
 
