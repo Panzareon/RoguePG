@@ -5,6 +5,7 @@ EntityNode::EntityNode(SceneManagerBattle* sm, Entity* entity): AnimatedNode(ent
     //ctor
     m_smb = sm;
     m_entity = entity;
+    entity->SetNode(this);
     m_targetedNode = nullptr;
 }
 

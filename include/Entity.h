@@ -10,6 +10,7 @@
 #include <vector>
 #include <map>
 
+class EntityNode;
 class SceneManagerBattle;
 
 class Entity
@@ -57,6 +58,10 @@ class Entity
         sf::Sprite* GetBattleSprite();
         void SetBattleSprite(TextureList::TextureFiles newSprite);
         int GetNumberSprites();
+
+        //Sets the Node showing this Entity on Screen
+        void SetNode(EntityNode* node);
+        EntityNode* GetNode();
     protected:
         std::vector<Skill> m_skills;
         //Map of all Passive Effects including the equiped Weapons and Armor with Priority, in which order they are called
@@ -76,6 +81,8 @@ class Entity
 
         sf::Sprite* m_battleSprite;
         int m_numberSprites;
+
+        EntityNode* m_node;
     private:
 };
 

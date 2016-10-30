@@ -11,9 +11,13 @@ class TextureList
         enum TextureFiles{
             DungeonTileMap,
 
-            HeroSpriteSheet, DefaultBattleSprite,
+            HeroSpriteSheet,
+
+            BatBattleSprite, DefaultBattleSprite,
 
             TargetCursor,
+
+            FireballAnimation,
 
             DungeonBattleBackground
         };

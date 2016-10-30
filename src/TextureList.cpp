@@ -33,13 +33,23 @@ Texture* TextureList::getTexture(TextureFiles file)
             newTexture = new Texture(4);
             filename = "skeleton-large.png";
             break;
+        case BatBattleSprite:
+            newTexture = new Texture();
+            filename = "bat.png";
+            break;
         case DefaultBattleSprite:
             newTexture = new Texture();
             filename = "rogue.png";
             break;
+
         case TargetCursor:
             newTexture = new Texture();
             filename = "target.png";
+            break;
+
+        case FireballAnimation:
+            newTexture = new Texture();
+            filename = "fireball.png";
             break;
 
 

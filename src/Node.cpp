@@ -92,6 +92,12 @@ void Node::setParent(Node* parent)
 {
     m_parent = parent;
 }
+
+Node* Node::GetParent()
+{
+    return m_parent;
+}
+
 bool Node::IsVisible()
 {
     return m_visible;

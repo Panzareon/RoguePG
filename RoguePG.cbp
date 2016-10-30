@@ -46,7 +46,9 @@
 		<Unit filename="include/AIRandom.h" />
 		<Unit filename="include/AnimatedNode.h" />
 		<Unit filename="include/Animation.h" />
+		<Unit filename="include/AnimationFactory.h" />
 		<Unit filename="include/AnimationPart.h" />
+		<Unit filename="include/AnimationPartSprite.h" />
 		<Unit filename="include/Attack.h" />
 		<Unit filename="include/CharacterClass.h" />
 		<Unit filename="include/Configuration.h" />
@@ -90,7 +92,9 @@
 		<Unit filename="src/AIRandom.cpp" />
 		<Unit filename="src/AnimatedNode.cpp" />
 		<Unit filename="src/Animation.cpp" />
+		<Unit filename="src/AnimationFactory.cpp" />
 		<Unit filename="src/AnimationPart.cpp" />
+		<Unit filename="src/AnimationPartSprite.cpp" />
 		<Unit filename="src/Attack.cpp" />
 		<Unit filename="src/CharacterClass.cpp" />
 		<Unit filename="src/Configuration.cpp" />

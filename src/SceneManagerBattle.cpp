@@ -67,8 +67,8 @@ SceneManagerBattle::SceneManagerBattle(sf::RenderTarget * target, int windowWidt
     m_mainNode->addChild(m_background);
     m_eventLayer = new Node();
     m_animationNode = new Node();
-    m_eventLayer->addChild(m_animationNode);
     m_mainNode->addChild(m_eventLayer);
+    m_mainNode->addChild(m_animationNode);
     m_gui = new Node();
     m_mainNode->addChild(m_gui);
     m_mainMenu = new MenuNode(m_windowWidth);
@@ -433,7 +433,7 @@ void SceneManagerBattle::AddSpriteForEntity(Entity* entity)
     DrawableNode* targetNode = new DrawableNode(target);
     //Moving Cursor
     sf::Transform targetTransform;
-    targetTransform.translate(15, -10);
+    targetTransform.translate(entity->GetBattleSprite()->getLocalBounds().width / 2 - 8, -10);
     targetNode->setTransform(targetTransform);
 
     //Create Node for Entity

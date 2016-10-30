@@ -22,7 +22,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type)
         //Exp to give after Battle
         ret = new Entity(10);
         ret->InitAllAttributes(10,5,2,5,6);
-        //TODO: ret->SetBattleSprite()
+        ret->SetBattleSprite(TextureList::BatBattleSprite);
         BattleEnums::Target target = BattleEnums::TargetEnemyTeamEntity;
         Skill* sk = new Skill(ret,target);
         sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(4)->GetEffectWithValue(2,target),true);

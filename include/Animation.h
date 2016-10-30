@@ -19,7 +19,6 @@ class Animation
         float m_animationTime;
         float m_maxTime;
         std::vector<AnimationPart*> m_animationParts;
-        std::vector<Node*> m_nodes;
 };
 
 #endif // ANIMATION_H

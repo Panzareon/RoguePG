@@ -4,6 +4,8 @@
 #include <math.h>
 #include <map>
 #include "TextureList.h"
+#include "AnimationFactory.h"
+#include "GameController.h"
 
 Entity::Entity(int exp)
 {
@@ -42,7 +44,9 @@ Entity::~Entity()
 }
 void Entity::AttackEntity(Entity* target)
 {
-    //TODO: play Attack animation
+    //TODO: play actual Attack animation (get from Weapon)
+    Animation* newAnim = AnimationFactory::GetAnimation(AnimationFactory::Fireball, target->GetNode());
+    GameController::getInstance()->GetActiveSceneManager()->AddAnimation(newAnim);
     //TODO: maybe change base Attack dmg
     int attack = 1;
     bool isPhysical = IsAttackPhysical();
@@ -251,6 +255,16 @@ int Entity::GetTeamId()
 void Entity::SetTeamId(int id)
 {
     m_teamId = id;
+}
+
+void Entity::SetNode(EntityNode* node)
+{
+    m_node = node;
+}
+
+EntityNode* Entity::GetNode()
+{
+    return m_node;
 }
 
 

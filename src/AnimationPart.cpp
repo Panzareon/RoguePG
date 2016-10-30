@@ -12,24 +12,31 @@ AnimationPart::~AnimationPart()
     //dtor
 }
 
+void AnimationPart::SetTiming(float start, float end)
+{
+    m_start = start;
+    m_end = end;
+}
+
+
 void AnimationPart::animate(float newTime)
 {
-    if(!m_status == 0 && newTime > m_start)
+    if(m_status == 0 && newTime > m_start)
     {
         //Start Animation
         m_status = 1;
-        //TODO: Start Animation
+        Start();
     }
     else if(m_status == 1 && newTime > m_end)
     {
         //Stop Animation
         m_status = 2;
-        //TODO: Stop Animation
+        Stop();
     }
     else if(m_status == 1)
     {
         //Animation step
-        float percent = (m_end - newTime) / (m_end - m_start);
-        //TODO: actual Animation for percent from 0 to 1
+        float percent = (newTime - m_start) / (m_end - m_start);
+        AnimationStep(percent);
     }
 }

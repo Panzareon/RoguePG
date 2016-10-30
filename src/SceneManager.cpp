@@ -39,7 +39,10 @@ void SceneManager::NextTick()
             delete (*iter);
             iter = m_animationList.erase(iter);
         }
-        iter++;
+        else
+        {
+            iter++;
+        }
     }
     //Call Ticks for derived Classes
     Tick();

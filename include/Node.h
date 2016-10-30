@@ -22,6 +22,7 @@ class Node
         void moveNode(float x, float y);
 
         void setParent(Node* parent);
+        Node* GetParent();
         void addChild(Node* child);
         void removeChild(Node* child);
 
