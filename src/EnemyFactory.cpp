@@ -19,12 +19,13 @@ Entity* EnemyFactory::GetEntity(EnemyList type)
     switch(type)
     {
     case EnemyListBat:
-        ret = new Entity();
+        //Exp to give after Battle
+        ret = new Entity(10);
         ret->InitAllAttributes(10,5,2,5,6);
         //TODO: ret->SetBattleSprite()
         BattleEnums::Target target = BattleEnums::TargetEnemyTeamEntity;
         Skill* sk = new Skill(ret,target);
-        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(3)->GetEffectWithValue(2,target),true);
+        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(4)->GetEffectWithValue(2,target),true);
         ret->AddSkill(sk);
         break;
     }

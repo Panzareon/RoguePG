@@ -11,7 +11,7 @@
 class EffectFactory
 {
     public:
-        EffectFactory(std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets)>* func);
+        EffectFactory(std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets)>* func, int id);
         virtual ~EffectFactory();
 
         //Returns new Instance of Effect with a strength defined by the value given, needs to be deleted
@@ -26,6 +26,8 @@ class EffectFactory
         //If the effect can be used with TargetNone
         bool DoesNeedTarget();
 
+        int GetId();
+
         StrengthCalculation* GetStrengthCalculation();
     protected:
     private:
@@ -36,6 +38,8 @@ class EffectFactory
         std::set<BattleEnums::EffectType> m_effectType;
         bool m_needsTarget;
         StrengthCalculation m_strengthCalculation;
+
+        int m_id;
 };
 
 #endif // EFFECTFACTORY_H

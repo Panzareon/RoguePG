@@ -1,9 +1,10 @@
 #include "EffectFactory.h"
 
-EffectFactory::EffectFactory(std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets)>* func)
+EffectFactory::EffectFactory(std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets)>* func, int id)
 {
     m_effectFunction = func;
     m_needsTarget = true;
+    m_id = id;
 }
 
 
@@ -52,5 +53,10 @@ bool EffectFactory::DoesNeedTarget()
 StrengthCalculation* EffectFactory::GetStrengthCalculation()
 {
     return &m_strengthCalculation;
+}
+
+int EffectFactory::GetId()
+{
+    return m_id;
 }
 

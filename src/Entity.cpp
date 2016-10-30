@@ -5,7 +5,7 @@
 #include <map>
 #include "TextureList.h"
 
-Entity::Entity()
+Entity::Entity(int exp)
 {
     //ctor
     m_controllTypeAtm = Entity::ControllAI;
@@ -27,6 +27,8 @@ Entity::Entity()
     SetBattleSprite(TextureList::DefaultBattleSprite);
 
     m_toNextAttack = 1.0f;
+
+    m_giveExp = exp;
 }
 
 Entity::~Entity()
@@ -251,3 +253,8 @@ void Entity::SetTeamId(int id)
     m_teamId = id;
 }
 
+
+int Entity::GetExpToGive()
+{
+    return m_giveExp;
+}

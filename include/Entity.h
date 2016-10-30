@@ -16,7 +16,7 @@ class Entity
 {
     public:
         enum ControllType{ControllAI, ControllUser};
-        Entity();
+        Entity(int exp = 0);
         virtual ~Entity();
 
         void PassTime(float Time);
@@ -47,6 +47,8 @@ class Entity
         void AddPassiveEffect(IPassiveEffect* eff);
         void RemovePassiveEffect(IPassiveEffect* eff);
 
+        int GetExpToGive();
+
         std::vector<Skill>* GetSkillList();
 
         int GetTeamId();
@@ -62,6 +64,7 @@ class Entity
 
         std::map<BattleEnums::Attribute, int> m_attributes;
         std::map<BattleEnums::AttackType, float> m_resistances;
+        int m_giveExp;
 
         int m_hp;
         float m_toNextAttack;

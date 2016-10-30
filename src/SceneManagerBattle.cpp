@@ -387,8 +387,12 @@ bool SceneManagerBattle::IsFinished()
 
 void SceneManagerBattle::Finished()
 {
-    //TODO: Calculate actual Exp from dead enemies
-    int exp = 100;
+    //Calculate Exp from dead enemies
+    int exp = 0;
+    for(unsigned int i = 0; i < m_enemies.size(); i++)
+    {
+        exp += m_enemies[i]->GetExpToGive();
+    }
     std::vector<PartyMember*> * activeParty = m_party->GetActivePartyMembers();
     for(unsigned int i = 0; i < activeParty->size(); i++)
     {
