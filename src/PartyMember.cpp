@@ -7,6 +7,8 @@ PartyMember::PartyMember(CharacterClass* chrClass)
     //ctor
     m_controllTypeAtm = Entity::ControllUser;
     m_chrClass = chrClass;
+    m_exp = 0;
+    m_lvl = 1;
 }
 
 PartyMember::~PartyMember()
@@ -27,7 +29,7 @@ void PartyMember::AddExp(int ammount)
         m_exp += newAmmount;
         //Level up if enough Exp
         //TODO: use an other calculation for needed exp
-        if(m_exp > m_lvl * m_lvl * 10)
+        while(m_exp > m_lvl * m_lvl * 10)
         {
             LevelUp();
         }

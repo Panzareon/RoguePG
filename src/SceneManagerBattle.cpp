@@ -151,54 +151,90 @@ void SceneManagerBattle::Tick()
         {
             if(m_targetType == BattleEnums::TargetEnemyTeamEntity)
             {
+                int nr = 0;
                 do
                 {
                     if(m_targetNr < m_enemies.size() - 1)
                     {
                         m_targetNr++;
-                        m_targetEntity = m_enemies[m_targetNr];
                     }
+                    else
+                    {
+                        m_targetNr = 0;
+                    }
+                    m_targetEntity = m_enemies[m_targetNr];
                 }
-                while(m_targetEntity->IsDead());
+                while(m_targetEntity->IsDead() && nr++ < 100);
+                if(nr >= 100)
+                {
+                    std::cout << "Missing Enemy to target" << std::endl;
+                }
             }
             else if(m_targetType == BattleEnums::TargetOwnTeamEntity)
             {
+                int nr = 0;
                 do
                 {
                     if(m_targetNr < m_party->GetActivePartyMembers()->size() - 1)
                     {
                         m_targetNr++;
-                        m_targetEntity = m_party->GetActivePartyMembers()->at(m_targetNr);
                     }
+                    else
+                    {
+                        m_targetNr = 0;
+                    }
+                    m_targetEntity = m_party->GetActivePartyMembers()->at(m_targetNr);
                 }
-                while(m_targetEntity->IsDead());
+                while(m_targetEntity->IsDead() && nr++ < 100);
+                if(nr >= 100)
+                {
+                    std::cout << "Missing Party member to target" << std::endl;
+                }
             }
         }
         else if(controller->IsKeyPressed(Configuration::MoveUp))
         {
             if(m_targetType == BattleEnums::TargetEnemyTeamEntity)
             {
+                int nr = 0;
                 do
                 {
                     if(m_targetNr > 0)
                     {
                         m_targetNr--;
-                        m_targetEntity = m_enemies[m_targetNr];
                     }
+                    else
+                    {
+                        m_targetNr = m_enemies.size() - 1;
+                    }
+                    m_targetEntity = m_enemies[m_targetNr];
                 }
-                while(m_targetEntity->IsDead());
+                while(m_targetEntity->IsDead() && nr++ < 100);
+                if(nr >= 100)
+                {
+                    std::cout << "Missing Enemy to target" << std::endl;
+                }
             }
             else if(m_targetType == BattleEnums::TargetOwnTeamEntity)
             {
+                int nr = 0;
                 do
                 {
                     if(m_targetNr > 0)
                     {
                         m_targetNr--;
-                        m_targetEntity = m_party->GetActivePartyMembers()->at(m_targetNr);
                     }
+                    else
+                    {
+                        m_targetNr = m_party->GetActivePartyMembers()->size() - 1;
+                    }
+                    m_targetEntity = m_party->GetActivePartyMembers()->at(m_targetNr);
                 }
-                while(m_targetEntity->IsDead());
+                while(m_targetEntity->IsDead() && nr++ < 100);
+                if(nr >= 100)
+                {
+                    std::cout << "Missing Party Member to target" << std::endl;
+                }
             }
         }
 

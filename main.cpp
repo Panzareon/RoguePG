@@ -41,7 +41,6 @@ int main()
 
     while (window.isOpen())
     {
-        std::cout << "nextTick" << std::endl;
         sf::Event event;
         while (window.pollEvent(event))
         {
