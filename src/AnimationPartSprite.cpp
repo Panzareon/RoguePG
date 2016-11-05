@@ -11,6 +11,8 @@ AnimationPartSprite::AnimationPartSprite(TextureList::TextureFiles sprite)
     m_angle = 0.0f;
     m_scale = 1.0f;
     m_texture = sprite;
+    m_sprite = new sf::Sprite();
+    m_sprite->setTexture(*TextureList::getTexture(m_texture));
 }
 
 AnimationPartSprite::~AnimationPartSprite()
@@ -41,8 +43,6 @@ void AnimationPartSprite::SetScaling(float scale)
 
 void AnimationPartSprite::Start()
 {
-    m_sprite = new sf::Sprite();
-    m_sprite->setTexture(*TextureList::getTexture(m_texture));
     m_node = new DrawableNode(m_sprite);
     m_node->setTransform(m_startTransform);
 
@@ -66,4 +66,9 @@ void AnimationPartSprite::AnimationStep(float percent)
     trans.translate(m_moveX * percent, m_moveY * percent);
 
     m_node->setTransform(trans);
+}
+
+sf::Sprite* AnimationPartSprite::GetSprite()
+{
+    return m_sprite;
 }

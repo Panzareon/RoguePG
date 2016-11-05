@@ -5,6 +5,7 @@
 #include <functional>
 #include "Entity.h"
 #include "StrengthCalculation.h"
+#include "AnimationFactory.h"
 
 class Effect
 {
@@ -12,6 +13,7 @@ class Effect
         Effect(std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets)>* func, std::vector<float> *strength, StrengthCalculation* strengthCalculation, BattleEnums::Target target);
 
         void UseEffectOn(Entity* user, std::vector<Entity*>* targets);
+        void SetAnimation(AnimationFactory::AnimationList anim);
 
         float GetValue();
 
@@ -23,6 +25,7 @@ class Effect
         std::vector<float> *m_strength;
         StrengthCalculation* m_strengthCalculation;
         BattleEnums::Target m_defaultTarget;
+        AnimationFactory::AnimationList m_anim;
 };
 
 #endif // EFFECT_H

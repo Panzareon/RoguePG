@@ -45,7 +45,7 @@ Entity::~Entity()
 void Entity::AttackEntity(Entity* target)
 {
     //TODO: play actual Attack animation (get from Weapon)
-    Animation* newAnim = AnimationFactory::GetAnimation(AnimationFactory::Fireball, target->GetNode());
+    Animation* newAnim = AnimationFactory::GetAnimation(AnimationFactory::Fireball, target);
     GameController::getInstance()->GetActiveSceneManager()->AddAnimation(newAnim);
     //TODO: maybe change base Attack dmg
     int attack = 1;

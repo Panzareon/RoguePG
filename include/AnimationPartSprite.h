@@ -19,6 +19,7 @@ class AnimationPartSprite : public AnimationPart
         virtual void Start();
         virtual void Stop();
         virtual void AnimationStep(float percent);
+        sf::Sprite* GetSprite();
 
     protected:
         TextureList::TextureFiles m_texture;
