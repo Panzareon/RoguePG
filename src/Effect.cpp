@@ -1,4 +1,5 @@
 #include "Effect.h"
+#include "GameController.h"
 
 Effect::Effect(std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets)>* func, std::vector<float>* strength, StrengthCalculation* strengthCalculation, BattleEnums::Target target)
 {
@@ -21,14 +22,16 @@ void Effect::UseEffectOn(Entity* user, std::vector<Entity* >* targets)
         //Use the Effect
         (*m_effectFunction)(m_strength, user, target);
         //Play the Animation for this effect
-        AnimationFactory::GetAnimation(m_anim, target);
+        Animation * newAnim = AnimationFactory::GetAnimation(m_anim, target);
+        GameController::getInstance()->GetActiveSceneManager()->AddAnimation(newAnim);
     }
     else
     {
         //Use the Effect
         (*m_effectFunction)(m_strength, user, targets);
         //Play the Animation for this effect
-        AnimationFactory::GetAnimation(m_anim, targets);
+        Animation * newAnim = AnimationFactory::GetAnimation(m_anim, targets);
+        GameController::getInstance()->GetActiveSceneManager()->AddAnimation(newAnim);
     }
 }
 

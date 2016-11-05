@@ -355,6 +355,8 @@ void SceneManagerBattle::PassTime(float Time)
 }
 bool SceneManagerBattle::IsFinished()
 {
+    if(m_animationList.size() > 0)
+        return false;
     bool finished = true;
     for(unsigned int i = 0; i < m_enemies.size(); i++)
     {

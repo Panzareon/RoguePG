@@ -7,6 +7,7 @@ Skill::Skill(Entity* user, BattleEnums::Target target)
     //ctor
     m_user = user;
     m_defaultTarget = target;
+    m_manaUse = 0.0f;
 }
 
 Skill::~Skill()
