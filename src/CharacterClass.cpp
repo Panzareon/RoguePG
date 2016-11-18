@@ -42,9 +42,16 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         newClass->SetAttributePerLevel(BattleEnums::AttributeStrength, 0.7f);
         newClass->SetAttributePerLevel(BattleEnums::AttributeInt, 1.3f);
 
-        newClass->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 1.0f);
+        newClass->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.8f);
+        newClass->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.85f);
+        newClass->AddSkillTarget(BattleEnums::TargetSelf, 0.9f);
+        newClass->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.95f);
+        newClass->AddSkillTarget(BattleEnums::TargetEnemyTeam, 1.0f);
         newClass->AddSkillAttackType(BattleEnums::AttackTypeFire, 1.0f);
-        newClass->AddSkillEffectType(BattleEnums::EffectTypeDamage, 1.0f);
+
+        newClass->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.8f, false);
+        newClass->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 1.0f, false);
+        newClass->AddSkillEffectType(BattleEnums::EffectTypeBuff, 1.0f, true);
 
         m_classes->at(CharacterClassFireMage) = newClass;
         //finished Initializing Character Classes
@@ -84,13 +91,16 @@ Skill* CharacterClass::GetNewSkill(PartyMember* user)
     BattleEnums::EffectType effectType;
 
     target = GetRandomTarget();
+    bool positive = false;
+    if(target == BattleEnums::TargetOwnTeam || target == BattleEnums::TargetOwnTeamEntity || target == BattleEnums::TargetSelf)
+        positive = true;
     Skill* newSkill = new Skill(user,target);
     float manaUse = 0.0f;
 
     do
     {
         attackType = GetRandomAttackType();
-        effectType = GetRandomEffectType();
+        effectType = GetRandomEffectType(positive);
 
 
         newSkill->AddEffect(EffectFactoryList::GetInstance()->getRandom(attackType, effectType)->GetEffectWithValue(strength - manaUse, target), true);
@@ -135,11 +145,21 @@ BattleEnums::AttackType CharacterClass::GetRandomAttackType()
     return it->second;
 }
 
-BattleEnums::EffectType CharacterClass::GetRandomEffectType()
+BattleEnums::EffectType CharacterClass::GetRandomEffectType(bool positive)
 {
     float random = rand() / (float)RAND_MAX;
-    auto it = m_skillEffectType.begin();
-    for(; it != m_skillEffectType.end(); it++)
+    std::map<float, BattleEnums::EffectType>::iterator it, endIt;
+    if(positive)
+    {
+        it = m_skillPositiveEffectType.begin();
+        endIt = m_skillPositiveEffectType.end();
+    }
+    else
+    {
+        it = m_skillNegativeEffectType.begin();
+        endIt = m_skillNegativeEffectType.end();
+    }
+    for(; it != endIt; it++)
     {
         if(it->first < random)
         {
@@ -160,9 +180,12 @@ void CharacterClass::AddSkillAttackType(BattleEnums::AttackType attackType, floa
     m_skillAttackType.insert(std::pair<float, BattleEnums::AttackType>(chance, attackType));
 }
 
-void CharacterClass::AddSkillEffectType(BattleEnums::EffectType effectType, float chance)
+void CharacterClass::AddSkillEffectType(BattleEnums::EffectType effectType, float chance, bool positive)
 {
-    m_skillEffectType.insert(std::pair<float, BattleEnums::EffectType>(chance, effectType));
+    if(positive)
+        m_skillPositiveEffectType.insert(std::pair<float, BattleEnums::EffectType>(chance, effectType));
+    else
+        m_skillNegativeEffectType.insert(std::pair<float, BattleEnums::EffectType>(chance, effectType));
 }
 
 float CharacterClass::GetAttributePerLevel(BattleEnums::Attribute attr)

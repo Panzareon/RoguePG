@@ -21,7 +21,7 @@ class CharacterClass
 
         void AddSkillTarget(BattleEnums::Target target, float chance);
         void AddSkillAttackType(BattleEnums::AttackType attackType, float chance);
-        void AddSkillEffectType(BattleEnums::EffectType effectType, float chance);
+        void AddSkillEffectType(BattleEnums::EffectType effectType, float chance, bool positive);
     protected:
         static std::vector<CharacterClass*>* m_classes;
 
@@ -29,7 +29,8 @@ class CharacterClass
         float m_skillChance;
         std::map<float, BattleEnums::Target> m_skillTarget;
         std::map<float, BattleEnums::AttackType> m_skillAttackType;
-        std::map<float, BattleEnums::EffectType> m_skillEffectType;
+        std::map<float, BattleEnums::EffectType> m_skillPositiveEffectType;
+        std::map<float, BattleEnums::EffectType> m_skillNegativeEffectType;
         std::map<BattleEnums::Attribute, int> m_baseAttributes;
         std::map<BattleEnums::Attribute, float> m_attributesPerLevel;
 
@@ -38,7 +39,7 @@ class CharacterClass
 
         BattleEnums::Target GetRandomTarget();
         BattleEnums::AttackType GetRandomAttackType();
-        BattleEnums::EffectType GetRandomEffectType();
+        BattleEnums::EffectType GetRandomEffectType(bool positive);
     private:
 };
 

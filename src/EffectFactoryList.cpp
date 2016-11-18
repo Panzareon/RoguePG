@@ -182,33 +182,6 @@ EffectFactoryList::~EffectFactoryList()
     }
 }
 
-
-EffectFactory* EffectFactoryList::getRandom(BattleEnums::AttackType attackType)
-{
-    int nr = 0;
-    for(unsigned int i = 0; i < m_effects.size(); i++)
-    {
-        if(m_effects[i]->DoesContainAttackType(attackType))
-            nr++;
-    }
-    if(nr == 0)
-    {
-        std::string msg = "No Effect with the AttackType:";
-        msg.append(std::to_string(attackType));
-        msg.append(" avaliable!");
-        throw InvalidArgumentException(msg);
-    }
-    int j = rand() % nr;
-    for(unsigned int i = 0; i < m_effects.size(); i++)
-    {
-        if(m_effects[i]->DoesContainAttackType(attackType))
-            if(j == 0)
-                return m_effects[i];
-            j--;
-    }
-    throw InvalidArgumentException("EffectFactory not found");
-}
-
 EffectFactory* EffectFactoryList::getRandom(BattleEnums::AttackType attackType, BattleEnums::EffectType effectType)
 {
     int nr = 0;
