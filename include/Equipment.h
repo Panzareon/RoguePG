@@ -13,6 +13,7 @@ class Skill;
 class Equipment : public IPassiveEffect, public Item
 {
     public:
+        enum EquipmentPosition{MainHand, SideHand, Helmet, Armor, Ring, EQUIPMENT_POSITION_END};
         Equipment(int ItemId);
 
         virtual void OnEffectStart();
@@ -39,6 +40,11 @@ class Equipment : public IPassiveEffect, public Item
 
         virtual void EquipTo(Entity* target);
         virtual void UnEquip();
+
+        //Methods from IPassiveEffect with NOOP
+        virtual void OnTurn();
+        virtual void GetAttacked(Attack*, Entity*, Entity*);
+        virtual float GetExp(float);
 
     protected:
         std::map<BattleEnums::Attribute, int> m_attributeBuffs;

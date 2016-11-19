@@ -66,6 +66,7 @@
 		<Unit filename="include/IPassiveEffect.h" />
 		<Unit filename="include/InvalidArgumentException.h" />
 		<Unit filename="include/Item.h" />
+		<Unit filename="include/ItemFactory.h" />
 		<Unit filename="include/Localization.h" />
 		<Unit filename="include/Map.h" />
 		<Unit filename="include/MapFill.h" />
@@ -111,6 +112,7 @@
 		<Unit filename="src/IPassiveEffect.cpp" />
 		<Unit filename="src/InvalidArgumentException.cpp" />
 		<Unit filename="src/Item.cpp" />
+		<Unit filename="src/ItemFactory.cpp" />
 		<Unit filename="src/Localization.cpp" />
 		<Unit filename="src/Map.cpp" />
 		<Unit filename="src/MapFill.cpp" />

@@ -3,7 +3,7 @@
 #include "Entity.h"
 #include "Skill.h"
 
-Equipment::Equipment(int itemId) : Item(itemId)
+Equipment::Equipment(int itemId) : Item(itemId, Item::ItemTypeEquipment)
 {
     //ctor
     m_target = nullptr;
@@ -129,3 +129,25 @@ void Equipment::LevelUp(Entity* target)
         target->AddSkill(it->second);
     }
 }
+
+
+
+
+
+//Not needed Functions from IPassiveEffect
+void Equipment::OnTurn()
+{
+    //NOOP
+}
+
+void Equipment::GetAttacked(Attack*, Entity*, Entity*)
+{
+    //NOOP
+}
+
+float Equipment::GetExp(float exp)
+{
+    //NOOP: simple Pass Through
+    return exp;
+}
+
