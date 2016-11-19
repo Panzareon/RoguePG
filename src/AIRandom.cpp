@@ -14,12 +14,12 @@ AIRandom::~AIRandom()
 void AIRandom::UseNextSkill()
 {
     //select random skill and use it
-    std::vector<Skill>* skillList = m_entity->GetSkillList();
+    std::vector<Skill*>* skillList = m_entity->GetSkillList();
     int nrSkills = skillList->size();
     int skill = rand() % (nrSkills + 1);
     if(skill < nrSkills)
     {
-        Skill* toUse = &skillList->at(skill);
+        Skill* toUse = skillList->at(skill);
         BattleEnums::Target target = toUse->GetDefaultTarget();
         if(target == BattleEnums::TargetEnemyTeamEntity)
             toUse->Use(target, GetRandomEntity(m_entity->GetTeamId(), true));

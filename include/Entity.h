@@ -50,7 +50,7 @@ class Entity
 
         int GetExpToGive();
 
-        std::vector<Skill>* GetSkillList();
+        std::vector<Skill*>* GetSkillList();
 
         int GetTeamId();
         void SetTeamId(int id);
@@ -63,7 +63,7 @@ class Entity
         void SetNode(EntityNode* node);
         EntityNode* GetNode();
     protected:
-        std::vector<Skill> m_skills;
+        std::vector<Skill*> m_skills;
         //Map of all Passive Effects including the equiped Weapons and Armor with Priority, in which order they are called
         std::multimap<int, IPassiveEffect*> m_passiveEffects;
 

@@ -16,6 +16,7 @@ class PartyMember : public Entity
 
         virtual void Died();
 
+        void GetStartingSkills(int nr);
         void LevelUp();
         int GetLevel();
     protected:

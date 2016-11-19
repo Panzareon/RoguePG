@@ -1,6 +1,7 @@
 #include "Equipment.h"
 #include "Attack.h"
 #include "Entity.h"
+#include "Skill.h"
 
 Equipment::Equipment(int itemId) : Item(itemId)
 {
@@ -66,3 +67,65 @@ bool Equipment::IsEquipment()
     return true;
 }
 
+void Equipment::AddExp(int exp)
+{
+    AddExp(m_target, exp);
+}
+
+void Equipment::AddExp(Entity* target, int exp)
+{
+    if(!CanLearnSomething(target))
+        return;
+    m_exp[target] += exp;
+    while(m_exp[target] >= m_level[target] * m_level[target] * m_neededExpMultiplier)
+    {
+        LevelUp(target);
+    }
+}
+
+int Equipment::GetEquipmentExp()
+{
+    return GetEquipmentExp(m_target);
+}
+
+int Equipment::GetLevel()
+{
+    return GetLevel(m_target);
+}
+
+int Equipment::GetEquipmentExp(Entity* target)
+{
+    return m_exp[target];
+}
+
+int Equipment::GetLevel(Entity* target)
+{
+    return m_level[target];
+}
+
+std::map<int, Skill*>*  Equipment::GetSkillsToLearn()
+{
+    return &m_skillsToLearn;
+}
+
+bool Equipment::CanLearnSomething(Entity* target)
+{
+    //Checks if the is a skill target has not learned yet from this Equipment
+    //Check if this Equipment actually can learn something
+    if(m_skillsToLearn.size() == 0)
+        return false;
+    //Check if last Skill is already learned
+    if(m_skillsToLearn.rbegin()->first <= m_level[target])
+        return false;
+    return true;
+}
+
+void Equipment::LevelUp(Entity* target)
+{
+    m_level[target]++;
+    auto it = m_skillsToLearn.find(m_level[target]);
+    if(it != m_skillsToLearn.end())
+    {
+        target->AddSkill(it->second);
+    }
+}

@@ -40,6 +40,8 @@ Entity::~Entity()
         delete m_AI;
     for(auto iter = m_passiveEffects.begin(); iter != m_passiveEffects.end(); iter++)
         delete iter->second;
+    for(auto iter = m_skills.begin(); iter != m_skills.end(); iter++)
+        delete (*iter);
     delete m_battleSprite;
 }
 void Entity::AttackEntity(Entity* target)
@@ -120,7 +122,7 @@ bool Entity::IsDead()
 
 void Entity::AddSkill(Skill* skill)
 {
-    m_skills.push_back(*skill);
+    m_skills.push_back(skill);
 }
 
 void Entity::AddPassiveEffect(IPassiveEffect* eff)
@@ -214,7 +216,7 @@ Entity::ControllType Entity::GetControllType()
 {
     return m_controllTypeAtm;
 }
-std::vector<Skill>* Entity::GetSkillList()
+std::vector<Skill*>* Entity::GetSkillList()
 {
     return &m_skills;
 }
