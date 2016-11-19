@@ -116,7 +116,6 @@ EffectFactoryList::EffectFactoryList()
     //Everything from 5% to 300% buff
     calc->AddStrengthValue(0.05f, 3.0f);
     calc->SetMultiplier(25.0f);
-    //Strength Buff fits Fire and Earth or Physical
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
@@ -132,7 +131,6 @@ EffectFactoryList::EffectFactoryList()
     //Everything from 5% to 300% buff
     calc->AddStrengthValue(0.05f, 3.0f);
     calc->SetMultiplier(25.0f);
-    //Strength Buff fits Fire and Earth or Physical
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuffDefense);
@@ -147,7 +145,6 @@ EffectFactoryList::EffectFactoryList()
     //Everything from 5% to 300% buff
     calc->AddStrengthValue(0.05f, 3.0f);
     calc->SetMultiplier(25.0f);
-    //Strength Buff fits Fire and Earth or Physical
     newEffect->AddAttackType(BattleEnums::AttackTypeFire);
     newEffect->AddAttackType(BattleEnums::AttackTypeWater);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
@@ -163,7 +160,6 @@ EffectFactoryList::EffectFactoryList()
     //Everything from 5% to 300% buff
     calc->AddStrengthValue(0.05f, 3.0f);
     calc->SetMultiplier(25.0f);
-    //Strength Buff fits Fire and Earth or Physical
     newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
     newEffect->AddAttackType(BattleEnums::AttackTypeAir);
     newEffect->AddAttackType(BattleEnums::AttackTypeWater);

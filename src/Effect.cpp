@@ -1,12 +1,13 @@
 #include "Effect.h"
 #include "GameController.h"
 
-Effect::Effect(std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets)>* func, std::vector<float>* strength, StrengthCalculation* strengthCalculation, BattleEnums::Target target)
+Effect::Effect(EffectFactory* factory, std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets)>* func, std::vector<float>* strength, StrengthCalculation* strengthCalculation, BattleEnums::Target target)
 {
     m_effectFunction = func;
     m_strength = strength;
     m_strengthCalculation = strengthCalculation;
     m_defaultTarget = target;
+    m_factory = factory;
 }
 
 Effect::~Effect()
@@ -39,6 +40,12 @@ float Effect::GetValue()
 {
     return m_strengthCalculation->GetValue(m_strength, m_defaultTarget);
 }
+
+EffectFactory* Effect::GetFactory()
+{
+    return m_factory;
+}
+
 
 void Effect::SetAnimation(AnimationFactory::AnimationList anim)
 {
