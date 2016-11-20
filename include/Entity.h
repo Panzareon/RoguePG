@@ -9,6 +9,7 @@
 #include "SFML/Graphics.hpp"
 #include <vector>
 #include <map>
+#include <memory>
 
 class EntityNode;
 class SceneManagerBattle;
@@ -44,13 +45,14 @@ class Entity
         virtual ControllType GetControllType();
         void CalculateMove(SceneManagerBattle* sm);
         void AddSkill(Skill* skill);
+        void AddSkill(std::shared_ptr<Skill> skill);
 
         void AddPassiveEffect(IPassiveEffect* eff);
         void RemovePassiveEffect(IPassiveEffect* eff);
 
         int GetExpToGive();
 
-        std::vector<Skill*>* GetSkillList();
+        std::vector<std::shared_ptr<Skill>>* GetSkillList();
 
         int GetTeamId();
         void SetTeamId(int id);
@@ -63,7 +65,7 @@ class Entity
         void SetNode(EntityNode* node);
         EntityNode* GetNode();
     protected:
-        std::vector<Skill*> m_skills;
+        std::vector<std::shared_ptr<Skill>> m_skills;
         //Map of all Passive Effects including the equiped Weapons and Armor with Priority, in which order they are called
         std::multimap<int, IPassiveEffect*> m_passiveEffects;
 

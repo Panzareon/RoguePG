@@ -6,6 +6,7 @@
 #include <set>
 #include "Enums.h"
 #include "Item.h"
+#include <memory>
 
 class Entity;
 class Skill;
@@ -35,7 +36,7 @@ class Equipment : public IPassiveEffect, public Item
         virtual int GetLevel();
         virtual int GetEquipmentExp(Entity* target);
         virtual int GetLevel(Entity* target);
-        virtual std::map<int, Skill*>* GetSkillsToLearn();
+        virtual std::map<int, std::shared_ptr<Skill>>* GetSkillsToLearn();
         virtual bool CanLearnSomething(Entity* target);
 
         virtual void EquipTo(Entity* target);
@@ -50,7 +51,7 @@ class Equipment : public IPassiveEffect, public Item
         std::map<BattleEnums::Attribute, int> m_attributeBuffs;
         std::map<BattleEnums::AttackType, float> m_typeResistance;
         std::set<BattleEnums::AttackType> m_attackTypes;
-        std::map<int, Skill*> m_skillsToLearn;
+        std::map<int, std::shared_ptr<Skill>> m_skillsToLearn;
 
         std::map<Entity*,int> m_level;
         std::map<Entity*,int> m_exp;

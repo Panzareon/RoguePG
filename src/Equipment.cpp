@@ -103,7 +103,7 @@ int Equipment::GetLevel(Entity* target)
     return m_level[target];
 }
 
-std::map<int, Skill*>*  Equipment::GetSkillsToLearn()
+std::map<int, std::shared_ptr<Skill>>*  Equipment::GetSkillsToLearn()
 {
     return &m_skillsToLearn;
 }
