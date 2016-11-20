@@ -23,7 +23,7 @@ namespace BattleFunctions
 
     void UseSkillOnTarget(SceneManagerBattle* sm, BattleEnums::Target targetType, Entity* toAttack, Entity* attacking, Skill* skill)
     {
-        skill->Use(targetType, toAttack);
+        skill->Use(attacking, targetType, toAttack);
         sm->TurnIsFinished();
     }
 
@@ -32,7 +32,7 @@ namespace BattleFunctions
         BattleEnums::Target target = skill->GetDefaultTarget();
         if(target == BattleEnums::TargetNone)
         {
-            skill->Use(target,nullptr);
+            skill->Use(attacking, target,nullptr);
             sm->TurnIsFinished();
         }
         else
@@ -121,7 +121,7 @@ void SceneManagerBattle::UseOnTarget(std::function<void(BattleEnums::Target, Ent
             m_targetEntity = m_enemies[i];
             i++;
         }
-        while(m_targetEntity->IsDead());
+        while(m_targetEntity->IsDead() && i < m_enemies.size());
     }
     else if(m_targetType == BattleEnums::TargetOwnTeamEntity)
     {
@@ -131,7 +131,7 @@ void SceneManagerBattle::UseOnTarget(std::function<void(BattleEnums::Target, Ent
             m_targetEntity = m_party->GetActivePartyMembers()->at(i);
             i++;
         }
-        while(m_targetEntity->IsDead());
+        while(m_targetEntity->IsDead() && i < m_party->GetActivePartyMembers()->size());
     }
     else if(m_targetType == BattleEnums::TargetSelf)
     {

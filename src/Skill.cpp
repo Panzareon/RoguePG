@@ -2,10 +2,9 @@
 #include "InvalidArgumentException.h"
 #include "Effect.h"
 
-Skill::Skill(Entity* user, BattleEnums::Target target)
+Skill::Skill(BattleEnums::Target target)
 {
     //ctor
-    m_user = user;
     m_defaultTarget = target;
     m_manaUse = 0.0f;
 }
@@ -14,7 +13,7 @@ Skill::~Skill()
 {
     //dtor
 }
-void Skill::Use(BattleEnums::Target targetType, Entity* target)
+void Skill::Use(Entity* user, BattleEnums::Target targetType, Entity* target)
 {
     std::vector<Entity*> targets;
     if(targetType == BattleEnums::TargetEnemyTeamEntity || targetType == BattleEnums::TargetOwnTeamEntity)
@@ -25,7 +24,7 @@ void Skill::Use(BattleEnums::Target targetType, Entity* target)
     }
     else if(targetType == BattleEnums::TargetSelf)
     {
-        targets.push_back(m_user);
+        targets.push_back(user);
     }
     else
     {
@@ -34,7 +33,7 @@ void Skill::Use(BattleEnums::Target targetType, Entity* target)
     //Use this Skill + play animation
     for(unsigned int i = 0; i < m_effects.size(); i++)
     {
-        m_effects[i]->UseEffectOn(m_user, &targets);
+        m_effects[i]->UseEffectOn(user, &targets);
     }
 }
 

@@ -24,7 +24,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type)
         ret->InitAllAttributes(10,5,2,5,6);
         ret->SetBattleSprite(TextureList::BatBattleSprite);
         BattleEnums::Target target = BattleEnums::TargetEnemyTeamEntity;
-        Skill* sk = new Skill(ret,target);
+        Skill* sk = new Skill(target);
         sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(4)->GetEffectWithValue(2,target),true);
         ret->AddSkill(sk);
         break;

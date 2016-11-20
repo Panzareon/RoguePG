@@ -1,20 +1,18 @@
 #ifndef INVALIDARGUMENTEXCEPTION_H
 #define INVALIDARGUMENTEXCEPTION_H
 
-#include <exception>
+#include "GenericException.h"
 #include <string>
 
-class InvalidArgumentException: public std::exception
+class InvalidArgumentException: public GenericException
 {
     public:
         InvalidArgumentException(std::string msg);
         virtual ~InvalidArgumentException();
-        virtual const char* what() const throw();
 
     protected:
 
     private:
-        std::string m_msg;
 };
 
 #endif // INVALIDARGUMENTEXCEPTION_H

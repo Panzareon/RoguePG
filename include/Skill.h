@@ -10,9 +10,9 @@ class Effect;
 class Skill
 {
     public:
-        Skill(Entity* user, BattleEnums::Target target);
+        Skill(BattleEnums::Target target);
         virtual ~Skill();
-        void Use(BattleEnums::Target targetType, Entity* target);
+        void Use(Entity* user, BattleEnums::Target targetType, Entity* target);
 
         float GetManaUse();
 
@@ -25,7 +25,6 @@ class Skill
     private:
         std::vector<Effect*> m_effects;
         std::vector<bool> m_isPositive;
-        Entity* m_user;
 
         float m_manaUse;
         BattleEnums::Target m_defaultTarget;

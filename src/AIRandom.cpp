@@ -22,11 +22,11 @@ void AIRandom::UseNextSkill()
         std::shared_ptr<Skill> toUse = skillList->at(skill);
         BattleEnums::Target target = toUse->GetDefaultTarget();
         if(target == BattleEnums::TargetEnemyTeamEntity)
-            toUse->Use(target, GetRandomEntity(m_entity->GetTeamId(), true));
+            toUse->Use(m_entity, target, GetRandomEntity(m_entity->GetTeamId(), true));
         else if(target == BattleEnums::TargetOwnTeamEntity)
-            toUse->Use(target, GetRandomEntity(m_entity->GetTeamId(), false));
+            toUse->Use(m_entity, target, GetRandomEntity(m_entity->GetTeamId(), false));
         else
-            toUse->Use(target, nullptr);
+            toUse->Use(m_entity, target, nullptr);
     }
     else
     {

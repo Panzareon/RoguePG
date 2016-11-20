@@ -63,6 +63,7 @@
 		<Unit filename="include/Equipment.h" />
 		<Unit filename="include/FillItem.h" />
 		<Unit filename="include/GameController.h" />
+		<Unit filename="include/GenericException.h" />
 		<Unit filename="include/IPassiveEffect.h" />
 		<Unit filename="include/InvalidArgumentException.h" />
 		<Unit filename="include/Item.h" />
@@ -84,6 +85,7 @@
 		<Unit filename="include/SceneManagerMoveable.h" />
 		<Unit filename="include/ShaderList.h" />
 		<Unit filename="include/Skill.h" />
+		<Unit filename="include/SkillGenerator.h" />
 		<Unit filename="include/StrengthCalculation.h" />
 		<Unit filename="include/Texture.h" />
 		<Unit filename="include/TextureList.h" />
@@ -109,6 +111,7 @@
 		<Unit filename="src/Equipment.cpp" />
 		<Unit filename="src/FillItem.cpp" />
 		<Unit filename="src/GameController.cpp" />
+		<Unit filename="src/GenericException.cpp" />
 		<Unit filename="src/IPassiveEffect.cpp" />
 		<Unit filename="src/InvalidArgumentException.cpp" />
 		<Unit filename="src/Item.cpp" />
@@ -130,6 +133,7 @@
 		<Unit filename="src/SceneManagerMoveable.cpp" />
 		<Unit filename="src/ShaderList.cpp" />
 		<Unit filename="src/Skill.cpp" />
+		<Unit filename="src/SkillGenerator.cpp" />
 		<Unit filename="src/StrengthCalculation.cpp" />
 		<Unit filename="src/Texture.cpp" />
 		<Unit filename="src/TextureList.cpp" />

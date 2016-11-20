@@ -6,6 +6,7 @@
 #include <set>
 #include "Enums.h"
 #include "Item.h"
+#include "SkillGenerator.h"
 #include <memory>
 
 class Entity;
@@ -48,6 +49,8 @@ class Equipment : public IPassiveEffect, public Item
         virtual float GetExp(float);
 
     protected:
+        SkillGenerator m_skillGenerator;
+
         std::map<BattleEnums::Attribute, int> m_attributeBuffs;
         std::map<BattleEnums::AttackType, float> m_typeResistance;
         std::set<BattleEnums::AttackType> m_attackTypes;
