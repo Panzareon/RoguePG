@@ -130,6 +130,28 @@ void Equipment::LevelUp(Entity* target)
     }
 }
 
+SkillGenerator* Equipment::GetSkillGenerator()
+{
+    return &m_skillGenerator;
+}
+
+void Equipment::AddSkillsToLearn(int nr)
+{
+    //Get next level of this Equipment, that has not yet a Skill to learn
+    int lvl = 1;
+    if(m_skillsToLearn.size() > 0)
+        lvl = m_skillsToLearn.rbegin()->first + 1;
+    for(int i = 0; i < nr; i++)
+    {
+        m_skillsToLearn.insert(std::pair<int, std::shared_ptr<Skill>>(lvl, std::shared_ptr<Skill>(m_skillGenerator.GetNewSkill(m_skillStrength))));
+        lvl++;
+    }
+}
+
+void Equipment::SetSkillStrength(float strength)
+{
+    m_skillStrength = strength;
+}
 
 
 

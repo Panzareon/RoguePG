@@ -43,6 +43,12 @@ class Equipment : public IPassiveEffect, public Item
         virtual void EquipTo(Entity* target);
         virtual void UnEquip();
 
+        SkillGenerator* GetSkillGenerator();
+
+        void AddSkillsToLearn(int nr);
+        void SetSkillStrength(float strength);
+
+
         //Methods from IPassiveEffect with NOOP
         virtual void OnTurn();
         virtual void GetAttacked(Attack*, Entity*, Entity*);
@@ -55,6 +61,7 @@ class Equipment : public IPassiveEffect, public Item
         std::map<BattleEnums::AttackType, float> m_typeResistance;
         std::set<BattleEnums::AttackType> m_attackTypes;
         std::map<int, std::shared_ptr<Skill>> m_skillsToLearn;
+        float m_skillStrength;
 
         std::map<Entity*,int> m_level;
         std::map<Entity*,int> m_exp;
