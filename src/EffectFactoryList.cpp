@@ -24,7 +24,6 @@ namespace EffectFunctions
         {
             Attack att(strength->at(0) + user->GetAttribute(BattleEnums::AttributeInt), false, type);
             user->AttackEntity(targets->at(i), &att);
-            //TODO: Animation
         }
     }
 
