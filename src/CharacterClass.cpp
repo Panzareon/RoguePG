@@ -34,6 +34,7 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         newClass = new CharacterClass(CharacterClassFireMage, 0.8f);
 
         newClass->SetBaseAttribute(BattleEnums::AttributeMaxHp, 10);
+        newClass->SetBaseAttribute(BattleEnums::AttributeMaxMp, 15);
         newClass->SetBaseAttribute(BattleEnums::AttributeStrength, 5);
         newClass->SetBaseAttribute(BattleEnums::AttributeInt, 12);
         newClass->SetBaseAttribute(BattleEnums::AttributeDefense, 8);
@@ -41,6 +42,7 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         newClass->SetBaseAttribute(BattleEnums::AttributeSpeed, 10);
 
         //Set increased and decreased Attribute per Level values
+        newClass->SetAttributePerLevel(BattleEnums::AttributeMaxMp, 1.3f);
         newClass->SetAttributePerLevel(BattleEnums::AttributeStrength, 0.7f);
         newClass->SetAttributePerLevel(BattleEnums::AttributeInt, 1.3f);
 

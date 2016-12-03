@@ -22,9 +22,13 @@ class MenuNode : public Node
     protected:
     private:
         virtual void onDraw(sf::RenderTarget& target, const sf::Transform& transform) const;
+        virtual void UpdateBackground();
+
+        sf::RectangleShape m_background;
 
 
         unsigned int m_width;
+        unsigned int m_height;
         unsigned int m_optionHeight;
         unsigned int m_selected;
         unsigned int m_scrollPosition;

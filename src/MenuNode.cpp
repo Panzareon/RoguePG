@@ -15,8 +15,25 @@ MenuNode::MenuNode(int width)
     m_backgroundColor = sf::Color::Black;
     m_foregroundColor = sf::Color::White;
     m_selectedColor = sf::Color::Blue;
-
+//    m_background = sf::RectangleShape(sf::Vector2f(width,0));
     m_optionHeight = 24;
+    UpdateBackground();
+}
+
+void MenuNode::UpdateBackground()
+{
+    //First Background
+    m_height = m_maxShownNumber;
+    if(m_maxShownNumber > m_optionName.size())
+    {
+        m_height = m_optionName.size();
+    }
+    //TODO: save Shape as class member?
+    m_background.setSize(sf::Vector2f(m_width, m_height* m_optionHeight));
+    //TODO: maybe use Texture
+    m_background.setFillColor(m_backgroundColor);
+    m_background.setOutlineColor(m_foregroundColor);
+    m_background.setOutlineThickness(1.0f);
 }
 
 MenuNode::~MenuNode()
@@ -28,6 +45,7 @@ void MenuNode::AddOption(std::string name, std::function<void()> func)
 {
     m_optionName.push_back(name);
     m_optionFunction.push_back(func);
+    UpdateBackground();
 }
 void MenuNode::CancelAvailable(bool cancel)
 {
@@ -43,6 +61,7 @@ void MenuNode::ResetOptions()
         delete m_children[i];
     }
     m_children.clear();
+    UpdateBackground();
 }
 void MenuNode::MoveUp()
 {
@@ -64,20 +83,8 @@ void MenuNode::Use()
 void MenuNode::onDraw(sf::RenderTarget& target, const sf::Transform& transformBase) const
 {
     //Draw Menu
-    //First Background
-    int height = m_maxShownNumber;
-    if(m_maxShownNumber > m_optionName.size())
-    {
-        height = m_optionName.size();
-    }
-    //TODO: save Shape as class member?
-    sf::RectangleShape background(sf::Vector2f(m_width, height* m_optionHeight));
-    //TODO: maybe use Texture
-    background.setFillColor(m_backgroundColor);
-    background.setOutlineColor(m_foregroundColor);
-    background.setOutlineThickness(1.0f);
     sf::Transform transform(transformBase);
-    target.draw(background, transform);
+    target.draw(m_background, transform);
 
     //Background of selected option
     int pos = m_selected - m_scrollPosition;
@@ -92,7 +99,7 @@ void MenuNode::onDraw(sf::RenderTarget& target, const sf::Transform& transformBa
     }
     sf::Font* font = Configuration::GetInstance()->GetFont();
     //all visible options
-    for(int i = 0; i < height; i++)
+    for(int i = 0; i < m_height; i++)
     {
         //draw text for m_scrollPosition + i at position i
         transform = transformBase;

@@ -177,15 +177,21 @@ void Entity::InitAttribute(BattleEnums::Attribute attr, int value)
     {
         m_hp = value;
     }
+    else if(attr == BattleEnums::AttributeMaxMp)
+    {
+        m_mp = value;
+    }
 }
 
-void Entity::InitAllAttributes(int maxHp, int strength, int intelligence, int defense, int magicDefense)
+void Entity::InitAllAttributes(int maxHp, int maxMp, int strength, int intelligence, int defense, int magicDefense, int speed)
 {
     InitAttribute(BattleEnums::AttributeMaxHp, maxHp);
+    InitAttribute(BattleEnums::AttributeMaxMp, maxMp);
     InitAttribute(BattleEnums::AttributeStrength, strength);
     InitAttribute(BattleEnums::AttributeInt, intelligence);
     InitAttribute(BattleEnums::AttributeDefense, defense);
     InitAttribute(BattleEnums::AttributeMagicDefense, magicDefense);
+    InitAttribute(BattleEnums::AttributeSpeed, speed);
 }
 
 void Entity::PassTime(float Time)
@@ -250,6 +256,32 @@ void Entity::SetBattleSprite(TextureList::TextureFiles newSprite)
 int Entity::GetNumberSprites()
 {
     return m_numberSprites;
+}
+
+int Entity::GetHp()
+{
+    return m_hp;
+}
+
+int Entity::GetMp()
+{
+    return m_mp;
+}
+
+float Entity::GetHpPercent()
+{
+    float maxHp = (float)GetAttribute(BattleEnums::AttributeMaxHp);
+    if(maxHp == 0.0f)
+        return 0.0f;
+    return (float)GetHp() / maxHp;
+}
+
+float Entity::GetMpPercent()
+{
+    float maxMp = (float)GetAttribute(BattleEnums::AttributeMaxMp);
+    if(maxMp == 0.0f)
+        return 0.0f;
+    return (float)GetMp() / maxMp;
 }
 
 int Entity::GetTeamId()

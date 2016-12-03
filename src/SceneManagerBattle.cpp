@@ -66,19 +66,13 @@ SceneManagerBattle::SceneManagerBattle(sf::RenderTarget * target, int windowWidt
     m_background = new DrawableNode(backgroundSprite);
     m_mainNode->addChild(m_background);
     m_eventLayer = new Node();
-    m_animationNode = new Node();
     m_mainNode->addChild(m_eventLayer);
     m_mainNode->addChild(m_animationNode);
-    m_gui = new Node();
-    m_mainNode->addChild(m_gui);
-    m_mainMenu = new MenuNode(m_windowWidth);
-    m_mainMenu->setVisibility(false);
-    m_gui->addChild(m_mainMenu);
 
     m_party = GameController::getInstance()->getParty();
 
 
-    m_next = 0;
+    m_next = nullptr;
     m_useOnTarget = nullptr;
 
     //Setting Startpositions for teams
@@ -261,7 +255,7 @@ void SceneManagerBattle::Tick()
             m_targetType = BattleEnums::TARGET_END;
         }
     }
-    else if(m_next != 0)
+    else if(m_next != nullptr && !m_nextFinished)
     {
         m_next->CalculateMove(this);
         if(m_next->GetControllType() == Entity::ControllUser)
@@ -272,8 +266,9 @@ void SceneManagerBattle::Tick()
     }
     else
     {
-        //Todo: check if all animations are over, then calculate next
-        CalculateNext();
+        //check if all animations are over, then calculate next
+        if(m_animationList.size() == 0)
+            CalculateNext();
     }
 }
 void SceneManagerBattle::AddEnemy(Entity* enemy)
@@ -282,21 +277,18 @@ void SceneManagerBattle::AddEnemy(Entity* enemy)
     AddSpriteForEntity(enemy);
 }
 
-void SceneManagerBattle::AddSubMenu(MenuNode* menu)
-{
-    m_mainMenu->addChild(menu);
-}
 
 void SceneManagerBattle::TurnIsFinished()
 {
     m_mainMenu->ResetOptions();
     m_mainMenu->setVisibility(false);
     m_next->FinishedTurn();
-    CalculateNext();
+    m_nextFinished = true;
 }
 
 void SceneManagerBattle::CalculateNext()
 {
+    m_nextFinished = false;
     float smallestNext;
     Entity * next = 0;
     std::vector<PartyMember*>* activeParty = m_party->GetActivePartyMembers();

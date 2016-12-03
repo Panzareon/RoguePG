@@ -21,7 +21,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type)
     case EnemyListBat:
         //Exp to give after Battle
         ret = new Entity(10);
-        ret->InitAllAttributes(10,5,2,5,6);
+        ret->InitAllAttributes(10,10,5,2,5,6,9);
         ret->SetBattleSprite(TextureList::BatBattleSprite);
         BattleEnums::Target target = BattleEnums::TargetEnemyTeamEntity;
         Skill* sk = new Skill(target);

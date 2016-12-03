@@ -40,7 +40,7 @@ class Entity
         float GetResistanceFor(BattleEnums::AttackType type);
         int GetAttribute(BattleEnums::Attribute attr);
         void InitAttribute(BattleEnums::Attribute attr, int value);
-        void InitAllAttributes(int maxHp, int strength, int intelligence, int defense, int magicDefense);
+        void InitAllAttributes(int maxHp, int maxMp, int strength, int intelligence, int defense, int magicDefense, int speed);
         float GetTimeToNextAttack();
         virtual ControllType GetControllType();
         void CalculateMove(SceneManagerBattle* sm);
@@ -61,6 +61,11 @@ class Entity
         void SetBattleSprite(TextureList::TextureFiles newSprite);
         int GetNumberSprites();
 
+        int GetHp();
+        int GetMp();
+        float GetHpPercent();
+        float GetMpPercent();
+
         //Sets the Node showing this Entity on Screen
         void SetNode(EntityNode* node);
         EntityNode* GetNode();
@@ -74,6 +79,7 @@ class Entity
         int m_giveExp;
 
         int m_hp;
+        int m_mp;
         float m_toNextAttack;
 
         ControllType m_controllTypeAtm;

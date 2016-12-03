@@ -32,9 +32,8 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     m_mainNode->addChild(m_belowHero);
 
     m_eventLayer = new Node();
-    m_animationNode = new Node();
-    m_eventLayer->addChild(m_animationNode);
     m_mainNode->addChild(m_eventLayer);
+    m_mainNode->addChild(m_animationNode);
 
     m_aboveHero = new Node();
     m_mainNode->addChild(m_aboveHero);

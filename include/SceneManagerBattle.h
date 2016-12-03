@@ -24,7 +24,6 @@ class SceneManagerBattle : public SceneManager
         std::vector<Entity*>* GetEnemies();
 
         void TurnIsFinished();
-        void AddSubMenu(MenuNode* menu);
 
         bool IsEntityTargeted(Entity* entity);
 
@@ -37,11 +36,9 @@ class SceneManagerBattle : public SceneManager
 
         DrawableNode* m_background;
         Node* m_eventLayer;
-        Node* m_gui;
-
-        MenuNode* m_mainMenu;
 
         Entity* m_next;
+        bool m_nextFinished;
 
         Party* m_party;
         std::vector<Entity*> m_enemies;

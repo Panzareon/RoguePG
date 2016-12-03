@@ -58,6 +58,7 @@
 		<Unit filename="include/EffectFactoryList.h" />
 		<Unit filename="include/EnemyFactory.h" />
 		<Unit filename="include/Entity.h" />
+		<Unit filename="include/EntityBarsNode.h" />
 		<Unit filename="include/EntityNode.h" />
 		<Unit filename="include/Enums.h" />
 		<Unit filename="include/Equipment.h" />
@@ -107,6 +108,7 @@
 		<Unit filename="src/EffectFactoryList.cpp" />
 		<Unit filename="src/EnemyFactory.cpp" />
 		<Unit filename="src/Entity.cpp" />
+		<Unit filename="src/EntityBarsNode.cpp" />
 		<Unit filename="src/EntityNode.cpp" />
 		<Unit filename="src/Equipment.cpp" />
 		<Unit filename="src/FillItem.cpp" />

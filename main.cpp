@@ -23,10 +23,6 @@ int main()
     window.setView(view);
     window.setVerticalSyncEnabled(true);
 
-    controller->SetRenderTarget(&window);
-    SceneManagerDungeon* sceneManager = new SceneManagerDungeon(&window,width,height, 30,30);
-    controller->LoadSceneManager(sceneManager);
-
 
     Party party;
     //create party with 2 member
@@ -38,6 +34,12 @@ int main()
         party.AddPartyMember(p);
     }
     controller->setParty(&party);
+
+
+    controller->SetRenderTarget(&window);
+    SceneManagerDungeon* sceneManager = new SceneManagerDungeon(&window,width,height, 30,30);
+    controller->LoadSceneManager(sceneManager);
+
 
     while (window.isOpen())
     {
