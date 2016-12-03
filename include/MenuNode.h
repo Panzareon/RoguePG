@@ -11,7 +11,8 @@ class MenuNode : public Node
         MenuNode(int width);
         virtual ~MenuNode();
         void ResetOptions();
-        void AddOption(std::string name, std::function<void()> func);
+        void AddOption(std::string name, std::function<void()> func, bool available = true);
+        void AddDisabledOption(std::string name);
         void CancelAvailable(bool cancel);
 
         void CheckKeyboardInput();
@@ -35,11 +36,13 @@ class MenuNode : public Node
         unsigned int m_maxShownNumber;
 
         std::vector<std::string> m_optionName;
+        std::vector<bool> m_optionAvailable;
         std::vector<std::function<void()>> m_optionFunction;
         bool m_cancelAvailable;
 
         sf::Color m_backgroundColor;
         sf::Color m_foregroundColor;
+        sf::Color m_foregroundColorDisabled;
         sf::Color m_selectedColor;
 };
 

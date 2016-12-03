@@ -25,13 +25,13 @@ Entity* AIBase::GetRandomEntity(int teamId, bool enemy)
     for(unsigned int i = 0; i < enemies->size(); i++)
     {
         //Check if teamIds are the same xor enemy is true
-        if((enemies->at(i)->GetTeamId() == teamId) != enemy)
+        if((enemies->at(i)->GetTeamId() == teamId) != enemy && !enemies->at(i)->IsDead())
             nr++;
     }
     for(unsigned int i = 0; i < party->size(); i++)
     {
         //Check if teamIds are the same xor enemy is true
-        if((party->at(i)->GetTeamId() == teamId) != enemy)
+        if((party->at(i)->GetTeamId() == teamId) != enemy && !party->at(i)->IsDead())
             nr++;
     }
     if(nr == 0)
@@ -49,7 +49,7 @@ Entity* AIBase::GetRandomEntity(int teamId, bool enemy)
     for(unsigned int i = 0; i < enemies->size(); i++)
     {
         //Check if teamIds are the same xor enemy is true
-        if((enemies->at(i)->GetTeamId() == teamId) != enemy)
+        if((enemies->at(i)->GetTeamId() == teamId) != enemy && !enemies->at(i)->IsDead())
         {
             if(ret == 0)
                 return enemies->at(i);
@@ -59,7 +59,7 @@ Entity* AIBase::GetRandomEntity(int teamId, bool enemy)
     for(unsigned int i = 0; i < party->size(); i++)
     {
         //Check if teamIds are the same xor enemy is true
-        if((party->at(i)->GetTeamId() == teamId) != enemy)
+        if((party->at(i)->GetTeamId() == teamId) != enemy && !party->at(i)->IsDead())
         {
             if(ret == 0)
                 return party->at(i);

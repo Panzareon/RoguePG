@@ -293,21 +293,24 @@ void SceneManagerBattle::CalculateNext()
     Entity * next = 0;
     std::vector<PartyMember*>* activeParty = m_party->GetActivePartyMembers();
     float newTime;
+    Entity* nextEntity;
     for(unsigned int i = 0; i < activeParty->size(); i++)
     {
-        newTime = activeParty->at(i)->GetTimeToNextAttack();
-        if(next == 0 || smallestNext > newTime)
+        nextEntity = activeParty->at(i);
+        newTime = nextEntity->GetTimeToNextAttack();
+        if(!nextEntity->IsDead() && (next == 0 || smallestNext > newTime))
         {
-            next = activeParty->at(i);
+            next = nextEntity;
             smallestNext = newTime;
         }
     }
     for(unsigned int i = 0; i < m_enemies.size(); i++)
     {
-        newTime = m_enemies.at(i)->GetTimeToNextAttack();
-        if(next == 0 || smallestNext > newTime)
+        nextEntity = m_enemies.at(i);
+        newTime = nextEntity->GetTimeToNextAttack();
+        if(!nextEntity->IsDead() && (next == 0 || smallestNext > newTime))
         {
-            next = m_enemies.at(i);
+            next = nextEntity;
             smallestNext = newTime;
         }
     }
@@ -327,7 +330,7 @@ void SceneManagerBattle::ShowMenuForNext()
     //add new Battle options
     Localization* local = Localization::GetInstance();
     m_mainMenu->AddOption(local->GetLocalization("battle_menu.attack"), std::function<void()>(std::bind(&BattleFunctions::Attack, this, m_next)));
-    m_mainMenu->AddOption(local->GetLocalization("battle_menu.skill"), std::function<void()>(std::bind(&BattleFunctions::SkillList, this, m_next)));
+    m_mainMenu->AddOption(local->GetLocalization("battle_menu.skill"), std::function<void()>(std::bind(&BattleFunctions::SkillList, this, m_next)), m_next->GetSkillList()->size() > 0);
     //TODO: add other Battle Options
 
     m_mainMenu->setVisibility(true);

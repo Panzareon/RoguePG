@@ -14,6 +14,7 @@ MenuNode::MenuNode(int width)
     //TODO: set Color
     m_backgroundColor = sf::Color::Black;
     m_foregroundColor = sf::Color::White;
+    m_foregroundColorDisabled = sf::Color(120,120,120);
     m_selectedColor = sf::Color::Blue;
 //    m_background = sf::RectangleShape(sf::Vector2f(width,0));
     m_optionHeight = 24;
@@ -41,12 +42,22 @@ MenuNode::~MenuNode()
     //dtor
 }
 
-void MenuNode::AddOption(std::string name, std::function<void()> func)
+void MenuNode::AddOption(std::string name, std::function<void()> func, bool available)
 {
     m_optionName.push_back(name);
+    m_optionAvailable.push_back(available);
     m_optionFunction.push_back(func);
     UpdateBackground();
 }
+
+void MenuNode::AddDisabledOption(std::string name)
+{
+    m_optionName.push_back(name);
+    m_optionAvailable.push_back(false);
+    m_optionFunction.push_back(std::function<void()>());
+    UpdateBackground();
+}
+
 void MenuNode::CancelAvailable(bool cancel)
 {
     m_cancelAvailable = cancel;
@@ -78,7 +89,8 @@ void MenuNode::MoveDown()
 void MenuNode::Use()
 {
     if(m_optionFunction.size() > m_selected)
-        m_optionFunction[m_selected]();
+        if(m_optionAvailable[m_selected])
+            m_optionFunction[m_selected]();
 }
 void MenuNode::onDraw(sf::RenderTarget& target, const sf::Transform& transformBase) const
 {
@@ -106,7 +118,10 @@ void MenuNode::onDraw(sf::RenderTarget& target, const sf::Transform& transformBa
         transform.translate(0.0f, i*m_optionHeight);
         sf::Text text(m_optionName[m_scrollPosition+i], *font);
         text.setCharacterSize(m_optionHeight);
-        text.setColor(m_foregroundColor);
+        if(m_optionAvailable[m_scrollPosition+i])
+            text.setColor(m_foregroundColor);
+        else
+            text.setColor(m_foregroundColorDisabled);
 
         target.draw(text, transform);
     }
