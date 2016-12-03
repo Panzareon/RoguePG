@@ -19,7 +19,9 @@ class TextureList
 
             FireballAnimation,
 
-            DungeonBattleBackground
+            DungeonBattleBackground,
+
+            GameOverScreen
         };
         virtual ~TextureList();
 

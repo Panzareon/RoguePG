@@ -377,7 +377,7 @@ bool SceneManagerBattle::IsFinished()
     if(finished)
     {
         std::cout << "Game Over!" << std::endl;
-        GameController::getInstance()->GameOver();
+        GameController::getInstance()->GameOverCheck();
     }
     return finished;
 }

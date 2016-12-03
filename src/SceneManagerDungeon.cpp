@@ -87,9 +87,4 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
 SceneManagerDungeon::~SceneManagerDungeon()
 {
     //dtor
-    delete m_tileMap;
-    delete m_tileMapAboveHero;
-    delete m_tileMapAboveWall;
-    delete m_tileMapItems;
-    delete m_tileMapWallDecoration;
 }

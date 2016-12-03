@@ -83,6 +83,7 @@
 		<Unit filename="include/SceneManager.h" />
 		<Unit filename="include/SceneManagerBattle.h" />
 		<Unit filename="include/SceneManagerDungeon.h" />
+		<Unit filename="include/SceneManagerGameOver.h" />
 		<Unit filename="include/SceneManagerMoveable.h" />
 		<Unit filename="include/ShaderList.h" />
 		<Unit filename="include/Skill.h" />
@@ -132,6 +133,7 @@
 		<Unit filename="src/SceneManager.cpp" />
 		<Unit filename="src/SceneManagerBattle.cpp" />
 		<Unit filename="src/SceneManagerDungeon.cpp" />
+		<Unit filename="src/SceneManagerGameOver.cpp" />
 		<Unit filename="src/SceneManagerMoveable.cpp" />
 		<Unit filename="src/ShaderList.cpp" />
 		<Unit filename="src/Skill.cpp" />

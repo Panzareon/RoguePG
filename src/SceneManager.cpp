@@ -25,12 +25,13 @@ SceneManager::SceneManager(sf::RenderTarget* target, int windowWidth, int window
     m_memberStats = new Node();
     m_gui->addChild(m_memberStats);
     SetMemberStats();
+    m_mainNode = nullptr;
 }
 
 SceneManager::~SceneManager()
 {
     //dtor
-    if(m_mainNode != 0)
+    if(m_mainNode != nullptr)
         delete m_mainNode;
     delete m_gui;
 }
@@ -55,12 +56,14 @@ void SceneManager::SetMemberStats()
 
 void SceneManager::DrawScene()
 {
-    m_mainNode->draw(*m_target, sf::Transform::Identity);
+    if(m_mainNode != nullptr)
+        m_mainNode->draw(*m_target, sf::Transform::Identity);
 }
 
 void SceneManager::DrawGui()
 {
-    m_gui->draw(*m_target, sf::Transform::Identity);
+    if(m_gui != nullptr)
+        m_gui->draw(*m_target, sf::Transform::Identity);
 }
 
 void SceneManager::NextTick()
@@ -68,8 +71,10 @@ void SceneManager::NextTick()
     m_frameTime = m_clock.getElapsedTime();
     m_clock.restart();
 
-    m_mainNode->Tick(m_frameTime.asSeconds());
-    m_gui->Tick(m_frameTime.asSeconds());
+    if(m_mainNode != nullptr)
+        m_mainNode->Tick(m_frameTime.asSeconds());
+    if(m_gui != nullptr)
+        m_gui->Tick(m_frameTime.asSeconds());
     //Call Ticks on Animation
     auto iter = m_animationList.begin();
     while(iter != m_animationList.end())

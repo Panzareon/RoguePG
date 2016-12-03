@@ -19,7 +19,7 @@ class GameController
         void LoadSceneManager(SceneManager*);
         void StartBattle(std::vector<Entity*>* enemies);
 
-        void GameOver();
+        void GameOverCheck();
 
         void SetRenderTarget(sf::RenderTarget* target);
         sf::RenderTarget* GetRenderTarget();
@@ -33,6 +33,8 @@ class GameController
         std::default_random_engine* GetRandomGenerator();
     protected:
     private:
+        void GameOver();
+        bool m_gameOver;
         Party* m_party;
         sf::RenderTarget* m_renderTarget;
         int m_windowWidth;

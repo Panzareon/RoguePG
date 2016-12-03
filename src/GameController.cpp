@@ -1,5 +1,6 @@
 #include "GameController.h"
 #include "SceneManagerBattle.h"
+#include "SceneManagerGameOver.h"
 #include <iostream>
 
 GameController* GameController::m_instance = 0;
@@ -9,6 +10,7 @@ GameController::GameController() : m_randomGenerator(time(NULL))
     m_party = 0;
     m_renderTarget = 0;
     m_keysPressed.resize(Configuration::GetInstance()->GetNumberKeys());
+    m_gameOver = false;
 
     //TODO: load actual values
     m_windowWidth = 640;
@@ -64,6 +66,8 @@ void GameController::Tick()
     if(GetActiveSceneManager()->IsFinished())
     {
         CloseActiveSceneManger();
+        if(m_gameOver)
+            GameOver();
     }
 }
 void GameController::StartBattle(std::vector<Entity*>* enemies)
@@ -107,20 +111,32 @@ bool GameController::IsKeyPressed(Configuration::Keys key)
     return false;
 }
 
-void GameController::GameOver()
+void GameController::GameOverCheck()
 {
     m_party->UpdateActiveParty();
-    bool finished = true;
+    m_gameOver = true;
     for(unsigned int i = 0; i < m_party->GetActivePartyMembers()->size(); i++)
     {
         if(!m_party->GetActivePartyMembers()->at(i)->IsDead())
         {
-            finished = false;
+            m_gameOver = false;
         }
     }
-    if(finished)
+}
+
+void GameController::GameOver()
+{
+    if(m_gameOver)
     {
-        //TODO: remove all SceneManager and display Game Over screen
+        //remove all SceneManager
+        //TODO: remove all but the Main Menu
+        while(m_sceneManager.size() > 0)
+        {
+            CloseActiveSceneManger();
+        }
+        //display Game Over screen
+        SceneManagerGameOver* gameOver = new SceneManagerGameOver(GetRenderTarget(), GetWindowWidth(), GetWindowHeight());
+        LoadSceneManager(gameOver);
     }
 }
 

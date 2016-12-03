@@ -18,46 +18,45 @@ Texture* TextureList::getTexture(TextureFiles file)
     {
         std::string filename;
         std::string texturePath = "texture/";
-        Texture* newTexture;
 
         //Initialize all Textures
+        int AnimationSteps = 1;
         switch(file)
         {
         case DungeonTileMap:
-            newTexture = new Texture();
             filename = "TileMap.png";
             break;
 
 
         case HeroSpriteSheet:
-            newTexture = new Texture(4);
             filename = "skeleton-large.png";
             break;
         case BatBattleSprite:
-            newTexture = new Texture();
             filename = "bat.png";
             break;
         case DefaultBattleSprite:
-            newTexture = new Texture();
             filename = "rogue.png";
             break;
 
         case TargetCursor:
-            newTexture = new Texture();
             filename = "target.png";
             break;
 
         case FireballAnimation:
-            newTexture = new Texture();
             filename = "fireball.png";
             break;
 
 
         case DungeonBattleBackground:
-            newTexture = new Texture();
             filename = "battle-background.png";
             break;
+
+
+        case GameOverScreen:
+            filename = "game-over.png";
+            break;
         }
+        Texture* newTexture = new Texture(AnimationSteps);
         texturePath += filename;
         if(!newTexture->loadFromFile(texturePath))
         {
