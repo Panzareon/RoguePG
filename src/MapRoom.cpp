@@ -1,5 +1,6 @@
 #include "MapRoom.h"
 #include <random>
+#include <algorithm>
 
 MapRoom::MapRoom(int roomId)
 {
@@ -15,6 +16,14 @@ MapRoom::~MapRoom()
 int MapRoom::GetNumberOfAdjacentRooms()
 {
     return m_adjacentRooms.size();
+}
+
+void MapRoom::IsAdjacentTo(MapRoom* other)
+{
+    if(std::find(m_adjacentRooms.begin(), m_adjacentRooms.end(), other) == m_adjacentRooms.end())
+    {
+        m_adjacentRooms.push_back(other);
+    }
 }
 
 void MapRoom::AddPosition(int x, int y)

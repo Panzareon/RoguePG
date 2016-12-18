@@ -99,6 +99,20 @@ int Map::GetRoomNr(unsigned int x, unsigned int y)
 {
     return m_roomNr[x][y];
 }
+
+void Map::RoomsAreAdjacent(int roomNr1, int roomNr2)
+{
+    MapRoom* room1 = &m_rooms.at(roomNr1);
+    MapRoom* room2 = &m_rooms.at(roomNr2);
+    room1->IsAdjacentTo(room2);
+    room2->IsAdjacentTo(room1);
+}
+
+std::map<int, MapRoom> Map::GetAllRooms()
+{
+    return &m_rooms;
+}
+
 void Map::SetTileId(unsigned int x, unsigned int y, int TileId, int layerId)
 {
     SetTileId(x,y,TileId,TileId,TileId,TileId,layerId);

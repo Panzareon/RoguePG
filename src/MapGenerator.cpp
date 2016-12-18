@@ -623,12 +623,56 @@ void MapGenerator::NumberRooms()
 
     }
 
-
+    //Setting of the rooms
     for(int i = 0; i < m_width; i++)
         for(int j = 0; j < m_height; j++)
         {
             if(checkedTiles[i][j] > 2)
+            {
                 m_map->SetRoomNr(i,j, checkedTiles[i][j] - 2);
+            }
+            else
+                m_map->SetRoomNr(i,j,0);
+        }
+
+    //Set adjacent
+    int xAdd, yAdd, roomAdjacentNumber;
+    for(int i = 0; i < m_width; i++)
+        for(int j = 0; j < m_height; j++)
+        {
+            if(checkedTiles[i][j] > 2)
+            {
+                for(int k = 0; k < 4; k++)
+                {
+                    switch(k)
+                    {
+                    case 0:
+                        xAdd = 1;
+                        break;
+                    case 1:
+                        xAdd = -1;
+                        break;
+                    case 2:
+                        yAdd = 1;
+                        break;
+                    case 3:
+                        yAdd = -1;
+                        break;
+                    }
+                    if(i + xAdd >= 0 && i + xAdd < m_width && j + yAdd >= 0 && j + yAdd < m_height)
+                    {
+                        roomAdjacentNumber = checkedTiles[i + xAdd][j + yAdd];
+                        if(roomAdjacentNumber > 2)
+                        {
+                            if(roomAdjacentNumber != checkedTiles[i][j])
+                            {
+                                m_map->RoomsAreAdjacent(checkedTiles[i][j] - 2, roomAdjacentNumber - 2);
+                            }
+                        }
+                    }
+
+                }
+            }
             else
                 m_map->SetRoomNr(i,j,0);
         }

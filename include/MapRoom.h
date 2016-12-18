@@ -10,6 +10,7 @@ class MapRoom
         virtual ~MapRoom();
 
         int GetNumberOfAdjacentRooms();
+        void IsAdjacentTo(MapRoom* other);
 
         void AddPosition(int x, int y);
         std::pair<int,int>* GetRandomPosition();

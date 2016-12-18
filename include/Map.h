@@ -26,6 +26,8 @@ class Map
 
         void SetRoomNr(unsigned int x, unsigned int y,  int roomNr);
         int GetRoomNr(unsigned int x, unsigned int y);
+        void RoomsAreAdjacent(int roomNr1, int roomNr2);
+        std::map<int, MapRoom>* GetAllRooms();
 
         void writeToTileMap(TileMap& in, int layerId, sf::Color color = sf::Color::White);
 
