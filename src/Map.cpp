@@ -108,7 +108,7 @@ void Map::RoomsAreAdjacent(int roomNr1, int roomNr2)
     room2->IsAdjacentTo(room1);
 }
 
-std::map<int, MapRoom> Map::GetAllRooms()
+std::map<int, MapRoom>* Map::GetAllRooms()
 {
     return &m_rooms;
 }

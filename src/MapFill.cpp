@@ -279,3 +279,30 @@ void MapFill::FillWithItems(int LayerId, int LayerAboveHeroId, int LayerWallDeco
         }
     }
 }
+
+void MapFill::PlaceItemAt(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, int index, int x, int y)
+{
+    int maxChance = 0.0f;
+    for(unsigned int i = 0; i < m_chanceForTile[index].size(); i++)
+    {
+        maxChance += m_chanceForTile[index][i].GetChance();
+    }
+
+    int i = 0;
+    int newRand = rand() % maxChance;
+    do
+    {
+        newRand -= m_chanceForTile[index][i].GetChance();
+        i++;
+    }
+    while(newRand > 0);
+    i--;
+    FillItem* newItem = &(m_chanceForTile[index][i]);
+
+    if(newItem->GetType() == FillItem::Blocking)
+    {
+        if(!CanBlockBeFilled(x,y))
+            return;
+    }
+    newItem->Insert(m_map,x,y,LayerId, LayerAboveHeroId, LayerWallDecoration);
+}

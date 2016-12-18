@@ -64,7 +64,8 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
 
     m_generator.NumberRooms();
 
-    m_generator.PlaceStartingPosition();
+    m_generator.PlaceStartingAndEndPosition();
+
     sf::Transform heroTransform;
     //Place Hero at Startposition
     heroTransform.translate(m_map.m_startX * TileMap::GetTileWith(), m_map.m_startY * TileMap::GetTileWith() - 14);
@@ -80,6 +81,10 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     mapFill.FillLayer(MapFill::WallTopping, 3);
     //Add random Items
     mapFill.FillLayer(MapFill::AdditionalItems, 1,2,4);
+
+    //Place Stairs
+    mapFill.PlaceItemAt(1,2,4,0,m_map.m_startX, m_map.m_startY);
+    mapFill.PlaceItemAt(1,2,4,1,m_map.m_endX, m_map.m_endY);
 
     //TODO: Place Chests and Stairs
 

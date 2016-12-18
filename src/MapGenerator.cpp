@@ -1,4 +1,5 @@
 #include "MapGenerator.h"
+#include "GenericException.h"
 
 #include <cstdlib>
 #include <ctime>
@@ -816,18 +817,77 @@ void MapGenerator::CheckTiles(int** checkArray, int x, int y, bool straight)
     }
 }
 
-void MapGenerator::PlaceStartingPosition()
+void MapGenerator::PlaceStartingAndEndPosition()
 {
-    int x,y;
-    int maxPos = 3;
-    do
+    int nr = 0;
+    std::map<int,MapRoom>* rooms = m_map->GetAllRooms();
+    MapRoom* startRoom = nullptr;
+    MapRoom* endRoom = nullptr;
+    if(rooms->size() >= 2)
     {
-        x = (std::rand() % maxPos) % m_width;
-        y = (std::rand() % maxPos) % m_height;
-        maxPos++;
+
+        for(auto it = rooms->begin(); it != rooms->end(); it++)
+        {
+            if(it->second.GetNumberOfAdjacentRooms() == 1)
+            {
+                nr++;
+            }
+        }
+
+        int maxNr = nr;
+        //is there a place for starting and end Position
+        if(nr < 2)
+        {
+            maxNr = rooms->size();
+        }
+        int startNr = rand() % maxNr;
+        int endNr = rand() % (maxNr - 1);
+        if(endNr >= startNr)
+            endNr++;
+        for(auto it = rooms->begin(); it != rooms->end(); it++)
+        {
+            if(nr < 2 || it->second.GetNumberOfAdjacentRooms() == 1)
+            {
+                if(startNr == 0)
+                    startRoom = &it->second;
+                startNr--;
+                if(endNr == 0)
+                    endRoom = &it->second;
+                endNr--;
+            }
+        }
     }
-    while(m_map->GetTileType(x,y) != Map::Space);
-    m_map->m_startX = x;
-    m_map->m_startY = y;
+    else if(rooms->size() == 1)
+    {
+        startRoom = &rooms->begin()->second;
+        endRoom = &rooms->begin()->second;
+    }
+    else
+    {
+        throw GenericException("No rooms on this map to place starting or end position!");
+    }
+    std::pair<int,int>* pos;
+    if(startRoom != nullptr)
+    {
+        pos = startRoom->GetRandomPosition();
+        m_map->m_startX = pos->first;
+        m_map->m_startY = pos->second;
+    }
+    else
+    {
+        //This should not happen
+        throw GenericException("No starting position found!");
+    }
+    if(endRoom != nullptr)
+    {
+        pos = endRoom->GetRandomPosition();
+        m_map->m_endX = pos->first;
+        m_map->m_endY = pos->second;
+    }
+    else
+    {
+        //This should not happen
+        throw GenericException("No end position found!");
+    }
 }
 

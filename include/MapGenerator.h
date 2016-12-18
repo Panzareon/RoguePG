@@ -32,7 +32,7 @@ class MapGenerator
 
         void NumberRooms();
 
-        void PlaceStartingPosition();
+        void PlaceStartingAndEndPosition();
 
     protected:
     private:
