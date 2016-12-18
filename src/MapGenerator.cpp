@@ -414,7 +414,6 @@ void MapGenerator::NumberRooms()
         }
     }
 
-    std::vector<sf::Vector2u> rooms;
     int nrWall;
     int roomId = 3;
     for(int d = 5; d >= 0; d--)
@@ -522,11 +521,25 @@ void MapGenerator::NumberRooms()
 
 
 
+        int checkX;
+        int checkY;
         finished = false;
         do
         {
-            int checkX = std::rand() % m_width;
-            int checkY = std::rand() % m_height;
+
+            for(int i = 0; i < m_width; i++)
+            {
+                for(int j = 0; j < m_height; j++)
+                {
+                    if(checkedTiles[i][j] == 0)
+                    {
+                        checkX = i;
+                        checkY = j;
+                        i = m_width;
+                        j = m_height;
+                    }
+                }
+            }
 
             if(checkedTiles[checkX][checkY] == 0)
             {
@@ -573,7 +586,6 @@ void MapGenerator::NumberRooms()
                 else
                 {
                     m_MGUtil.SetTilesToChecked(checkedTiles, checkX, checkY, 0, roomId);
-                    rooms.push_back(sf::Vector2u(checkX, checkY));
                     roomId++;
                 }
             }
@@ -725,7 +737,7 @@ void MapGenerator::CheckTiles(int** checkArray, int x, int y, bool straight)
         x += xChange;
         y += yChange;
     }
-    if(checkArray[x][y] != 0)
+    if(x > 0 && y > 0 && x < m_width - 1 && y < m_height - 1 && checkArray[x][y] != 0)
     {
         if(straight)
         {
@@ -735,8 +747,8 @@ void MapGenerator::CheckTiles(int** checkArray, int x, int y, bool straight)
                 x += xChange;
                 y += yChange;
             }
-            //if after Wall is checked Space
-            if(checkArray[x][y] == 1)
+            //if after Wall is checked Space go back to the start and set to space
+            if(x > 0 && y > 0 && x < m_width - 1 && y < m_height - 1 && checkArray[x][y] == 1)
             {
                 do
                 {

@@ -24,6 +24,7 @@ class MapGeneratorUtil
 
         int m_width;
         int m_height;
+        int** m_checked2;
 };
 
 #endif // MAPGENERATORUTIL_H

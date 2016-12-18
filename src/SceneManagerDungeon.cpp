@@ -62,6 +62,8 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     else
         m_generator.CellularAutomata(0.45f);
 
+    m_generator.NumberRooms();
+
     m_generator.PlaceStartingPosition();
     sf::Transform heroTransform;
     //Place Hero at Startposition

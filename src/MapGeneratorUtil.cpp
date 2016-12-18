@@ -6,11 +6,21 @@ MapGeneratorUtil::MapGeneratorUtil(int width, int height)
     //ctor
     m_width = width;
     m_height = height;
+    m_checked2 = new int*[m_width];
+    for(int x = 0; x < m_width; x++)
+    {
+        m_checked2[x] = new int[m_height];
+    }
 }
 
 MapGeneratorUtil::~MapGeneratorUtil()
 {
     //dtor
+    for(int x = 0; x < m_width; x++)
+    {
+        delete[] m_checked2[x];
+    }
+    delete[] m_checked2;
 }
 int MapGeneratorUtil::SetTilesToChecked(int** checkArray, int x, int y, int fromId, int toId, bool useToId)
 {
@@ -18,10 +28,14 @@ int MapGeneratorUtil::SetTilesToChecked(int** checkArray, int x, int y, int from
         return 0;
     int retval = 0;
     std::vector<sf::Vector2u> checked;
-    int checked2[m_width][m_height];
+    for(int x = 0; x < m_width; x++)
+    {
+        for(int y = 0; y < m_height; y++)
+            m_checked2[x][y] = 0;
+    }
     for(int x = 0; x < m_width; x++)
         for(int y = 0; y < m_height; y++)
-            checked2[x][y] = 0;
+            m_checked2[x][y] = 0;
     checked.push_back(sf::Vector2u(x,y));
     checkArray[x][y] = toId;
     while(checked.size() > 0)
@@ -35,41 +49,41 @@ int MapGeneratorUtil::SetTilesToChecked(int** checkArray, int x, int y, int from
         if(x > 0 && (checkArray[x-1][y] == fromId || (useToId && checkArray[x-1][y] == toId)))
         {
             sf::Vector2u add(x-1,y);
-            if(checked2[x-1][y] == 0)
+            if(m_checked2[x-1][y] == 0)
             {
                 checked.push_back(add);
                 checkArray[x-1][y] = toId;
-                checked2[x-1][y] = 1;
+                m_checked2[x-1][y] = 1;
             }
         }
         if(y > 0 && (checkArray[x][y-1] == fromId || (useToId && checkArray[x][y-1] == toId)))
         {
             sf::Vector2u add(x,y-1);
-            if(checked2[x][y-1] == 0)
+            if(m_checked2[x][y-1] == 0)
             {
                 checked.push_back(add);
                 checkArray[x][y-1] = toId;
-                checked2[x][y-1] = 1;
+                m_checked2[x][y-1] = 1;
             }
         }
         if(x < m_width - 1 && (checkArray[x+1][y] == fromId || (useToId && checkArray[x+1][y] == toId)))
         {
             sf::Vector2u add(x+1,y);
-            if(checked2[x+1][y] == 0)
+            if(m_checked2[x+1][y] == 0)
             {
                 checked.push_back(add);
                 checkArray[x+1][y] = toId;
-                checked2[x+1][y] = 1;
+                m_checked2[x+1][y] = 1;
             }
         }
         if(y < m_height - 1 && (checkArray[x][y+1] == fromId || (useToId && checkArray[x][y+1] == toId)))
         {
             sf::Vector2u add(x,y+1);
-            if(checked2[x][y+1] == 0)
+            if(m_checked2[x][y+1] == 0)
             {
                 checked.push_back(add);
                 checkArray[x][y+1] = toId;
-                checked2[x][y+1] = 1;
+                m_checked2[x][y+1] = 1;
             }
         }
     }
@@ -81,10 +95,11 @@ int MapGeneratorUtil::GetNumberOfConnected(int** checkArray, int x, int y, int c
         return 0;
     int retval = 0;
     std::vector<sf::Vector2u> checked;
-    int checked2[m_width][m_height];
     for(int x = 0; x < m_width; x++)
+    {
         for(int y = 0; y < m_height; y++)
-            checked2[x][y] = 0;
+            m_checked2[x][y] = 0;
+    }
     checked.push_back(sf::Vector2u(x,y));
     while(checked.size() > 0)
     {
@@ -97,37 +112,37 @@ int MapGeneratorUtil::GetNumberOfConnected(int** checkArray, int x, int y, int c
         if(x > 0 && checkArray[x-1][y] == checkId)
         {
             sf::Vector2u add(x-1,y);
-            if(checked2[x-1][y] == 0)
+            if(m_checked2[x-1][y] == 0)
             {
                 checked.push_back(add);
-                checked2[x-1][y] = 1;
+                m_checked2[x-1][y] = 1;
             }
         }
         if(y > 0 && checkArray[x][y-1] == checkId)
         {
             sf::Vector2u add(x,y-1);
-            if(checked2[x][y-1] == 0)
+            if(m_checked2[x][y-1] == 0)
             {
                 checked.push_back(add);
-                checked2[x][y-1] = 1;
+                m_checked2[x][y-1] = 1;
             }
         }
         if(x < m_width - 1 && checkArray[x+1][y] == checkId)
         {
             sf::Vector2u add(x+1,y);
-            if(checked2[x+1][y] == 0)
+            if(m_checked2[x+1][y] == 0)
             {
                 checked.push_back(add);
-                checked2[x+1][y] = 1;
+                m_checked2[x+1][y] = 1;
             }
         }
         if(y < m_height - 1 && checkArray[x][y+1] == checkId)
         {
             sf::Vector2u add(x,y+1);
-            if(checked2[x][y+1] == 0)
+            if(m_checked2[x][y+1] == 0)
             {
                 checked.push_back(add);
-                checked2[x][y+1] = 1;
+                m_checked2[x][y+1] = 1;
             }
         }
         if(retval + checked.size() >= maxCount)
