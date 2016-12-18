@@ -57,7 +57,12 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
 
     //Generate Map
 
-    m_generator.CellularAutomata(0.45f);
+    if(tileHeight > 200 || tileWidth > 200)
+        m_generator.FasterCellularAutomata(0.45f);
+    else
+        m_generator.CellularAutomata(0.45f);
+
+    m_generator.NumberRooms();
 
     m_generator.PlaceStartingPosition();
     sf::Transform heroTransform;

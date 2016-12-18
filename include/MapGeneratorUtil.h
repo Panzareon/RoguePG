@@ -10,7 +10,7 @@ class MapGeneratorUtil
         virtual ~MapGeneratorUtil();
 
         int SetTilesToChecked(int** checkArray, int x, int y, int fromId = 0, int toId = 1, bool useToId = false);
-        int GetNumberOfConnected(int** checkArray, int x, int y, int checkId);
+        int GetNumberOfConnected(int** checkArray, int x, int y, int checkId, int maxCount = -1);
         sf::Vector2f GetMidpointOf(int** tiles, int checkId);
         sf::Vector2u GetClosestToPoint(int** tiles, int checkId, int x, int y);
 
@@ -24,6 +24,7 @@ class MapGeneratorUtil
 
         int m_width;
         int m_height;
+        int** m_checked2;
 };
 
 #endif // MAPGENERATORUTIL_H

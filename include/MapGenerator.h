@@ -13,8 +13,12 @@ class MapGenerator
         virtual ~MapGenerator();
 
         void CellularAutomata(float startPercent);
+        //Faster Generation for Maps > than 200 x 200
+        void FasterCellularAutomata(float startPercent);
         void CellularAutomataStart(float startPercent);
         void CellularAutomataStep(int minWallTiles, int orMaxWallTiles = -1, float chanceAtThreshhold = 1.0f, bool onlyChangeToWall = false);
+
+        void MorphologicalCloseOperator();
 
         //has really bad Performance, not recommended to use with Maps larger than 200x200
         void ConnectAllRooms(bool straight, int maxRemovedTiles = 10);
