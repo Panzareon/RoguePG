@@ -3,7 +3,9 @@
 
 #include "TileMap.h"
 #include <vector>
+#include <map>
 #include "SFML/Graphics.hpp"
+#include "MapRoom.h"
 
 class Map
 {
@@ -46,7 +48,9 @@ class Map
     private:
         int** m_tiles;
         int** m_roomNr;
+        int m_maxRoomNr;
         std::vector<int**> m_layers;
+        std::map<int, MapRoom> m_rooms;
         unsigned int m_nrLayers;
         unsigned int m_width;
         unsigned int m_height;

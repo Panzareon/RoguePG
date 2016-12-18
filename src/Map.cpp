@@ -88,6 +88,11 @@ bool Map::IsTileWall(unsigned int x, unsigned int y)
 void Map::SetRoomNr(unsigned int x, unsigned int y, int roomNr)
 {
     m_roomNr[x][y] = roomNr;
+    if(m_maxRoomNr < roomNr)
+        m_maxRoomNr = roomNr;
+    if(m_rooms.find(roomNr) == m_rooms.end())
+        m_rooms.insert(std::pair<int,MapRoom>(roomNr, MapRoom(roomNr)));
+    m_rooms.at(roomNr).AddPosition(x,y);
 }
 
 int Map::GetRoomNr(unsigned int x, unsigned int y)

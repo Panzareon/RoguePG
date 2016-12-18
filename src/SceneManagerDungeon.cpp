@@ -76,6 +76,8 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     //Add random Items
     mapFill.FillLayer(MapFill::AdditionalItems, 1,2,4);
 
+    //TODO: Place Chests and Stairs
+
     m_map.writeToTileMap(*m_tileMap,0);
     m_map.writeToTileMap(*m_tileMapItems,1);
     m_map.writeToTileMap(*m_tileMapAboveHero,2);
