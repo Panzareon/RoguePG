@@ -11,8 +11,14 @@ class SceneManager
         SceneManager(sf::RenderTarget * target, int windowWidth, int windowHeight);
         virtual ~SceneManager();
         virtual void NextTick();
+        virtual void Draw();
         virtual bool IsFinished();
         virtual void AddSubMenu(MenuNode* menu);
+
+        //returns true if Scene Manager below should be displayed first
+        virtual bool IsTransparent();
+        //returns true if Tick should be called for the Scene Manager below
+        virtual bool PausesSceneManagerBelow();
 
         void AddAnimation(Animation* anim);
         Node* GetAnimationNode();

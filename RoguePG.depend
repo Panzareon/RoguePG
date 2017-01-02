@@ -1068,3 +1068,489 @@
 1472500192 d:\programme\projekte\roguepg\include\configuration.h
 	<SFML/Graphics.hpp>
 
+1480789189 source:/home/michael/Projects/RoguePG/main.cpp
+	<SFML/Graphics.hpp>
+	"SceneManagerDungeon.h"
+	<random>
+	<time.h>
+	<iostream>
+	"AnimatedNode.h"
+	"GameController.h"
+	"EffectFactoryList.h"
+	"Localization.h"
+	"CharacterClass.h"
+
+1473525204 /home/michael/Projects/RoguePG/include/SceneManagerDungeon.h
+	"SceneManagerMoveable.h"
+	"MapGenerator.h"
+
+1471381917 /home/michael/Projects/RoguePG/include/SceneManagerMoveable.h
+	<SceneManager.h>
+	"Map.h"
+	"AnimatedNode.h"
+
+1483388014 /home/michael/Projects/RoguePG/include/SceneManager.h
+	"MenuNode.h"
+	"Animation.h"
+	<vector>
+
+1480791930 /home/michael/Projects/RoguePG/include/MenuNode.h
+	"Node.h"
+	<vector>
+	<functional>
+
+1477860255 /home/michael/Projects/RoguePG/include/Node.h
+	<SFML/Graphics.hpp>
+	<vector>
+
+1477860412 /home/michael/Projects/RoguePG/include/Animation.h
+	"AnimationPart.h"
+	"Node.h"
+	<vector>
+
+1477862024 /home/michael/Projects/RoguePG/include/AnimationPart.h
+
+1482451956 /home/michael/Projects/RoguePG/include/Map.h
+	"TileMap.h"
+	<vector>
+	<map>
+	"SFML/Graphics.hpp"
+	"MapRoom.h"
+
+1471381917 /home/michael/Projects/RoguePG/include/TileMap.h
+	<SFML/Graphics.hpp>
+
+1482451956 /home/michael/Projects/RoguePG/include/MapRoom.h
+	<vector>
+
+1477851609 /home/michael/Projects/RoguePG/include/AnimatedNode.h
+	"Node.h"
+
+1482451956 /home/michael/Projects/RoguePG/include/MapGenerator.h
+	"TileMap.h"
+	"MapGeneratorUtil.h"
+	"Map.h"
+
+1482083078 /home/michael/Projects/RoguePG/include/MapGeneratorUtil.h
+	"SFML/Graphics.hpp"
+
+1480805558 /home/michael/Projects/RoguePG/include/GameController.h
+	"Party.h"
+	"SceneManager.h"
+	<vector>
+	<SFML/Graphics.hpp>
+	"Configuration.h"
+
+1477836451 /home/michael/Projects/RoguePG/include/Party.h
+	<vector>
+	"PartyMember.h"
+	"Item.h"
+
+1479566381 /home/michael/Projects/RoguePG/include/PartyMember.h
+	<Entity.h>
+
+1480790195 /home/michael/Projects/RoguePG/include/Entity.h
+	"TextureList.h"
+	"Skill.h"
+	"IPassiveEffect.h"
+	"AIBase.h"
+	"Attack.h"
+	"SFML/Graphics.hpp"
+	<vector>
+	<map>
+	<memory>
+
+1480804627 /home/michael/Projects/RoguePG/include/TextureList.h
+	<map>
+	"Texture.h"
+
+1477689194 /home/michael/Projects/RoguePG/include/Texture.h
+	"SFML/Graphics/Texture.hpp"
+
+1479647094 /home/michael/Projects/RoguePG/include/Skill.h
+	<string>
+	<vector>
+	"Enums.h"
+
+1480785481 /home/michael/Projects/RoguePG/include/Enums.h
+
+1477837543 /home/michael/Projects/RoguePG/include/IPassiveEffect.h
+	"Enums.h"
+
+1473787357 /home/michael/Projects/RoguePG/include/AIBase.h
+
+1477752123 /home/michael/Projects/RoguePG/include/Attack.h
+	"Enums.h"
+	<set>
+
+1479567912 /home/michael/Projects/RoguePG/include/Item.h
+
+1473525204 /home/michael/Projects/RoguePG/include/Configuration.h
+	<SFML/Graphics.hpp>
+
+1479504605 /home/michael/Projects/RoguePG/include/EffectFactoryList.h
+	"EffectFactory.h"
+	<vector>
+
+1479506561 /home/michael/Projects/RoguePG/include/EffectFactory.h
+	<vector>
+	<set>
+	<functional>
+	"Effect.h"
+	"StrengthCalculation.h"
+
+1479506620 /home/michael/Projects/RoguePG/include/Effect.h
+	<vector>
+	<functional>
+	"Entity.h"
+	"StrengthCalculation.h"
+	"AnimationFactory.h"
+
+1473543325 /home/michael/Projects/RoguePG/include/StrengthCalculation.h
+	<vector>
+	"Enums.h"
+
+1479502887 /home/michael/Projects/RoguePG/include/AnimationFactory.h
+	"Animation.h"
+	"EntityNode.h"
+
+1477689194 /home/michael/Projects/RoguePG/include/EntityNode.h
+	"AnimatedNode.h"
+	"SceneManagerBattle.h"
+
+1480790618 /home/michael/Projects/RoguePG/include/SceneManagerBattle.h
+	"SceneManager.h"
+	"DrawableNode.h"
+	"MenuNode.h"
+	"Enums.h"
+	"Party.h"
+	<vector>
+
+1468660025 /home/michael/Projects/RoguePG/include/DrawableNode.h
+	<Node.h>
+
+1477838872 /home/michael/Projects/RoguePG/include/Localization.h
+	<string>
+	<map>
+
+1479646405 /home/michael/Projects/RoguePG/include/CharacterClass.h
+	"PartyMember.h"
+	"SkillGenerator.h"
+	<vector>
+	<map>
+
+1479647288 /home/michael/Projects/RoguePG/include/SkillGenerator.h
+	"Enums.h"
+	"Skill.h"
+	"PartyMember.h"
+
+1480792692 source:/home/michael/Projects/RoguePG/src/AIBase.cpp
+	"AIBase.h"
+	"InvalidArgumentException.h"
+	"GameController.h"
+	"SceneManagerBattle.h"
+	"Entity.h"
+
+1479646881 /home/michael/Projects/RoguePG/include/InvalidArgumentException.h
+	"GenericException.h"
+	<string>
+
+1479646874 /home/michael/Projects/RoguePG/include/GenericException.h
+	<exception>
+	<string>
+
+1479647169 source:/home/michael/Projects/RoguePG/src/AIRandom.cpp
+	"AIRandom.h"
+	"Entity.h"
+	<random>
+
+1473787016 /home/michael/Projects/RoguePG/include/AIRandom.h
+	"AIBase.h"
+
+1477851615 source:/home/michael/Projects/RoguePG/src/AnimatedNode.cpp
+	"AnimatedNode.h"
+	"ShaderList.h"
+
+1477689194 /home/michael/Projects/RoguePG/include/ShaderList.h
+	<SFML/Graphics.hpp>
+
+1477860423 source:/home/michael/Projects/RoguePG/src/Animation.cpp
+	"Animation.h"
+
+1479502887 source:/home/michael/Projects/RoguePG/src/AnimationFactory.cpp
+	"AnimationFactory.h"
+	"AnimationPartSprite.h"
+
+1479502887 /home/michael/Projects/RoguePG/include/AnimationPartSprite.h
+	"AnimationPart.h"
+	"TextureList.h"
+	"SFML/Graphics.hpp"
+	"DrawableNode.h"
+
+1477863725 source:/home/michael/Projects/RoguePG/src/AnimationPart.cpp
+	"AnimationPart.h"
+
+1479502887 source:/home/michael/Projects/RoguePG/src/AnimationPartSprite.cpp
+	"AnimationPartSprite.h"
+	"Animation.h"
+	"DrawableNode.h"
+	"GameController.h"
+
+1477753586 source:/home/michael/Projects/RoguePG/src/Attack.cpp
+	"Attack.h"
+
+1480790049 source:/home/michael/Projects/RoguePG/src/CharacterClass.cpp
+	"CharacterClass.h"
+	"InvalidArgumentException.h"
+	"EffectFactoryList.h"
+	<random>
+
+1473602815 source:/home/michael/Projects/RoguePG/src/Configuration.cpp
+	"Configuration.h"
+	<iostream>
+	"InvalidArgumentException.h"
+
+1468660025 source:/home/michael/Projects/RoguePG/src/DrawableNode.cpp
+	"DrawableNode.h"
+
+1479507599 source:/home/michael/Projects/RoguePG/src/Effect.cpp
+	"Effect.h"
+	"GameController.h"
+
+1479507614 source:/home/michael/Projects/RoguePG/src/EffectFactory.cpp
+	"EffectFactory.h"
+
+1479937496 source:/home/michael/Projects/RoguePG/src/EffectFactoryList.cpp
+	"EffectFactoryList.h"
+	"InvalidArgumentException.h"
+	"Entity.h"
+	"Enums.h"
+	"PassiveEffect.h"
+	<random>
+
+1477836905 /home/michael/Projects/RoguePG/include/PassiveEffect.h
+	"Enums.h"
+	"Attack.h"
+	"IPassiveEffect.h"
+	<functional>
+
+1480790209 source:/home/michael/Projects/RoguePG/src/EnemyFactory.cpp
+	"EnemyFactory.h"
+	"EffectFactoryList.h"
+	"InvalidArgumentException.h"
+
+1477692402 /home/michael/Projects/RoguePG/include/EnemyFactory.h
+	"Entity.h"
+	<map>
+
+1480790184 source:/home/michael/Projects/RoguePG/src/Entity.cpp
+	"Entity.h"
+	"AIRandom.h"
+	"SceneManagerBattle.h"
+	<math.h>
+	<map>
+	"TextureList.h"
+	"AnimationFactory.h"
+	"GameController.h"
+
+1480788576 source:/home/michael/Projects/RoguePG/src/EntityBarsNode.cpp
+	"EntityBarsNode.h"
+
+1480786088 /home/michael/Projects/RoguePG/include/EntityBarsNode.h
+	"Node.h"
+	"Party.h"
+
+1477862778 source:/home/michael/Projects/RoguePG/src/EntityNode.cpp
+	"EntityNode.h"
+
+1479648238 source:/home/michael/Projects/RoguePG/src/Equipment.cpp
+	"Equipment.h"
+	"Attack.h"
+	"Entity.h"
+	"Skill.h"
+
+1479648155 /home/michael/Projects/RoguePG/include/Equipment.h
+	<IPassiveEffect.h>
+	<map>
+	<set>
+	"Enums.h"
+	"Item.h"
+	"SkillGenerator.h"
+	<memory>
+
+1473525204 source:/home/michael/Projects/RoguePG/src/FillItem.cpp
+	"FillItem.h"
+	"TileMap.h"
+
+1473525204 /home/michael/Projects/RoguePG/include/FillItem.h
+	"Map.h"
+
+1483388245 source:/home/michael/Projects/RoguePG/src/GameController.cpp
+	"GameController.h"
+	"SceneManagerBattle.h"
+	"SceneManagerGameOver.h"
+	<iostream>
+
+1480804326 /home/michael/Projects/RoguePG/include/SceneManagerGameOver.h
+	"SceneManager.h"
+
+1479646914 source:/home/michael/Projects/RoguePG/src/GenericException.cpp
+	"GenericException.h"
+
+1479646909 source:/home/michael/Projects/RoguePG/src/InvalidArgumentException.cpp
+	"InvalidArgumentException.h"
+
+1477836916 source:/home/michael/Projects/RoguePG/src/IPassiveEffect.cpp
+	"IPassiveEffect.h"
+
+1479567245 source:/home/michael/Projects/RoguePG/src/Item.cpp
+	"Item.h"
+
+1479649672 source:/home/michael/Projects/RoguePG/src/ItemFactory.cpp
+	"ItemFactory.h"
+	"InvalidArgumentException.h"
+
+1479642960 /home/michael/Projects/RoguePG/include/ItemFactory.h
+	"Item.h"
+	"Equipment.h"
+	<vector>
+	<map>
+
+1477841300 source:/home/michael/Projects/RoguePG/src/Localization.cpp
+	"Localization.h"
+	"fstream"
+
+1480792175 source:/home/michael/Projects/RoguePG/src/MenuNode.cpp
+	"MenuNode.h"
+	"Configuration.h"
+	"GameController.h"
+
+1477860269 source:/home/michael/Projects/RoguePG/src/Node.cpp
+	"Node.h"
+	<algorithm>
+
+1477746308 source:/home/michael/Projects/RoguePG/src/Party.cpp
+	"Party.h"
+	"Configuration.h"
+
+1479646342 source:/home/michael/Projects/RoguePG/src/PartyMember.cpp
+	"PartyMember.h"
+	"CharacterClass.h"
+	"GameController.h"
+	"Equipment.h"
+
+1477836924 source:/home/michael/Projects/RoguePG/src/PassiveEffect.cpp
+	"PassiveEffect.h"
+
+1480805725 source:/home/michael/Projects/RoguePG/src/SceneManagerBattle.cpp
+	"SceneManagerBattle.h"
+	"GameController.h"
+	"SFML/Graphics.hpp"
+	"TextureList.h"
+	"Configuration.h"
+	"Skill.h"
+	"Localization.h"
+	"EntityNode.h"
+	<iostream>
+
+1480805022 source:/home/michael/Projects/RoguePG/src/SceneManagerGameOver.cpp
+	"SceneManagerGameOver.h"
+	"TextureList.h"
+	"DrawableNode.h"
+	"Configuration.h"
+
+1477846718 source:/home/michael/Projects/RoguePG/src/SceneManagerMoveable.cpp
+	"SceneManagerMoveable.h"
+	"Configuration.h"
+	"GameController.h"
+	"EnemyFactory.h"
+
+1477852500 source:/home/michael/Projects/RoguePG/src/ShaderList.cpp
+	"ShaderList.h"
+	"InvalidArgumentException.h"
+
+1479940175 source:/home/michael/Projects/RoguePG/src/Skill.cpp
+	"Skill.h"
+	"InvalidArgumentException.h"
+	"Effect.h"
+	"GameController.h"
+
+1479647302 source:/home/michael/Projects/RoguePG/src/SkillGenerator.cpp
+	"SkillGenerator.h"
+	"EffectFactoryList.h"
+
+1473786405 source:/home/michael/Projects/RoguePG/src/StrengthCalculation.cpp
+	"StrengthCalculation.h"
+	<random>
+
+1477689194 source:/home/michael/Projects/RoguePG/src/Texture.cpp
+	"Texture.h"
+
+1480805039 source:/home/michael/Projects/RoguePG/src/TextureList.cpp
+	"TextureList.h"
+	"InvalidArgumentException.h"
+
+1471381917 source:/home/michael/Projects/RoguePG/src/TileMap.cpp
+	"TileMap.h"
+	<iostream>
+
+1482451956 source:/home/michael/Projects/RoguePG/src/Map.cpp
+	"Map.h"
+	<cmath>
+
+1482451956 source:/home/michael/Projects/RoguePG/src/MapFill.cpp
+	"MapFill.h"
+	<cstdlib>
+
+1482451956 /home/michael/Projects/RoguePG/include/MapFill.h
+	"Map.h"
+	"MapGeneratorUtil.h"
+	<vector>
+	"FillItem.h"
+
+1482451956 source:/home/michael/Projects/RoguePG/src/MapFillDungeon.cpp
+	"MapFillDungeon.h"
+
+1473525204 /home/michael/Projects/RoguePG/include/MapFillDungeon.h
+	<MapFill.h>
+
+1483388467 source:/home/michael/Projects/RoguePG/src/MapGenerator.cpp
+	"MapGenerator.h"
+	"GenericException.h"
+	<cstdlib>
+	<ctime>
+	<iostream>
+	<limits>
+	<cmath>
+
+1482083078 source:/home/michael/Projects/RoguePG/src/MapGeneratorUtil.cpp
+	"MapGeneratorUtil.h"
+	<iostream>
+
+1482451956 source:/home/michael/Projects/RoguePG/src/MapRoom.cpp
+	"MapRoom.h"
+	<random>
+	<algorithm>
+
+1482451956 source:/home/michael/Projects/RoguePG/src/SceneManagerDungeon.cpp
+	"SceneManagerDungeon.h"
+	"DrawableNode.h"
+	"AnimatedNode.h"
+	"TileMap.h"
+	"MapFillDungeon.h"
+	"TextureList.h"
+	<iostream>
+
+1483388041 source:/home/michael/Projects/RoguePG/src/SceneManager.cpp
+	"SceneManager.h"
+	"GameController.h"
+	"Configuration.h"
+	"EntityBarsNode.h"
+	<cmath>
+
+1483388292 source:/home/michael/Projects/RoguePG/src/SceneManagerGameMenu.cpp
+	"SceneManagerGameMenu.h"
+
+1483388271 /home/michael/Projects/RoguePG/include/SceneManagerGameMenu.h
+	"SceneManager.h"
+

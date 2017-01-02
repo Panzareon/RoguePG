@@ -92,6 +92,10 @@ void SceneManager::NextTick()
     }
     //Call Ticks for derived Classes
     Tick();
+}
+
+void SceneManager::Draw()
+{
 
     sf::View view = m_target->getDefaultView();
     view.setCenter(std::floor(m_posx), std::floor(m_posy));
@@ -107,6 +111,7 @@ void SceneManager::NextTick()
 
 
 }
+
 bool SceneManager::IsFinished()
 {
     return false;
@@ -126,3 +131,14 @@ void SceneManager::AddSubMenu(MenuNode* menu)
 {
     m_mainMenu->addChild(menu);
 }
+
+bool SceneManager::IsTransparent()
+{
+    return false;
+}
+
+bool SceneManager::PausesSceneManagerBelow()
+{
+    return true;
+}
+

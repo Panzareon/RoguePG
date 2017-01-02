@@ -522,8 +522,8 @@ void MapGenerator::NumberRooms()
 
 
 
-        int checkX;
-        int checkY;
+        int checkX = 0;
+        int checkY = 0;
         finished = false;
         do
         {

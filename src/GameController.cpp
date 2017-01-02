@@ -61,8 +61,22 @@ void GameController::Tick()
         }
     }
 
+    //Tick all Scene Manager til the first one that does not pause the one below
+    std::vector<SceneManager*>::reverse_iterator manager;
+    for(manager = m_sceneManager.rbegin(); manager != m_sceneManager.rend(); manager++)
+    {
+        (*manager)->NextTick();
+        if((*manager)->PausesSceneManagerBelow())
+            break;
+    }
 
-    GetActiveSceneManager()->NextTick();
+    for(manager = m_sceneManager.rbegin(); manager != m_sceneManager.rend(); manager++)
+    {
+        (*manager)->Draw();
+        if((*manager)->IsTransparent())
+            break;
+    }
+
     if(GetActiveSceneManager()->IsFinished())
     {
         CloseActiveSceneManger();
