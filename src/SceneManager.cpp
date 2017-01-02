@@ -101,9 +101,6 @@ void SceneManager::Draw()
     view.setCenter(std::floor(m_posx), std::floor(m_posy));
     m_target->setView(view);
 
-
-
-    m_target->clear();
     DrawScene();
 
     m_target->setView(m_target->getDefaultView());

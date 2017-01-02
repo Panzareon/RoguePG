@@ -55,6 +55,9 @@ Texture* TextureList::getTexture(TextureFiles file)
         case GameOverScreen:
             filename = "game-over.png";
             break;
+        case InGameMenu:
+            filename = "menu.png";
+            break;
         }
         Texture* newTexture = new Texture(AnimationSteps);
         texturePath += filename;

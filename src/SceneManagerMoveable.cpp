@@ -1,4 +1,5 @@
 #include "SceneManagerMoveable.h"
+#include "SceneManagerGameMenu.h"
 #include "Configuration.h"
 #include "GameController.h"
 
@@ -21,6 +22,7 @@ SceneManagerMoveable::~SceneManagerMoveable()
 void SceneManagerMoveable::Tick()
 {
     //Calculations fore every tick
+    GameController* controller = GameController::getInstance();
 
     //Movement
     //TODO: calculate movement Speed
@@ -30,6 +32,7 @@ void SceneManagerMoveable::Tick()
     float moveX = 0.0f;
     float moveY = 0.0f;
 
+    //check Movement Buttons
     if (sf::Keyboard::isKeyPressed(conf->GetKey(Configuration::MoveLeft)))
     {
         moveX -= MoveSpeed * m_frameTime.asSeconds();
@@ -45,6 +48,14 @@ void SceneManagerMoveable::Tick()
     if (sf::Keyboard::isKeyPressed(conf->GetKey(Configuration::MoveDown)))
     {
         moveY += MoveSpeed * m_frameTime.asSeconds();
+    }
+
+    //Check menu Key
+    if(controller->IsKeyPressed(Configuration::Cancel))
+    {
+        //Open Menu
+        SceneManager* sm = new SceneManagerGameMenu(controller->GetRenderTarget(), controller->GetWindowWidth(), controller->GetWindowHeight());
+        controller->LoadSceneManager(sm);
     }
 
     //TODO: remove Debugkey

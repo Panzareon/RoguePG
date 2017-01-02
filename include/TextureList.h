@@ -21,7 +21,8 @@ class TextureList
 
             DungeonBattleBackground,
 
-            GameOverScreen
+            GameOverScreen,
+            InGameMenu
         };
         virtual ~TextureList();
 
