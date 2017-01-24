@@ -11,6 +11,8 @@ GameController::GameController() : m_randomGenerator(time(NULL))
     m_renderTarget = 0;
     m_keysPressed.resize(Configuration::GetInstance()->GetNumberKeys());
     m_gameOver = false;
+    m_levelId = 0;
+    m_dungeonConfiguration = nullptr;
 
     //TODO: load actual values
     m_windowWidth = 640;
@@ -100,6 +102,55 @@ void GameController::StartBattle(std::vector<Entity*>* enemies)
     }
     LoadSceneManager(newBattle);
 }
+
+void GameController::GotoNextLevel()
+{
+    m_levelId++;
+    SceneManager* next;
+    if(!m_nextLevels.empty())
+    {
+        //if there is already a created level
+        next = m_nextLevels.at(m_nextLevels.size() - 1);
+        m_nextLevels.pop_back();
+        LoadSceneManager(next);
+    }
+    else if(m_levelId <= m_dungeonConfiguration->GetNrLevels())
+    {
+        //if not create a new one
+        next = m_dungeonConfiguration->GetLevel(m_levelId);
+        LoadSceneManager(next);
+    }
+    else
+    {
+        //TODO: finish the dungeon
+    }
+}
+
+void GameController::GotoPreviousLevel()
+{
+    m_levelId--;
+    if(m_levelId > 0)
+    {
+        //Unload Scene Manager, should be a Dungeon-Level
+        SceneManager* next = GetActiveSceneManager();
+        m_sceneManager.pop_back();
+        m_nextLevels.push_back(next);
+    }
+    else
+    {
+        //TODO: exit Dungeon
+    }
+}
+
+void GameController::SetDungeonConfiguration(DungeonConfiguration* config)
+{
+    if(m_dungeonConfiguration != nullptr)
+    {
+        delete m_dungeonConfiguration;
+    }
+    m_dungeonConfiguration = config;
+}
+
 
 void GameController::SetRenderTarget(sf::RenderTarget* target)
 {

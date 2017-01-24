@@ -4,6 +4,8 @@
 #include <SceneManager.h>
 #include "Map.h"
 #include "AnimatedNode.h"
+#include "MapEvent.h"
+#include <vector>
 
 
 class SceneManagerMoveable : public SceneManager
@@ -15,6 +17,8 @@ class SceneManagerMoveable : public SceneManager
     protected:
         Map m_map;
         AnimatedNode* m_hero;
+        Enums::Direction m_heroDirection;
+        std::vector<MapEvent*> m_events;
 
         int m_minViewPosX;
         int m_minViewPosY;

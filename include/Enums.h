@@ -9,4 +9,8 @@ namespace BattleEnums
     enum Attribute{AttributeMaxHp, AttributeMaxMp, AttributeStrength, AttributeInt, AttributeDefense, AttributeMagicDefense, AttributeSpeed, ATTRIBUTE_END};
 }
 
+namespace Enums
+{
+    enum Direction {North, East, South, West};
+}
 #endif // ENUMS_H_INCLUDED

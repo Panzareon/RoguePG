@@ -37,9 +37,9 @@ int main()
 
 
     controller->SetRenderTarget(&window);
-    SceneManagerDungeon* sceneManager = new SceneManagerDungeon(&window,width,height, 30,30);
-    controller->LoadSceneManager(sceneManager);
-
+    DungeonConfiguration * config = new DungeonConfiguration(3);
+    controller->SetDungeonConfiguration(config);
+    controller->GotoNextLevel();
 
     while (window.isOpen())
     {

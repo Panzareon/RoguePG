@@ -5,6 +5,7 @@
 #include "TileMap.h"
 #include "MapFillDungeon.h"
 #include "TextureList.h"
+#include "MapEventStairs.h"
 
 #include <iostream>
 
@@ -85,6 +86,8 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     //Place Stairs
     mapFill.PlaceItemAt(1,2,4,0,m_map.m_startX, m_map.m_startY);
     mapFill.PlaceItemAt(1,2,4,1,m_map.m_endX, m_map.m_endY);
+    m_events.push_back(new MapEventStairs(false, m_map.m_startX, m_map.m_startY));
+    m_events.push_back(new MapEventStairs(true, m_map.m_endX, m_map.m_endY));
 
     //TODO: Place Chests and Stairs
 

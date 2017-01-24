@@ -6,6 +6,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Configuration.h"
+#include "DungeonConfiguration.h"
 
 class GameController
 {
@@ -18,6 +19,9 @@ class GameController
         void CloseActiveSceneManger();
         void LoadSceneManager(SceneManager*);
         void StartBattle(std::vector<Entity*>* enemies);
+        void GotoNextLevel();
+        void GotoPreviousLevel();
+        void SetDungeonConfiguration(DungeonConfiguration* config);
 
         void GameOverCheck();
 
@@ -39,13 +43,18 @@ class GameController
         sf::RenderTarget* m_renderTarget;
         int m_windowWidth;
         int m_windowHeight;
-        static GameController* m_instance;
-        GameController();
+        int m_levelId;
 
         std::vector<bool> m_keysPressed;
 
         std::vector<SceneManager*> m_sceneManager;
+        std::vector<SceneManager*> m_nextLevels;
         std::default_random_engine m_randomGenerator;
+        DungeonConfiguration* m_dungeonConfiguration;
+
+
+        static GameController* m_instance;
+        GameController();
 };
 
 #endif // GAMECONTROLLER_H

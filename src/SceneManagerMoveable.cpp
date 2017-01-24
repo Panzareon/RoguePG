@@ -32,22 +32,49 @@ void SceneManagerMoveable::Tick()
     float moveX = 0.0f;
     float moveY = 0.0f;
 
+    bool doChange = true;
+    Enums::Direction newDirection;
+
+
+
     //check Movement Buttons
     if (sf::Keyboard::isKeyPressed(conf->GetKey(Configuration::MoveLeft)))
     {
         moveX -= MoveSpeed * m_frameTime.asSeconds();
+        newDirection = Enums::West;
+        doChange = false;
     }
     if (sf::Keyboard::isKeyPressed(conf->GetKey(Configuration::MoveRight)))
     {
         moveX += MoveSpeed * m_frameTime.asSeconds();
+        if(doChange || m_heroDirection == Enums::East)
+        {
+            newDirection = Enums::East;
+            doChange = false;
+        }
     }
     if (sf::Keyboard::isKeyPressed(conf->GetKey(Configuration::MoveUp)))
     {
         moveY -= MoveSpeed * m_frameTime.asSeconds();
+        if(doChange || m_heroDirection == Enums::North)
+        {
+            newDirection = Enums::North;
+            doChange = false;
+        }
     }
     if (sf::Keyboard::isKeyPressed(conf->GetKey(Configuration::MoveDown)))
     {
         moveY += MoveSpeed * m_frameTime.asSeconds();
+        if(doChange || m_heroDirection == Enums::South)
+        {
+            newDirection = Enums::South;
+            doChange = false;
+        }
+    }
+
+    if(doChange == false)
+    {
+        m_heroDirection = newDirection;
     }
 
     //Check menu Key
@@ -57,6 +84,21 @@ void SceneManagerMoveable::Tick()
         SceneManager* sm = new SceneManagerGameMenu(controller->GetRenderTarget(), controller->GetWindowWidth(), controller->GetWindowHeight());
         controller->LoadSceneManager(sm);
     }
+
+    sf::FloatRect heroBB = m_hero->getGlobalBoundingBox();
+    //Check Accept Key
+    for(auto event : m_events)
+    {
+        if(event->ActivateAt(heroBB, m_heroDirection))
+        {
+            if(event->NeedButtonPress() && !controller->IsKeyPressed(Configuration::Accept))
+            {
+                continue;
+            }
+            event->Activate();
+        }
+    }
+
 
     //TODO: remove Debugkey
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
@@ -79,7 +121,6 @@ void SceneManagerMoveable::Tick()
 
     if(moveX != 0.0f || moveY != 0.0f)
     {
-        sf::FloatRect heroBB = m_hero->getGlobalBoundingBox();
         heroBB.left += moveX;
         heroBB.top += moveY;
         if(!m_map.DoesCollide(heroBB))

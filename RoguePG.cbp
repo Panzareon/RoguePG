@@ -53,6 +53,7 @@
 		<Unit filename="include/CharacterClass.h" />
 		<Unit filename="include/Configuration.h" />
 		<Unit filename="include/DrawableNode.h" />
+		<Unit filename="include/DungeonConfiguration.h" />
 		<Unit filename="include/Effect.h" />
 		<Unit filename="include/EffectFactory.h" />
 		<Unit filename="include/EffectFactoryList.h" />
@@ -71,6 +72,8 @@
 		<Unit filename="include/ItemFactory.h" />
 		<Unit filename="include/Localization.h" />
 		<Unit filename="include/Map.h" />
+		<Unit filename="include/MapEvent.h" />
+		<Unit filename="include/MapEventStairs.h" />
 		<Unit filename="include/MapFill.h" />
 		<Unit filename="include/MapFillDungeon.h" />
 		<Unit filename="include/MapGenerator.h" />
@@ -106,6 +109,7 @@
 		<Unit filename="src/CharacterClass.cpp" />
 		<Unit filename="src/Configuration.cpp" />
 		<Unit filename="src/DrawableNode.cpp" />
+		<Unit filename="src/DungeonConfiguration.cpp" />
 		<Unit filename="src/Effect.cpp" />
 		<Unit filename="src/EffectFactory.cpp" />
 		<Unit filename="src/EffectFactoryList.cpp" />
@@ -123,6 +127,8 @@
 		<Unit filename="src/ItemFactory.cpp" />
 		<Unit filename="src/Localization.cpp" />
 		<Unit filename="src/Map.cpp" />
+		<Unit filename="src/MapEvent.cpp" />
+		<Unit filename="src/MapEventStairs.cpp" />
 		<Unit filename="src/MapFill.cpp" />
 		<Unit filename="src/MapFillDungeon.cpp" />
 		<Unit filename="src/MapGenerator.cpp" />
