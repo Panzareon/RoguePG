@@ -128,9 +128,9 @@ void GameController::GotoNextLevel()
 
 void GameController::GotoPreviousLevel()
 {
-    m_levelId--;
-    if(m_levelId > 0)
+    if(m_levelId > 1)
     {
+        m_levelId--;
         //Unload Scene Manager, should be a Dungeon-Level
         SceneManager* next = GetActiveSceneManager();
         m_sceneManager.pop_back();

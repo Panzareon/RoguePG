@@ -8,7 +8,7 @@
 class SceneManagerDungeon: public SceneManagerMoveable
 {
     public:
-        SceneManagerDungeon(sf::RenderTarget * target, int windowWidth, int windowHeight, int tileWidth, int tileHeight);
+        SceneManagerDungeon(sf::RenderTarget * target, int windowWidth, int windowHeight, int tileWidth, int tileHeight, unsigned int seed);
         virtual ~SceneManagerDungeon();
     protected:
 

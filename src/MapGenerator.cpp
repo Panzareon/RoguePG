@@ -632,8 +632,6 @@ void MapGenerator::NumberRooms()
             {
                 m_map->SetRoomNr(i,j, checkedTiles[i][j] - 2);
             }
-            else
-                m_map->SetRoomNr(i,j,0);
         }
 
     //Set adjacent
@@ -674,8 +672,6 @@ void MapGenerator::NumberRooms()
 
                 }
             }
-            else
-                m_map->SetRoomNr(i,j,0);
         }
 
 
@@ -823,6 +819,8 @@ void MapGenerator::PlaceStartingAndEndPosition()
     std::map<int,MapRoom>* rooms = m_map->GetAllRooms();
     MapRoom* startRoom = nullptr;
     MapRoom* endRoom = nullptr;
+    int startNr;
+    int endNr;
     if(rooms->size() >= 2)
     {
 
@@ -840,8 +838,8 @@ void MapGenerator::PlaceStartingAndEndPosition()
         {
             maxNr = rooms->size();
         }
-        int startNr = rand() % maxNr;
-        int endNr = rand() % (maxNr - 1);
+        startNr = rand() % maxNr;
+        endNr = rand() % (maxNr - 1);
         if(endNr >= startNr)
             endNr++;
         for(auto it = rooms->begin(); it != rooms->end(); it++)
@@ -870,6 +868,10 @@ void MapGenerator::PlaceStartingAndEndPosition()
     if(startRoom != nullptr)
     {
         pos = startRoom->GetRandomPosition();
+        if(m_map->GetTileType(pos->first, pos->second) != Map::Space)
+        {
+            throw GenericException("Invalid starting position found!");
+        }
         m_map->m_startX = pos->first;
         m_map->m_startY = pos->second;
     }
@@ -881,6 +883,10 @@ void MapGenerator::PlaceStartingAndEndPosition()
     if(endRoom != nullptr)
     {
         pos = endRoom->GetRandomPosition();
+        if(m_map->GetTileType(pos->first, pos->second) != Map::Space)
+        {
+            throw GenericException("Invalid end position found!");
+        }
         m_map->m_endX = pos->first;
         m_map->m_endY = pos->second;
     }

@@ -126,17 +126,24 @@ void SceneManagerMoveable::Tick()
         if(!m_map.DoesCollide(heroBB))
         {
             m_hero->moveNode(moveX, moveY);
-            m_posx = heroBB.left;
-            m_posy = heroBB.top;
-
-            if(m_posx < m_minViewPosX)
-                m_posx = m_minViewPosX;
-            else if(m_posx > m_maxViewPosX)
-                m_posx = m_maxViewPosX;
-            if(m_posy < m_minViewPosY)
-                m_posy = m_minViewPosY;
-            else if(m_posy > m_maxViewPosY)
-                m_posy = m_maxViewPosY;
+            UpdateCamPosition();
         }
     }
 }
+void SceneManagerMoveable::UpdateCamPosition()
+{
+    //Places the Cam on the Hero
+    sf::FloatRect heroBB = m_hero->getGlobalBoundingBox();
+    m_posx = heroBB.left;
+    m_posy = heroBB.top;
+
+    if(m_posx < m_minViewPosX)
+        m_posx = m_minViewPosX;
+    else if(m_posx > m_maxViewPosX)
+        m_posx = m_maxViewPosX;
+    if(m_posy < m_minViewPosY)
+        m_posy = m_minViewPosY;
+    else if(m_posy > m_maxViewPosY)
+        m_posy = m_maxViewPosY;
+}
+

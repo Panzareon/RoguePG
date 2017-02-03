@@ -6,13 +6,14 @@
 class DungeonConfiguration
 {
     public:
-        DungeonConfiguration(int nrLevels);
+        DungeonConfiguration(int nrLevels, unsigned int seed);
         virtual ~DungeonConfiguration();
         SceneManager* GetLevel(int id);
         int GetNrLevels();
 
     protected:
         int m_nrLevels;
+        unsigned int m_seed;
 
     private:
 };

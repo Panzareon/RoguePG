@@ -37,7 +37,7 @@ int main()
 
 
     controller->SetRenderTarget(&window);
-    DungeonConfiguration * config = new DungeonConfiguration(3);
+    DungeonConfiguration * config = new DungeonConfiguration(300, time(null));
     controller->SetDungeonConfiguration(config);
     controller->GotoNextLevel();
 

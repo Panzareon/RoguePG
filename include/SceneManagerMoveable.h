@@ -15,6 +15,7 @@ class SceneManagerMoveable : public SceneManager
         virtual ~SceneManagerMoveable();
         virtual void Tick();
     protected:
+        void UpdateCamPosition();
         Map m_map;
         AnimatedNode* m_hero;
         Enums::Direction m_heroDirection;

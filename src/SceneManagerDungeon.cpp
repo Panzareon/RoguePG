@@ -10,7 +10,7 @@
 #include <iostream>
 
 
-SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWidth, int windowHeight, int tileWidth, int tileHeight): SceneManagerMoveable(target, windowWidth, windowHeight, tileWidth, tileHeight), m_generator(&m_map)
+SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWidth, int windowHeight, int tileWidth, int tileHeight, unsigned int seed): SceneManagerMoveable(target, windowWidth, windowHeight, tileWidth, tileHeight), m_generator(&m_map, seed)
 {
     //ctor
     //Define Tile Maps
@@ -71,7 +71,7 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     //Place Hero at Startposition
     heroTransform.translate(m_map.m_startX * TileMap::GetTileWith(), m_map.m_startY * TileMap::GetTileWith() - 14);
     m_hero->setTransform(heroTransform);
-    //m_generator.NumberRooms();
+    UpdateCamPosition();
 
     MapFillDungeon mapFill(&m_map);
     //Fill Base Layer with walkable Tile
