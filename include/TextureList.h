@@ -12,6 +12,7 @@ class TextureList
             DungeonTileMap,
 
             HeroSpriteSheet,
+            EnemySpriteSheet,
 
             BatBattleSprite, DefaultBattleSprite,
 

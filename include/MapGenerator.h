@@ -33,6 +33,7 @@ class MapGenerator
         void NumberRooms();
 
         void PlaceStartingAndEndPosition();
+        std::pair<int,int>* GetFreePosition();
 
     protected:
     private:

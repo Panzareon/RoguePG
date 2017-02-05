@@ -6,6 +6,7 @@
 #include "MapFillDungeon.h"
 #include "TextureList.h"
 #include "MapEventStairs.h"
+#include "MapEventEnemy.h"
 
 #include <iostream>
 
@@ -89,7 +90,9 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     m_events.push_back(new MapEventStairs(false, m_map.m_startX, m_map.m_startY));
     m_events.push_back(new MapEventStairs(true, m_map.m_endX, m_map.m_endY));
 
-    //TODO: Place Chests and Stairs
+    SpawnEnemy();
+
+    //TODO: Place Chests
 
     m_map.writeToTileMap(*m_tileMap,0);
     m_map.writeToTileMap(*m_tileMapItems,1);
@@ -102,4 +105,25 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
 SceneManagerDungeon::~SceneManagerDungeon()
 {
     //dtor
+}
+
+void SceneManagerDungeon::SpawnEnemy()
+{
+    std::pair<int, int>* pos = m_generator.GetFreePosition();
+
+    sf::Sprite sprite;
+    Texture* tex = TextureList::getTexture(TextureList::EnemySpriteSheet);
+    sprite.setTexture(*tex);
+    sprite.setTextureRect(sf::IntRect(15,13,32,36));
+    Node* enemy = new AnimatedNode(&sprite, tex->GetNumberAnimationSteps());
+    enemy->setBoundingBox(sf::FloatRect(8.0f,22.0f,16.0f,16.0f));
+    m_eventLayer->addChild(enemy);
+
+    sf::Transform enemyTransform;
+    //Place Enemy at Position
+    enemyTransform.translate(pos->first * TileMap::GetTileWith(), pos->second * TileMap::GetTileWith() - 14);
+    enemy->setTransform(enemyTransform);
+
+    MapEventEnemy* mapEvent = new MapEventEnemy(&m_map, enemy,  256.0f);
+    m_events.push_back(mapEvent);
 }

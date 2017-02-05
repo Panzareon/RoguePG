@@ -3,6 +3,7 @@
 
 #include "Enums.h"
 #include "SFML/Graphics/Rect.hpp"
+#include "SFML/System/Time.hpp"
 
 class MapEvent
 {
@@ -11,7 +12,7 @@ class MapEvent
         virtual ~MapEvent();
 
         bool NeedButtonPress();
-        virtual bool ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection);
+        virtual bool ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, sf::Time tickTime);
         virtual void Activate();
         bool IsFinished();
 

@@ -73,6 +73,7 @@
 		<Unit filename="include/Localization.h" />
 		<Unit filename="include/Map.h" />
 		<Unit filename="include/MapEvent.h" />
+		<Unit filename="include/MapEventEnemy.h" />
 		<Unit filename="include/MapEventStairs.h" />
 		<Unit filename="include/MapFill.h" />
 		<Unit filename="include/MapFillDungeon.h" />
@@ -128,6 +129,7 @@
 		<Unit filename="src/Localization.cpp" />
 		<Unit filename="src/Map.cpp" />
 		<Unit filename="src/MapEvent.cpp" />
+		<Unit filename="src/MapEventEnemy.cpp" />
 		<Unit filename="src/MapEventStairs.cpp" />
 		<Unit filename="src/MapFill.cpp" />
 		<Unit filename="src/MapFillDungeon.cpp" />

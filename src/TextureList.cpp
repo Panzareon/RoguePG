@@ -31,6 +31,11 @@ Texture* TextureList::getTexture(TextureFiles file)
         case HeroSpriteSheet:
             filename = "skeleton-large.png";
             break;
+        case EnemySpriteSheet:
+            filename = "skeleton-large.png";
+            break;
+
+
         case BatBattleSprite:
             filename = "bat.png";
             break;

@@ -21,7 +21,7 @@ bool MapEvent::IsFinished()
 {
     return m_finished;
 }
-bool MapEvent::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection)
+bool MapEvent::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, sf::Time tickTime)
 {
     return true;
 }

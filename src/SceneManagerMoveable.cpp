@@ -87,33 +87,25 @@ void SceneManagerMoveable::Tick()
 
     sf::FloatRect heroBB = m_hero->getGlobalBoundingBox();
     //Check Accept Key
-    for(auto event : m_events)
+    for(int i = 0; i < m_events.size(); i++)
     {
-        if(event->ActivateAt(heroBB, m_heroDirection))
+        if(m_events[i]->ActivateAt(heroBB, m_heroDirection, m_frameTime))
         {
-            if(event->NeedButtonPress() && !controller->IsKeyPressed(Configuration::Accept))
+            if(m_events[i]->NeedButtonPress() && !controller->IsKeyPressed(Configuration::Accept))
             {
                 continue;
             }
-            event->Activate();
+            m_events[i]->Activate();
+        }
+        if(m_events[i]->IsFinished())
+        {
+            delete m_events[i];
+            m_events.erase(m_events.begin() + i);
         }
     }
 
 
     //TODO: remove Debugkey
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
-    {
-        std::vector<Entity*> enemies;
-        //TODO: get Entities of this Map from somewhere else
-        Entity* e = EnemyFactory::GetEntity(EnemyFactory::EnemyListBat);
-        e->SetTeamId(1);
-        enemies.push_back(e);
-        e = EnemyFactory::GetEntity(EnemyFactory::EnemyListBat);
-        e->SetTeamId(1);
-        enemies.push_back(e);
-
-        GameController::getInstance()->StartBattle(&enemies);
-    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
     {
         GameController::getInstance()->getParty()->GetActivePartyMembers()->at(0)->LevelUp();

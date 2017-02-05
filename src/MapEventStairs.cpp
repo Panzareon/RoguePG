@@ -17,7 +17,7 @@ MapEventStairs::~MapEventStairs()
     //dtor
 }
 
-bool MapEventStairs::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection)
+bool MapEventStairs::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, sf::Time tickTime)
 {
     if(rect.intersects(m_rect))
     {

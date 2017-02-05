@@ -897,3 +897,10 @@ void MapGenerator::PlaceStartingAndEndPosition()
     }
 }
 
+std::pair<int,int>* MapGenerator::GetFreePosition()
+{
+    std::map<int,MapRoom>* rooms = m_map->GetAllRooms();
+    int roomsSize = rooms->size();
+    int i = rand() % roomsSize;
+    return rooms->at(i).GetRandomPosition();
+}
