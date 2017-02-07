@@ -63,6 +63,12 @@ Texture* TextureList::getTexture(TextureFiles file)
         case InGameMenu:
             filename = "menu.png";
             break;
+        case InGameMenuSelected:
+            filename = "menu-selected.png";
+            break;
+        case EquipmentMenu:
+            filename = "equipment-menu.png";
+            break;
         }
         Texture* newTexture = new Texture(AnimationSteps);
         texturePath += filename;

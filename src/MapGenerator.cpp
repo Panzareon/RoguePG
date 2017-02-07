@@ -901,6 +901,6 @@ std::pair<int,int>* MapGenerator::GetFreePosition()
 {
     std::map<int,MapRoom>* rooms = m_map->GetAllRooms();
     int roomsSize = rooms->size();
-    int i = rand() % roomsSize;
+    int i = rand() % roomsSize + 1;
     return rooms->at(i).GetRandomPosition();
 }

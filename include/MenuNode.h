@@ -2,6 +2,7 @@
 #define GUINODE_H
 
 #include "Node.h"
+#include "Texture.h"
 #include <vector>
 #include <functional>
 
@@ -20,12 +21,32 @@ class MenuNode : public Node
         void MoveDown();
         void Use();
 
+        void SetBackgroundColor(sf::Color c);
+        void SetForegroundColor(sf::Color c);
+        void SetForegroundColorDisabled(sf::Color c);
+        void SetSelectedColor(sf::Color c);
+        void SetOutlineColor(sf::Color c);
+
+        void SetSelectedTexture(Texture * texture);
+
+        void SetPadding(int x, int y);
+        void SetFontSize(int s);
+        void SetSpacing(int s);
+
     protected:
     private:
         virtual void onDraw(sf::RenderTarget& target, const sf::Transform& transform) const;
         virtual void UpdateBackground();
 
         sf::RectangleShape m_background;
+
+        sf::Drawable* m_selectedDrawable;
+
+        int m_paddingX;
+        int m_paddingY;
+
+        int m_fontSize;
+        int m_spacing;
 
 
         unsigned int m_width;
@@ -44,6 +65,7 @@ class MenuNode : public Node
         sf::Color m_foregroundColor;
         sf::Color m_foregroundColorDisabled;
         sf::Color m_selectedColor;
+        sf::Color m_outlineColor;
 };
 
 #endif // GUINODE_H

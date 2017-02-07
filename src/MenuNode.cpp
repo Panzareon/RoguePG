@@ -11,13 +11,18 @@ MenuNode::MenuNode(int width)
     m_maxShownNumber = 4;
     m_width = width;
     m_cancelAvailable = false;
-    //TODO: set Color
     m_backgroundColor = sf::Color::Black;
     m_foregroundColor = sf::Color::White;
+    m_outlineColor = sf::Color::White;
     m_foregroundColorDisabled = sf::Color(120,120,120);
     m_selectedColor = sf::Color::Blue;
-//    m_background = sf::RectangleShape(sf::Vector2f(width,0));
+    m_selectedDrawable = nullptr;
+    m_paddingX = 0;
+    m_paddingY = 0;
+    m_background = sf::RectangleShape(sf::Vector2f(width,0));
     m_optionHeight = 24;
+    m_fontSize = 24;
+    m_spacing = 0;
     UpdateBackground();
 }
 
@@ -33,7 +38,7 @@ void MenuNode::UpdateBackground()
     m_background.setSize(sf::Vector2f(m_width, m_height* m_optionHeight));
     //TODO: maybe use Texture
     m_background.setFillColor(m_backgroundColor);
-    m_background.setOutlineColor(m_foregroundColor);
+    m_background.setOutlineColor(m_outlineColor);
     m_background.setOutlineThickness(1.0f);
 }
 
@@ -103,11 +108,18 @@ void MenuNode::onDraw(sf::RenderTarget& target, const sf::Transform& transformBa
     if(pos >= 0 && pos < m_maxShownNumber)
     {
         //if Selected is visible
-        sf::RectangleShape selected(sf::Vector2f(m_width, m_optionHeight));
-        selected.setFillColor(m_selectedColor);
-
         transform.translate(0.0f, pos * m_optionHeight);
-        target.draw(selected, transform);
+        if(m_selectedDrawable != nullptr)
+        {
+            target.draw(*m_selectedDrawable, transform);
+        }
+        else
+        {
+            sf::RectangleShape selected(sf::Vector2f(m_width, m_optionHeight));
+            selected.setFillColor(m_selectedColor);
+            target.draw(selected, transform);
+        }
+
     }
     sf::Font* font = Configuration::GetInstance()->GetFont();
     //all visible options
@@ -115,9 +127,9 @@ void MenuNode::onDraw(sf::RenderTarget& target, const sf::Transform& transformBa
     {
         //draw text for m_scrollPosition + i at position i
         transform = transformBase;
-        transform.translate(0.0f, i*m_optionHeight);
+        transform.translate(m_paddingX, i*m_optionHeight + m_paddingY);
         sf::Text text(m_optionName[m_scrollPosition+i], *font);
-        text.setCharacterSize(m_optionHeight);
+        text.setCharacterSize(m_fontSize);
         if(m_optionAvailable[m_scrollPosition+i])
             text.setColor(m_foregroundColor);
         else
@@ -173,4 +185,58 @@ void MenuNode::CheckKeyboardInput()
         }
     }
 }
+
+void MenuNode::SetBackgroundColor(sf::Color c)
+{
+    m_backgroundColor = c;
+    UpdateBackground();
+}
+
+void MenuNode::SetForegroundColor(sf::Color c)
+{
+    m_foregroundColor = c;
+}
+
+void MenuNode::SetForegroundColorDisabled(sf::Color c)
+{
+    m_foregroundColorDisabled = c;
+}
+
+void MenuNode::SetSelectedColor(sf::Color c)
+{
+    m_selectedColor = c;
+}
+
+void MenuNode::SetOutlineColor(sf::Color c)
+{
+    m_outlineColor = c;
+    UpdateBackground();
+}
+
+void MenuNode::SetSelectedTexture(Texture* texture)
+{
+    if(m_selectedDrawable != nullptr)
+    {
+        delete m_selectedDrawable;
+    }
+    m_selectedDrawable = new sf::Sprite(*texture);
+}
+
+void MenuNode::SetPadding(int x, int y)
+{
+    m_paddingX = x;
+    m_paddingY = y;
+}
+void MenuNode::SetFontSize(int s)
+{
+    m_fontSize = s;
+    m_optionHeight = m_spacing + m_fontSize;
+}
+
+void MenuNode::SetSpacing(int s)
+{
+    m_spacing = s;
+    m_optionHeight = m_spacing + m_fontSize;
+}
+
 

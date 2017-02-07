@@ -3,3 +3,7 @@ main.window.title = RoguePG
 //Battle-Menu-Texts
 battle_menu.attack = Attack
 battle_menu.skill = Skill
+
+//Menu-Texts
+menu.equipment = Equipment
+menu.quit = Quit

@@ -12,6 +12,9 @@ class SceneManagerGameMenu : public SceneManager
         SceneManagerGameMenu(sf::RenderTarget * target, int windowWidth, int windowHeight);
         virtual ~SceneManagerGameMenu();
 
+        virtual void OpenEquipment();
+        virtual void Quit();
+
         virtual void Tick();
         virtual bool IsFinished();
 
@@ -22,6 +25,8 @@ class SceneManagerGameMenu : public SceneManager
 
     protected:
         bool m_finished;
+
+
 
     private:
 };
