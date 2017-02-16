@@ -24,7 +24,6 @@ SceneManager::SceneManager(sf::RenderTarget* target, int windowWidth, int window
 
     m_memberStats = new Node();
     m_gui->addChild(m_memberStats);
-    SetMemberStats();
     m_mainNode = nullptr;
 }
 

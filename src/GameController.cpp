@@ -7,12 +7,13 @@ GameController* GameController::m_instance = 0;
 GameController::GameController() : m_randomGenerator(time(NULL))
 {
     //ctor
-    m_party = 0;
+    m_party = nullptr;
     m_renderTarget = 0;
     m_keysPressed.resize(Configuration::GetInstance()->GetNumberKeys());
     m_gameOver = false;
     m_levelId = 0;
     m_dungeonConfiguration = nullptr;
+    m_quit = false;
 
     //TODO: load actual values
     m_windowWidth = 640;
@@ -27,6 +28,10 @@ GameController::~GameController()
 
 void GameController::setParty(Party* party)
 {
+    if(m_party != nullptr)
+    {
+        delete m_party;
+    }
     m_party = party;
 }
 
@@ -90,6 +95,11 @@ void GameController::Tick()
         CloseActiveSceneManger();
         if(m_gameOver)
             GameOver();
+    }
+    if(m_quit)
+    {
+        ToMainMenu();
+        m_quit = false;
     }
 }
 void GameController::StartBattle(std::vector<Entity*>* enemies)
@@ -199,17 +209,27 @@ void GameController::GameOver()
 {
     if(m_gameOver)
     {
-        //remove all SceneManager
-        //TODO: remove all but the Main Menu
-        while(m_sceneManager.size() > 0)
-        {
-            CloseActiveSceneManger();
-        }
+        ToMainMenu();
         //display Game Over screen
         SceneManagerGameOver* gameOver = new SceneManagerGameOver(GetRenderTarget(), GetWindowWidth(), GetWindowHeight());
         LoadSceneManager(gameOver);
     }
 }
+
+void GameController::ToMainMenu()
+{
+    //remove all SceneManager but the Main Menu
+    while(m_sceneManager.size() > 1)
+    {
+        CloseActiveSceneManger();
+    }
+}
+
+void GameController::QuitToMainMenu()
+{
+    m_quit = true;
+}
+
 
 std::default_random_engine* GameController::GetRandomGenerator()
 {

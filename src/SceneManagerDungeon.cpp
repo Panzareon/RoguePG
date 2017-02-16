@@ -15,6 +15,7 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
 {
     //ctor
     //Define Tile Maps
+    SetMemberStats();
     m_map.init(5);
     m_tileMap = new TileMap();
     m_tileMapItems = new TileMap();

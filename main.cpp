@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "SceneManagerDungeon.h"
+#include "SceneManagerMainMenu.h"
 
 #include <random>
 #include <time.h>
@@ -22,24 +22,10 @@ int main()
     sf::View view(sf::FloatRect(0,0,width,height));
     window.setView(view);
     window.setVerticalSyncEnabled(true);
-
-
-    Party party;
-    //create party with 2 member
-    int partyInitialSize = 2;
-    for(int i = 0; i < partyInitialSize; i++)
-    {
-        PartyMember* p = CharacterClass::GetRandomCharacterClass()->GetNewPartyMember();
-        p->SetTeamId(0);
-        party.AddPartyMember(p);
-    }
-    controller->setParty(&party);
-
-
     controller->SetRenderTarget(&window);
-    DungeonConfiguration * config = new DungeonConfiguration(300, time(NULL));
-    controller->SetDungeonConfiguration(config);
-    controller->GotoNextLevel();
+
+    SceneManager* sm = new SceneManagerMainMenu(&window,width, height );
+    controller->LoadSceneManager(sm);
 
     while (window.isOpen())
     {

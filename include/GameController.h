@@ -24,6 +24,7 @@ class GameController
         void SetDungeonConfiguration(DungeonConfiguration* config);
 
         void GameOverCheck();
+        void QuitToMainMenu();
 
         void SetRenderTarget(sf::RenderTarget* target);
         sf::RenderTarget* GetRenderTarget();
@@ -37,7 +38,9 @@ class GameController
         std::default_random_engine* GetRandomGenerator();
     protected:
     private:
+        void ToMainMenu();
         void GameOver();
+        bool m_quit;
         bool m_gameOver;
         Party* m_party;
         sf::RenderTarget* m_renderTarget;

@@ -61,6 +61,7 @@ SceneManagerBattle::SceneManagerBattle(sf::RenderTarget * target, int windowWidt
 {
     //ctor
     //Build Scene Graph
+    SetMemberStats();
     m_mainNode = new Node();
     sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::DungeonBattleBackground));
     m_background = new DrawableNode(backgroundSprite);
