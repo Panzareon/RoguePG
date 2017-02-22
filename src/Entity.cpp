@@ -284,6 +284,12 @@ float Entity::GetMpPercent()
     return (float)GetMp() / maxMp;
 }
 
+std::string Entity::GetName()
+{
+    return "Entity";
+}
+
+
 int Entity::GetTeamId()
 {
     return m_teamId;

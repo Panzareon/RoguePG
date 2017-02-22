@@ -25,7 +25,8 @@ class TextureList
             GameOverScreen,
             InGameMenu,
             InGameMenuSelected,
-            EquipmentMenu
+            EquipmentMenu,
+            EquipmentSelected
         };
         virtual ~TextureList();
 

@@ -18,9 +18,15 @@ Party::~Party()
         delete m_deadMembers[i];
     }
 }
+
 std::vector<PartyMember*> * Party::GetActivePartyMembers()
 {
     return &m_activePartyMembers;
+}
+
+std::vector<PartyMember*> * Party::GetAllPartyMembers()
+{
+    return &m_partyMembers;
 }
 
 void Party::AddPartyMember(PartyMember* member)

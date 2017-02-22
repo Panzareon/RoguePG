@@ -65,6 +65,7 @@ class Entity
         int GetMp();
         float GetHpPercent();
         float GetMpPercent();
+        virtual std::string GetName();
 
         //Sets the Node showing this Entity on Screen
         void SetNode(EntityNode* node);

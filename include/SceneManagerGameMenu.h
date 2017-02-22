@@ -3,6 +3,7 @@
 
 #include "SceneManager.h"
 
+class PartyMember;
 /*
 Class to display the ingame menu
 */
@@ -14,6 +15,7 @@ class SceneManagerGameMenu : public SceneManager
 
         virtual void OpenEquipment();
         virtual void Quit();
+        virtual void SelectMember(PartyMember* member);
 
         virtual void Tick();
         virtual bool IsFinished();
@@ -26,7 +28,9 @@ class SceneManagerGameMenu : public SceneManager
     protected:
         bool m_finished;
 
+        MenuNode* m_equipmentMenu;
 
+        PartyMember* m_selectedMember;
 
     private:
 };

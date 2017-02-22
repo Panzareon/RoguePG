@@ -11,14 +11,14 @@ class MenuNode : public Node
     public:
         MenuNode(int width);
         virtual ~MenuNode();
-        void ResetOptions();
-        void AddOption(std::string name, std::function<void()> func, bool available = true);
-        void AddDisabledOption(std::string name);
+        virtual void ResetOptions();
+        virtual void AddOption(std::string name, std::function<void()> func, bool available = true);
+        virtual void AddDisabledOption(std::string name);
         void CancelAvailable(bool cancel);
 
-        void CheckKeyboardInput();
-        void MoveUp();
-        void MoveDown();
+        virtual void CheckKeyboardInput();
+        virtual void MoveUp();
+        virtual void MoveDown();
         void Use();
 
         void SetBackgroundColor(sf::Color c);
@@ -34,7 +34,6 @@ class MenuNode : public Node
         void SetSpacing(int s);
 
     protected:
-    private:
         virtual void onDraw(sf::RenderTarget& target, const sf::Transform& transform) const;
         virtual void UpdateBackground();
 
@@ -66,6 +65,7 @@ class MenuNode : public Node
         sf::Color m_foregroundColorDisabled;
         sf::Color m_selectedColor;
         sf::Color m_outlineColor;
+    private:
 };
 
 #endif // GUINODE_H

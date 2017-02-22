@@ -68,6 +68,7 @@
 		<Unit filename="include/GenericException.h" />
 		<Unit filename="include/IPassiveEffect.h" />
 		<Unit filename="include/InvalidArgumentException.h" />
+		<Unit filename="include/InvalidFunctionException.h" />
 		<Unit filename="include/Item.h" />
 		<Unit filename="include/ItemFactory.h" />
 		<Unit filename="include/Localization.h" />
@@ -81,6 +82,7 @@
 		<Unit filename="include/MapGeneratorUtil.h" />
 		<Unit filename="include/MapRoom.h" />
 		<Unit filename="include/MenuNode.h" />
+		<Unit filename="include/MenuNodeItems.h" />
 		<Unit filename="include/Node.h" />
 		<Unit filename="include/Party.h" />
 		<Unit filename="include/PartyMember.h" />
@@ -125,6 +127,7 @@
 		<Unit filename="src/GenericException.cpp" />
 		<Unit filename="src/IPassiveEffect.cpp" />
 		<Unit filename="src/InvalidArgumentException.cpp" />
+		<Unit filename="src/InvalidFunctionException.cpp" />
 		<Unit filename="src/Item.cpp" />
 		<Unit filename="src/ItemFactory.cpp" />
 		<Unit filename="src/Localization.cpp" />
@@ -138,6 +141,7 @@
 		<Unit filename="src/MapGeneratorUtil.cpp" />
 		<Unit filename="src/MapRoom.cpp" />
 		<Unit filename="src/MenuNode.cpp" />
+		<Unit filename="src/MenuNodeItems.cpp" />
 		<Unit filename="src/Node.cpp" />
 		<Unit filename="src/Party.cpp" />
 		<Unit filename="src/PartyMember.cpp" />
