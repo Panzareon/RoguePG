@@ -186,6 +186,20 @@ void MenuNode::CheckKeyboardInput()
     }
 }
 
+int MenuNode::GetScrollPosition()
+{
+    return m_scrollPosition;
+}
+
+void MenuNode::SetMaxShownOptions(int nr)
+{
+    if(nr > 0)
+    {
+        m_maxShownNumber = nr;
+    }
+}
+
+
 void MenuNode::SetBackgroundColor(sf::Color c)
 {
     m_backgroundColor = c;

@@ -21,6 +21,9 @@ class MenuNode : public Node
         virtual void MoveDown();
         void Use();
 
+        int GetScrollPosition();
+
+        void SetMaxShownOptions(int nr);
         void SetBackgroundColor(sf::Color c);
         void SetForegroundColor(sf::Color c);
         void SetForegroundColorDisabled(sf::Color c);

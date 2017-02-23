@@ -28,6 +28,16 @@ SceneManagerGameMenu::SceneManagerGameMenu(sf::RenderTarget * target, int window
 {
     //ctor
     int padding = 8;
+    m_maxShownHeroes = 3;
+    m_attributeNodePosition[BattleEnums::AttributeMaxHp] = std::pair<int,int>(25,40);
+    m_attributeNodePosition[BattleEnums::AttributeStrength] = std::pair<int,int>(110,40);
+    m_attributeNodePosition[BattleEnums::AttributeInt] = std::pair<int,int>(190,40);
+    m_attributeNodePosition[BattleEnums::AttributeSpeed] = std::pair<int,int>(263,40);
+    m_attributeNodePosition[BattleEnums::AttributeMaxMp] = std::pair<int,int>(25,75);
+    m_attributeNodePosition[BattleEnums::AttributeDefense] = std::pair<int,int>(110,75);
+    m_attributeNodePosition[BattleEnums::AttributeMagicDefense] = std::pair<int,int>(190,75);
+
+
 
     //Set Background
     sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::InGameMenu));
@@ -101,6 +111,7 @@ void SceneManagerGameMenu::Tick()
 void SceneManagerGameMenu::OpenEquipment()
 {
     int HeroSelectWidth = 314;
+    int MemberHeight = 104;
     int padding = 3;
 
     std::cout << "Equipment" << std::endl;
@@ -116,13 +127,31 @@ void SceneManagerGameMenu::OpenEquipment()
     m_equipmentMenu = new MenuNode(HeroSelectWidth);
     Party* party = GameController::getInstance()->getParty();
     std::vector<PartyMember*>* member = party->GetAllPartyMembers();
+    m_attributeNodes.resize(m_maxShownHeroes);
     for(int i = 0; i < member->size(); i++)
     {
         m_equipmentMenu->AddOption(member->at(i)->GetName(), std::function<void()>(std::bind(&MenuFunctions::SelectMember,this,member->at(i))));
+        if(i < m_maxShownHeroes)
+        {
+            Node* nextMember = new Node();
+            nextMember->moveNode(0,MemberHeight*i);
+            background->addChild(nextMember);
+            for(int j = 0; j < BattleEnums::ATTRIBUTE_END; j++)
+            {
+                TextNode* node = new TextNode(std::to_string(member->at(i)->GetAttribute((BattleEnums::Attribute)j)));
+                node->SetColor(sf::Color::Black);
+                node->SetFontSize(25);
+                m_attributeNodes[i][(BattleEnums::Attribute)j] = node;
+                nextMember->addChild(node);
+                std::pair<int,int> pos = m_attributeNodePosition[(BattleEnums::Attribute)j];
+                node->moveNode(pos.first,pos.second);
+            }
+        }
     }
     background->addChild(m_equipmentMenu);
 
     //Set Menu looks
+    m_equipmentMenu->SetMaxShownOptions(m_maxShownHeroes);
     m_equipmentMenu->moveNode(3,3);
     m_equipmentMenu->SetPadding(padding,padding);
     m_equipmentMenu->SetBackgroundColor(sf::Color::Transparent);
@@ -143,4 +172,39 @@ void SceneManagerGameMenu::SelectMember(PartyMember* member)
 {
     m_selectedMember = member;
     //TODO: Show Equipment Menu for this member
+
+    //Get stats of member now
+    for(int i = 0; i < BattleEnums::ATTRIBUTE_END; i++)
+    {
+        m_memberStats[(BattleEnums::Attribute)i] = member->GetAttribute((BattleEnums::Attribute)i);
+    }
+}
+
+void SceneManagerGameMenu::UpdateMemberStats()
+{
+    Party* party = GameController::getInstance()->getParty();
+    std::vector<PartyMember*>* member = party->GetAllPartyMembers();
+    int scrollPosition = m_equipmentMenu->GetScrollPosition();
+    PartyMember* mem;
+    for(int i = scrollPosition; i < member->size() && i < scrollPosition + m_maxShownHeroes; i++)
+    {
+        mem = member->at(i);
+        for(int j = 0; j < BattleEnums::ATTRIBUTE_END; j++)
+        {
+            int attributeValue = mem->GetAttribute((BattleEnums::Attribute)j);
+            m_attributeNodes[i][(BattleEnums::Attribute)j]->SetText(std::to_string(attributeValue));
+            if(mem == m_selectedMember && attributeValue > m_memberStats[(BattleEnums::Attribute)j])
+            {
+                m_attributeNodes[i][(BattleEnums::Attribute)j]->SetColor(sf::Color::Green);
+            }
+            else if(mem == m_selectedMember && attributeValue < m_memberStats[(BattleEnums::Attribute)j])
+            {
+                m_attributeNodes[i][(BattleEnums::Attribute)j]->SetColor(sf::Color::Red);
+            }
+            else
+            {
+                m_attributeNodes[i][(BattleEnums::Attribute)j]->SetColor(sf::Color::Black);
+            }
+        }
+    }
 }

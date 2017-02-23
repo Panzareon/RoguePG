@@ -98,6 +98,7 @@
 		<Unit filename="include/Skill.h" />
 		<Unit filename="include/SkillGenerator.h" />
 		<Unit filename="include/StrengthCalculation.h" />
+		<Unit filename="include/TextNode.h" />
 		<Unit filename="include/Texture.h" />
 		<Unit filename="include/TextureList.h" />
 		<Unit filename="include/TileMap.h" />
@@ -157,6 +158,7 @@
 		<Unit filename="src/Skill.cpp" />
 		<Unit filename="src/SkillGenerator.cpp" />
 		<Unit filename="src/StrengthCalculation.cpp" />
+		<Unit filename="src/TextNode.cpp" />
 		<Unit filename="src/Texture.cpp" />
 		<Unit filename="src/TextureList.cpp" />
 		<Unit filename="src/TileMap.cpp" />

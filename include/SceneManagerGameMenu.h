@@ -2,6 +2,9 @@
 #define SCENEMANAGERGAMEMENU_H
 
 #include "SceneManager.h"
+#include "Enums.h"
+#include "TextNode.h"
+#include <map>
 
 class PartyMember;
 /*
@@ -26,11 +29,19 @@ class SceneManagerGameMenu : public SceneManager
         virtual bool PausesSceneManagerBelow();
 
     protected:
+        void UpdateMemberStats();
+
         bool m_finished;
 
         MenuNode* m_equipmentMenu;
 
+        std::vector<std::map<BattleEnums::Attribute, TextNode*>> m_attributeNodes;
+        std::map<BattleEnums::Attribute, std::pair<int,int>> m_attributeNodePosition;
+
+        //For Equipment menu
+        int m_maxShownHeroes;
         PartyMember* m_selectedMember;
+        std::map<BattleEnums::Attribute, int> m_memberStats;
 
     private:
 };
