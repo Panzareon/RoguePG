@@ -2,6 +2,7 @@
 #include "CharacterClass.h"
 #include "GameController.h"
 #include "Equipment.h"
+#include <iostream>
 
 PartyMember::PartyMember(CharacterClass* chrClass)
 {
@@ -104,19 +105,23 @@ int PartyMember::GetLevel()
 void PartyMember::SetEquipment(Equipment::EquipmentPosition position, Equipment* equipment)
 {
     if(m_equipment[position] != nullptr)
-        m_equipment[position]->UnEquip();
-    std::multimap<int, IPassiveEffect*> ::iterator it;
-    for(it=m_passiveEffects.begin(); it!=m_passiveEffects.end(); ++it)
     {
-        if((*it).second == equipment)
+        std::multimap<int, IPassiveEffect*> ::iterator it;
+        for(it=m_passiveEffects.begin(); it!=m_passiveEffects.end(); ++it)
         {
-            m_passiveEffects.erase(it);
-            break;
+            if((*it).second == m_equipment[position])
+            {
+                std::cout << "Remove Old Equipment!" << std::endl;
+                m_passiveEffects.erase(it);
+                break;
+            }
         }
+        m_equipment[position]->UnEquip();
     }
     if(equipment != nullptr)
     {
         equipment->EquipTo(this);
+        AddPassiveEffect(equipment);
     }
     m_equipment[position] = equipment;
 }

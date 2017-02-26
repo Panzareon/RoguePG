@@ -60,6 +60,7 @@ SceneManagerGameMenu::SceneManagerGameMenu(sf::RenderTarget * target, int window
     m_gui->addChild(background);
 
     m_equipmentMenu = nullptr;
+    m_equipmentItems = nullptr;
     m_selectedMember = nullptr;
 
     //Set Menu function
@@ -183,23 +184,34 @@ void SceneManagerGameMenu::SelectMember(PartyMember* member)
 {
     Party* party = GameController::getInstance()->getParty();
     m_selectedMember = member;
-    if(m_equipmentMenu != nullptr)
-        delete m_equipmentMenu;
     //Show Equipment Menu for this member
     m_equipmentItems = new MenuNodeItems<Equipment>(150, std::function<void(Equipment*)>(std::bind(&MenuFunctions::SelectEquipment,this,std::placeholders::_1)));
+    m_equipmentMenu->addChild(m_equipmentItems);
     m_equipmentItems->CancelAvailable(true);
+    //Set Menu looks
+    m_equipmentItems->SetMaxShownOptions(m_maxShownHeroes);
+    m_equipmentItems->moveNode(322,1);
+    m_equipmentItems->SetBackgroundColor(sf::Color::Transparent);
+    m_equipmentItems->SetForegroundColor(sf::Color::Black);
+    m_equipmentItems->SetOutlineColor(sf::Color::Transparent);
+    m_equipmentItems->SetSelectedColor(sf::Color::Blue);
+    m_equipmentItems->SetFontSize(30);
+    m_equipmentItems->SetSpacing(5);
     //For now only Weapons
     Equipment::EquipmentPosition pos = Equipment::MainHand;
+    Equipment* equip;
     m_equipmentItems->CallOnCancel(std::function<void()>(std::bind(&MenuFunctions::Equip,this,member->GetEquipment(pos))));
+    Localization* loc = Localization::GetInstance();
     for(auto item = party->GetItems()->begin(); item != party->GetItems()->end(); item++)
     {
         //Check if this Item can be Equipped
         if((*item).second->GetItemType() == Item::ItemTypeEquipment)
         {
-            if(((Equipment*)((*item).second))->GetEquipmentPosition() == pos)
+            equip = (Equipment*)((*item).second);
+            if(equip->GetEquipmentPosition() == pos)
             {
                 //Add Item to Menu
-                m_equipmentItems->AddOptionWithItem((*item).second->GetName(), std::function<void()>(std::bind(&MenuFunctions::Equip,this,(Equipment*)(*item).second)), (Equipment*)(*item).second);
+                m_equipmentItems->AddOptionWithItem(loc->GetLocalization(equip->GetName()), std::function<void()>(std::bind(&MenuFunctions::Equip,this,equip)), equip, !equip->IsEquiped());
 
             }
         }
@@ -215,7 +227,7 @@ void SceneManagerGameMenu::SelectMember(PartyMember* member)
 void SceneManagerGameMenu::SelectEquipment(Equipment* equipment)
 {
     //For now only Weapons
-    if(equipment != nullptr && equipment->IsEquiped())
+    if(equipment != nullptr && !equipment->IsEquiped())
     {
         m_selectedMember->SetEquipment(Equipment::MainHand, equipment);
         UpdateMemberStats();
@@ -225,7 +237,7 @@ void SceneManagerGameMenu::SelectEquipment(Equipment* equipment)
 void SceneManagerGameMenu::Equip(Equipment* equipment)
 {
     SelectEquipment(equipment);
-    m_equipmentMenu->setVisibility(false);
+    m_equipmentItems->setVisibility(false);
     m_selectedMember = nullptr;
 }
 
