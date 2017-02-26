@@ -84,6 +84,12 @@ std::string Skill::GetName()
     //TODO: return actual value
     return "Test-Skill";
 }
+
+std::vector<Effect*>* Skill::GetEffects()
+{
+    return &m_effects;
+}
+
 void Skill::AddEffect(Effect* eff, bool isPositive)
 {
     m_effects.push_back(eff);

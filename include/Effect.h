@@ -20,6 +20,9 @@ class Effect
         float GetValue();
         EffectFactory* GetFactory();
 
+        std::string GetName();
+        std::string GetLocalizedDescription();
+
         virtual ~Effect();
     protected:
     private:

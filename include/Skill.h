@@ -19,6 +19,8 @@ class Skill
         BattleEnums::Target GetDefaultTarget();
         std::string GetName();
 
+        std::vector<Effect*>* GetEffects();
+
 
         void AddEffect(Effect* eff, bool isPositive);
     protected:

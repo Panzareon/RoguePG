@@ -1,12 +1,43 @@
 #include "Localization.h"
 #include "fstream"
-
+#include <sstream>
 
 std::string trim(std::string& str)
 {
     size_t first = str.find_first_not_of(' ');
     size_t last = str.find_last_not_of(' ');
     return str.substr(first, (last-first+1));
+}
+
+std::string format(std::string& str, std::vector<float>* values)
+{
+    std::stringstream out;
+    size_t pos;
+    while (pos != str.npos)
+    {
+        pos = str.find_first_of('%');
+        if(pos == str.npos)
+        {
+            out << str;
+        }
+        else
+        {
+            out << str.substr(0,pos);
+            //only check for one digit numbers
+            char next = str.at(pos + 1);
+            if(next >= '0' && next <= '9')
+            {
+                //check what number should be displayed here
+                next -= '0';
+                if(values->size() > next)
+                {
+                    out << values->at(next);
+                }
+            }
+            str.erase(0, pos + 2);
+        }
+    }
+    return out.str();
 }
 
 Localization* Localization::m_instance = nullptr;
@@ -41,6 +72,13 @@ std::string Localization::GetLocalization(std::string toLocalize)
 
     //If not found return unlocalized string
     return toLocalize;
+}
+
+//returns formatted string
+std::string Localization::GetLocalization(std::string toLocalize, std::vector<float>* values)
+{
+    std::string str = GetLocalization(toLocalize);
+    return format(str, values);
 }
 
 void Localization::LoadLocalizationFile(std::string filename, Languages language)

@@ -202,6 +202,21 @@ void SceneManagerGameMenu::SelectMember(PartyMember* member)
     Equipment* equip;
     m_equipmentItems->CallOnCancel(std::function<void()>(std::bind(&MenuFunctions::Equip,this,member->GetEquipment(pos))));
     Localization* loc = Localization::GetInstance();
+
+    //Node for Equipment Description
+    m_equipmentDescription = new TextNode();
+    m_equipmentDescription->SetColor(sf::Color::Black);
+    m_gui->addChild(m_equipmentDescription);
+    m_equipmentDescription->moveNode(5, 353);
+
+    //Get stats of member now
+    for(int i = 0; i < BattleEnums::ATTRIBUTE_END; i++)
+    {
+        m_memberStats[(BattleEnums::Attribute)i] = member->GetAttribute((BattleEnums::Attribute)i);
+    }
+
+    bool first = true;
+
     for(auto item = party->GetItems()->begin(); item != party->GetItems()->end(); item++)
     {
         //Check if this Item can be Equipped
@@ -213,14 +228,16 @@ void SceneManagerGameMenu::SelectMember(PartyMember* member)
                 //Add Item to Menu
                 m_equipmentItems->AddOptionWithItem(loc->GetLocalization(equip->GetName()), std::function<void()>(std::bind(&MenuFunctions::Equip,this,equip)), equip, !equip->IsEquiped());
 
+                if(first)
+                {
+                    //Equip first available Item if not equipped otherwise
+                    if(!equip->IsEquiped())
+                        SelectEquipment(equip);
+                    first = false;
+                }
+
             }
         }
-    }
-
-    //Get stats of member now
-    for(int i = 0; i < BattleEnums::ATTRIBUTE_END; i++)
-    {
-        m_memberStats[(BattleEnums::Attribute)i] = member->GetAttribute((BattleEnums::Attribute)i);
     }
 }
 
@@ -232,6 +249,7 @@ void SceneManagerGameMenu::SelectEquipment(Equipment* equipment)
         m_selectedMember->SetEquipment(Equipment::MainHand, equipment);
         UpdateMemberStats();
     }
+    m_equipmentDescription->SetText( Localization::GetInstance()->GetLocalization(equipment->GetDescription()));
 }
 
 void SceneManagerGameMenu::Equip(Equipment* equipment)
@@ -239,6 +257,7 @@ void SceneManagerGameMenu::Equip(Equipment* equipment)
     SelectEquipment(equipment);
     m_equipmentItems->setVisibility(false);
     m_selectedMember = nullptr;
+    UpdateMemberStats();
 }
 
 void SceneManagerGameMenu::UpdateMemberStats()

@@ -40,6 +40,7 @@ class SceneManagerGameMenu : public SceneManager
         MenuNode* m_equipmentMenu;
         MenuNodeItems<Equipment>* m_equipmentItems;
 
+        TextNode* m_equipmentDescription;
         std::vector<std::map<BattleEnums::Attribute, TextNode*>> m_attributeNodes;
         std::map<BattleEnums::Attribute, std::pair<int,int>> m_attributeNodePosition;
 

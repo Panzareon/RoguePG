@@ -11,6 +11,7 @@ class Item
         virtual ~Item();
 
         std::string GetName();
+        std::string GetDescription();
         int GetItemId();
         ItemType GetItemType();
     protected:

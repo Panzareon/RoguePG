@@ -1,6 +1,14 @@
 #include "TextNode.h"
 #include "Configuration.h"
 
+
+TextNode::TextNode()
+{
+    //ctor
+    sf::Font* font = Configuration::GetInstance()->GetFont();
+    m_text.setFont(*font);
+}
+
 TextNode::TextNode(std::string text)
 {
     //ctor

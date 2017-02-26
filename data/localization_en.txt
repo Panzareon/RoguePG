@@ -11,3 +11,8 @@ menu.quit = Quit
 
 //Item-Names
 item.1 = Sword
+item.1.desc = A generic Sword
+
+//Effects
+effect.1 = Fire Damage
+effect.1.desc = Deals %0 Fire Damage to an enemy.

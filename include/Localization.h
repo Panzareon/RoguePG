@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include <vector>
 
 class Localization
 {
@@ -13,6 +14,7 @@ class Localization
         void LoadLocalizationFile(std::string filename, Languages language);
 
         std::string GetLocalization(std::string toLocalize);
+        std::string GetLocalization(std::string toLocalize, std::vector<float>* values);
 
     protected:
 
