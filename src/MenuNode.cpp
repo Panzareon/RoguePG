@@ -63,6 +63,11 @@ void MenuNode::AddDisabledOption(std::string name)
     UpdateBackground();
 }
 
+void MenuNode::CallOnCancel(std::function<void()>func)
+{
+    m_cancelFunction = func;
+}
+
 void MenuNode::CancelAvailable(bool cancel)
 {
     m_cancelAvailable = cancel;
@@ -180,6 +185,10 @@ void MenuNode::CheckKeyboardInput()
             //Cancel Menu / check if menu can be canceled
             if(m_cancelAvailable)
             {
+                if(m_cancelFunction)
+                {
+                    m_cancelFunction();
+                }
                 m_visible = false;
             }
         }

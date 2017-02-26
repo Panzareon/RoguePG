@@ -1,6 +1,7 @@
 #ifndef ITEM_H
 #define ITEM_H
 
+#include <string>
 
 class Item
 {
@@ -9,6 +10,7 @@ class Item
         Item(int itemId, ItemType type);
         virtual ~Item();
 
+        std::string GetName();
         int GetItemId();
         ItemType GetItemType();
     protected:

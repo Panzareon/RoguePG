@@ -1,7 +1,8 @@
 #ifndef PARTYMEMBER_H
 #define PARTYMEMBER_H
 
-#include <Entity.h>
+#include "Entity.h"
+#include "Equipment.h"
 
 class CharacterClass;
 
@@ -19,9 +20,15 @@ class PartyMember : public Entity
         void GetStartingSkills(int nr);
         void LevelUp();
         int GetLevel();
+        void SetEquipment(Equipment::EquipmentPosition position, Equipment* equipment = nullptr);
+        Equipment* GetEquipment(Equipment::EquipmentPosition position);
     protected:
         int m_exp;
         int m_lvl;
+
+        std::map<Equipment::EquipmentPosition, Equipment*> m_equipment;
+
+
 
         CharacterClass* m_chrClass;
     private:

@@ -30,6 +30,7 @@ class PassiveEffect: public IPassiveEffect
         void AddAttack(std::function<void(Attack*, Entity*, Entity*)>* attack);
         void AddOnAttacked(std::function<void(Attack*, Entity*, Entity*)>* onAttacked);
         void AddGetExp(std::function<float(float)>* getExp);
+        void AddGetResistance(std::function<float(float,BattleEnums::AttackType)>* getResistance);
 
     protected:
         Entity* m_target;

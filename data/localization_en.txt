@@ -8,3 +8,6 @@ battle_menu.skill = Skill
 menu.startDungeon = Start Dungeon
 menu.equipment = Equipment
 menu.quit = Quit
+
+//Item-Names
+item.1 = Sword

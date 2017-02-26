@@ -142,7 +142,7 @@
 		<Unit filename="src/MapGeneratorUtil.cpp" />
 		<Unit filename="src/MapRoom.cpp" />
 		<Unit filename="src/MenuNode.cpp" />
-		<Unit filename="src/MenuNodeItems.cpp" />
+		<Unit filename="src/MenuNodeItems.tpp" />
 		<Unit filename="src/Node.cpp" />
 		<Unit filename="src/Party.cpp" />
 		<Unit filename="src/PartyMember.cpp" />

@@ -16,9 +16,10 @@ class Party
 
         void AddPartyMember(PartyMember* member);
 
-        void AddItem(int itemId);
+        void AddItem(Item* item);
         int GetNumberOfItem(int itemId);
         bool RemoveItem(int itemId);
+        std::vector<std::pair<int,Item*>>* GetItems();
     protected:
     private:
         std::vector<PartyMember*> m_partyMembers;

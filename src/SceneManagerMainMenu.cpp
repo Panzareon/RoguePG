@@ -5,6 +5,7 @@
 #include "GameController.h"
 #include "Localization.h"
 #include "CharacterClass.h"
+#include "ItemFactory.h"
 
 #include <iostream>
 
@@ -72,6 +73,12 @@ void SceneManagerMainMenu::StartDungeon()
         party->AddPartyMember(p);
     }
     controller->setParty(party);
+
+    ItemFactory* itemFactory = ItemFactory::GetInstance();
+    for(int i = 0; i < 3; i++)
+    {
+        party->AddItem(itemFactory->GetRandomEquipment(Equipment::MainHand));
+    }
 
 
     DungeonConfiguration * config = new DungeonConfiguration(5, time(NULL));

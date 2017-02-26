@@ -3,26 +3,30 @@
 
 #include "MenuNode.h"
 
+class SceneManagerGameMenu;
+
 //A Menu to select one of multiple Instances of a Class
 
-class MenuNodeItems : public MenuNode
+template<class T> class MenuNodeItems : public MenuNode
 {
     public:
-        MenuNodeItems(int width, std::function<void(void*)> onSelect);
+        MenuNodeItems(int width, std::function<void(T*)> onSelect);
         virtual ~MenuNodeItems();
         virtual void ResetOptions();
         virtual void MoveUp();
         virtual void MoveDown();
-        virtual void AddOption(std::string name, std::function<void()> func, void* item, bool available = true);
+        virtual void AddOptionWithItem(std::string name, std::function<void()> func, T* item, bool available = true);
         virtual void AddOption(std::string name, std::function<void()> func, bool available = true);
         virtual void AddDisabledOption(std::string name);
 
     protected:
-        std::vector<void*> m_optionItems;
+        std::vector<T*> m_optionItems;
 
-        std::function<void(void*)> m_onSelect;
+        std::function<void(T*)> m_onSelect;
 
     private:
 };
+
+#include "../src/MenuNodeItems.tpp"
 
 #endif // MENUNODEITEMS_H

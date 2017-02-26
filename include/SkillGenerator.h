@@ -3,7 +3,7 @@
 
 #include "Enums.h"
 #include "Skill.h"
-#include "PartyMember.h"
+#include <map>
 
 class SkillGenerator
 {

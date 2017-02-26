@@ -21,3 +21,9 @@ Item::ItemType Item::GetItemType()
 {
     return m_itemType;
 }
+
+std::string Item::GetName()
+{
+    //TODO: get actual name
+    return "item." + std::to_string(m_itemId);
+}

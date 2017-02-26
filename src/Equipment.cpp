@@ -3,10 +3,11 @@
 #include "Entity.h"
 #include "Skill.h"
 
-Equipment::Equipment(int itemId) : Item(itemId, Item::ItemTypeEquipment)
+Equipment::Equipment(int itemId, EquipmentPosition pos) : Item(itemId, Item::ItemTypeEquipment)
 {
     //ctor
     m_target = nullptr;
+    m_position = pos;
 }
 
 Equipment::~Equipment()
@@ -22,12 +23,16 @@ void Equipment::OnEffectStart()
 void Equipment::EquipTo(Entity* target)
 {
     m_target = target;
-    target->AddPassiveEffect(this);
 }
 
 void Equipment::UnEquip()
 {
     m_target = nullptr;
+}
+
+bool Equipment::IsEquiped()
+{
+    return m_target != nullptr;
 }
 
 
@@ -81,6 +86,11 @@ void Equipment::AddExp(Entity* target, int exp)
     {
         LevelUp(target);
     }
+}
+
+Equipment::EquipmentPosition Equipment::GetEquipmentPosition()
+{
+    return m_position;
 }
 
 int Equipment::GetEquipmentExp()
@@ -153,6 +163,20 @@ void Equipment::SetSkillStrength(float strength)
     m_skillStrength = strength;
 }
 
+void Equipment::SetAttributeBuff(BattleEnums::Attribute attribute, int buff)
+{
+    m_attributeBuffs[attribute] = buff;
+}
+
+void Equipment::SetTypeResistance(BattleEnums::AttackType type, float multiplier)
+{
+    m_typeResistance[type] = multiplier;
+}
+
+void Equipment::AddAttackType(BattleEnums::AttackType type)
+{
+    m_attackTypes.insert(type);
+}
 
 
 

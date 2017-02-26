@@ -14,6 +14,7 @@ class MenuNode : public Node
         virtual void ResetOptions();
         virtual void AddOption(std::string name, std::function<void()> func, bool available = true);
         virtual void AddDisabledOption(std::string name);
+        virtual void CallOnCancel(std::function<void()> func);
         void CancelAvailable(bool cancel);
 
         virtual void CheckKeyboardInput();
@@ -61,6 +62,7 @@ class MenuNode : public Node
         std::vector<std::string> m_optionName;
         std::vector<bool> m_optionAvailable;
         std::vector<std::function<void()>> m_optionFunction;
+        std::function<void()> m_cancelFunction;
         bool m_cancelAvailable;
 
         sf::Color m_backgroundColor;

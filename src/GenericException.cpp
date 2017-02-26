@@ -3,6 +3,7 @@
 GenericException::GenericException(std::string msg)
 {
     //ctor
+    m_msg = msg;
 }
 
 GenericException::~GenericException()

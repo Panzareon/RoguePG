@@ -27,6 +27,8 @@ PassiveEffect::~PassiveEffect()
         delete m_attack;
     if(m_onAttacked != nullptr)
         delete m_onAttacked;
+    if(m_getExp != nullptr)
+        delete m_getExp;
 }
 
 void PassiveEffect::AddOnTurnEffect(std::function<void(Entity*, PassiveEffect*)>* onTurn)
@@ -105,8 +107,18 @@ void PassiveEffect::AddOnAttacked(std::function<void(Attack*, Entity*, Entity*)>
 
 void PassiveEffect::AddGetExp(std::function<float(float)>* getExp)
 {
+    if(m_getExp != nullptr)
+        delete m_getExp;
     m_getExp = getExp;
 }
+
+void PassiveEffect::AddGetResistance(std::function<float(float, BattleEnums::AttackType)>* getResistance)
+{
+    if(m_resistanceFunction != nullptr)
+        delete m_resistanceFunction;
+    m_resistanceFunction = getResistance;
+}
+
 
 bool PassiveEffect::IsStillActive()
 {

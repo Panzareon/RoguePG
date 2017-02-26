@@ -10,6 +10,10 @@ PartyMember::PartyMember(CharacterClass* chrClass)
     m_chrClass = chrClass;
     m_exp = 0;
     m_lvl = 1;
+    for(int i = 0; i < Equipment::EQUIPMENT_POSITION_END; i++)
+    {
+        m_equipment[(Equipment::EquipmentPosition)i] = nullptr;
+    }
 }
 
 PartyMember::~PartyMember()
@@ -95,6 +99,31 @@ void PartyMember::LevelUp()
 int PartyMember::GetLevel()
 {
     return m_lvl;
+}
+
+void PartyMember::SetEquipment(Equipment::EquipmentPosition position, Equipment* equipment)
+{
+    if(m_equipment[position] != nullptr)
+        m_equipment[position]->UnEquip();
+    std::multimap<int, IPassiveEffect*> ::iterator it;
+    for(it=m_passiveEffects.begin(); it!=m_passiveEffects.end(); ++it)
+    {
+        if((*it).second == equipment)
+        {
+            m_passiveEffects.erase(it);
+            break;
+        }
+    }
+    if(equipment != nullptr)
+    {
+        equipment->EquipTo(this);
+    }
+    m_equipment[position] = equipment;
+}
+
+Equipment* PartyMember::GetEquipment(Equipment::EquipmentPosition position)
+{
+    return m_equipment[position];
 }
 
 void PartyMember::Died()

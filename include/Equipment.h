@@ -1,7 +1,7 @@
 #ifndef EQUIPMENT_H
 #define EQUIPMENT_H
 
-#include <IPassiveEffect.h>
+#include "IPassiveEffect.h"
 #include <map>
 #include <set>
 #include "Enums.h"
@@ -16,7 +16,7 @@ class Equipment : public IPassiveEffect, public Item
 {
     public:
         enum EquipmentPosition{MainHand, SideHand, Helmet, Armor, Ring, EQUIPMENT_POSITION_END};
-        Equipment(int ItemId);
+        Equipment(int ItemId, EquipmentPosition pos);
 
         virtual void OnEffectStart();
         virtual float GetResistance(float resistanceValue, BattleEnums::AttackType type);
@@ -33,12 +33,14 @@ class Equipment : public IPassiveEffect, public Item
         virtual bool IsEquipment();
         virtual void AddExp(int exp);
         virtual void AddExp(Entity* target, int exp);
+        EquipmentPosition GetEquipmentPosition();
         virtual int GetEquipmentExp();
         virtual int GetLevel();
         virtual int GetEquipmentExp(Entity* target);
         virtual int GetLevel(Entity* target);
         virtual std::map<int, std::shared_ptr<Skill>>* GetSkillsToLearn();
         virtual bool CanLearnSomething(Entity* target);
+        bool IsEquiped();
 
         virtual void EquipTo(Entity* target);
         virtual void UnEquip();
@@ -47,6 +49,9 @@ class Equipment : public IPassiveEffect, public Item
 
         void AddSkillsToLearn(int nr);
         void SetSkillStrength(float strength);
+        void SetAttributeBuff(BattleEnums::Attribute attribute, int buff);
+        void SetTypeResistance(BattleEnums::AttackType type, float multiplier);
+        void AddAttackType(BattleEnums::AttackType type);
 
 
         //Methods from IPassiveEffect with NOOP
@@ -56,6 +61,8 @@ class Equipment : public IPassiveEffect, public Item
 
     protected:
         SkillGenerator m_skillGenerator;
+
+        EquipmentPosition m_position;
 
         std::map<BattleEnums::Attribute, int> m_attributeBuffs;
         std::map<BattleEnums::AttackType, float> m_typeResistance;

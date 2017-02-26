@@ -9,6 +9,7 @@
 #include "EffectFactoryList.h"
 #include "Localization.h"
 #include "CharacterClass.h"
+#include "GenericException.h"
 
 int main()
 {
@@ -27,17 +28,24 @@ int main()
     SceneManager* sm = new SceneManagerMainMenu(&window,width, height );
     controller->LoadSceneManager(sm);
 
-    while (window.isOpen())
+    try
     {
-        sf::Event event;
-        while (window.pollEvent(event))
+        while (window.isOpen())
         {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+            sf::Event event;
+            while (window.pollEvent(event))
+            {
+                if (event.type == sf::Event::Closed)
+                    window.close();
+            }
 
-        controller->Tick();
-        window.display();
+            controller->Tick();
+            window.display();
+        }
+    }
+    catch(GenericException ex)
+    {
+        std::cout << ex.what() << std::endl;
     }
 
     return 0;

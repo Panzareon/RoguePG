@@ -73,3 +73,51 @@ void Party::UpdateActiveParty()
         }
     }
 }
+
+void Party::AddItem(Item* item)
+{
+    for(int i = 0; i < m_items.size(); i++)
+    {
+        if(m_items[i].second == item)
+        {
+            m_items[i].first++;
+            return;
+        }
+    }
+    m_items.push_back(std::pair<int, Item*>(1,item));
+}
+
+int Party::GetNumberOfItem(int itemId)
+{
+    int retval = 0;
+    for(int i = 0; i < m_items.size(); i++)
+    {
+        if(m_items[i].second->GetItemId() == itemId)
+        {
+            retval += m_items[i].first;
+        }
+    }
+    return retval;
+}
+
+bool Party::RemoveItem(int itemId)
+{
+    for(int i = 0; i < m_items.size(); i++)
+    {
+        if(m_items[i].second->GetItemId() == itemId)
+        {
+            m_items[i].first--;
+            if(m_items[i].first <= 0)
+            {
+                delete m_items[i].second;
+                m_items.erase(m_items.begin() + i);
+            }
+        }
+    }
+}
+
+std::vector<std::pair<int,Item*>>* Party::GetItems()
+{
+    return &m_items;
+}
+

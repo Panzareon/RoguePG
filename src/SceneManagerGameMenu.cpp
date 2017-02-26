@@ -22,6 +22,16 @@ namespace MenuFunctions
     {
         sm->SelectMember(member);
     }
+
+    void SelectEquipment(SceneManagerGameMenu* sm, Equipment* item)
+    {
+        sm->SelectEquipment(static_cast<Equipment*>(item));
+    }
+
+    void Equip(SceneManagerGameMenu* sm, Equipment* item)
+    {
+        sm->Equip(static_cast<Equipment*>(item));
+    }
 }
 
 SceneManagerGameMenu::SceneManagerGameMenu(sf::RenderTarget * target, int windowWidth, int windowHeight): SceneManager(target, windowWidth, windowHeight)
@@ -125,6 +135,7 @@ void SceneManagerGameMenu::OpenEquipment()
     m_gui->addChild(background);
     //Hero Selection
     m_equipmentMenu = new MenuNode(HeroSelectWidth);
+    m_equipmentMenu->CancelAvailable(true);
     Party* party = GameController::getInstance()->getParty();
     std::vector<PartyMember*>* member = party->GetAllPartyMembers();
     m_attributeNodes.resize(m_maxShownHeroes);
@@ -170,14 +181,52 @@ void SceneManagerGameMenu::Quit()
 
 void SceneManagerGameMenu::SelectMember(PartyMember* member)
 {
+    Party* party = GameController::getInstance()->getParty();
     m_selectedMember = member;
-    //TODO: Show Equipment Menu for this member
+    if(m_equipmentMenu != nullptr)
+        delete m_equipmentMenu;
+    //Show Equipment Menu for this member
+    m_equipmentItems = new MenuNodeItems<Equipment>(150, std::function<void(Equipment*)>(std::bind(&MenuFunctions::SelectEquipment,this,std::placeholders::_1)));
+    m_equipmentItems->CancelAvailable(true);
+    //For now only Weapons
+    Equipment::EquipmentPosition pos = Equipment::MainHand;
+    m_equipmentItems->CallOnCancel(std::function<void()>(std::bind(&MenuFunctions::Equip,this,member->GetEquipment(pos))));
+    for(auto item = party->GetItems()->begin(); item != party->GetItems()->end(); item++)
+    {
+        //Check if this Item can be Equipped
+        if((*item).second->GetItemType() == Item::ItemTypeEquipment)
+        {
+            if(((Equipment*)((*item).second))->GetEquipmentPosition() == pos)
+            {
+                //Add Item to Menu
+                m_equipmentItems->AddOptionWithItem((*item).second->GetName(), std::function<void()>(std::bind(&MenuFunctions::Equip,this,(Equipment*)(*item).second)), (Equipment*)(*item).second);
+
+            }
+        }
+    }
 
     //Get stats of member now
     for(int i = 0; i < BattleEnums::ATTRIBUTE_END; i++)
     {
         m_memberStats[(BattleEnums::Attribute)i] = member->GetAttribute((BattleEnums::Attribute)i);
     }
+}
+
+void SceneManagerGameMenu::SelectEquipment(Equipment* equipment)
+{
+    //For now only Weapons
+    if(equipment != nullptr && equipment->IsEquiped())
+    {
+        m_selectedMember->SetEquipment(Equipment::MainHand, equipment);
+        UpdateMemberStats();
+    }
+}
+
+void SceneManagerGameMenu::Equip(Equipment* equipment)
+{
+    SelectEquipment(equipment);
+    m_equipmentMenu->setVisibility(false);
+    m_selectedMember = nullptr;
 }
 
 void SceneManagerGameMenu::UpdateMemberStats()

@@ -1,12 +1,14 @@
 #ifndef SCENEMANAGERGAMEMENU_H
 #define SCENEMANAGERGAMEMENU_H
 
+#include "MenuNodeItems.h"
 #include "SceneManager.h"
 #include "Enums.h"
 #include "TextNode.h"
 #include <map>
 
 class PartyMember;
+class Equipment;
 /*
 Class to display the ingame menu
 */
@@ -19,6 +21,8 @@ class SceneManagerGameMenu : public SceneManager
         virtual void OpenEquipment();
         virtual void Quit();
         virtual void SelectMember(PartyMember* member);
+        virtual void SelectEquipment(Equipment* equipment);
+        virtual void Equip(Equipment* equipment);
 
         virtual void Tick();
         virtual bool IsFinished();
@@ -34,6 +38,7 @@ class SceneManagerGameMenu : public SceneManager
         bool m_finished;
 
         MenuNode* m_equipmentMenu;
+        MenuNodeItems<Equipment>* m_equipmentItems;
 
         std::vector<std::map<BattleEnums::Attribute, TextNode*>> m_attributeNodes;
         std::map<BattleEnums::Attribute, std::pair<int,int>> m_attributeNodePosition;
