@@ -31,7 +31,19 @@ std::string format(std::string& str, std::vector<float>* values)
                 next -= '0';
                 if(values->size() > next)
                 {
-                    out << values->at(next);
+                    //Check if it should be formated as percent ("%0%" with value 0.5 to "50%")
+                    if(str.at(pos + 2) == '%')
+                    {
+                        out << values->at(next) * 100.0f << "%";
+                    }
+                    else if(str.at(pos + 2) == '/')
+                    {
+                        out << (1.0f / values->at(next)) * 100.0f << "%";
+                    }
+                    else
+                    {
+                        out << values->at(next);
+                    }
                 }
             }
             str.erase(0, pos + 2);

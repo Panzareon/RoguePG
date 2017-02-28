@@ -45,6 +45,16 @@ namespace EffectFunctions
         }
     }
 
+    //Strength: one value with strength of dmg
+    void DealPhysicalDmg(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, BattleEnums::AttackType type = BattleEnums::AttackTypePhysical)
+    {
+        for(unsigned int i = 0; i < targets->size(); i++)
+        {
+            Attack att(strength->at(0) + user->GetAttribute(BattleEnums::AttributeStrength), true, type);
+            user->AttackEntity(targets->at(i), &att);
+        }
+    }
+
     //Strength: two values, fist: duration in turns, second: strength of Buff
     void BuffAttribute(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, BattleEnums::Attribute attribute)
     {
@@ -137,6 +147,16 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(1.0f, 100.0f);
     calc->SetMultiplier(1.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
+    m_effects.push_back(newEffect);
+
+    //Add Physical Damage
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DealPhysicalDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypePhysical));
+    newEffect = new EffectFactory(func, 5);
+    calc = newEffect->GetStrengthCalculation();
+    calc->AddStrengthValue(1.0f, 100.0f);
+    calc->SetMultiplier(1.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
     newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
     m_effects.push_back(newEffect);
 

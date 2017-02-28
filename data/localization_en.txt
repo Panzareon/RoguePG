@@ -11,8 +11,58 @@ menu.quit = Quit
 
 //Item-Names
 item.1 = Sword
-item.1.desc = A generic Sword
+item.1.desc = A generic sword
+
+//Effect Base Description
+effect.target.0 = Targets one hero.
+effect.target.1 = Targets one enemy.
+effect.target.2 = Targets all heroes.
+effect.target.3 = Targets all enemies.
+effect.target.4 = Targets the casting hero.
+effect.target.5 = Does not target anything.
+effect.target.6 = Targets all heroes and enemies.
 
 //Effects
 effect.1 = Fire Damage
-effect.1.desc = Deals %0 Fire Damage to an enemy.
+effect.1.desc = Deals %0 fire damage.
+effect.2 = Air Damage
+effect.2.desc = Deals %0 air damage.
+effect.3 = Water Damage
+effect.3.desc = Deals %0 water damage.
+effect.4 = Earth Damage
+effect.4.desc = Deals %0 earth damage.
+effect.5 = Physical Damage
+effect.5.desc = Deals %0 physical damage.
+
+effect.101 = Strength Buff
+effect.101.desc = Increases strength by %1% for %0 turns.
+effect.102 = Defense Buff
+effect.102.desc = Increases defense by %1% for %0 turns.
+effect.103 = Magic Defense Buff
+effect.103.desc = Increases magic defense by %1% for %0 turns.
+effect.104 = Int Buff
+effect.104.desc = Increases intelligence by %1% for %0 turns.
+effect.105 = Speed Buff
+effect.105.desc = Increases speed by %1% for %0 turns.
+
+effect.151 = Physical Resistance
+effect.151.desc = Increases resistance against physical attacks by %1% for %0 turns.
+effect.152 = Water Resistance
+effect.152.desc = Increases resistance against water attacks by %1% for %0 turns.
+effect.153 = Air Resistance
+effect.153.desc = Increases resistance against air attacks by %1% for %0 turns.
+effect.154 = Earth Resistance
+effect.154.desc = Increases resistance against earth attacks by %1% for %0 turns.
+effect.155 = Fire Resistance
+effect.155.desc = Increases resistance against fire attacks by %1% for %0 turns.
+
+effect.10001 = Strength Debuff
+effect.10001.desc = Decreases strength to %1/ for %0 turns.
+effect.10002 = Defense Debuff
+effect.10002.desc = Decreases defense to %1/ for %0 turns.
+effect.10003 = Magic Defense Debuff
+effect.10003.desc = Decreases magic defense to %1/ for %0 turns.
+effect.10004 = Int Debuff
+effect.10004.desc = Decreases intelligence to %1/ for %0 turns.
+effect.10005 = Speed Debuff
+effect.10005.desc = Decreases speed to %1/ for %0 turns.
