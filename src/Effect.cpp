@@ -52,14 +52,14 @@ EffectFactory* Effect::GetFactory()
 std::string Effect::GetName()
 {
     std::stringstream out;
-    out << "effect." << GetFactory()->GetId() << std::endl;
+    out << "effect." << GetFactory()->GetId();
     return out.str();
 }
 
 std::string Effect::GetLocalizedDescription()
 {
     std::stringstream out;
-    out << GetName() << ".desc" << std::endl;
+    out << GetName() << ".desc";
     return Localization::GetInstance()->GetLocalization(out.str(), m_strength);
 }
 

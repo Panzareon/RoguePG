@@ -12,6 +12,7 @@ std::string trim(std::string& str)
 std::string format(std::string& str, std::vector<float>* values)
 {
     std::stringstream out;
+    out.precision(2);
     size_t pos;
     while (pos != str.npos)
     {
@@ -39,6 +40,7 @@ std::string format(std::string& str, std::vector<float>* values)
                     else if(str.at(pos + 2) == '/')
                     {
                         out << (1.0f / values->at(next)) * 100.0f << "%";
+                        str.erase(0, 1);
                     }
                     else
                     {

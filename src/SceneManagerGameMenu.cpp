@@ -32,6 +32,20 @@ namespace MenuFunctions
     {
         sm->Equip(static_cast<Equipment*>(item));
     }
+
+    void SelectEquipmentSkills(SceneManagerGameMenu* sm, Equipment* item)
+    {
+        sm->SelectEquipmentSkills(true);
+    }
+    void DeselectEquipmentSkills(SceneManagerGameMenu* sm)
+    {
+        sm->SelectEquipmentSkills(false);
+    }
+
+    void SelectSkill(SceneManagerGameMenu* sm, Skill* skill)
+    {
+        sm->SelectSkill(skill);
+    }
 }
 
 SceneManagerGameMenu::SceneManagerGameMenu(sf::RenderTarget * target, int windowWidth, int windowHeight): SceneManager(target, windowWidth, windowHeight)
@@ -61,7 +75,9 @@ SceneManagerGameMenu::SceneManagerGameMenu(sf::RenderTarget * target, int window
 
     m_equipmentMenu = nullptr;
     m_equipmentItems = nullptr;
+    m_equipmentSkills = nullptr;
     m_selectedMember = nullptr;
+    m_equipmentSkillsSelected = false;
 
     //Set Menu function
     m_mainMenu = new MenuNode(background->getBoundingBox().width - 2* padding);
@@ -107,7 +123,12 @@ void SceneManagerGameMenu::Tick()
     GameController* controller = GameController::getInstance();
     //Check Menu inputs
     if(m_equipmentMenu != nullptr)
-        m_equipmentMenu->CheckKeyboardInput();
+    {
+        if(m_equipmentSkillsSelected)
+            m_equipmentSkills->CheckKeyboardInput();
+        else
+            m_equipmentMenu->CheckKeyboardInput();
+    }
     else
         m_mainMenu->CheckKeyboardInput();
     //Check menu Key
@@ -127,16 +148,17 @@ void SceneManagerGameMenu::OpenEquipment()
 
     std::cout << "Equipment" << std::endl;
     sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::EquipmentMenu));
-    DrawableNode* background = new DrawableNode(backgroundSprite);
+    m_background = new DrawableNode(backgroundSprite);
     int x = GameController::getInstance()->GetWindowWidth() - backgroundSprite->getLocalBounds().width;
     x /= 2;
     int y = GameController::getInstance()->GetWindowHeight() - backgroundSprite->getLocalBounds().height;
     y /= 2;
-    background->moveNode(x,y);
-    m_gui->addChild(background);
+    m_background->moveNode(x,y);
+    m_gui->addChild(m_background);
     //Hero Selection
     m_equipmentMenu = new MenuNode(HeroSelectWidth);
     m_equipmentMenu->CancelAvailable(true);
+    m_equipmentMenu->NextAvailable(true);
     Party* party = GameController::getInstance()->getParty();
     std::vector<PartyMember*>* member = party->GetAllPartyMembers();
     m_attributeNodes.resize(m_maxShownHeroes);
@@ -147,7 +169,7 @@ void SceneManagerGameMenu::OpenEquipment()
         {
             Node* nextMember = new Node();
             nextMember->moveNode(0,MemberHeight*i);
-            background->addChild(nextMember);
+            m_background->addChild(nextMember);
             for(int j = 0; j < BattleEnums::ATTRIBUTE_END; j++)
             {
                 TextNode* node = new TextNode(std::to_string(member->at(i)->GetAttribute((BattleEnums::Attribute)j)));
@@ -160,7 +182,7 @@ void SceneManagerGameMenu::OpenEquipment()
             }
         }
     }
-    background->addChild(m_equipmentMenu);
+    m_background->addChild(m_equipmentMenu);
 
     //Set Menu looks
     m_equipmentMenu->SetMaxShownOptions(m_maxShownHeroes);
@@ -188,8 +210,11 @@ void SceneManagerGameMenu::SelectMember(PartyMember* member)
     m_equipmentItems = new MenuNodeItems<Equipment>(150, std::function<void(Equipment*)>(std::bind(&MenuFunctions::SelectEquipment,this,std::placeholders::_1)));
     m_equipmentMenu->addChild(m_equipmentItems);
     m_equipmentItems->CancelAvailable(true);
+    m_equipmentItems->NextAvailable(true);
+    m_equipmentItems->CallOnNext(std::function<void(Equipment*)>(std::bind(&MenuFunctions::SelectEquipmentSkills,this,std::placeholders::_1)));
+    m_equipmentItems->PreviousAvailable(true);
     //Set Menu looks
-    m_equipmentItems->SetMaxShownOptions(m_maxShownHeroes);
+    m_equipmentItems->SetMaxShownOptions(9);
     m_equipmentItems->moveNode(322,1);
     m_equipmentItems->SetBackgroundColor(sf::Color::Transparent);
     m_equipmentItems->SetForegroundColor(sf::Color::Black);
@@ -207,7 +232,8 @@ void SceneManagerGameMenu::SelectMember(PartyMember* member)
     m_equipmentDescription = new TextNode();
     m_equipmentDescription->SetColor(sf::Color::Black);
     m_gui->addChild(m_equipmentDescription);
-    m_equipmentDescription->moveNode(5, 353);
+    m_equipmentDescription->moveNode(5, 356);
+    m_equipmentDescription->SetFontSize(15);
 
     //Get stats of member now
     for(int i = 0; i < BattleEnums::ATTRIBUTE_END; i++)
@@ -244,12 +270,20 @@ void SceneManagerGameMenu::SelectMember(PartyMember* member)
 void SceneManagerGameMenu::SelectEquipment(Equipment* equipment)
 {
     //For now only Weapons
-    if(equipment != nullptr && !equipment->IsEquiped())
+    if(equipment != nullptr)
     {
-        m_selectedMember->SetEquipment(Equipment::MainHand, equipment);
-        UpdateMemberStats();
+        SetEquipmentSkillMenu(equipment);
+        if(!equipment->IsEquiped())
+        {
+            m_selectedMember->SetEquipment(Equipment::MainHand, equipment);
+            UpdateMemberStats();
+        }
+        m_equipmentDescription->SetText( Localization::GetInstance()->GetLocalization(equipment->GetDescription()));
     }
-    m_equipmentDescription->SetText( Localization::GetInstance()->GetLocalization(equipment->GetDescription()));
+    else if(m_equipmentSkills != nullptr)
+    {
+        m_equipmentSkills->setVisibility(false);
+    }
 }
 
 void SceneManagerGameMenu::Equip(Equipment* equipment)
@@ -257,7 +291,18 @@ void SceneManagerGameMenu::Equip(Equipment* equipment)
     SelectEquipment(equipment);
     m_equipmentItems->setVisibility(false);
     m_selectedMember = nullptr;
+    RemoveEquipmentSkillMenu();
     UpdateMemberStats();
+}
+
+void SceneManagerGameMenu::SelectEquipmentSkills(bool selected)
+{
+    m_equipmentSkillsSelected = selected;
+}
+
+void SceneManagerGameMenu::SelectSkill(Skill* skill)
+{
+    m_equipmentDescription->SetText(skill->GetLocalizedDescription());
 }
 
 void SceneManagerGameMenu::UpdateMemberStats()
@@ -288,3 +333,46 @@ void SceneManagerGameMenu::UpdateMemberStats()
         }
     }
 }
+
+void SceneManagerGameMenu::RemoveEquipmentSkillMenu()
+{
+    if(m_equipmentSkills != nullptr)
+    {
+        m_equipmentSkills->GetParent()->removeChild(m_equipmentSkills);
+        delete m_equipmentSkills;
+        m_equipmentSkills = nullptr;
+    }
+}
+
+void SceneManagerGameMenu::SetEquipmentSkillMenu(Equipment* equipment)
+{
+    if(m_equipmentSkills != nullptr)
+    {
+        m_equipmentSkills->ResetOptions();
+    }
+    else
+    {
+        m_equipmentSkills = new MenuNodeItems<Skill>(150, std::function<void(Skill*)>(std::bind(&MenuFunctions::SelectSkill,this,std::placeholders::_1)));
+        m_background->addChild(m_equipmentSkills);
+        m_equipmentSkills->PreviousAvailable(true);
+        m_equipmentSkills->CallOnCancel(std::function<void()>(std::bind(&MenuFunctions::DeselectEquipmentSkills,this)));
+
+        //Set Menu looks
+        m_equipmentSkills->SetMaxShownOptions(9);
+        m_equipmentSkills->moveNode(485,4);
+        m_equipmentSkills->SetBackgroundColor(sf::Color::Transparent);
+        m_equipmentSkills->SetForegroundColorDisabled(sf::Color::Black);
+        m_equipmentSkills->SetForegroundColor(sf::Color::Black);
+        m_equipmentSkills->SetOutlineColor(sf::Color::Transparent);
+        m_equipmentSkills->SetSelectedColor(sf::Color::Blue);
+        m_equipmentSkills->SetFontSize(15);
+        m_equipmentSkills->SetSpacing(20);
+    }
+    Localization* localization = Localization::GetInstance();
+    std::map<int, std::shared_ptr<Skill>>* skills = equipment->GetSkillsToLearn();
+    for(auto it = skills->begin(); it != skills->end(); it++)
+    {
+        m_equipmentSkills->AddOptionWithItem(localization->GetLocalization(it->second->GetName()), nullptr, it->second.get(), false);
+    }
+}
+

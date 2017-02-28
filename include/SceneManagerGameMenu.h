@@ -23,6 +23,8 @@ class SceneManagerGameMenu : public SceneManager
         virtual void SelectMember(PartyMember* member);
         virtual void SelectEquipment(Equipment* equipment);
         virtual void Equip(Equipment* equipment);
+        virtual void SelectEquipmentSkills(bool selected);
+        virtual void SelectSkill(Skill* skill);
 
         virtual void Tick();
         virtual bool IsFinished();
@@ -34,11 +36,16 @@ class SceneManagerGameMenu : public SceneManager
 
     protected:
         void UpdateMemberStats();
+        void RemoveEquipmentSkillMenu();
+        void SetEquipmentSkillMenu(Equipment* equipment);
 
         bool m_finished;
 
+        Node* m_background;
         MenuNode* m_equipmentMenu;
         MenuNodeItems<Equipment>* m_equipmentItems;
+        MenuNodeItems<Skill>* m_equipmentSkills;
+        bool m_equipmentSkillsSelected;
 
         TextNode* m_equipmentDescription;
         std::vector<std::map<BattleEnums::Attribute, TextNode*>> m_attributeNodes;

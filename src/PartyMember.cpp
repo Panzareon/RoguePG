@@ -111,7 +111,6 @@ void PartyMember::SetEquipment(Equipment::EquipmentPosition position, Equipment*
         {
             if((*it).second == m_equipment[position])
             {
-                std::cout << "Remove Old Equipment!" << std::endl;
                 m_passiveEffects.erase(it);
                 break;
             }

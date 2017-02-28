@@ -112,8 +112,10 @@ bool Party::RemoveItem(int itemId)
                 delete m_items[i].second;
                 m_items.erase(m_items.begin() + i);
             }
+            return true;
         }
     }
+    return false;
 }
 
 std::vector<std::pair<int,Item*>>* Party::GetItems()

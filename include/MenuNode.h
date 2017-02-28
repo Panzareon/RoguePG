@@ -16,11 +16,14 @@ class MenuNode : public Node
         virtual void AddDisabledOption(std::string name);
         virtual void CallOnCancel(std::function<void()> func);
         void CancelAvailable(bool cancel);
+        //Does Right Button do something (Default disabled)
+        virtual void NextAvailable(bool next);
+        //Function to call on Right Button press (Default is function of selected option)
+        virtual void CallOnNext(std::function<void()> func);
+        //Does Left Button cancel the menu
+        virtual void PreviousAvailable(bool prev);
 
         virtual void CheckKeyboardInput();
-        virtual void MoveUp();
-        virtual void MoveDown();
-        void Use();
 
         int GetScrollPosition();
 
@@ -38,6 +41,10 @@ class MenuNode : public Node
         void SetSpacing(int s);
 
     protected:
+        virtual void MoveUp();
+        virtual void MoveDown();
+        virtual void MoveRight();
+        void Use();
         virtual void onDraw(sf::RenderTarget& target, const sf::Transform& transform) const;
         virtual void UpdateBackground();
 
@@ -64,6 +71,9 @@ class MenuNode : public Node
         std::vector<std::function<void()>> m_optionFunction;
         std::function<void()> m_cancelFunction;
         bool m_cancelAvailable;
+        std::function<void()> m_nextFunction;
+        bool m_nextAvailable;
+        bool m_previousAvailable;
 
         sf::Color m_backgroundColor;
         sf::Color m_foregroundColor;

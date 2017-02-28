@@ -2,6 +2,7 @@
 #include "InvalidArgumentException.h"
 #include "Effect.h"
 #include "GameController.h"
+#include "Localization.h"
 
 Skill::Skill(BattleEnums::Target target)
 {
@@ -81,8 +82,25 @@ BattleEnums::Target Skill::GetDefaultTarget()
 
 std::string Skill::GetName()
 {
-    //TODO: return actual value
+    //TODO: return actual name
+    if(m_effects.size() >= 1)
+    {
+        return m_effects[0]->GetName();
+    }
     return "Test-Skill";
+}
+
+std::string Skill::GetLocalizedDescription()
+{
+    Localization* localization = Localization::GetInstance();
+    std::string toLocalize("effect.target.");
+    toLocalize += std::to_string(m_defaultTarget);
+    std::string retval = localization->GetLocalization(toLocalize);
+    for(int i = 0; i < m_effects.size(); i++)
+    {
+        retval += " " + m_effects[i]->GetLocalizedDescription();
+    }
+    return retval;
 }
 
 std::vector<Effect*>* Skill::GetEffects()

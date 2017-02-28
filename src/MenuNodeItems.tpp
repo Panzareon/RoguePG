@@ -54,3 +54,24 @@ template<class T> void MenuNodeItems<T>::MoveDown()
     }
 }
 
+
+template<class T> void MenuNodeItems<T>::MoveRight()
+{
+    //Check if this should do anything
+    if(m_nextAvailable)
+    {
+        if(m_nextFunction == nullptr)
+        {
+            Use();
+        }
+        else
+        {
+            m_nextFunction(m_optionItems[m_selected]);
+        }
+    }
+}
+
+template<class T> void MenuNodeItems<T>::CallOnNext(std::function<void(T*)>func)
+{
+    m_nextFunction = func;
+}

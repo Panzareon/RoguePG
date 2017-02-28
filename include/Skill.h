@@ -18,6 +18,7 @@ class Skill
 
         BattleEnums::Target GetDefaultTarget();
         std::string GetName();
+        std::string GetLocalizedDescription();
 
         std::vector<Effect*>* GetEffects();
 

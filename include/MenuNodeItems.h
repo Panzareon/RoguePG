@@ -15,6 +15,8 @@ template<class T> class MenuNodeItems : public MenuNode
         virtual void ResetOptions();
         virtual void MoveUp();
         virtual void MoveDown();
+        virtual void MoveRight();
+        virtual void CallOnNext(std::function<void(T*)> func);
         virtual void AddOptionWithItem(std::string name, std::function<void()> func, T* item, bool available = true);
         virtual void AddOption(std::string name, std::function<void()> func, bool available = true);
         virtual void AddDisabledOption(std::string name);
@@ -23,6 +25,7 @@ template<class T> class MenuNodeItems : public MenuNode
         std::vector<T*> m_optionItems;
 
         std::function<void(T*)> m_onSelect;
+        std::function<void(T*)> m_nextFunction;
 
     private:
 };

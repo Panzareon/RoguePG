@@ -11,6 +11,8 @@ MenuNode::MenuNode(int width)
     m_maxShownNumber = 4;
     m_width = width;
     m_cancelAvailable = false;
+    m_nextAvailable = false;
+    m_previousAvailable = false;
     m_backgroundColor = sf::Color::Black;
     m_foregroundColor = sf::Color::White;
     m_outlineColor = sf::Color::White;
@@ -73,6 +75,21 @@ void MenuNode::CancelAvailable(bool cancel)
     m_cancelAvailable = cancel;
 }
 
+void MenuNode::NextAvailable(bool next)
+{
+    m_nextAvailable = next;
+}
+
+void MenuNode::PreviousAvailable(bool prev)
+{
+    m_previousAvailable = prev;
+}
+
+void MenuNode::CallOnNext(std::function<void()>func)
+{
+    m_nextFunction = func;
+}
+
 void MenuNode::ResetOptions()
 {
     m_optionName.clear();
@@ -94,6 +111,22 @@ void MenuNode::MoveDown()
 {
     if(m_selected < m_optionName.size() - 1)
         m_selected ++;
+}
+
+void MenuNode::MoveRight()
+{
+    //Check if this should do anything
+    if(m_nextAvailable)
+    {
+        if(m_nextFunction == nullptr)
+        {
+            Use();
+        }
+        else
+        {
+            m_nextFunction();
+        }
+    }
 }
 
 void MenuNode::Use()
@@ -175,12 +208,11 @@ void MenuNode::CheckKeyboardInput()
         {
             MoveUp();
         }
-
-        if(controller->IsKeyPressed(Configuration::Accept))
+        else if(controller->IsKeyPressed(Configuration::Accept))
         {
             Use();
         }
-        else if(controller->IsKeyPressed(Configuration::Cancel))
+        else if(controller->IsKeyPressed(Configuration::Cancel) || (controller->IsKeyPressed(Configuration::MoveLeft) && m_previousAvailable))
         {
             //Cancel Menu / check if menu can be canceled
             if(m_cancelAvailable)
@@ -191,6 +223,10 @@ void MenuNode::CheckKeyboardInput()
                 }
                 m_visible = false;
             }
+        }
+        else if(controller->IsKeyPressed(Configuration::MoveRight))
+        {
+            MoveRight();
         }
     }
 }

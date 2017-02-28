@@ -90,6 +90,10 @@ void Node::setTransform(sf::Transform newTransform)
 }
 void Node::setParent(Node* parent)
 {
+    if(m_parent != nullptr)
+    {
+        m_parent->removeChild(this);
+    }
     m_parent = parent;
 }
 
