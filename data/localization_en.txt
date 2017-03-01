@@ -56,6 +56,9 @@ effect.154.desc = Increases resistance against earth attacks by %1% for %0 turns
 effect.155 = Fire Resistance
 effect.155.desc = Increases resistance against fire attacks by %1% for %0 turns.
 
+effect.1001 = Heal
+effect.1001.desc = Heals for %0 hp.
+
 effect.10001 = Strength Debuff
 effect.10001.desc = Decreases strength to %1/ for %0 turns.
 effect.10002 = Defense Debuff

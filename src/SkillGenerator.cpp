@@ -61,10 +61,11 @@ BattleEnums::Target SkillGenerator::GetRandomTarget()
     auto it = m_skillTarget.begin();
     for(; it != m_skillTarget.end(); it++)
     {
-        if(it->first < random)
+        if(it->first > random)
         {
             return it->second;
         }
+        random -= it->first;
     }
     it--;
     return it->second;
@@ -76,10 +77,11 @@ BattleEnums::AttackType SkillGenerator::GetRandomAttackType()
     auto it = m_skillAttackType.begin();
     for(; it != m_skillAttackType.end(); it++)
     {
-        if(it->first < random)
+        if(it->first > random)
         {
             return it->second;
         }
+        random -= it->first;
     }
     it--;
     return it->second;
@@ -101,10 +103,11 @@ BattleEnums::EffectType SkillGenerator::GetRandomEffectType(bool positive)
     }
     for(; it != endIt; it++)
     {
-        if(it->first < random)
+        if(it->first > random)
         {
             return it->second;
         }
+        random -= it->first;
     }
     it--;
     return it->second;

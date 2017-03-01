@@ -30,6 +30,8 @@ class Entity
         //Get damage and play get hit animation
         void GetHit(Attack* attack, Entity* attacker);
 
+        void Heal(int hp);
+
 
         bool IsAttackPhysical();
 

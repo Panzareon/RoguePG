@@ -153,7 +153,7 @@ void Equipment::AddSkillsToLearn(int nr)
         lvl = m_skillsToLearn.rbegin()->first + 1;
     for(int i = 0; i < nr; i++)
     {
-        m_skillsToLearn.insert(std::pair<int, std::shared_ptr<Skill>>(lvl, std::shared_ptr<Skill>(m_skillGenerator.GetNewSkill(m_skillStrength))));
+        m_skillsToLearn.insert(std::pair<int, std::shared_ptr<Skill>>(lvl, std::shared_ptr<Skill>(m_skillGenerator.GetNewSkill(m_skillStrength + lvl))));
         lvl++;
     }
 }

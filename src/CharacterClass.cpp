@@ -48,14 +48,14 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
 
         skillGenerator = newClass->GetSkillGenerator();
         skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.8f);
-        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.85f);
-        skillGenerator->AddSkillTarget(BattleEnums::TargetSelf, 0.9f);
-        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.95f);
-        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeam, 1.0f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.05f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetSelf, 0.05f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.05f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.05f);
         skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeFire, 1.0f);
 
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.8f, false);
-        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 1.0f, false);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.2f, false);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeBuff, 1.0f, true);
 
         m_classes->at(CharacterClassFireMage) = newClass;

@@ -55,6 +55,15 @@ namespace EffectFunctions
         }
     }
 
+    //Strength: one value with strength of heal
+    void Heal(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets)
+    {
+        for(unsigned int i = 0; i < targets->size(); i++)
+        {
+            targets->at(i)->Heal(strength->at(0));
+        }
+    }
+
     //Strength: two values, fist: duration in turns, second: strength of Buff
     void BuffAttribute(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, BattleEnums::Attribute attribute)
     {
@@ -307,6 +316,23 @@ EffectFactoryList::EffectFactoryList()
     newEffect->AddAttackType(BattleEnums::AttackTypeFire);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuffDefense);
+    m_effects.push_back(newEffect);
+
+
+
+    //Heal
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::Heal,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
+    newEffect = new EffectFactory(func, 1001);
+    calc = newEffect->GetStrengthCalculation();
+    //Everything from 1 to 30 hp heal
+    calc->AddStrengthValue(1.0f, 300.0f, 1.0f);
+    calc->SetMultiplier(2.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
+    newEffect->AddAttackType(BattleEnums::AttackTypeFire);
+    newEffect->AddAttackType(BattleEnums::AttackTypeWater);
+    newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
+    newEffect->AddAttackType(BattleEnums::AttackTypeAir);
+    newEffect->AddEffectType(BattleEnums::EffectTypeHeal);
     m_effects.push_back(newEffect);
 
 

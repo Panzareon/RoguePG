@@ -47,10 +47,12 @@ namespace BattleFunctions
         MenuNode* skillMenu = new MenuNode(GameController::getInstance()->GetWindowWidth());
         skillMenu->CancelAvailable(true);
 
+        Localization* localization = Localization::GetInstance();
+
         std::vector<std::shared_ptr<Skill>>* skillList = attacking->GetSkillList();
         for(unsigned int i = 0; i < skillList->size(); i++)
         {
-            skillMenu->AddOption(skillList->at(i)->GetName(),std::function<void()>(std::bind(&UseSkill, sm, attacking, skillList->at(i).get())));
+            skillMenu->AddOption(localization->GetLocalization(skillList->at(i)->GetName()),std::function<void()>(std::bind(&UseSkill, sm, attacking, skillList->at(i).get())));
         }
 
         sm->AddSubMenu(skillMenu);

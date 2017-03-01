@@ -102,6 +102,19 @@ void Entity::GetHit(Attack* attack, Entity* attacker)
     }
 }
 
+void Entity::Heal(int hp)
+{
+    if(!IsDead())
+    {
+        m_hp += hp;
+        int maxHp = GetAttribute(BattleEnums::AttributeMaxHp);
+        if(m_hp > maxHp)
+        {
+            m_hp = maxHp;
+        }
+    }
+}
+
 void Entity::Died()
 {
     //TODO: handle death + death animation
