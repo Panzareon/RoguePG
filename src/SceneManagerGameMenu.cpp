@@ -46,6 +46,11 @@ namespace MenuFunctions
     {
         sm->SelectSkill(skill);
     }
+
+    void CloseEquipmentMenu(SceneManagerGameMenu* sm)
+    {
+        sm->CloseEquipment();
+    }
 }
 
 SceneManagerGameMenu::SceneManagerGameMenu(sf::RenderTarget * target, int windowWidth, int windowHeight): SceneManager(target, windowWidth, windowHeight)
@@ -77,6 +82,7 @@ SceneManagerGameMenu::SceneManagerGameMenu(sf::RenderTarget * target, int window
     m_equipmentItems = nullptr;
     m_equipmentSkills = nullptr;
     m_selectedMember = nullptr;
+    m_equipmentDescription = nullptr;
     m_equipmentSkillsSelected = false;
 
     //Set Menu function
@@ -122,7 +128,7 @@ void SceneManagerGameMenu::Tick()
 {
     GameController* controller = GameController::getInstance();
     //Check Menu inputs
-    if(m_equipmentMenu != nullptr)
+    if(m_equipmentMenu != nullptr && m_equipmentMenu->IsVisible())
     {
         if(m_equipmentSkillsSelected)
             m_equipmentSkills->CheckKeyboardInput();
@@ -158,6 +164,7 @@ void SceneManagerGameMenu::OpenEquipment()
     //Hero Selection
     m_equipmentMenu = new MenuNode(HeroSelectWidth);
     m_equipmentMenu->CancelAvailable(true);
+    m_equipmentMenu->CallOnCancel( std::function<void()>(std::bind(&MenuFunctions::CloseEquipmentMenu,this)));
     m_equipmentMenu->NextAvailable(true);
     Party* party = GameController::getInstance()->getParty();
     std::vector<PartyMember*>* member = party->GetAllPartyMembers();
@@ -196,11 +203,17 @@ void SceneManagerGameMenu::OpenEquipment()
     m_equipmentMenu->SetSpacing(74);
 }
 
+void SceneManagerGameMenu::CloseEquipment()
+{
+    m_background->setVisibility(false);
+}
+
 void SceneManagerGameMenu::Quit()
 {
     //Quit to Main menu
     GameController::getInstance()->QuitToMainMenu();
 }
+
 
 void SceneManagerGameMenu::SelectMember(PartyMember* member)
 {
@@ -229,11 +242,18 @@ void SceneManagerGameMenu::SelectMember(PartyMember* member)
     Localization* loc = Localization::GetInstance();
 
     //Node for Equipment Description
-    m_equipmentDescription = new TextNode();
-    m_equipmentDescription->SetColor(sf::Color::Black);
-    m_gui->addChild(m_equipmentDescription);
-    m_equipmentDescription->moveNode(5, 356);
-    m_equipmentDescription->SetFontSize(15);
+    if(m_equipmentDescription != nullptr)
+    {
+        m_equipmentDescription->setVisibility(true);
+    }
+    else
+    {
+        m_equipmentDescription = new TextNode();
+        m_equipmentDescription->SetColor(sf::Color::Black);
+        m_gui->addChild(m_equipmentDescription);
+        m_equipmentDescription->moveNode(5, 356);
+        m_equipmentDescription->SetFontSize(15);
+    }
 
     //Get stats of member now
     for(int i = 0; i < BattleEnums::ATTRIBUTE_END; i++)
@@ -269,6 +289,7 @@ void SceneManagerGameMenu::SelectMember(PartyMember* member)
 
 void SceneManagerGameMenu::SelectEquipment(Equipment* equipment)
 {
+    m_selectedEquipment = equipment;
     //For now only Weapons
     if(equipment != nullptr)
     {
@@ -280,9 +301,13 @@ void SceneManagerGameMenu::SelectEquipment(Equipment* equipment)
         }
         m_equipmentDescription->SetText( Localization::GetInstance()->GetLocalization(equipment->GetDescription()));
     }
-    else if(m_equipmentSkills != nullptr)
+    else
     {
-        m_equipmentSkills->setVisibility(false);
+        m_selectedMember->SetEquipment(Equipment::MainHand, equipment);
+        if(m_equipmentSkills != nullptr)
+        {
+            m_equipmentSkills->setVisibility(false);
+        }
     }
 }
 
@@ -290,6 +315,7 @@ void SceneManagerGameMenu::Equip(Equipment* equipment)
 {
     SelectEquipment(equipment);
     m_equipmentItems->setVisibility(false);
+    m_equipmentDescription->setVisibility(false);
     m_selectedMember = nullptr;
     RemoveEquipmentSkillMenu();
     UpdateMemberStats();
@@ -298,6 +324,17 @@ void SceneManagerGameMenu::Equip(Equipment* equipment)
 void SceneManagerGameMenu::SelectEquipmentSkills(bool selected)
 {
     m_equipmentSkillsSelected = selected;
+    m_equipmentSkills->ShowSelected(selected);
+    //Still show the menu even if it is not selected
+    m_equipmentSkills->setVisibility(true);
+    if(selected)
+    {
+        m_equipmentDescription->SetText(m_selectedEquipment->GetSkillsToLearn()->begin()->second->GetLocalizedDescription());
+    }
+    else
+    {
+        m_equipmentDescription->SetText( Localization::GetInstance()->GetLocalization(m_selectedEquipment->GetDescription()));
+    }
 }
 
 void SceneManagerGameMenu::SelectSkill(Skill* skill)
@@ -356,6 +393,7 @@ void SceneManagerGameMenu::SetEquipmentSkillMenu(Equipment* equipment)
         m_background->addChild(m_equipmentSkills);
         m_equipmentSkills->PreviousAvailable(true);
         m_equipmentSkills->CallOnCancel(std::function<void()>(std::bind(&MenuFunctions::DeselectEquipmentSkills,this)));
+        m_equipmentSkills->CancelAvailable(true);
 
         //Set Menu looks
         m_equipmentSkills->SetMaxShownOptions(9);
@@ -367,6 +405,7 @@ void SceneManagerGameMenu::SetEquipmentSkillMenu(Equipment* equipment)
         m_equipmentSkills->SetSelectedColor(sf::Color::Blue);
         m_equipmentSkills->SetFontSize(15);
         m_equipmentSkills->SetSpacing(20);
+        m_equipmentSkills->ShowSelected(false);
     }
     Localization* localization = Localization::GetInstance();
     std::map<int, std::shared_ptr<Skill>>* skills = equipment->GetSkillsToLearn();

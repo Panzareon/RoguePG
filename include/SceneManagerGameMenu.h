@@ -19,6 +19,7 @@ class SceneManagerGameMenu : public SceneManager
         virtual ~SceneManagerGameMenu();
 
         virtual void OpenEquipment();
+        virtual void CloseEquipment();
         virtual void Quit();
         virtual void SelectMember(PartyMember* member);
         virtual void SelectEquipment(Equipment* equipment);
@@ -52,6 +53,7 @@ class SceneManagerGameMenu : public SceneManager
         std::map<BattleEnums::Attribute, std::pair<int,int>> m_attributeNodePosition;
 
         //For Equipment menu
+        Equipment* m_selectedEquipment;
         int m_maxShownHeroes;
         PartyMember* m_selectedMember;
         std::map<BattleEnums::Attribute, int> m_memberStats;

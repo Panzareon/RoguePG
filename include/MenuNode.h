@@ -25,8 +25,10 @@ class MenuNode : public Node
 
         virtual void CheckKeyboardInput();
 
+
         int GetScrollPosition();
 
+        virtual void ShowSelected(bool show);
         void SetMaxShownOptions(int nr);
         void SetBackgroundColor(sf::Color c);
         void SetForegroundColor(sf::Color c);
@@ -59,6 +61,7 @@ class MenuNode : public Node
         int m_spacing;
 
 
+        bool m_showSelected;
         unsigned int m_width;
         unsigned int m_height;
         unsigned int m_optionHeight;

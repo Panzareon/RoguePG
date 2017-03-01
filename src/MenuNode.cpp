@@ -13,6 +13,7 @@ MenuNode::MenuNode(int width)
     m_cancelAvailable = false;
     m_nextAvailable = false;
     m_previousAvailable = false;
+    m_showSelected = true;
     m_backgroundColor = sf::Color::Black;
     m_foregroundColor = sf::Color::White;
     m_outlineColor = sf::Color::White;
@@ -92,6 +93,7 @@ void MenuNode::CallOnNext(std::function<void()>func)
 
 void MenuNode::ResetOptions()
 {
+    m_selected = 0;
     m_optionName.clear();
     m_optionFunction.clear();
     for(unsigned int i = 0; i < m_children.size(); i++)
@@ -143,7 +145,7 @@ void MenuNode::onDraw(sf::RenderTarget& target, const sf::Transform& transformBa
 
     //Background of selected option
     int pos = m_selected - m_scrollPosition;
-    if(pos >= 0 && pos < m_maxShownNumber)
+    if(pos >= 0 && pos < m_maxShownNumber && m_showSelected)
     {
         //if Selected is visible
         transform.translate(0.0f, pos * m_optionHeight);
@@ -212,16 +214,13 @@ void MenuNode::CheckKeyboardInput()
         {
             Use();
         }
-        else if(controller->IsKeyPressed(Configuration::Cancel) || (controller->IsKeyPressed(Configuration::MoveLeft) && m_previousAvailable))
+        else if(m_cancelAvailable && (controller->IsKeyPressed(Configuration::Cancel) || (m_previousAvailable && controller->IsKeyPressed(Configuration::MoveLeft))))
         {
             //Cancel Menu / check if menu can be canceled
-            if(m_cancelAvailable)
+            m_visible = false;
+            if(m_cancelFunction)
             {
-                if(m_cancelFunction)
-                {
-                    m_cancelFunction();
-                }
-                m_visible = false;
+                m_cancelFunction();
             }
         }
         else if(controller->IsKeyPressed(Configuration::MoveRight))
@@ -234,6 +233,11 @@ void MenuNode::CheckKeyboardInput()
 int MenuNode::GetScrollPosition()
 {
     return m_scrollPosition;
+}
+
+void MenuNode::ShowSelected(bool show)
+{
+    m_showSelected = show;
 }
 
 void MenuNode::SetMaxShownOptions(int nr)
