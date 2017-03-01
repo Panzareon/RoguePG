@@ -237,7 +237,7 @@ bool MapFill::CanBlockBeFilled(int x, int y)
 
 }
 
-void MapFill::FillWithItems(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, int index, int NrItems)
+void MapFill::FillWithItems(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, TileIndex index, int NrItems)
 {
     int maxChance = 0.0f;
     for(unsigned int i = 0; i < m_chanceForTile[index].size(); i++)
@@ -280,7 +280,7 @@ void MapFill::FillWithItems(int LayerId, int LayerAboveHeroId, int LayerWallDeco
     }
 }
 
-void MapFill::PlaceItemAt(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, int index, int x, int y)
+void MapFill::PlaceItemAt(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, TileIndex index, int x, int y)
 {
     int maxChance = 0.0f;
     for(unsigned int i = 0; i < m_chanceForTile[index].size(); i++)

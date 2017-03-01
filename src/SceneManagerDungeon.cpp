@@ -7,6 +7,7 @@
 #include "TextureList.h"
 #include "MapEventStairs.h"
 #include "MapEventEnemy.h"
+#include "MapEventChest.h"
 
 #include <iostream>
 
@@ -75,25 +76,25 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     m_hero->setTransform(heroTransform);
     UpdateCamPosition();
 
-    MapFillDungeon mapFill(&m_map);
+    m_mapFill = new MapFillDungeon(&m_map);
     //Fill Base Layer with walkable Tile
-    mapFill.FillLayer(MapFill::Ground, 0);
+    m_mapFill->FillLayer(MapFill::Ground, 0);
     //Fill Wall
-    mapFill.FillLayer(MapFill::Wall, 0,3);
+    m_mapFill->FillLayer(MapFill::Wall, 0,3);
     //Fill Wall Topping
-    mapFill.FillLayer(MapFill::WallTopping, 3);
+    m_mapFill->FillLayer(MapFill::WallTopping, 3);
     //Add random Items
-    mapFill.FillLayer(MapFill::AdditionalItems, 1,2,4);
+    m_mapFill->FillLayer(MapFill::AdditionalItems, 1,2,4);
 
     //Place Stairs
-    mapFill.PlaceItemAt(1,2,4,0,m_map.m_startX, m_map.m_startY);
-    mapFill.PlaceItemAt(1,2,4,1,m_map.m_endX, m_map.m_endY);
+    m_mapFill->PlaceItemAt(1,2,4,MapFill::TileStairsUp,m_map.m_startX, m_map.m_startY);
+    m_mapFill->PlaceItemAt(1,2,4,MapFill::TileStairsDown,m_map.m_endX, m_map.m_endY);
     m_events.push_back(new MapEventStairs(false, m_map.m_startX, m_map.m_startY));
     m_events.push_back(new MapEventStairs(true, m_map.m_endX, m_map.m_endY));
 
-    SpawnEnemy();
 
-    //TODO: Place Chests
+    //Place Chests
+    PlaceChest();
 
     m_map.writeToTileMap(*m_tileMap,0);
     m_map.writeToTileMap(*m_tileMapItems,1);
@@ -101,11 +102,15 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     sf::Color halfTransparent(255,255,255,220);
     m_map.writeToTileMap(*m_tileMapAboveWall,3, halfTransparent);
     m_map.writeToTileMap(*m_tileMapWallDecoration,4);
+
+
+    SpawnEnemy();
 }
 
 SceneManagerDungeon::~SceneManagerDungeon()
 {
     //dtor
+    delete m_mapFill;
 }
 
 void SceneManagerDungeon::SpawnEnemy()
@@ -127,4 +132,12 @@ void SceneManagerDungeon::SpawnEnemy()
 
     MapEventEnemy* mapEvent = new MapEventEnemy(&m_map, enemy,  256.0f);
     m_events.push_back(mapEvent);
+}
+
+void SceneManagerDungeon::PlaceChest()
+{
+    std::pair<int, int>* pos = m_generator.GetFreePosition();
+    std::cout << "Chest at " << pos->first << " " << pos->second << std::endl;
+    m_mapFill->PlaceItemAt(1,2,4,MapFill::TileChest,pos->first, pos->second);
+    m_events.push_back(new MapEventChest(pos->first, pos->second));
 }

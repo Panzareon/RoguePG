@@ -5,6 +5,9 @@
 #include "MapGenerator.h"
 
 
+class MapFill;
+
+
 class SceneManagerDungeon: public SceneManagerMoveable
 {
     public:
@@ -12,8 +15,10 @@ class SceneManagerDungeon: public SceneManagerMoveable
         virtual ~SceneManagerDungeon();
         void SpawnEnemy();
     protected:
-
+        void PlaceChest();
         MapGenerator m_generator;
+
+        MapFill* m_mapFill;
 
         TileMap* m_tileMap;
         TileMap* m_tileMapItems;

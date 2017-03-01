@@ -31,6 +31,7 @@ void MapEvent::Activate()
     if(!m_isActivated)
     {
         m_isActivated = true;
-        //TODO: start this event
+        //start this event
+        //NOOP
     }
 }

@@ -1,15 +1,10 @@
 #include "MapEventStairs.h"
 #include "GameController.h"
-#include "TileMap.h"
 
-MapEventStairs::MapEventStairs(bool next, int x, int y) : MapEvent(true)
+MapEventStairs::MapEventStairs(bool next, int x, int y) : MapEventTile(true,x,y)
 {
     //ctor
     m_next = next;
-    m_rect.left = x * TileMap::GetTileWith();
-    m_rect.top = y * TileMap::GetTileWith();
-    m_rect.width = TileMap::GetTileWith();
-    m_rect.height = TileMap::GetTileWith();
 }
 
 MapEventStairs::~MapEventStairs()
@@ -17,14 +12,6 @@ MapEventStairs::~MapEventStairs()
     //dtor
 }
 
-bool MapEventStairs::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, sf::Time tickTime)
-{
-    if(rect.intersects(m_rect))
-    {
-         return true;
-    }
-    return false;
-}
 
 void MapEventStairs::Activate()
 {

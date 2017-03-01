@@ -1,22 +1,20 @@
 #ifndef MAPEVENTSTAIRS_H
 #define MAPEVENTSTAIRS_H
 
-#include "MapEvent.h"
+#include "MapEventTile.h"
 
 
-class MapEventStairs : public MapEvent
+class MapEventStairs : public MapEventTile
 {
     public:
         MapEventStairs(bool next, int x, int y);
         virtual ~MapEventStairs();
-        virtual bool ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, sf::Time tickTime);
         virtual void Activate();
 
     protected:
 
     private:
         bool m_next;
-        sf::FloatRect m_rect;
 };
 
 #endif // MAPEVENTSTAIRS_H

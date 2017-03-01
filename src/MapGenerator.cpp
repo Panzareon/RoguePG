@@ -902,5 +902,15 @@ std::pair<int,int>* MapGenerator::GetFreePosition()
     std::map<int,MapRoom>* rooms = m_map->GetAllRooms();
     int roomsSize = rooms->size();
     int i = rand() % roomsSize + 1;
-    return rooms->at(i).GetRandomPosition();
+    int nr = 0;
+    std::pair<int,int>* pos;
+    //100 tries to find free space
+    while(nr < 100)
+    {
+         pos = rooms->at(i).GetRandomPosition();
+         if(!m_map->DoesCollide(pos->first, pos->second))
+            return pos;
+    }
+    //if no free space is found, return last one
+    return pos;
 }

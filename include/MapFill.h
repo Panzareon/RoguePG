@@ -11,6 +11,7 @@ class MapFill
 {
     public:
         enum ToFillLayer{Ground, Wall, WallTopping, AdditionalItems};
+        enum TileIndex{TileStairsUp, TileStairsDown, TileRandomItem, TileChest, TILE_INDEX_END};
         MapFill(Map* map);
         virtual ~MapFill();
 
@@ -18,7 +19,7 @@ class MapFill
 
 
         //Place item of layer at position x,y
-        void PlaceItemAt(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, int index, int x, int y);
+        void PlaceItemAt(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, TileIndex index, int x, int y);
     protected:
         enum FillType {Simple, WithAdjacent};
         Map* m_map;
@@ -37,7 +38,7 @@ class MapFill
         void FillLayerWallByTiles(Map::TileType checkTile, int LayerId, int LayerAboveHeroId, int TileId, int wallHeight);
         void FillLayerWallAbove(Map::TileType checkTile, int LayerId, int TileId, int wallHeight);
         //index of m_chanceForTile
-        void FillWithItems(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, int index, int NrItems);
+        void FillWithItems(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, TileIndex index, int NrItems);
     private:
 };
 
