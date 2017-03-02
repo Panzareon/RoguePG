@@ -12,7 +12,7 @@ class MapEventEnemy : public MapEvent
     public:
         MapEventEnemy(Map* m, Node* node, float movementSpeed);
         virtual ~MapEventEnemy();
-        virtual bool ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, sf::Time tickTime);
+        virtual bool ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, float tickTime);
         virtual void Activate();
 
     protected:

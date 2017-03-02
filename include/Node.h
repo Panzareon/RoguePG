@@ -30,7 +30,7 @@ class Node
 
         void setBoundingBox(sf::FloatRect bb);
         sf::FloatRect getGlobalBoundingBox();
-        sf::FloatRect getBoundingBox();
+        virtual sf::FloatRect getBoundingBox();
     protected:
         virtual void onDraw(sf::RenderTarget& target, const sf::Transform& transform) const;
         sf::Transform m_transform;

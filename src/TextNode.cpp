@@ -40,3 +40,9 @@ void TextNode::SetColor(sf::Color c)
 {
     m_text.setColor(c);
 }
+
+sf::FloatRect TextNode::getBoundingBox()
+{
+    return m_text.getLocalBounds();
+}
+

@@ -9,6 +9,8 @@ menu.startDungeon = Start Dungeon
 menu.equipment = Equipment
 menu.quit = Quit
 
+chest.receive_item = You got a %0!
+
 //Item-Names
 item.1 = Sword
 item.1.desc = A generic sword

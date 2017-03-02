@@ -8,7 +8,8 @@ AnimatedNode::AnimatedNode(sf::Sprite* sprite, int numberFrames)
     m_sprite = *sprite;
 
     //Load shader
-    m_shader = ShaderList::GetShader(ShaderList::AnimatedSpriteShader);
+    if(sf::Shader::isAvailable())
+        m_shader = ShaderList::GetShader(ShaderList::AnimatedSpriteShader);
 
     //Set number of Frames to circle through
     m_numberFrames = numberFrames;
@@ -26,8 +27,11 @@ void AnimatedNode::Tick(float seconds)
 void AnimatedNode::onDraw(sf::RenderTarget& target, const sf::Transform& transform) const
 {
     sf::RenderStates rs(transform);
-    rs.shader = m_shader;
-    m_shader->setParameter("frameId",(int)m_elapsedSeconds % m_numberFrames);
-    m_shader->setParameter("numberFrames", m_numberFrames);
+    if(sf::Shader::isAvailable())
+    {
+        rs.shader = m_shader;
+        m_shader->setParameter("frameId",(int)m_elapsedSeconds % m_numberFrames);
+        m_shader->setParameter("numberFrames", m_numberFrames);
+    }
     target.draw(m_sprite, rs);
 }

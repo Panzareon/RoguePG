@@ -40,13 +40,13 @@ void SceneManagerMoveable::Tick()
     //check Movement Buttons
     if (sf::Keyboard::isKeyPressed(conf->GetKey(Configuration::MoveLeft)))
     {
-        moveX -= MoveSpeed * m_frameTime.asSeconds();
+        moveX -= MoveSpeed * controller->GetTickTimeSeconds();
         newDirection = Enums::West;
         doChange = false;
     }
     if (sf::Keyboard::isKeyPressed(conf->GetKey(Configuration::MoveRight)))
     {
-        moveX += MoveSpeed * m_frameTime.asSeconds();
+        moveX += MoveSpeed * controller->GetTickTimeSeconds();
         if(doChange || m_heroDirection == Enums::East)
         {
             newDirection = Enums::East;
@@ -55,7 +55,7 @@ void SceneManagerMoveable::Tick()
     }
     if (sf::Keyboard::isKeyPressed(conf->GetKey(Configuration::MoveUp)))
     {
-        moveY -= MoveSpeed * m_frameTime.asSeconds();
+        moveY -= MoveSpeed * controller->GetTickTimeSeconds();
         if(doChange || m_heroDirection == Enums::North)
         {
             newDirection = Enums::North;
@@ -64,7 +64,7 @@ void SceneManagerMoveable::Tick()
     }
     if (sf::Keyboard::isKeyPressed(conf->GetKey(Configuration::MoveDown)))
     {
-        moveY += MoveSpeed * m_frameTime.asSeconds();
+        moveY += MoveSpeed * controller->GetTickTimeSeconds();
         if(doChange || m_heroDirection == Enums::South)
         {
             newDirection = Enums::South;
@@ -89,7 +89,7 @@ void SceneManagerMoveable::Tick()
     //Check Accept Key
     for(int i = 0; i < m_events.size(); i++)
     {
-        if(m_events[i]->ActivateAt(heroBB, m_heroDirection, m_frameTime))
+        if(m_events[i]->ActivateAt(heroBB, m_heroDirection, controller->GetTickTimeSeconds()))
         {
             if(m_events[i]->NeedButtonPress() && !controller->IsKeyPressed(Configuration::Accept))
             {

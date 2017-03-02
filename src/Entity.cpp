@@ -114,6 +114,24 @@ void Entity::Heal(int hp)
         }
     }
 }
+void Entity::RestoreMana(int mp)
+{
+    m_mp += mp;
+    int maxMp = GetAttribute(BattleEnums::AttributeMaxMp);
+    if(m_mp > maxMp)
+    {
+        m_mp = maxMp;
+    }
+}
+
+
+bool Entity::UseMp(int mp)
+{
+    if(m_mp < mp)
+        return false;
+    m_mp -= mp;
+    return true;
+}
 
 void Entity::Died()
 {

@@ -14,7 +14,8 @@ class Localization
         void LoadLocalizationFile(std::string filename, Languages language);
 
         std::string GetLocalization(std::string toLocalize);
-        std::string GetLocalization(std::string toLocalize, std::vector<float>* values);
+        std::string GetLocalizationWithFloats(std::string toLocalize, std::vector<float>* values);
+        std::string GetLocalizationWithStrings(std::string toLocalize, std::vector<std::string>* values);
 
     protected:
 

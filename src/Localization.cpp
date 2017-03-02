@@ -54,6 +54,38 @@ std::string format(std::string& str, std::vector<float>* values)
     return out.str();
 }
 
+std::string formatWithStrings(std::string& str, std::vector<std::string>* values)
+{
+    std::stringstream out;
+    out.precision(2);
+    size_t pos;
+    while (pos != str.npos)
+    {
+        pos = str.find_first_of('%');
+        if(pos == str.npos)
+        {
+            out << str;
+        }
+        else
+        {
+            out << str.substr(0,pos);
+            //only check for one digit numbers
+            char next = str.at(pos + 1);
+            if(next >= '0' && next <= '9')
+            {
+                //check what number should be displayed here
+                next -= '0';
+                if(values->size() > next)
+                {
+                    out << values->at(next);
+                }
+            }
+            str.erase(0, pos + 2);
+        }
+    }
+    return out.str();
+}
+
 Localization* Localization::m_instance = nullptr;
 
 Localization::Localization()
@@ -89,10 +121,17 @@ std::string Localization::GetLocalization(std::string toLocalize)
 }
 
 //returns formatted string
-std::string Localization::GetLocalization(std::string toLocalize, std::vector<float>* values)
+std::string Localization::GetLocalizationWithFloats(std::string toLocalize, std::vector<float>* values)
 {
     std::string str = GetLocalization(toLocalize);
     return format(str, values);
+}
+
+//returns formatted string
+std::string Localization::GetLocalizationWithStrings(std::string toLocalize, std::vector<std::string>* values)
+{
+    std::string str = GetLocalization(toLocalize);
+    return formatWithStrings(str, values);
 }
 
 void Localization::LoadLocalizationFile(std::string filename, Languages language)

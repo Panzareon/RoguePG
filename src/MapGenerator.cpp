@@ -908,7 +908,7 @@ std::pair<int,int>* MapGenerator::GetFreePosition()
     while(nr < 100)
     {
          pos = rooms->at(i).GetRandomPosition();
-         if(!m_map->DoesCollide(pos->first, pos->second))
+         if(m_map->GetTileType(pos->first, pos->second) == Map::Space)
             return pos;
     }
     //if no free space is found, return last one

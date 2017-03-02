@@ -58,6 +58,9 @@ void GameController::LoadSceneManager(SceneManager* sm)
 }
 void GameController::Tick()
 {
+    m_frameTime = m_clock.getElapsedTime();
+    m_clock.restart();
+
     Configuration* conf = Configuration::GetInstance();
     //Check Keys
     for(unsigned int i = 0; i < m_keysPressed.size(); i++)
@@ -180,6 +183,11 @@ int GameController::GetWindowWidth()
 int GameController::GetWindowHeight()
 {
     return m_windowHeight;
+}
+
+float GameController::GetTickTimeSeconds()
+{
+    return m_frameTime.asSeconds();
 }
 
 bool GameController::IsKeyPressed(Configuration::Keys key)

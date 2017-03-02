@@ -16,7 +16,7 @@ MapEventTile::~MapEventTile()
     //dtor
 }
 
-bool MapEventTile::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, sf::Time tickTime)
+bool MapEventTile::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, float tickTime)
 {
     if(!m_walkableTile)
     {

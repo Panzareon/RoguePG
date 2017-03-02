@@ -20,14 +20,18 @@
 			<Target title="Release">
 				<Option output="bin/Release/RougePG" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
-				<Option type="1" />
+				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-std=c++11" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-static-libgcc" />
+					<Add option="-static-libstdc++" />
+					<Add option="-static" />
 				</Linker>
 			</Target>
 		</Build>
@@ -95,6 +99,7 @@
 		<Unit filename="include/SceneManagerGameMenu.h" />
 		<Unit filename="include/SceneManagerGameOver.h" />
 		<Unit filename="include/SceneManagerMainMenu.h" />
+		<Unit filename="include/SceneManagerMessage.h" />
 		<Unit filename="include/SceneManagerMoveable.h" />
 		<Unit filename="include/ShaderList.h" />
 		<Unit filename="include/Skill.h" />
@@ -157,6 +162,7 @@
 		<Unit filename="src/SceneManagerGameMenu.cpp" />
 		<Unit filename="src/SceneManagerGameOver.cpp" />
 		<Unit filename="src/SceneManagerMainMenu.cpp" />
+		<Unit filename="src/SceneManagerMessage.cpp" />
 		<Unit filename="src/SceneManagerMoveable.cpp" />
 		<Unit filename="src/ShaderList.cpp" />
 		<Unit filename="src/Skill.cpp" />

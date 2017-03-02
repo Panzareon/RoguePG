@@ -31,6 +31,8 @@ class Entity
         void GetHit(Attack* attack, Entity* attacker);
 
         void Heal(int hp);
+        void RestoreMana(int mp);
+        bool UseMp(int mp);
 
 
         bool IsAttackPhysical();

@@ -14,9 +14,12 @@ class SceneManagerDungeon: public SceneManagerMoveable
         SceneManagerDungeon(sf::RenderTarget * target, int windowWidth, int windowHeight, int tileWidth, int tileHeight, unsigned int seed);
         virtual ~SceneManagerDungeon();
         void SpawnEnemy();
+        virtual void Tick();
     protected:
         void PlaceChest();
         MapGenerator m_generator;
+
+        float m_timeToNextSpawn;
 
         MapFill* m_mapFill;
 

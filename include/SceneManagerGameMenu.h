@@ -32,7 +32,7 @@ class SceneManagerGameMenu : public SceneManager
 
         //returns true if Scene Manager below should be displayed first
         virtual bool IsTransparent();
-        //returns true if Tick should be called for the Scene Manager below
+        //returns false if Tick should be called for the Scene Manager below
         virtual bool PausesSceneManagerBelow();
 
     protected:

@@ -67,18 +67,16 @@ void SceneManager::DrawGui()
 
 void SceneManager::NextTick()
 {
-    m_frameTime = m_clock.getElapsedTime();
-    m_clock.restart();
-
+    float time = GameController::getInstance()->GetTickTimeSeconds();
     if(m_mainNode != nullptr)
-        m_mainNode->Tick(m_frameTime.asSeconds());
+        m_mainNode->Tick(time);
     if(m_gui != nullptr)
-        m_gui->Tick(m_frameTime.asSeconds());
+        m_gui->Tick(time);
     //Call Ticks on Animation
     auto iter = m_animationList.begin();
     while(iter != m_animationList.end())
     {
-        (*iter)->PassTime(m_frameTime.asSeconds());
+        (*iter)->PassTime(time);
         if((*iter)->IsFinished())
         {
             delete (*iter);

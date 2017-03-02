@@ -16,6 +16,7 @@ class TextNode : public Node
         void SetText(std::string text);
         void SetColor(sf::Color c);
 
+        virtual sf::FloatRect getBoundingBox();
     protected:
         sf::Text m_text;
 

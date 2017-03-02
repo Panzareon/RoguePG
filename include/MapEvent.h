@@ -12,7 +12,7 @@ class MapEvent
         virtual ~MapEvent();
 
         bool NeedButtonPress();
-        virtual bool ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, sf::Time tickTime);
+        virtual bool ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, float tickTime);
         virtual void Activate();
         bool IsFinished();
 

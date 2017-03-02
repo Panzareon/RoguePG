@@ -17,7 +17,7 @@ class SceneManager
 
         //returns true if Scene Manager below should be displayed first
         virtual bool IsTransparent();
-        //returns true if Tick should be called for the Scene Manager below
+        //returns false if Tick should be called for the Scene Manager below
         virtual bool PausesSceneManagerBelow();
 
         void AddAnimation(Animation* anim);
@@ -34,8 +34,6 @@ class SceneManager
         MenuNode* m_mainMenu;
         Node * m_memberStats;
         sf::RenderTarget* m_target;
-        sf::Clock m_clock;
-        sf::Time m_frameTime;
 
         float m_posx;
         float m_posy;

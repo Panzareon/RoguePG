@@ -8,6 +8,7 @@
 #include "MapEventStairs.h"
 #include "MapEventEnemy.h"
 #include "MapEventChest.h"
+#include "GameController.h"
 
 #include <iostream>
 
@@ -113,9 +114,33 @@ SceneManagerDungeon::~SceneManagerDungeon()
     delete m_mapFill;
 }
 
+void SceneManagerDungeon::Tick()
+{
+    m_timeToNextSpawn -= GameController::getInstance()->GetTickTimeSeconds();
+    if(m_timeToNextSpawn <= 0.0f)
+    {
+        SpawnEnemy();
+    }
+    SceneManagerMoveable::Tick();
+}
+
 void SceneManagerDungeon::SpawnEnemy()
 {
-    std::pair<int, int>* pos = m_generator.GetFreePosition();
+    std::cout << "Spawn Enemy" << std::endl;
+    sf::FloatRect heroPos = m_hero->getGlobalBoundingBox();
+    float x = heroPos.left + heroPos.width/2;
+    x /= TileMap::GetTileWith();
+    float y = heroPos.top + heroPos.height/2;
+    y /= TileMap::GetTileWith();
+    int playerRoomNumber = m_map.GetRoomNr(x,y);
+    std::pair<int, int>* pos;
+    int nrTries = 0;
+    //Try 10 Times to find a Position not in the same room as the Hero
+    do
+    {
+        pos = m_generator.GetFreePosition();
+    }
+    while(m_map.GetRoomNr(pos->first, pos->second) == playerRoomNumber && nrTries < 10);
 
     sf::Sprite sprite;
     Texture* tex = TextureList::getTexture(TextureList::EnemySpriteSheet);
@@ -132,6 +157,7 @@ void SceneManagerDungeon::SpawnEnemy()
 
     MapEventEnemy* mapEvent = new MapEventEnemy(&m_map, enemy,  256.0f);
     m_events.push_back(mapEvent);
+    m_timeToNextSpawn = rand()%10 + 10;
 }
 
 void SceneManagerDungeon::PlaceChest()

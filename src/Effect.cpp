@@ -60,7 +60,7 @@ std::string Effect::GetLocalizedDescription()
 {
     std::stringstream out;
     out << GetName() << ".desc";
-    return Localization::GetInstance()->GetLocalization(out.str(), m_strength);
+    return Localization::GetInstance()->GetLocalizationWithFloats(out.str(), m_strength);
 }
 
 void Effect::SetAnimation(AnimationFactory::AnimationList anim)

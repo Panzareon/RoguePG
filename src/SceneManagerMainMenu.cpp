@@ -51,8 +51,8 @@ SceneManagerMainMenu::SceneManagerMainMenu(sf::RenderTarget * target, int window
     m_mainMenu->SetForegroundColor(sf::Color::Black);
     m_mainMenu->SetOutlineColor(sf::Color::Transparent);
     m_mainMenu->SetSelectedTexture(TextureList::getTexture(TextureList::InGameMenuSelected));
-    m_mainMenu->SetFontSize(50);
-    m_mainMenu->SetSpacing(29);
+    m_mainMenu->SetFontSize(45);
+    m_mainMenu->SetSpacing(34);
 }
 
 SceneManagerMainMenu::~SceneManagerMainMenu()
@@ -79,7 +79,6 @@ void SceneManagerMainMenu::StartDungeon()
     {
         party->AddItem(itemFactory->GetRandomEquipment(Equipment::MainHand));
     }
-
 
     DungeonConfiguration * config = new DungeonConfiguration(5, time(NULL));
     controller->SetDungeonConfiguration(config);

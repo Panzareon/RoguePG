@@ -17,6 +17,8 @@ Skill::~Skill()
 }
 void Skill::Use(Entity* user, BattleEnums::Target targetType, Entity* target)
 {
+    if(!user->UseMp(GetManaUse()))
+        return;
     std::vector<Entity*> targets;
     if(targetType == BattleEnums::TargetEnemyTeamEntity || targetType == BattleEnums::TargetOwnTeamEntity)
     {

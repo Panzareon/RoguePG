@@ -52,7 +52,7 @@ namespace BattleFunctions
         std::vector<std::shared_ptr<Skill>>* skillList = attacking->GetSkillList();
         for(unsigned int i = 0; i < skillList->size(); i++)
         {
-            skillMenu->AddOption(localization->GetLocalization(skillList->at(i)->GetName()),std::function<void()>(std::bind(&UseSkill, sm, attacking, skillList->at(i).get())));
+            skillMenu->AddOption(localization->GetLocalization(skillList->at(i)->GetName()),std::function<void()>(std::bind(&UseSkill, sm, attacking, skillList->at(i).get())), attacking->GetMp() >= skillList->at(i)->GetManaUse());
         }
 
         sm->AddSubMenu(skillMenu);
@@ -77,6 +77,8 @@ SceneManagerBattle::SceneManagerBattle(sf::RenderTarget * target, int windowWidt
 
     m_next = nullptr;
     m_useOnTarget = nullptr;
+    m_restoreHpPercent = 0.25f;
+    m_restoreMpPercent = 0.25f;
 
     //Setting Startpositions for teams
     //TODO: for more than 2 teams?
@@ -399,6 +401,8 @@ void SceneManagerBattle::Finished()
         PartyMember* member = activeParty->at(i);
         member->AddExp(exp);
         member->BattleFinished();
+        member->Heal(member->GetAttribute(BattleEnums::AttributeMaxHp) * m_restoreHpPercent);
+        member->RestoreMana(member->GetAttribute(BattleEnums::AttributeMaxMp) * m_restoreMpPercent);
     }
 }
 

@@ -23,7 +23,7 @@ MapEventEnemy::~MapEventEnemy()
     //dtor
 }
 
-bool MapEventEnemy::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, sf::Time tickTime)
+bool MapEventEnemy::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, float tickTime)
 {
     if(m_timeSinceChange > m_maxTimeSinceChange){
         m_timeSinceChange = 0.0f;
@@ -32,10 +32,10 @@ bool MapEventEnemy::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirec
         m_xMove = cos(angle);
         m_yMove = sin(angle);
     }
-    m_timeSinceChange += tickTime.asSeconds();
+    m_timeSinceChange += tickTime;
     sf::FloatRect enemyBB = m_node->getGlobalBoundingBox();
-    enemyBB.left += m_xMove * m_movementSpeed * tickTime.asSeconds();
-    enemyBB.top += m_yMove * m_movementSpeed  * tickTime.asSeconds();
+    enemyBB.left += m_xMove * m_movementSpeed * tickTime;
+    enemyBB.top += m_yMove * m_movementSpeed  * tickTime;
     if(!m_map->DoesCollide(enemyBB))
     {
         m_node->moveNode(m_xMove, m_yMove);

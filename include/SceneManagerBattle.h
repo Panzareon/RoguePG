@@ -39,6 +39,8 @@ class SceneManagerBattle : public SceneManager
 
         Entity* m_next;
         bool m_nextFinished;
+        float m_restoreHpPercent;
+        float m_restoreMpPercent;
 
         Party* m_party;
         std::vector<Entity*> m_enemies;

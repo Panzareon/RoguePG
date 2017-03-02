@@ -8,7 +8,7 @@ class MapEventTile : public MapEvent
 {
     public:
         MapEventTile(bool needButton, int x, int y, bool walkableTile = true);
-        virtual bool ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, sf::Time tickTime);
+        virtual bool ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, float tickTime);
         virtual ~MapEventTile();
 
     protected:

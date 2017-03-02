@@ -1,6 +1,9 @@
 #include "MapEventChest.h"
 #include "GameController.h"
 #include "ItemFactory.h"
+#include "Localization.h"
+#include "SceneManagerMessage.h"
+
 #include <iostream>
 
 MapEventChest::MapEventChest(int x, int y) : MapEventTile(true, x, y, false)
@@ -19,8 +22,17 @@ void MapEventChest::Activate()
     {
         m_isActivated = true;
         //start this event (Give an item)
-        GameController::getInstance()->getParty()->AddItem(ItemFactory::GetInstance()->GetRandomEquipment(Equipment::MainHand));
+        Item* item = ItemFactory::GetInstance()->GetRandomEquipment(Equipment::MainHand);
+        GameController* controller = GameController::getInstance();
+        controller->getParty()->AddItem(item);
         std::cout << "Got Item" << std::endl;
-        //TODO: Receive message
+        //Receive message
+        std::string toDisplay;
+        Localization* localization = Localization::GetInstance();
+        std::vector<std::string> itemName;
+        itemName.push_back(localization->GetLocalization(item->GetName()));
+        toDisplay = localization->GetLocalizationWithStrings("chest.receive_item", &itemName);
+        SceneManagerMessage* message = new SceneManagerMessage(controller->GetRenderTarget(), controller->GetWindowWidth(), controller->GetWindowHeight(), toDisplay);
+        controller->LoadSceneManager(message);
     }
 }

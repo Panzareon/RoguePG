@@ -31,6 +31,8 @@ class GameController
         int GetWindowWidth();
         int GetWindowHeight();
 
+        float GetTickTimeSeconds();
+
         bool IsKeyPressed(Configuration::Keys key);
 
         void setParty(Party* party);
@@ -47,6 +49,8 @@ class GameController
         int m_windowWidth;
         int m_windowHeight;
         int m_levelId;
+        sf::Time m_frameTime;
+        sf::Clock m_clock;
 
         std::vector<bool> m_keysPressed;
 
