@@ -43,6 +43,19 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         ret->AddSkill(sk);
         break;
     }
+    case EnemyListStoneGolem:
+    {
+
+        //Exp to give after Battle
+        ret = new Entity(15);
+        ret->InitAllAttributes(28 + lvl*2,10 + lvl,5 + lvl/2,5 + lvl/2,16 + lvl,15 + lvl,10 + lvl);
+        ret->SetBattleSprite(TextureList::StoneGolemBattleSprite);
+        BattleEnums::Target target = BattleEnums::TargetEnemyTeam;
+        Skill* sk = new Skill(target);
+        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(1)->GetEffectWithValue(4 + lvl,target),true);
+        ret->AddSkill(sk);
+        break;
+    }
     }
 
     if(ret == nullptr)

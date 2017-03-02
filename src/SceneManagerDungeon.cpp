@@ -144,7 +144,10 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     m_map.writeToTileMap(*m_tileMapWallDecoration,4);
 
 
-    SpawnEnemy();
+    for(int i = 0; i < 10; i++)
+    {
+        SpawnEnemy();
+    }
 }
 
 SceneManagerDungeon::~SceneManagerDungeon()

@@ -14,7 +14,7 @@ class TextureList
             HeroSpriteSheet,
             EnemySpriteSheet,
 
-            BatBattleSprite, DeadWizardBattleSprite,
+            BatBattleSprite, DeadWizardBattleSprite, StoneGolemBattleSprite,
             DefaultBattleSprite,
 
             TargetCursor,
