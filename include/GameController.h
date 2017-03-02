@@ -14,6 +14,8 @@ class GameController
         virtual ~GameController();
         static GameController* getInstance();
 
+        void InitValues();
+
         void Tick();
         SceneManager* GetActiveSceneManager();
         void CloseActiveSceneManger();

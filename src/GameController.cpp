@@ -19,14 +19,14 @@ GameController* GameController::m_instance = 0;
 GameController::GameController() : m_randomGenerator(time(NULL))
 {
     //ctor
-    m_party = nullptr;
     m_renderTarget = 0;
     m_keysPressed.resize(Configuration::GetInstance()->GetNumberKeys());
     m_gameOver = false;
-    m_levelId = 0;
     m_dungeonConfiguration = nullptr;
     m_quit = false;
     m_windowFocused = true;
+
+    InitValues();
 
     //TODO: load actual values
     m_windowWidth = 640;
@@ -36,7 +36,18 @@ GameController::GameController() : m_randomGenerator(time(NULL))
 GameController::~GameController()
 {
     //dtor
-    delete m_party;
+    if(m_party != nullptr)
+        delete m_party;
+    if(m_dungeonConfiguration != nullptr)
+        delete m_dungeonConfiguration;
+}
+
+void GameController::InitValues()
+{
+    if(m_party != nullptr)
+        delete m_party;
+    m_party = nullptr;
+    m_levelId = 0;
 }
 
 bool GameController::IsWindowFocused()
@@ -264,6 +275,7 @@ void GameController::ToMainMenu()
     {
         CloseActiveSceneManger();
     }
+    InitValues();
 }
 
 void GameController::QuitToMainMenu()
