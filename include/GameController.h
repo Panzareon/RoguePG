@@ -34,8 +34,10 @@ class GameController
         float GetTickTimeSeconds();
 
         bool IsKeyPressed(Configuration::Keys key);
+        bool IsWindowFocused();
 
         void setParty(Party* party);
+        void SetWindowFocus(bool focused);
         Party* getParty();
         std::default_random_engine* GetRandomGenerator();
     protected:
@@ -51,6 +53,8 @@ class GameController
         int m_levelId;
         sf::Time m_frameTime;
         sf::Clock m_clock;
+
+        bool m_windowFocused;
 
         std::vector<bool> m_keysPressed;
 

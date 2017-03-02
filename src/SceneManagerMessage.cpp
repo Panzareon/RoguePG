@@ -37,6 +37,8 @@ void SceneManagerMessage::Tick()
     if(controller->IsKeyPressed(Configuration::Cancel) || controller->IsKeyPressed(Configuration::Accept))
     {
         m_finished = true;
+        if(m_onAccept != nullptr)
+            m_onAccept();
     }
 }
 
@@ -44,3 +46,9 @@ bool SceneManagerMessage::IsFinished()
 {
     return m_finished;
 }
+
+void SceneManagerMessage::OnAccept(std::function<void()>func)
+{
+    m_onAccept = func;
+}
+

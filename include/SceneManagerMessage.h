@@ -3,6 +3,7 @@
 
 #include "SceneManager.h"
 #include "TextNode.h"
+#include <functional>
 
 
 class SceneManagerMessage : public SceneManager
@@ -19,8 +20,11 @@ class SceneManagerMessage : public SceneManager
         //returns false if Tick should be called for the Scene Manager below
         virtual bool PausesSceneManagerBelow();
 
+        void OnAccept(std::function<void()> func);
+
     protected:
         TextNode* m_text;
+        std::function<void()> m_onAccept;
 
         bool m_finished;
     private:

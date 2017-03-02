@@ -9,6 +9,8 @@ menu.startDungeon = Start Dungeon
 menu.equipment = Equipment
 menu.quit = Quit
 
+dungeon.finished = You Won!
+
 chest.receive_item = You got a %0!
 
 //Item-Names

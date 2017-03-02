@@ -1,7 +1,19 @@
 #include "GameController.h"
 #include "SceneManagerBattle.h"
 #include "SceneManagerGameOver.h"
+#include "SceneManagerMessage.h"
+#include "Localization.h"
+
 #include <iostream>
+
+
+namespace ControllerFunctions
+{
+    void QuitToMainMenu()
+    {
+        GameController::getInstance()->QuitToMainMenu();
+    }
+}
 
 GameController* GameController::m_instance = 0;
 GameController::GameController() : m_randomGenerator(time(NULL))
@@ -14,6 +26,7 @@ GameController::GameController() : m_randomGenerator(time(NULL))
     m_levelId = 0;
     m_dungeonConfiguration = nullptr;
     m_quit = false;
+    m_windowFocused = true;
 
     //TODO: load actual values
     m_windowWidth = 640;
@@ -24,6 +37,16 @@ GameController::~GameController()
 {
     //dtor
     delete m_party;
+}
+
+bool GameController::IsWindowFocused()
+{
+    return m_windowFocused;
+}
+
+void GameController::SetWindowFocus(bool focused)
+{
+    m_windowFocused = focused;
 }
 
 void GameController::setParty(Party* party)
@@ -135,7 +158,10 @@ void GameController::GotoNextLevel()
     }
     else
     {
-        //TODO: finish the dungeon
+        //finish the dungeon
+        SceneManagerMessage* message = new SceneManagerMessage(GetRenderTarget(), GetWindowWidth(), GetWindowHeight(), Localization::GetInstance()->GetLocalization("dungeon.finished"));
+        message->OnAccept(std::function<void()>(ControllerFunctions::QuitToMainMenu));
+        LoadSceneManager(message);
     }
 }
 
@@ -151,7 +177,8 @@ void GameController::GotoPreviousLevel()
     }
     else
     {
-        //TODO: exit Dungeon
+        //exit Dungeon
+        QuitToMainMenu();
     }
 }
 
@@ -192,6 +219,11 @@ float GameController::GetTickTimeSeconds()
 
 bool GameController::IsKeyPressed(Configuration::Keys key)
 {
+    //Only check Keys if Window is focused
+    if(!IsWindowFocused())
+    {
+        return false;
+    }
     if(!m_keysPressed.at(key) && sf::Keyboard::isKeyPressed(Configuration::GetInstance()->GetKey(key)))
     {
         m_keysPressed.at(key) = true;

@@ -105,20 +105,38 @@ void SceneManagerMoveable::Tick()
     }
 
 
-    //TODO: remove Debugkey
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
-    {
-        GameController::getInstance()->getParty()->GetActivePartyMembers()->at(0)->LevelUp();
-    }
 
     if(moveX != 0.0f || moveY != 0.0f)
     {
-        heroBB.left += moveX;
-        heroBB.top += moveY;
-        if(!m_map.DoesCollide(heroBB))
+        sf::FloatRect heroBBtest = heroBB;
+        heroBBtest.left += moveX;
+        heroBBtest.top += moveY;
+        if(!m_map.DoesCollide(heroBBtest))
         {
             m_hero->moveNode(moveX, moveY);
             UpdateCamPosition();
+        }
+        else
+        {
+            //Check only horizontal movement
+            sf::FloatRect heroBBtest = heroBB;
+            heroBBtest.left += moveX;
+            if(!m_map.DoesCollide(heroBBtest))
+            {
+                m_hero->moveNode(moveX, 0.0f);
+                UpdateCamPosition();
+            }
+            else
+            {
+                //Check only vertical movement
+                sf::FloatRect heroBBtest = heroBB;
+                heroBBtest.top += moveY;
+                if(!m_map.DoesCollide(heroBBtest))
+                {
+                    m_hero->moveNode(0.0f, moveY);
+                    UpdateCamPosition();
+                }
+            }
         }
     }
 }
