@@ -70,13 +70,6 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
 
     m_generator.NumberRooms();
 
-    m_generator.PlaceStartingAndEndPosition();
-
-    sf::Transform heroTransform;
-    //Place Hero at Startposition
-    heroTransform.translate(m_map.m_startX * TileMap::GetTileWith(), m_map.m_startY * TileMap::GetTileWith() - 14);
-    m_hero->setTransform(heroTransform);
-    UpdateCamPosition();
 
     m_mapFill = new MapFillDungeon(&m_map);
     //Fill Base Layer with walkable Tile
@@ -85,6 +78,16 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     m_mapFill->FillLayer(MapFill::Wall, 0,3);
     //Fill Wall Topping
     m_mapFill->FillLayer(MapFill::WallTopping, 3);
+
+
+    m_generator.PlaceStartingAndEndPosition();
+
+    sf::Transform heroTransform;
+    //Place Hero at Startposition
+    heroTransform.translate(m_map.m_startX * TileMap::GetTileWith(), m_map.m_startY * TileMap::GetTileWith() - 14);
+    m_hero->setTransform(heroTransform);
+    UpdateCamPosition();
+
     //Add random Items
     m_mapFill->FillLayer(MapFill::AdditionalItems, 1,2,4);
 

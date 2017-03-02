@@ -27,24 +27,27 @@ MapEventEnemy::~MapEventEnemy()
 
 bool MapEventEnemy::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, float tickTime)
 {
-    if(m_timeSinceChange > m_maxTimeSinceChange){
-        m_timeSinceChange = 0.0f;
-        //Change Direction
-        float angle = (rand() % 4) / 2.0f * M_PI;
-        m_xMove = cos(angle);
-        m_yMove = sin(angle);
-    }
-    m_timeSinceChange += tickTime;
-    sf::FloatRect enemyBB = m_node->getGlobalBoundingBox();
-    enemyBB.left += m_xMove * m_movementSpeed * tickTime;
-    enemyBB.top += m_yMove * m_movementSpeed  * tickTime;
-    if(!m_map->DoesCollide(enemyBB))
+    if(m_movementSpeed > 0.0f)
     {
-        m_node->moveNode(m_xMove, m_yMove);
-    }
-    else
-    {
-        m_timeSinceChange += m_maxTimeSinceChange;
+        if(m_timeSinceChange > m_maxTimeSinceChange){
+            m_timeSinceChange = 0.0f;
+            //Change Direction
+            float angle = (rand() % 4) / 2.0f * M_PI;
+            m_xMove = cos(angle);
+            m_yMove = sin(angle);
+        }
+        m_timeSinceChange += tickTime;
+        sf::FloatRect enemyBB = m_node->getGlobalBoundingBox();
+        enemyBB.left += m_xMove * m_movementSpeed * tickTime;
+        enemyBB.top += m_yMove * m_movementSpeed  * tickTime;
+        if(!m_map->DoesCollide(enemyBB))
+        {
+            m_node->moveNode(m_xMove, m_yMove);
+        }
+        else
+        {
+            m_timeSinceChange += m_maxTimeSinceChange;
+        }
     }
     return rect.intersects(m_node->getGlobalBoundingBox());
 }

@@ -874,6 +874,7 @@ void MapGenerator::PlaceStartingAndEndPosition()
         }
         m_map->m_startX = pos->first;
         m_map->m_startY = pos->second;
+        m_map->SetTileToType(m_map->m_startX, m_map->m_startY, Map::WalkthroughItem);
     }
     else
     {
@@ -889,6 +890,7 @@ void MapGenerator::PlaceStartingAndEndPosition()
         }
         m_map->m_endX = pos->first;
         m_map->m_endY = pos->second;
+        m_map->SetTileToType(m_map->m_endX, m_map->m_endY, Map::WalkthroughItem);
     }
     else
     {
