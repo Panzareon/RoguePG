@@ -10,16 +10,19 @@
 #include "MapEventChest.h"
 #include "GameController.h"
 #include "EnemyFactory.h"
+#include "DungeonConfiguration.h"
 
 #include <iostream>
 
 
-SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWidth, int windowHeight, int tileWidth, int tileHeight, unsigned int seed): SceneManagerMoveable(target, windowWidth, windowHeight, tileWidth, tileHeight), m_generator(&m_map, seed)
+SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWidth, int windowHeight, int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config): SceneManagerMoveable(target, windowWidth, windowHeight, tileWidth, tileHeight), m_generator(&m_map, seed)
 {
     //ctor
     //Define Tile Maps
     SetMemberStats();
     m_map.init(5);
+    m_dungeonConfig = config;
+    m_lvlId = lvlId;
     m_tileMap = new TileMap();
     m_tileMapItems = new TileMap();
     m_tileMapAboveHero = new TileMap();
@@ -114,13 +117,13 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
 
     std::vector<Entity*>* enemies = new std::vector<Entity*>();
     //TODO: get Entities of this Map from somewhere else
-    Entity* e = EnemyFactory::GetEntity(EnemyFactory::EnemyListBat);
+    Entity* e = m_dungeonConfig->GetDungeonEnemy(m_lvlId);
     e->SetTeamId(1);
     enemies->push_back(e);
-    e = EnemyFactory::GetEntity(EnemyFactory::EnemyListDeadWizard);
+    e = m_dungeonConfig->GetDungeonBoss(m_lvlId);
     e->SetTeamId(1);
     enemies->push_back(e);
-    e = EnemyFactory::GetEntity(EnemyFactory::EnemyListBat);
+    e = m_dungeonConfig->GetDungeonEnemy(m_lvlId);
     e->SetTeamId(1);
     enemies->push_back(e);
 
@@ -193,10 +196,10 @@ void SceneManagerDungeon::SpawnEnemy()
 
     std::vector<Entity*>* enemies = new std::vector<Entity*>();
     //TODO: get Entities of this Map from somewhere else
-    Entity* e = EnemyFactory::GetEntity(EnemyFactory::EnemyListBat);
+    Entity* e = m_dungeonConfig->GetDungeonEnemy(m_lvlId);
     e->SetTeamId(1);
     enemies->push_back(e);
-    e = EnemyFactory::GetEntity(EnemyFactory::EnemyListBat);
+    e = m_dungeonConfig->GetDungeonEnemy(m_lvlId);
     e->SetTeamId(1);
     enemies->push_back(e);
 

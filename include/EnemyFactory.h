@@ -14,7 +14,7 @@ class EnemyFactory
         EnemyFactory();
         virtual ~EnemyFactory();
 
-        static Entity* GetEntity(EnemyList type);
+        static Entity* GetEntity(EnemyList type, int lvl);
 
     protected:
 

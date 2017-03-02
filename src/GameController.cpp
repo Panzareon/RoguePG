@@ -265,6 +265,7 @@ void GameController::GameOver()
         //display Game Over screen
         SceneManagerGameOver* gameOver = new SceneManagerGameOver(GetRenderTarget(), GetWindowWidth(), GetWindowHeight());
         LoadSceneManager(gameOver);
+        m_gameOver = false;
     }
 }
 

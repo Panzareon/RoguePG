@@ -6,12 +6,12 @@
 
 
 class MapFill;
-
+class DungeonConfiguration;
 
 class SceneManagerDungeon: public SceneManagerMoveable
 {
     public:
-        SceneManagerDungeon(sf::RenderTarget * target, int windowWidth, int windowHeight, int tileWidth, int tileHeight, unsigned int seed);
+        SceneManagerDungeon(sf::RenderTarget * target, int windowWidth, int windowHeight, int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config);
         virtual ~SceneManagerDungeon();
         void SpawnEnemy();
         virtual void Tick();
@@ -20,6 +20,7 @@ class SceneManagerDungeon: public SceneManagerMoveable
         MapGenerator m_generator;
 
         float m_timeToNextSpawn;
+        int m_lvlId;
 
         MapFill* m_mapFill;
 
@@ -28,6 +29,8 @@ class SceneManagerDungeon: public SceneManagerMoveable
         TileMap* m_tileMapAboveHero;
         TileMap* m_tileMapAboveWall;
         TileMap* m_tileMapWallDecoration;
+
+        DungeonConfiguration* m_dungeonConfig;
 
         Node* m_belowHero;
         Node* m_eventLayer;
