@@ -3,11 +3,14 @@
 #include "Entity.h"
 #include "Skill.h"
 
+#include <iostream>
+
 Equipment::Equipment(int itemId, EquipmentPosition pos) : Item(itemId, Item::ItemTypeEquipment)
 {
     //ctor
     m_target = nullptr;
     m_position = pos;
+    m_neededExpMultiplier = 10;
 }
 
 Equipment::~Equipment()
@@ -79,6 +82,7 @@ void Equipment::AddExp(int exp)
 
 void Equipment::AddExp(Entity* target, int exp)
 {
+    initExpAndLevel(target);
     if(!CanLearnSomething(target))
         return;
     m_exp[target] += exp;
@@ -105,11 +109,13 @@ int Equipment::GetLevel()
 
 int Equipment::GetEquipmentExp(Entity* target)
 {
+    initExpAndLevel(target);
     return m_exp[target];
 }
 
 int Equipment::GetLevel(Entity* target)
 {
+    initExpAndLevel(target);
     return m_level[target];
 }
 
@@ -120,6 +126,7 @@ std::map<int, std::shared_ptr<Skill>>*  Equipment::GetSkillsToLearn()
 
 bool Equipment::CanLearnSomething(Entity* target)
 {
+    initExpAndLevel(target);
     //Checks if the is a skill target has not learned yet from this Equipment
     //Check if this Equipment actually can learn something
     if(m_skillsToLearn.size() == 0)
@@ -137,6 +144,15 @@ void Equipment::LevelUp(Entity* target)
     if(it != m_skillsToLearn.end())
     {
         target->AddSkill(it->second);
+    }
+}
+
+void Equipment::initExpAndLevel(Entity* target)
+{
+    if(m_level.find(target) == m_level.end())
+    {
+        m_level[target] = 0;
+        m_exp[target] = 0;
     }
 }
 

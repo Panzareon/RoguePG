@@ -9,11 +9,11 @@ class SceneManagerGameOver : public SceneManager
     public:
         SceneManagerGameOver(sf::RenderTarget * target, int windowWidth, int windowHeight);
         virtual ~SceneManagerGameOver();
-        virtual void Tick();
         virtual bool IsFinished();
 
     protected:
         bool m_finished;
+        virtual void Tick();
 
     private:
 };

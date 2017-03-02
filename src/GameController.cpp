@@ -247,7 +247,8 @@ void GameController::GameOverCheck()
 
 void GameController::GameOver()
 {
-    if(m_gameOver)
+    //Only show Game over if not in Main Menu
+    if(m_gameOver && m_sceneManager.size() > 1)
     {
         ToMainMenu();
         //display Game Over screen

@@ -16,6 +16,12 @@ chest.receive_item = You got a %0!
 //Item-Names
 item.1 = Sword
 item.1.desc = A generic sword
+item.2 = Shield
+item.2.desc = A generic shield
+item.3 = Staff
+item.3.desc = A healing staff
+item.4 = Spell Book
+item.4.desc = A magic spell book
 
 //Effect Base Description
 effect.target.0 = Targets one hero.

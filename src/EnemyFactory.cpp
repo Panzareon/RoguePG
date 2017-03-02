@@ -19,6 +19,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type)
     switch(type)
     {
     case EnemyListBat:
+    {
         //Exp to give after Battle
         ret = new Entity(10);
         ret->InitAllAttributes(12,10,8,2,8,6,10);
@@ -28,6 +29,20 @@ Entity* EnemyFactory::GetEntity(EnemyList type)
         sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(4)->GetEffectWithValue(2,target),true);
         ret->AddSkill(sk);
         break;
+    }
+    case EnemyListDeadWizard:
+    {
+
+        //Exp to give after Battle
+        ret = new Entity(20);
+        ret->InitAllAttributes(30,40,8,15,12,16,15);
+        ret->SetBattleSprite(TextureList::DeadWizardBattleSprite);
+        BattleEnums::Target target = BattleEnums::TargetEnemyTeamEntity;
+        Skill* sk = new Skill(target);
+        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(1)->GetEffectWithValue(10,target),true);
+        ret->AddSkill(sk);
+        break;
+    }
     }
 
     if(ret == nullptr)

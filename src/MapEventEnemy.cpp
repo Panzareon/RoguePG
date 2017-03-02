@@ -7,7 +7,7 @@
 #define M_PI 3.1415926535897
 #include <math.h>
 
-MapEventEnemy::MapEventEnemy(Map* m, Node* node, float movementSpeed) : MapEvent(false)
+MapEventEnemy::MapEventEnemy(Map* m, Node* node, float movementSpeed, std::vector<Entity*>* enemies) : MapEvent(false)
 {
     //ctor
     m_map = m;
@@ -16,11 +16,13 @@ MapEventEnemy::MapEventEnemy(Map* m, Node* node, float movementSpeed) : MapEvent
     m_movementSpeed = movementSpeed;
     m_node = node;
     m_maxTimeSinceChange = 3.0f;
+    m_enemies = enemies;
 }
 
 MapEventEnemy::~MapEventEnemy()
 {
     //dtor
+    delete m_enemies;
 }
 
 bool MapEventEnemy::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, float tickTime)
@@ -49,16 +51,8 @@ bool MapEventEnemy::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirec
 
 void MapEventEnemy::Activate()
 {
-    std::vector<Entity*> enemies;
-    //TODO: get Entities of this Map from somewhere else
-    Entity* e = EnemyFactory::GetEntity(EnemyFactory::EnemyListBat);
-    e->SetTeamId(1);
-    enemies.push_back(e);
-    e = EnemyFactory::GetEntity(EnemyFactory::EnemyListBat);
-    e->SetTeamId(1);
-    enemies.push_back(e);
 
-    GameController::getInstance()->StartBattle(&enemies);
+    GameController::getInstance()->StartBattle(m_enemies);
 
     m_finished = true;
     m_node->GetParent()->removeChild(m_node);

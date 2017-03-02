@@ -5,12 +5,12 @@
 
 #include "Node.h"
 #include "Map.h"
-
+#include "Entity.h"
 
 class MapEventEnemy : public MapEvent
 {
     public:
-        MapEventEnemy(Map* m, Node* node, float movementSpeed);
+        MapEventEnemy(Map* m, Node* node, float movementSpeed, std::vector<Entity*>* enemies);
         virtual ~MapEventEnemy();
         virtual bool ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, float tickTime);
         virtual void Activate();
@@ -25,6 +25,8 @@ class MapEventEnemy : public MapEvent
 
         float m_timeSinceChange;
         float m_maxTimeSinceChange;
+
+        std::vector<Entity*>* m_enemies;
 
     private:
 };

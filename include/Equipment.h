@@ -70,6 +70,7 @@ class Equipment : public IPassiveEffect, public Item
         std::map<int, std::shared_ptr<Skill>> m_skillsToLearn;
         float m_skillStrength;
 
+        void initExpAndLevel(Entity* target);
         std::map<Entity*,int> m_level;
         std::map<Entity*,int> m_exp;
 

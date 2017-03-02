@@ -25,13 +25,11 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-std=c++11" />
+					<Add option="-m64" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
-					<Add option="-s" />
-					<Add option="-static-libgcc" />
-					<Add option="-static-libstdc++" />
-					<Add option="-static" />
+					<Add option="-m64" />
 				</Linker>
 			</Target>
 		</Build>

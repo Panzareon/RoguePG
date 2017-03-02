@@ -39,6 +39,9 @@ Texture* TextureList::getTexture(TextureFiles file)
         case BatBattleSprite:
             filename = "bat.png";
             break;
+        case DeadWizardBattleSprite:
+            filename = "deadWizard.png";
+            break;
         case DefaultBattleSprite:
             filename = "rogue.png";
             break;

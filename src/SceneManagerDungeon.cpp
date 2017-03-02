@@ -9,6 +9,7 @@
 #include "MapEventEnemy.h"
 #include "MapEventChest.h"
 #include "GameController.h"
+#include "EnemyFactory.h"
 
 #include <iostream>
 
@@ -94,6 +95,38 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     m_events.push_back(new MapEventStairs(true, m_map.m_endX, m_map.m_endY));
 
 
+    //Place Boss at Stairs
+    sf::Sprite sprite;
+    tex = TextureList::getTexture(TextureList::EnemySpriteSheet);
+    sprite.setTexture(*tex);
+    sprite.setTextureRect(sf::IntRect(15,13,32,36));
+    Node* enemy = new AnimatedNode(&sprite, tex->GetNumberAnimationSteps());
+    enemy->setBoundingBox(sf::FloatRect(0.0f,14.0f,32.0f,32.0f));
+    m_eventLayer->addChild(enemy);
+
+    sf::Transform enemyTransform;
+    //Place Enemy at Position
+    enemyTransform.translate(m_map.m_endX * TileMap::GetTileWith(), m_map.m_endY * TileMap::GetTileWith() - 14);
+    enemy->setTransform(enemyTransform);
+
+    std::vector<Entity*>* enemies = new std::vector<Entity*>();
+    //TODO: get Entities of this Map from somewhere else
+    Entity* e = EnemyFactory::GetEntity(EnemyFactory::EnemyListBat);
+    e->SetTeamId(1);
+    enemies->push_back(e);
+    e = EnemyFactory::GetEntity(EnemyFactory::EnemyListDeadWizard);
+    e->SetTeamId(1);
+    enemies->push_back(e);
+    e = EnemyFactory::GetEntity(EnemyFactory::EnemyListBat);
+    e->SetTeamId(1);
+    enemies->push_back(e);
+
+
+    MapEventEnemy* mapEvent = new MapEventEnemy(&m_map, enemy,  0.0f, enemies);
+    m_events.push_back(mapEvent);
+
+
+
     //Place Chests
     PlaceChest();
 
@@ -155,7 +188,17 @@ void SceneManagerDungeon::SpawnEnemy()
     enemyTransform.translate(pos->first * TileMap::GetTileWith(), pos->second * TileMap::GetTileWith() - 14);
     enemy->setTransform(enemyTransform);
 
-    MapEventEnemy* mapEvent = new MapEventEnemy(&m_map, enemy,  256.0f);
+    std::vector<Entity*>* enemies = new std::vector<Entity*>();
+    //TODO: get Entities of this Map from somewhere else
+    Entity* e = EnemyFactory::GetEntity(EnemyFactory::EnemyListBat);
+    e->SetTeamId(1);
+    enemies->push_back(e);
+    e = EnemyFactory::GetEntity(EnemyFactory::EnemyListBat);
+    e->SetTeamId(1);
+    enemies->push_back(e);
+
+
+    MapEventEnemy* mapEvent = new MapEventEnemy(&m_map, enemy,  256.0f, enemies);
     m_events.push_back(mapEvent);
     m_timeToNextSpawn = rand()%10 + 10;
 }

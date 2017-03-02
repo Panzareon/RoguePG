@@ -8,7 +8,8 @@ class EnemyFactory
 {
     public:
         enum EnemyList{
-            EnemyListBat
+            EnemyListBat,
+            EnemyListDeadWizard
         };
         EnemyFactory();
         virtual ~EnemyFactory();
