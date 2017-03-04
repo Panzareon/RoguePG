@@ -1,5 +1,6 @@
 #include "SkillGenerator.h"
 #include "EffectFactoryList.h"
+#include <iostream>
 
 SkillGenerator::SkillGenerator()
 {

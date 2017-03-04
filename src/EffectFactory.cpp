@@ -1,5 +1,7 @@
 #include "EffectFactory.h"
 
+#include <iostream>
+
 EffectFactory::EffectFactory(std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets)>* func, int id)
 {
     m_effectFunction = func;

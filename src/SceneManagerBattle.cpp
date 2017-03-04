@@ -5,6 +5,7 @@
 #include "Configuration.h"
 #include "Skill.h"
 #include "Localization.h"
+#include "MenuNodeItems.h"
 #include "EntityNode.h"
 #include <iostream>
 
@@ -27,6 +28,16 @@ namespace BattleFunctions
         sm->TurnIsFinished();
     }
 
+    void SetSkillDescription(SceneManagerBattle* sm, Skill* skill)
+    {
+        sm->SetDescription(skill->GetLocalizedDescription());
+    }
+
+    void SetDescription(SceneManagerBattle* sm, std::string str)
+    {
+        sm->SetDescription(str);
+    }
+
     void UseSkill(SceneManagerBattle* sm, Entity* attacking, Skill* skill)
     {
         BattleEnums::Target target = skill->GetDefaultTarget();
@@ -44,15 +55,22 @@ namespace BattleFunctions
     void SkillList(SceneManagerBattle* sm, Entity* attacking)
     {
         //TODO: different width?
-        MenuNode* skillMenu = new MenuNode(GameController::getInstance()->GetWindowWidth());
+        MenuNodeItems<Skill>* skillMenu = new MenuNodeItems<Skill>(GameController::getInstance()->GetWindowWidth(), std::function<void(Skill*)>(std::bind(&SetSkillDescription, sm, std::placeholders::_1)));
         skillMenu->CancelAvailable(true);
+        skillMenu->SetPadding(5,0);
 
         Localization* localization = Localization::GetInstance();
 
         std::vector<std::shared_ptr<Skill>>* skillList = attacking->GetSkillList();
+        bool setDescription = true;
         for(unsigned int i = 0; i < skillList->size(); i++)
         {
-            skillMenu->AddOption(localization->GetLocalization(skillList->at(i)->GetName()),std::function<void()>(std::bind(&UseSkill, sm, attacking, skillList->at(i).get())), attacking->GetMp() >= skillList->at(i)->GetManaUse());
+            if(setDescription)
+            {
+                SetSkillDescription(sm, skillList->at(i).get());
+            }
+            skillMenu->AddOptionWithItem(localization->GetLocalization(skillList->at(i)->GetName()),std::function<void()>(std::bind(&UseSkill, sm, attacking, skillList->at(i).get())), skillList->at(i).get(), attacking->GetMp() >= skillList->at(i)->GetManaUse());
+            skillMenu->AddValueToOption(i, std::to_string((int)skillList->at(i)->GetManaUse()));
         }
 
         sm->AddSubMenu(skillMenu);
@@ -71,6 +89,12 @@ SceneManagerBattle::SceneManagerBattle(sf::RenderTarget * target, int windowWidt
     m_eventLayer = new Node();
     m_mainNode->addChild(m_eventLayer);
     m_mainNode->addChild(m_animationNode);
+    m_description = new TextNode();
+    m_description->moveNode(20.0f, GameController::getInstance()->GetWindowHeight() - 64.0f);
+    m_description->SetColor(sf::Color::Black);
+    m_description->SetFontSize(20);
+    m_mainNode->addChild(m_description);
+    m_mainMenu->SetPadding(5,0);
 
     m_party = GameController::getInstance()->getParty();
 
@@ -87,6 +111,9 @@ SceneManagerBattle::SceneManagerBattle(sf::RenderTarget * target, int windowWidt
     m_posChangePerTeam.push_back(sf::Vector2f(40,40));
     m_posChangePerTeam.push_back(sf::Vector2f(-40,40));
 
+
+    //Change Hero bar positions
+    m_memberStats->moveNode(0.0f, -64.0f);
 
 
     for(auto member : (*m_party->GetActivePartyMembers()))
@@ -334,8 +361,9 @@ void SceneManagerBattle::ShowMenuForNext()
     m_mainMenu->ResetOptions();
     //add new Battle options
     Localization* local = Localization::GetInstance();
-    m_mainMenu->AddOption(local->GetLocalization("battle_menu.attack"), std::function<void()>(std::bind(&BattleFunctions::Attack, this, m_next)));
-    m_mainMenu->AddOption(local->GetLocalization("battle_menu.skill"), std::function<void()>(std::bind(&BattleFunctions::SkillList, this, m_next)), m_next->GetSkillList()->size() > 0);
+    m_mainMenu->AddOption(local->GetLocalization("battle_menu.attack"), std::function<void()>(std::bind(&BattleFunctions::Attack, this, m_next)), std::function<void()>(std::bind(&BattleFunctions::SetDescription, this, local->GetLocalization("battle_menu.attack.desc"))));
+    m_mainMenu->AddOption(local->GetLocalization("battle_menu.skill"), std::function<void()>(std::bind(&BattleFunctions::SkillList, this, m_next)), std::function<void()>(std::bind(&BattleFunctions::SetDescription, this, local->GetLocalization("battle_menu.skill.desc"))), m_next->GetSkillList()->size() > 0);
+    SetDescription(local->GetLocalization("battle_menu.attack.desc"));
     //TODO: add other Battle Options
 
     m_mainMenu->setVisibility(true);
@@ -452,4 +480,9 @@ void SceneManagerBattle::AddSpriteForEntity(Entity* entity)
     m_posChangePerTeam[teamId].x *= -1;
     node->setTransform(trans);
     m_eventLayer->addChild(node);
+}
+
+void SceneManagerBattle::SetDescription(std::string str)
+{
+    m_description->SetText(str);
 }

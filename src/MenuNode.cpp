@@ -66,6 +66,23 @@ void MenuNode::AddDisabledOption(std::string name)
     UpdateBackground();
 }
 
+void MenuNode::AddOption(std::string name, std::function<void()>func, std::function<void()>onSelect, bool available)
+{
+    m_selectFunction.resize(m_optionName.size());
+    m_selectFunction.push_back(onSelect);
+    m_optionName.push_back(name);
+    m_optionAvailable.push_back(available);
+    m_optionFunction.push_back(func);
+    UpdateBackground();
+
+}
+
+void MenuNode::AddValueToOption(int optionNr, std::string value)
+{
+    if(m_optionValue.size() <= optionNr)
+        m_optionValue.resize(optionNr + 1);
+    m_optionValue[optionNr] = value;
+}
 void MenuNode::CallOnCancel(std::function<void()>func)
 {
     m_cancelFunction = func;
@@ -107,12 +124,20 @@ void MenuNode::MoveUp()
 {
     if(m_selected > 0)
         m_selected--;
+    if(m_selectFunction.size() > m_selected && m_selectFunction[m_selected] != nullptr)
+    {
+        m_selectFunction[m_selected]();
+    }
 }
 
 void MenuNode::MoveDown()
 {
     if(m_selected < m_optionName.size() - 1)
         m_selected ++;
+    if(m_selectFunction.size() > m_selected && m_selectFunction[m_selected] != nullptr)
+    {
+        m_selectFunction[m_selected]();
+    }
 }
 
 void MenuNode::MoveRight()
@@ -176,6 +201,22 @@ void MenuNode::onDraw(sf::RenderTarget& target, const sf::Transform& transformBa
             text.setColor(m_foregroundColorDisabled);
 
         target.draw(text, transform);
+
+        if(m_optionValue.size() > m_scrollPosition+i && m_optionValue[m_scrollPosition+i] != "")
+        {
+            sf::Text value(m_optionValue[m_scrollPosition+i], *font);
+            value.setCharacterSize(m_fontSize);
+            if(m_optionAvailable[m_scrollPosition+i])
+                value.setColor(m_foregroundColor);
+            else
+                value.setColor(m_foregroundColorDisabled);
+
+
+            transform = transformBase;
+            transform.translate(m_width - m_paddingX - value.getLocalBounds().width, i*m_optionHeight + m_paddingY);
+
+            target.draw(value, transform);
+        }
     }
 
 }

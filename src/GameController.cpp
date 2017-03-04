@@ -25,6 +25,7 @@ GameController::GameController() : m_randomGenerator(time(NULL))
     m_dungeonConfiguration = nullptr;
     m_quit = false;
     m_windowFocused = true;
+    m_party = nullptr;
 
     InitValues();
 

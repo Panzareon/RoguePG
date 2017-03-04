@@ -19,6 +19,10 @@ void Skill::Use(Entity* user, BattleEnums::Target targetType, Entity* target)
 {
     if(!user->UseMp(GetManaUse()))
         return;
+
+    Localization* local = Localization::GetInstance();
+    ((SceneManagerBattle*)GameController::getInstance()->GetActiveSceneManager())->SetDescription(local->GetLocalization(GetName()));
+
     std::vector<Entity*> targets;
     if(targetType == BattleEnums::TargetEnemyTeamEntity || targetType == BattleEnums::TargetOwnTeamEntity)
     {

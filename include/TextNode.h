@@ -7,8 +7,7 @@
 class TextNode : public Node
 {
     public:
-        TextNode();
-        TextNode(std::string text);
+        TextNode(std::string text = "");
         virtual ~TextNode();
         virtual void onDraw(sf::RenderTarget& target, const sf::Transform& transform) const;
 

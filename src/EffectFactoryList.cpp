@@ -23,7 +23,7 @@ namespace PassiveEffectFunctions
     {
         if(toBuff != attr)
             return baseValue;
-        return baseValue * (1 / strength);
+        return baseValue * (1 - strength);
     }
     float DebuffResistance(float baseValue, BattleEnums::AttackType type, float strength, BattleEnums::AttackType toBuff)
     {
@@ -343,8 +343,8 @@ EffectFactoryList::EffectFactoryList()
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
-    //New Value is anything from 1/1.05 to 1/5 of the original
-    calc->AddStrengthValue(1.05f, 5.0f);
+    //Debuff for something between 2 and 66%
+    calc->AddStrengthValue(0.02f, 0.66f);
     calc->SetMultiplier(25.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeFire);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
@@ -359,8 +359,8 @@ EffectFactoryList::EffectFactoryList()
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
-    //New Value is anything from 1/1.05 to 1/5 of the original
-    calc->AddStrengthValue(1.05f, 5.0f);
+    //Debuff for something between 2 and 66%
+    calc->AddStrengthValue(0.02f, 0.66f);
     calc->SetMultiplier(25.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
@@ -374,8 +374,8 @@ EffectFactoryList::EffectFactoryList()
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
-    //New Value is anything from 1/1.05 to 1/5 of the original
-    calc->AddStrengthValue(1.05f, 5.0f);
+    //Debuff for something between 2 and 66%
+    calc->AddStrengthValue(0.02f, 0.66f);
     calc->SetMultiplier(25.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddAttackType(BattleEnums::AttackTypeAir);
@@ -389,8 +389,8 @@ EffectFactoryList::EffectFactoryList()
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
-    //New Value is anything from 1/1.05 to 1/5 of the original
-    calc->AddStrengthValue(1.05f, 5.0f);
+    //Debuff for something between 2 and 66%
+    calc->AddStrengthValue(0.02f, 0.66f);
     calc->SetMultiplier(25.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeFire);
     newEffect->AddAttackType(BattleEnums::AttackTypeWater);
@@ -404,8 +404,8 @@ EffectFactoryList::EffectFactoryList()
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
-    //New Value is anything from 1/1.05 to 1/5 of the original
-    calc->AddStrengthValue(1.05f, 5.0f);
+    //Debuff for something between 2 and 66%
+    calc->AddStrengthValue(0.02f, 0.66f);
     calc->SetMultiplier(25.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
     newEffect->AddAttackType(BattleEnums::AttackTypeAir);

@@ -14,6 +14,9 @@ class MenuNode : public Node
         virtual void ResetOptions();
         virtual void AddOption(std::string name, std::function<void()> func, bool available = true);
         virtual void AddDisabledOption(std::string name);
+        virtual void AddOption(std::string name, std::function<void()> func, std::function<void()> onSelect, bool available = true);
+        //Add Value at the right on this Option
+        virtual void AddValueToOption(int optionNr, std::string value);
         virtual void CallOnCancel(std::function<void()> func);
         void CancelAvailable(bool cancel);
         //Does Right Button do something (Default disabled)
@@ -70,8 +73,10 @@ class MenuNode : public Node
         unsigned int m_maxShownNumber;
 
         std::vector<std::string> m_optionName;
+        std::vector<std::string> m_optionValue;
         std::vector<bool> m_optionAvailable;
         std::vector<std::function<void()>> m_optionFunction;
+        std::vector<std::function<void()>> m_selectFunction;
         std::function<void()> m_cancelFunction;
         bool m_cancelAvailable;
         std::function<void()> m_nextFunction;

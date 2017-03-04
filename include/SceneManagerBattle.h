@@ -4,6 +4,7 @@
 #include "SceneManager.h"
 #include "DrawableNode.h"
 #include "MenuNode.h"
+#include "TextNode.h"
 #include "Enums.h"
 
 #include "Party.h"
@@ -28,6 +29,8 @@ class SceneManagerBattle : public SceneManager
         bool IsEntityTargeted(Entity* entity);
 
         void AddSpriteForEntity(Entity* entity);
+
+        void SetDescription(std::string str);
     protected:
         void CalculateNext();
         void ShowMenuForNext();
@@ -36,6 +39,7 @@ class SceneManagerBattle : public SceneManager
 
         DrawableNode* m_background;
         Node* m_eventLayer;
+        TextNode* m_description;
 
         Entity* m_next;
         bool m_nextFinished;

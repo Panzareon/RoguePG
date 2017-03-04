@@ -29,10 +29,10 @@ void StrengthCalculation::SetMultiplier(float multiplyWith)
 
 float StrengthCalculation::GetValue(std::vector<float>* strength, BattleEnums::Target target)
 {
-    float value = 1.0f;
+    float value = m_multiplyWith;
     for(unsigned int i = 0; i < m_minValue.size(); i++)
     {
-        value *= strength->at(i) * m_multiplyWith;
+        value *= strength->at(i);
     }
 
     if(target == BattleEnums::TargetEnemyTeam || target == BattleEnums::TargetOwnTeam)
@@ -58,21 +58,21 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
         value /= AllTargetMali;
     }
 
-    float minV = 1.0f;
-    float maxV = 1.0f;
+    float minV = m_multiplyWith;
+    float maxV = m_multiplyWith;
 
     for(unsigned int i = 0; i < m_minValue.size(); i++)
     {
-        minV *= m_minValue[i] * m_multiplyWith;
-        maxV *= m_maxValue[i] * m_multiplyWith;
+        minV *= m_minValue[i];
+        maxV *= m_maxValue[i];
     }
 
     //if getting nr to actually get the value is impossible return closed to it
-    if(minV > value)
+    if(minV >= value)
     {
         return new std::vector<float>(m_minValue.begin(), m_minValue.end());
     }
-    if(maxV < value)
+    if(maxV <= value)
     {
         return new std::vector<float>(m_maxValue.begin(), m_maxValue.end());
     }
@@ -85,7 +85,7 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
     do
     {
         finished = true;
-        calculatedValue = 1.0f;
+        calculatedValue = m_multiplyWith;
         for(int i = 0; i < lastValueId; i++)
         {
             if(m_step[i] == 0.0f)
@@ -95,9 +95,9 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
                 int steps = (m_maxValue[i] - m_minValue[i]) / m_step[i] + 1;
                 retVal[i] = m_minValue[i] + m_step[i] * (std::rand() % steps);
             }
-            calculatedValue *= retVal[i] * m_multiplyWith;
+            calculatedValue *= retVal[i];
         }
-        retVal[lastValueId] = (value / calculatedValue) / m_multiplyWith;
+        retVal[lastValueId] = (value / calculatedValue);
         if(retVal[lastValueId] < m_minValue[lastValueId] || retVal[lastValueId] > m_maxValue[lastValueId])
         {
             finished = false;

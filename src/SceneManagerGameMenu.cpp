@@ -277,6 +277,7 @@ void SceneManagerGameMenu::SelectMember(PartyMember* member)
                 if(first)
                 {
                     //Equip first available Item if not equipped otherwise
+                    SetEquipmentSkillMenu(equip);
                     if(!equip->IsEquiped())
                         SelectEquipment(equip);
                     first = false;
@@ -398,6 +399,7 @@ void SceneManagerGameMenu::SetEquipmentSkillMenu(Equipment* equipment)
         //Set Menu looks
         m_equipmentSkills->SetMaxShownOptions(9);
         m_equipmentSkills->moveNode(485,4);
+        m_equipmentSkills->SetPadding(2,0);
         m_equipmentSkills->SetBackgroundColor(sf::Color::Transparent);
         m_equipmentSkills->SetForegroundColorDisabled(sf::Color::Black);
         m_equipmentSkills->SetForegroundColor(sf::Color::Black);
@@ -409,9 +411,11 @@ void SceneManagerGameMenu::SetEquipmentSkillMenu(Equipment* equipment)
     }
     Localization* localization = Localization::GetInstance();
     std::map<int, std::shared_ptr<Skill>>* skills = equipment->GetSkillsToLearn();
+    int optionNr = 0;
     for(auto it = skills->begin(); it != skills->end(); it++)
     {
         m_equipmentSkills->AddOptionWithItem(localization->GetLocalization(it->second->GetName()), nullptr, it->second.get(), false);
+        m_equipmentSkills->AddValueToOption(optionNr++, std::to_string((int)it->second->GetManaUse()));
     }
 }
 

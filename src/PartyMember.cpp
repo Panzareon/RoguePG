@@ -38,10 +38,8 @@ void PartyMember::AddExp(int ammount)
         {
             if(iter->second->IsEquipment())
             {
-                std::cout << "Random Bug fix2"<< std::endl;
                 ((Equipment*)iter->second)->AddExp(m_exp);
             }
-            std::cout << "Random Bug fix3"<< std::endl;
         }
         //Level up if enough Exp
         //TODO: use an other calculation for needed exp

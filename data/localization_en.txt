@@ -2,7 +2,9 @@ main.window.title = RoguePG
 
 //Battle-Menu-Texts
 battle_menu.attack = Attack
+battle_menu.attack.desc = Attack the enemy with your weapon
 battle_menu.skill = Skill
+battle_menu.skill.desc = Use a learnt skill.
 
 //Menu-Texts
 menu.startDungeon = Start Dungeon
@@ -70,12 +72,12 @@ effect.1001 = Heal
 effect.1001.desc = Heals for %0 hp.
 
 effect.10001 = Strength Debuff
-effect.10001.desc = Decreases strength to %1/ for %0 turns.
+effect.10001.desc = Decreases strength by %1% for %0 turns.
 effect.10002 = Defense Debuff
-effect.10002.desc = Decreases defense to %1/ for %0 turns.
+effect.10002.desc = Decreases defense by %1% for %0 turns.
 effect.10003 = Magic Defense Debuff
-effect.10003.desc = Decreases magic defense to %1/ for %0 turns.
+effect.10003.desc = Decreases magic defense by %1% for %0 turns.
 effect.10004 = Int Debuff
-effect.10004.desc = Decreases intelligence to %1/ for %0 turns.
+effect.10004.desc = Decreases intelligence by %1% for %0 turns.
 effect.10005 = Speed Debuff
-effect.10005.desc = Decreases speed to %1/ for %0 turns.
+effect.10005.desc = Decreases speed by %1% for %0 turns.
