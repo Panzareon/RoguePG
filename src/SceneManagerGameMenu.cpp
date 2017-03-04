@@ -84,6 +84,7 @@ SceneManagerGameMenu::SceneManagerGameMenu(sf::RenderTarget * target, int window
     m_selectedMember = nullptr;
     m_equipmentDescription = nullptr;
     m_equipmentSkillsSelected = false;
+    m_equipmentSkillBase = nullptr;
 
     //Set Menu function
     m_mainMenu = new MenuNode(background->getBoundingBox().width - 2* padding);
@@ -374,40 +375,58 @@ void SceneManagerGameMenu::UpdateMemberStats()
 
 void SceneManagerGameMenu::RemoveEquipmentSkillMenu()
 {
-    if(m_equipmentSkills != nullptr)
+    if(m_equipmentSkillBase != nullptr)
     {
-        m_equipmentSkills->GetParent()->removeChild(m_equipmentSkills);
-        delete m_equipmentSkills;
-        m_equipmentSkills = nullptr;
+        m_equipmentSkillBase->setVisibility(false);
     }
 }
 
 void SceneManagerGameMenu::SetEquipmentSkillMenu(Equipment* equipment)
 {
+    int height = 45;
+    int width = 150;
     if(m_equipmentSkills != nullptr)
     {
         m_equipmentSkills->ResetOptions();
+        m_equipmentSkillBase->setVisibility(true);
     }
     else
     {
-        m_equipmentSkills = new MenuNodeItems<Skill>(150, std::function<void(Skill*)>(std::bind(&MenuFunctions::SelectSkill,this,std::placeholders::_1)));
-        m_background->addChild(m_equipmentSkills);
+        int fontSize = 15;
+        m_equipmentSkillBase = new Node();
+        m_equipmentSkillBase->moveNode(485,4);
+        m_background->addChild(m_equipmentSkillBase);
+
+        //Set learning displays
+        m_equipmentSkillLearned = new sf::RectangleShape();
+        m_equipmentSkillLearned->setFillColor(sf::Color::Green);
+        DrawableNode* learned = new DrawableNode(m_equipmentSkillLearned);
+        m_equipmentSkillBase->addChild(learned);
+        m_equipmentSkillLearning = new sf::RectangleShape();
+        m_equipmentSkillLearning->setFillColor(sf::Color::Red);
+        m_equipmentSkillLearningNode = new DrawableNode(m_equipmentSkillLearning);
+        m_equipmentSkillBase->addChild(m_equipmentSkillLearningNode);
+
+
+        m_equipmentSkills = new MenuNodeItems<Skill>(width, std::function<void(Skill*)>(std::bind(&MenuFunctions::SelectSkill,this,std::placeholders::_1)));
+        m_equipmentSkillBase->addChild(m_equipmentSkills);
         m_equipmentSkills->PreviousAvailable(true);
         m_equipmentSkills->CallOnCancel(std::function<void()>(std::bind(&MenuFunctions::DeselectEquipmentSkills,this)));
         m_equipmentSkills->CancelAvailable(true);
 
         //Set Menu looks
         m_equipmentSkills->SetMaxShownOptions(9);
-        m_equipmentSkills->moveNode(485,4);
         m_equipmentSkills->SetPadding(2,0);
         m_equipmentSkills->SetBackgroundColor(sf::Color::Transparent);
         m_equipmentSkills->SetForegroundColorDisabled(sf::Color::Black);
         m_equipmentSkills->SetForegroundColor(sf::Color::Black);
         m_equipmentSkills->SetOutlineColor(sf::Color::Transparent);
         m_equipmentSkills->SetSelectedColor(sf::Color::Blue);
-        m_equipmentSkills->SetFontSize(15);
-        m_equipmentSkills->SetSpacing(20);
+        m_equipmentSkills->SetFontSize(fontSize);
+        m_equipmentSkills->SetSpacing(height - fontSize);
         m_equipmentSkills->ShowSelected(false);
+
+
     }
     Localization* localization = Localization::GetInstance();
     std::map<int, std::shared_ptr<Skill>>* skills = equipment->GetSkillsToLearn();
@@ -416,6 +435,26 @@ void SceneManagerGameMenu::SetEquipmentSkillMenu(Equipment* equipment)
     {
         m_equipmentSkills->AddOptionWithItem(localization->GetLocalization(it->second->GetName()), nullptr, it->second.get(), false);
         m_equipmentSkills->AddValueToOption(optionNr++, std::to_string((int)it->second->GetManaUse()));
+    }
+    //Display how far learned
+    int learnedHeight = equipment->GetLevel(m_selectedMember) - 1;
+    bool showLearning = learnedHeight < skills->size();
+    if(skills->size() < learnedHeight)
+    {
+        learnedHeight = skills->size();
+    }
+    learnedHeight *= height;
+    m_equipmentSkillLearned->setSize(sf::Vector2f(width,learnedHeight));
+    if(showLearning)
+    {
+        m_equipmentSkillLearningNode->setVisibility(true);
+        m_equipmentSkillLearning->setPosition(sf::Vector2f(0, learnedHeight));
+        int learningWidth = equipment->GetEquipmentExpPercent(m_selectedMember) * width;
+        m_equipmentSkillLearning->setSize(sf::Vector2f(learningWidth, height));
+    }
+    else
+    {
+        m_equipmentSkillLearningNode->setVisibility(false);
     }
 }
 

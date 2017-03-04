@@ -35,8 +35,10 @@ class Equipment : public IPassiveEffect, public Item
         virtual void AddExp(Entity* target, int exp);
         EquipmentPosition GetEquipmentPosition();
         virtual int GetEquipmentExp();
+        virtual float GetEquipmentExpPercent();
         virtual int GetLevel();
         virtual int GetEquipmentExp(Entity* target);
+        virtual float GetEquipmentExpPercent(Entity* target);
         virtual int GetLevel(Entity* target);
         virtual std::map<int, std::shared_ptr<Skill>>* GetSkillsToLearn();
         virtual bool CanLearnSomething(Entity* target);
@@ -60,6 +62,7 @@ class Equipment : public IPassiveEffect, public Item
         virtual float GetExp(float);
 
     protected:
+        int NeededExp(int lvl);
         SkillGenerator m_skillGenerator;
 
         EquipmentPosition m_position;

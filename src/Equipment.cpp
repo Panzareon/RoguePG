@@ -10,7 +10,7 @@ Equipment::Equipment(int itemId, EquipmentPosition pos) : Item(itemId, Item::Ite
     //ctor
     m_target = nullptr;
     m_position = pos;
-    m_neededExpMultiplier = 10;
+    m_neededExpMultiplier = 20;
 }
 
 Equipment::~Equipment()
@@ -86,7 +86,7 @@ void Equipment::AddExp(Entity* target, int exp)
     if(!CanLearnSomething(target))
         return;
     m_exp[target] += exp;
-    while(m_exp[target] >= m_level[target] * m_level[target] * m_neededExpMultiplier)
+    while(GetEquipmentExpPercent(target) >= 1.0)
     {
         LevelUp(target);
     }
@@ -100,6 +100,22 @@ Equipment::EquipmentPosition Equipment::GetEquipmentPosition()
 int Equipment::GetEquipmentExp()
 {
     return GetEquipmentExp(m_target);
+}
+
+float Equipment::GetEquipmentExpPercent()
+{
+    GetEquipmentExp(m_target);
+}
+
+float Equipment::GetEquipmentExpPercent(Entity* target)
+{
+    initExpAndLevel(target);
+    return ((float)m_exp[target] - NeededExp(m_level[target] - 1)) / (float)(NeededExp(m_level[target]));
+}
+
+int Equipment::NeededExp(int lvl)
+{
+    return lvl * lvl * m_neededExpMultiplier;
 }
 
 int Equipment::GetLevel()
@@ -151,7 +167,7 @@ void Equipment::initExpAndLevel(Entity* target)
 {
     if(m_level.find(target) == m_level.end())
     {
-        m_level[target] = 0;
+        m_level[target] = 1;
         m_exp[target] = 0;
     }
 }
@@ -164,7 +180,7 @@ SkillGenerator* Equipment::GetSkillGenerator()
 void Equipment::AddSkillsToLearn(int nr)
 {
     //Get next level of this Equipment, that has not yet a Skill to learn
-    int lvl = 1;
+    int lvl = 2;
     if(m_skillsToLearn.size() > 0)
         lvl = m_skillsToLearn.rbegin()->first + 1;
     for(int i = 0; i < nr; i++)

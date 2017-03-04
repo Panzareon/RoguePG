@@ -44,8 +44,12 @@ class SceneManagerGameMenu : public SceneManager
 
         Node* m_background;
         MenuNode* m_equipmentMenu;
+        Node* m_equipmentSkillBase;
         MenuNodeItems<Equipment>* m_equipmentItems;
         MenuNodeItems<Skill>* m_equipmentSkills;
+        sf::RectangleShape* m_equipmentSkillLearned;
+        sf::RectangleShape* m_equipmentSkillLearning;
+        Node* m_equipmentSkillLearningNode;
         bool m_equipmentSkillsSelected;
 
         TextNode* m_equipmentDescription;
