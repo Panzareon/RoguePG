@@ -17,7 +17,11 @@ MapEventEnemy::MapEventEnemy(Map* m, Node* node, float movementSpeed, std::vecto
     m_node = node;
     m_maxTimeSinceChange = 3.0f;
     m_enemies = enemies;
+    m_followPlayer = false;
+    m_followSpeed = -1.0f;
+    m_followDistanceSquared = -1.0f;
 }
+
 
 MapEventEnemy::~MapEventEnemy()
 {
@@ -27,26 +31,73 @@ MapEventEnemy::~MapEventEnemy()
 
 bool MapEventEnemy::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, float tickTime)
 {
+    bool mv = false;
+    sf::FloatRect enemyBB = m_node->getGlobalBoundingBox();
     if(m_movementSpeed > 0.0f)
     {
         if(m_timeSinceChange > m_maxTimeSinceChange){
             m_timeSinceChange = 0.0f;
             //Change Direction
             float angle = (rand() % 4) / 2.0f * M_PI;
-            m_xMove = cos(angle);
-            m_yMove = sin(angle);
+            m_xMove = cos(angle) * m_movementSpeed;
+            m_yMove = sin(angle) * m_movementSpeed;
         }
         m_timeSinceChange += tickTime;
-        sf::FloatRect enemyBB = m_node->getGlobalBoundingBox();
-        enemyBB.left += m_xMove * m_movementSpeed * tickTime;
-        enemyBB.top += m_yMove * m_movementSpeed  * tickTime;
-        if(!m_map->DoesCollide(enemyBB))
+        mv = true;
+    }
+    if(m_followPlayer)
+    {
+        float xDist = rect.left - enemyBB.left;
+        float yDist = rect.top - enemyBB.top;
+        xDist *= xDist;
+        yDist *= yDist;
+        if(xDist + yDist < m_followDistanceSquared)
         {
-            m_node->moveNode(m_xMove, m_yMove);
+            float x1 = (rect.left + rect.width / 2) / TileMap::GetTileWith();
+            float x2 = (enemyBB.left + enemyBB.width / 2) / TileMap::GetTileWith();
+            float y1 = (rect.top + rect.height / 2) / TileMap::GetTileWith();
+            float y2 = (enemyBB.top + enemyBB.height / 2) / TileMap::GetTileWith();
+            if(!m_map->DoesCollide(x1,y1,x2,y2))
+            {
+                m_xMove = (x1 - x2);
+                m_yMove = (y1 - y2);
+                float length = sqrt(m_xMove * m_xMove + m_yMove * m_yMove);
+                m_xMove *= m_followSpeed/length;
+                m_yMove *= m_followSpeed/length;
+                mv = true;
+            }
+        }
+    }
+    if(mv)
+    {
+        sf::FloatRect testBB = enemyBB;
+        testBB.left += m_xMove * tickTime;
+        testBB.top += m_yMove * tickTime;
+        if(!m_map->DoesCollide(testBB))
+        {
+            m_node->moveNode(m_xMove * tickTime, m_yMove * tickTime);
         }
         else
         {
-            m_timeSinceChange += m_maxTimeSinceChange;
+            sf::FloatRect testBB = enemyBB;
+            testBB.left += m_xMove * tickTime;
+            if(!m_map->DoesCollide(testBB) && m_xMove < 0.01f && m_xMove > 0.01f)
+            {
+                m_node->moveNode(m_xMove * tickTime, 0.0f);
+            }
+            else
+            {
+                sf::FloatRect testBB = enemyBB;
+                testBB.top += m_yMove * tickTime;
+                if(!m_map->DoesCollide(testBB) && m_yMove < 0.01f && m_yMove > 0.01f)
+                {
+                    m_node->moveNode(0.0f, m_yMove * tickTime);
+                }
+                else
+                {
+                    m_timeSinceChange += m_maxTimeSinceChange;
+                }
+            }
         }
     }
     return rect.intersects(m_node->getGlobalBoundingBox());
@@ -60,4 +111,11 @@ void MapEventEnemy::Activate()
     m_finished = true;
     m_node->GetParent()->removeChild(m_node);
     delete m_node;
+}
+
+void MapEventEnemy::FollowPlayer(bool follow, float followDistance, float followSpeed)
+{
+    m_followPlayer = follow;
+    m_followDistanceSquared = followDistance * followDistance * TileMap::GetTileWith() * TileMap::GetTileWith();
+    m_followSpeed = followSpeed;
 }

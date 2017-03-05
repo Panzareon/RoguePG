@@ -207,8 +207,9 @@ void SceneManagerDungeon::SpawnEnemy()
     enemies->push_back(e);
 
 
-    MapEventEnemy* mapEvent = new MapEventEnemy(&m_map, enemy,  256.0f, enemies);
+    MapEventEnemy* mapEvent = new MapEventEnemy(&m_map, enemy,  110.0f, enemies);
     m_events.push_back(mapEvent);
+    mapEvent->FollowPlayer(true, 4, 220.0f);
     m_timeToNextSpawn = rand()%10 + 10;
 }
 

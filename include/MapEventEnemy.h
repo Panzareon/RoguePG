@@ -15,6 +15,8 @@ class MapEventEnemy : public MapEvent
         virtual bool ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, float tickTime);
         virtual void Activate();
 
+        void FollowPlayer(bool follow, float followDistance = -1.0f, float followSpeed = -1.0f);
+
     protected:
         Node* m_node;
         Map* m_map;
@@ -27,6 +29,10 @@ class MapEventEnemy : public MapEvent
         float m_maxTimeSinceChange;
 
         std::vector<Entity*>* m_enemies;
+
+        bool m_followPlayer;
+        float m_followDistanceSquared;
+        float m_followSpeed;
 
     private:
 };

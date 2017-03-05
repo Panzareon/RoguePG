@@ -171,3 +171,75 @@ bool Map::DoesCollide(sf::Rect<float> rect)
     return false;
 }
 
+bool Map::DoesCollide(unsigned int fromX, unsigned int fromY, unsigned int toX, unsigned int toY)
+{
+    if(abs(fromX - toX) > abs(fromY - toY))
+    {
+        if(fromX > toX)
+        {
+            int x = toX;
+            int y = toY;
+            toX = fromX;
+            toY = fromY;
+            fromX = x;
+            fromY = y;
+        }
+
+        int yStep = 1;
+        if(fromY > toY)
+            yStep = -1;
+
+        int dX = abs(toX - fromX);
+        int dY = abs(toY - fromY);
+        int fehler = dX / 2;
+        int y = fromY;
+        for(int x = fromX; x <= toX; x++)
+        {
+            if(DoesCollide(x,y))
+                return true;
+            fehler -= dY;
+            if(fehler < 0)
+            {
+                fehler += dX;
+                y += yStep;
+                if(DoesCollide(x,y))
+                    return true;
+            }
+        }
+    }
+    else
+    {
+        if(fromY > toY)
+        {
+            int x = toX;
+            int y = toY;
+            toX = fromX;
+            toY = fromY;
+            fromX = x;
+            fromY = y;
+        }
+
+        int xStep = 1;
+        if(fromX > toX)
+            xStep = -1;
+
+        int dX = abs(toX - fromX);
+        int dY = abs(toY - fromY);
+        int fehler = dY / 2;
+        int x = fromX;
+        for(int y = fromY; y <= toY; y++)
+        {
+            if(DoesCollide(x,y))
+                return true;
+            fehler -= dX;
+            if(fehler < 0)
+            {
+                fehler += dY;
+                x += xStep;
+                if(DoesCollide(x,y))
+                    return true;
+            }
+        }
+    }
+    return false;
+}

@@ -39,6 +39,8 @@ class Map
 
         bool DoesCollide(sf::Rect<float> rect);
         bool DoesCollide(unsigned int x, unsigned int y);
+        //Check if a Line collides
+        bool DoesCollide(unsigned int fromX, unsigned int fromY, unsigned int toX, unsigned int toY);
 
 
         int GetWidth();
