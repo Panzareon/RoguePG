@@ -4,11 +4,13 @@
 #include "GameController.h"
 #include "Localization.h"
 
+#include <math.h>
+
 Skill::Skill(BattleEnums::Target target)
 {
     //ctor
     m_defaultTarget = target;
-    m_manaUse = 0.0f;
+    m_manaUseBase = 0.0f;
 }
 
 Skill::~Skill()
@@ -119,12 +121,17 @@ void Skill::AddEffect(Effect* eff, bool isPositive)
     m_effects.push_back(eff);
     m_isPositive.push_back(isPositive);
     if(isPositive)
-        m_manaUse += eff->GetValue();
+        m_manaUseBase += eff->GetValue();
     else
-        m_manaUse -= 0.5 * eff->GetValue();
+        m_manaUseBase -= 0.5 * eff->GetValue();
 }
 
-float Skill::GetManaUse()
+int Skill::GetManaUse()
 {
-    return m_manaUse;
+    return std::ceil(std::sqrt(m_manaUseBase));
+}
+
+int Skill::GetManaBase()
+{
+    return m_manaUseBase;
 }

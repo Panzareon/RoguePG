@@ -19,10 +19,10 @@ class SkillGenerator
         Skill* GetNewSkill(float strength);
 
     protected:
-        std::map<float, BattleEnums::Target> m_skillTarget;
-        std::map<float, BattleEnums::AttackType> m_skillAttackType;
-        std::map<float, BattleEnums::EffectType> m_skillPositiveEffectType;
-        std::map<float, BattleEnums::EffectType> m_skillNegativeEffectType;
+        std::multimap<float, BattleEnums::Target> m_skillTarget;
+        std::multimap<float, BattleEnums::AttackType> m_skillAttackType;
+        std::multimap<float, BattleEnums::EffectType> m_skillPositiveEffectType;
+        std::multimap<float, BattleEnums::EffectType> m_skillNegativeEffectType;
 
 
         BattleEnums::Target GetRandomTarget();

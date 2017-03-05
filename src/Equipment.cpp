@@ -104,7 +104,7 @@ int Equipment::GetEquipmentExp()
 
 float Equipment::GetEquipmentExpPercent()
 {
-    GetEquipmentExp(m_target);
+    return GetEquipmentExp(m_target);
 }
 
 float Equipment::GetEquipmentExpPercent(Entity* target)

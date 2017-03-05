@@ -14,7 +14,8 @@ class Skill
         virtual ~Skill();
         void Use(Entity* user, BattleEnums::Target targetType, Entity* target);
 
-        float GetManaUse();
+        int GetManaUse();
+        int GetManaBase();
 
         BattleEnums::Target GetDefaultTarget();
         std::string GetName();
@@ -29,7 +30,7 @@ class Skill
         std::vector<Effect*> m_effects;
         std::vector<bool> m_isPositive;
 
-        float m_manaUse;
+        float m_manaUseBase;
         BattleEnums::Target m_defaultTarget;
 };
 

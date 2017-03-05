@@ -50,7 +50,7 @@ Skill* SkillGenerator::GetNewSkill(float strength)
 
 
         newSkill->AddEffect(EffectFactoryList::GetInstance()->getRandom(attackType, effectType)->GetEffectWithValue(strength - manaUse, target), true);
-        manaUse = newSkill->GetManaUse();
+        manaUse = newSkill->GetManaBase();
     }
     while(manaUse < strength * 0.9);
     return newSkill;
@@ -91,7 +91,7 @@ BattleEnums::AttackType SkillGenerator::GetRandomAttackType()
 BattleEnums::EffectType SkillGenerator::GetRandomEffectType(bool positive)
 {
     float random = rand() / (float)RAND_MAX;
-    std::map<float, BattleEnums::EffectType>::iterator it, endIt;
+    std::multimap<float, BattleEnums::EffectType>::iterator it, endIt;
     if(positive)
     {
         it = m_skillPositiveEffectType.begin();
