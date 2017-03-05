@@ -8,8 +8,25 @@ battle_menu.skill.desc = Use a learnt skill.
 
 //Menu-Texts
 menu.startDungeon = Start Dungeon
+menu.keyBindings = Key Bindings
 menu.equipment = Equipment
 menu.quit = Quit
+
+menu.keyBindings.move_up = Move Up
+menu.keyBindings.move_down = Move Down
+menu.keyBindings.move_right = Move Right
+menu.keyBindings.move_left = Move Left
+menu.keyBindings.accept = Accept
+menu.keyBindings.cancel = Cancel
+
+menu.keyBindings.36 = Escape
+menu.keyBindings.57 = Space
+menu.keyBindings.58 = Return
+menu.keyBindings.66 = Delete
+menu.keyBindings.71 = Left Arrow
+menu.keyBindings.72 = Right Arrow
+menu.keyBindings.73 = Up Arrow
+menu.keyBindings.74 = Down Arrow
 
 dungeon.finished = You Won!
 

@@ -1,0 +1,7 @@
+//Key Bindings
+move_up = 22
+move_down = 18
+move_right = 3
+move_left = 0
+accept = 57
+cancel = 66

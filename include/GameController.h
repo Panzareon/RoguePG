@@ -35,7 +35,8 @@ class GameController
 
         float GetTickTimeSeconds();
 
-        bool IsKeyPressed(Configuration::Keys key);
+        //If once == false check if it is still pressed
+        bool IsKeyPressed(Configuration::Keys key, bool once = true);
         bool IsWindowFocused();
 
         void setParty(Party* party);
@@ -59,6 +60,7 @@ class GameController
         bool m_windowFocused;
 
         std::vector<bool> m_keysPressed;
+        std::vector<bool> m_defaultKeysPressed;
 
         std::vector<SceneManager*> m_sceneManager;
         std::vector<SceneManager*> m_nextLevels;

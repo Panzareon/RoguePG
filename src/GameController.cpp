@@ -21,6 +21,7 @@ GameController::GameController() : m_randomGenerator(time(NULL))
     //ctor
     m_renderTarget = 0;
     m_keysPressed.resize(Configuration::GetInstance()->GetNumberKeys());
+    m_defaultKeysPressed.resize(Configuration::GetInstance()->GetNumberKeys());
     m_gameOver = false;
     m_dungeonConfiguration = nullptr;
     m_quit = false;
@@ -103,6 +104,13 @@ void GameController::Tick()
         if(m_keysPressed.at(i) && !sf::Keyboard::isKeyPressed(conf->GetKey((Configuration::Keys)i)))
         {
             m_keysPressed.at(i) = false;
+        }
+    }
+    for(unsigned int i = 0; i < m_defaultKeysPressed.size(); i++)
+    {
+        if(m_defaultKeysPressed.at(i) && !sf::Keyboard::isKeyPressed(conf->GetDefaultKey((Configuration::Keys)i)))
+        {
+            m_defaultKeysPressed.at(i) = false;
         }
     }
 
@@ -229,16 +237,28 @@ float GameController::GetTickTimeSeconds()
     return m_frameTime.asSeconds();
 }
 
-bool GameController::IsKeyPressed(Configuration::Keys key)
+bool GameController::IsKeyPressed(Configuration::Keys key, bool once)
 {
     //Only check Keys if Window is focused
     if(!IsWindowFocused())
     {
         return false;
     }
+    if(!once)
+    {
+        return sf::Keyboard::isKeyPressed(Configuration::GetInstance()->GetKey(key)) || sf::Keyboard::isKeyPressed(Configuration::GetInstance()->GetDefaultKey(key));
+    }
+
     if(!m_keysPressed.at(key) && sf::Keyboard::isKeyPressed(Configuration::GetInstance()->GetKey(key)))
     {
         m_keysPressed.at(key) = true;
+        m_defaultKeysPressed.at(key) = true;
+        return true;
+    }
+    if(!m_defaultKeysPressed.at(key) && sf::Keyboard::isKeyPressed(Configuration::GetInstance()->GetDefaultKey(key)))
+    {
+        m_keysPressed.at(key) = true;
+        m_defaultKeysPressed.at(key) = true;
         return true;
     }
     return false;

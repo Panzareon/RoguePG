@@ -2,6 +2,7 @@
 #include "TextureList.h"
 #include "DrawableNode.h"
 #include "Configuration.h"
+#include "GameController.h"
 
 SceneManagerGameOver::SceneManagerGameOver(sf::RenderTarget * target, int windowWidth, int windowHeight): SceneManager(target, windowWidth, windowHeight)
 {
@@ -20,7 +21,7 @@ SceneManagerGameOver::~SceneManagerGameOver()
 
 void SceneManagerGameOver::Tick()
 {
-    if (sf::Keyboard::isKeyPressed(Configuration::GetInstance()->GetKey(Configuration::Accept)))
+    if (GameController::getInstance()->IsKeyPressed(Configuration::Accept))
     {
         m_finished = true;
     }

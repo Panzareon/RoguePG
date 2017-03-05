@@ -1,11 +1,11 @@
 #ifndef LOCALIZATION_H
 #define LOCALIZATION_H
 
-#include <string>
-#include <map>
+#include "FileConfig.h"
+
 #include <vector>
 
-class Localization
+class Localization : FileConfig
 {
     public:
         enum Languages{English};
@@ -23,7 +23,6 @@ class Localization
         Localization();
         static Localization* m_instance;
         Languages m_language;
-        std::map<std::string, std::string> m_localization;
 };
 
 #endif // LOCALIZATION_H

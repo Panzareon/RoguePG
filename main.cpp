@@ -41,6 +41,8 @@ int main()
                     controller->SetWindowFocus(true);
                 else if (event.type == sf::Event::LostFocus)
                     controller->SetWindowFocus(false);
+                else if (event.type == sf::Event::KeyPressed)
+                    Configuration::GetInstance()->SetLastKeyPressed(event.key.code);
             }
 
             controller->Tick();

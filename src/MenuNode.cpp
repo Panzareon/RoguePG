@@ -243,15 +243,7 @@ void MenuNode::CheckKeyboardInput()
     {
         GameController* controller = GameController::getInstance();
 
-        if(controller->IsKeyPressed(Configuration::MoveDown))
-        {
-            MoveDown();
-        }
-        else if(controller->IsKeyPressed(Configuration::MoveUp))
-        {
-            MoveUp();
-        }
-        else if(controller->IsKeyPressed(Configuration::Accept))
+        if(controller->IsKeyPressed(Configuration::Accept))
         {
             Use();
         }
@@ -267,6 +259,15 @@ void MenuNode::CheckKeyboardInput()
         else if(controller->IsKeyPressed(Configuration::MoveRight))
         {
             MoveRight();
+        }
+
+        if(controller->IsKeyPressed(Configuration::MoveDown))
+        {
+            MoveDown();
+        }
+        else if(controller->IsKeyPressed(Configuration::MoveUp))
+        {
+            MoveUp();
         }
     }
 }

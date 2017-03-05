@@ -65,6 +65,7 @@
 		<Unit filename="include/EntityNode.h" />
 		<Unit filename="include/Enums.h" />
 		<Unit filename="include/Equipment.h" />
+		<Unit filename="include/FileConfig.h" />
 		<Unit filename="include/FillItem.h" />
 		<Unit filename="include/GameController.h" />
 		<Unit filename="include/GenericException.h" />
@@ -128,6 +129,7 @@
 		<Unit filename="src/EntityBarsNode.cpp" />
 		<Unit filename="src/EntityNode.cpp" />
 		<Unit filename="src/Equipment.cpp" />
+		<Unit filename="src/FileConfig.cpp" />
 		<Unit filename="src/FillItem.cpp" />
 		<Unit filename="src/GameController.cpp" />
 		<Unit filename="src/GenericException.cpp" />
