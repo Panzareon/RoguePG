@@ -414,6 +414,78 @@ EffectFactoryList::EffectFactoryList()
     newEffect->AddEffectType(BattleEnums::EffectTypeDebuffOffense);
     newEffect->AddEffectType(BattleEnums::EffectTypeDebuffMagic);
     m_effects.push_back(newEffect);
+
+
+    //Add Elemental Resistance Debuffs
+    //Physical Defense
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DebuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypePhysical));
+    newEffect = new EffectFactory(func, 10051);
+    calc = newEffect->GetStrengthCalculation();
+    //Number of turns: from 2 to 10 with step of 1
+    calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
+    //Everything from 5% to 66% debuff
+    calc->AddStrengthValue(0.05f, 3.0f);
+    calc->SetMultiplier(25.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDebuff);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDebuffDefense);
+    m_effects.push_back(newEffect);
+
+    //Water Defense
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DebuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeWater));
+    newEffect = new EffectFactory(func, 10052);
+    calc = newEffect->GetStrengthCalculation();
+    //Number of turns: from 2 to 10 with step of 1
+    calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
+    //Everything from 5% to 66% debuff
+    calc->AddStrengthValue(0.05f, 3.0f);
+    calc->SetMultiplier(25.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypeWater);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDebuff);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDebuffDefense);
+    m_effects.push_back(newEffect);
+
+    //Air Defense
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DebuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeAir));
+    newEffect = new EffectFactory(func, 10053);
+    calc = newEffect->GetStrengthCalculation();
+    //Number of turns: from 2 to 10 with step of 1
+    calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
+    //Everything from 5% to 66% debuff
+    calc->AddStrengthValue(0.05f, 3.0f);
+    calc->SetMultiplier(25.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypeAir);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDebuff);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDebuffDefense);
+    m_effects.push_back(newEffect);
+
+    //Earth Defense
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DebuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeEarth));
+    newEffect = new EffectFactory(func, 10054);
+    calc = newEffect->GetStrengthCalculation();
+    //Number of turns: from 2 to 10 with step of 1
+    calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
+    //Everything from 5% to 66% debuff
+    calc->AddStrengthValue(0.05f, 3.0f);
+    calc->SetMultiplier(25.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDebuff);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDebuffDefense);
+    m_effects.push_back(newEffect);
+
+    //Fire Defense
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DebuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeFire));
+    newEffect = new EffectFactory(func, 10055);
+    calc = newEffect->GetStrengthCalculation();
+    //Number of turns: from 2 to 10 with step of 1
+    calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
+    //Everything from 5% to 66% debuff
+    calc->AddStrengthValue(0.05f, 3.0f);
+    calc->SetMultiplier(25.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypeFire);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDebuff);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDebuffDefense);
+    m_effects.push_back(newEffect);
 }
 
 EffectFactoryList::~EffectFactoryList()

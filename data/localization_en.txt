@@ -98,3 +98,15 @@ effect.10004 = Int Debuff
 effect.10004.desc = Decreases intelligence by %1% for %0 turns.
 effect.10005 = Speed Debuff
 effect.10005.desc = Decreases speed by %1% for %0 turns.
+
+
+effect.10051 = Physical Weakness
+effect.10051.desc = Decreases resistance against physical attacks by %1% for %0 turns.
+effect.10052 = Water Weakness
+effect.10052.desc = Decreases resistance against water attacks by %1% for %0 turns.
+effect.10053 = Air Weakness
+effect.10053.desc = Decreases resistance against air attacks by %1% for %0 turns.
+effect.10054 = Earth Weakness
+effect.10054.desc = Decreases resistance against earth attacks by %1% for %0 turns.
+effect.10055 = Fire Weakness
+effect.10055.desc = Decreases resistance against fire attacks by %1% for %0 turns.
