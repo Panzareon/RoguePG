@@ -6,13 +6,14 @@
 
 #define M_PI 3.1415926535897
 #include <math.h>
+#include <iostream>
 
 MapEventEnemy::MapEventEnemy(Map* m, Node* node, float movementSpeed, std::vector<Entity*>* enemies) : MapEvent(false)
 {
     //ctor
     m_map = m;
     m_xMove = 0.0f;
-    m_xMove = 0.0f;
+    m_yMove = 0.0f;
     m_movementSpeed = movementSpeed;
     m_node = node;
     m_maxTimeSinceChange = 3.0f;
@@ -62,6 +63,9 @@ bool MapEventEnemy::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirec
                 m_xMove = (x1 - x2);
                 m_yMove = (y1 - y2);
                 float length = sqrt(m_xMove * m_xMove + m_yMove * m_yMove);
+                //Prevent division by 0
+                if(length == 0.0f)
+                    length = 1.0f;
                 m_xMove *= m_followSpeed/length;
                 m_yMove *= m_followSpeed/length;
                 mv = true;
@@ -81,7 +85,7 @@ bool MapEventEnemy::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirec
         {
             sf::FloatRect testBB = enemyBB;
             testBB.left += m_xMove * tickTime;
-            if(!m_map->DoesCollide(testBB) && m_xMove < 0.01f && m_xMove > 0.01f)
+            if(!m_map->DoesCollide(testBB) && (m_xMove < -0.01f || m_xMove > 0.01f))
             {
                 m_node->moveNode(m_xMove * tickTime, 0.0f);
             }
@@ -89,7 +93,7 @@ bool MapEventEnemy::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirec
             {
                 sf::FloatRect testBB = enemyBB;
                 testBB.top += m_yMove * tickTime;
-                if(!m_map->DoesCollide(testBB) && m_yMove < 0.01f && m_yMove > 0.01f)
+                if(!m_map->DoesCollide(testBB) && (m_yMove < -0.01f || m_yMove > 0.01f))
                 {
                     m_node->moveNode(0.0f, m_yMove * tickTime);
                 }
@@ -105,7 +109,6 @@ bool MapEventEnemy::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirec
 
 void MapEventEnemy::Activate()
 {
-
     GameController::getInstance()->StartBattle(m_enemies);
 
     m_finished = true;
