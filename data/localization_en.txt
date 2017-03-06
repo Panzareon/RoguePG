@@ -53,15 +53,15 @@ effect.target.6 = Targets all heroes and enemies.
 
 //Effects
 effect.1 = Fire Damage
-effect.1.desc = Deals %0 fire damage.
+effect.1.desc = Deals %0 base fire damage.
 effect.2 = Air Damage
-effect.2.desc = Deals %0 air damage.
+effect.2.desc = Deals %0 base air damage.
 effect.3 = Water Damage
-effect.3.desc = Deals %0 water damage.
+effect.3.desc = Deals %0 base water damage.
 effect.4 = Earth Damage
-effect.4.desc = Deals %0 earth damage.
+effect.4.desc = Deals %0 base earth damage.
 effect.5 = Physical Damage
-effect.5.desc = Deals %0 physical damage.
+effect.5.desc = Deals %0 base physical damage.
 
 effect.101 = Strength Buff
 effect.101.desc = Increases strength by %1% for %0 turns.
