@@ -19,6 +19,8 @@ bool FillItem::CanInsertAt(Map* map, int x, int y, int LayerId, int LayerAboveHe
 {
     if(x == map->m_startX && y == map->m_startY)
         return false;
+    if(x == map->m_endX && y == map->m_endY)
+        return false;
     switch(m_size)
     {
         case AndOneAbove:

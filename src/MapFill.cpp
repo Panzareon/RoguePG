@@ -280,7 +280,7 @@ void MapFill::FillWithItems(int LayerId, int LayerAboveHeroId, int LayerWallDeco
     }
 }
 
-bool MapFill::PlaceItemAt(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, TileIndex index, int x, int y)
+bool MapFill::PlaceItemAt(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, TileIndex index, int x, int y, bool checkPlacement)
 {
     int maxChance = 0.0f;
     for(unsigned int i = 0; i < m_chanceForTile[index].size(); i++)
@@ -299,12 +299,12 @@ bool MapFill::PlaceItemAt(int LayerId, int LayerAboveHeroId, int LayerWallDecora
     i--;
     FillItem* newItem = &(m_chanceForTile[index][i]);
 
-    if(!newItem->CanInsertAt(m_map, x, y, LayerId, LayerAboveHeroId))
+    if(checkPlacement && !newItem->CanInsertAt(m_map, x, y, LayerId, LayerAboveHeroId))
     {
         return false;
     }
 
-    if(newItem->GetType() == FillItem::Blocking)
+    if(checkPlacement && newItem->GetType() == FillItem::Blocking)
     {
         if(!CanBlockBeFilled(x,y))
             return false;

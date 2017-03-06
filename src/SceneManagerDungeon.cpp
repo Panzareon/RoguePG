@@ -129,8 +129,8 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     m_mapFill->FillLayer(MapFill::AdditionalItems, 1,2,4);
 
     //Place Stairs
-    m_mapFill->PlaceItemAt(1,2,4,MapFill::TileStairsUp,m_map.m_startX, m_map.m_startY);
-    m_mapFill->PlaceItemAt(1,2,4,MapFill::TileStairsDown,m_map.m_endX, m_map.m_endY);
+    m_mapFill->PlaceItemAt(1,2,4,MapFill::TileStairsUp,m_map.m_startX, m_map.m_startY, false);
+    m_mapFill->PlaceItemAt(1,2,4,MapFill::TileStairsDown,m_map.m_endX, m_map.m_endY, false);
     m_events.push_back(new MapEventStairs(false, m_map.m_startX, m_map.m_startY));
     m_events.push_back(new MapEventStairs(true, m_map.m_endX, m_map.m_endY));
 
