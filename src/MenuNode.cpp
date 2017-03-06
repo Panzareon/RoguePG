@@ -124,6 +124,8 @@ void MenuNode::MoveUp()
 {
     if(m_selected > 0)
         m_selected--;
+    if(m_selected < m_scrollPosition)
+        m_scrollPosition--;
     if(m_selectFunction.size() > m_selected && m_selectFunction[m_selected] != nullptr)
     {
         m_selectFunction[m_selected]();
@@ -134,6 +136,8 @@ void MenuNode::MoveDown()
 {
     if(m_selected < m_optionName.size() - 1)
         m_selected ++;
+    if(m_selected - m_scrollPosition >= m_maxShownNumber)
+        m_scrollPosition++;
     if(m_selectFunction.size() > m_selected && m_selectFunction[m_selected] != nullptr)
     {
         m_selectFunction[m_selected]();
@@ -287,6 +291,7 @@ void MenuNode::SetMaxShownOptions(int nr)
     if(nr > 0)
     {
         m_maxShownNumber = nr;
+        UpdateBackground();
     }
 }
 
