@@ -19,7 +19,7 @@ class MapFill
 
 
         //Place item of layer at position x,y
-        void PlaceItemAt(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, TileIndex index, int x, int y);
+        bool PlaceItemAt(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, TileIndex index, int x, int y);
     protected:
         enum FillType {Simple, WithAdjacent};
         Map* m_map;

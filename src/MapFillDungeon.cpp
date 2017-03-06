@@ -43,7 +43,7 @@ void MapFillDungeon::InitItemChances()
     m_chanceForTile[TileRandomItem].push_back(FillItem(579,50,FillItem::Blocking,FillItem::Single, FillItem::AtWall));
 
     //Chest
-    m_chanceForTile[TileChest].push_back(FillItem(928,1,FillItem::Blocking));
+    m_chanceForTile[TileChest].push_back(FillItem(928,1,FillItem::Blocking,FillItem::Single, FillItem::AtWall));
 
 }
 

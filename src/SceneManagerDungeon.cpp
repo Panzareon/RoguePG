@@ -215,8 +215,18 @@ void SceneManagerDungeon::SpawnEnemy()
 
 void SceneManagerDungeon::PlaceChest()
 {
-    std::pair<int, int>* pos = m_generator.GetFreePosition();
-    std::cout << "Chest at " << pos->first << " " << pos->second << std::endl;
-    m_mapFill->PlaceItemAt(1,2,4,MapFill::TileChest,pos->first, pos->second);
+    std::pair<int, int>* pos;
+    //Add a maximum number of tries to prevent endless loop
+    //For the first 100 try to find a dead end to put the chest into
+    int nrTries = 0;
+    bool placed;
+    do
+    {
+        nrTries++;
+        pos = m_generator.GetFreePosition(nrTries < 100);
+        placed = m_mapFill->PlaceItemAt(1,2,4,MapFill::TileChest,pos->first, pos->second);
+    }
+    while(!placed && nrTries < 200);
+    std::cout << "Chest at " << pos->first << " " << pos->second << " dead end: " << (nrTries < 100) << std::endl;
     m_events.push_back(new MapEventChest(pos->first, pos->second));
 }

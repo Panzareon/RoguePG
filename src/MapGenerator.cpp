@@ -895,18 +895,51 @@ void MapGenerator::PlaceStartingAndEndPosition()
     }
 }
 
-std::pair<int,int>* MapGenerator::GetFreePosition()
+std::pair<int,int>* MapGenerator::GetFreePosition(bool deadEnd)
 {
     std::map<int,MapRoom>* rooms = m_map->GetAllRooms();
     int roomsSize = rooms->size();
+    if(deadEnd)
+    {
+        roomsSize = 0;
+        for(auto it = rooms->begin(); it != rooms->end(); it++)
+        {
+            if(it->second.GetNumberOfAdjacentRooms() == 1)
+            {
+                roomsSize++;
+            }
+        }
+        if(roomsSize == 0)
+        {
+            roomsSize = rooms->size();
+        }
+    }
     int i = rand() % roomsSize + 1;
     int nr = 0;
     std::pair<int,int>* pos;
     //100 tries to find free space
     while(nr < 100)
     {
-         pos = rooms->at(i).GetRandomPosition();
-         if(m_map->GetTileType(pos->first, pos->second) == Map::Space)
+        if(deadEnd && roomsSize != rooms->size())
+        {
+            int randNr = nr;
+            for(auto it = rooms->begin(); it != rooms->end() && randNr >= 0; it++)
+            {
+                if(it->second.GetNumberOfAdjacentRooms() == 1)
+                {
+                    if(randNr == 0)
+                    {
+                        pos = rooms->at(i).GetRandomPosition();
+                    }
+                    randNr--;
+                }
+            }
+        }
+        else
+        {
+            pos = rooms->at(i).GetRandomPosition();
+        }
+        if(m_map->GetTileType(pos->first, pos->second) == Map::Space)
             return pos;
     }
     //if no free space is found, return last one

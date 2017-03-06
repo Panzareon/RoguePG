@@ -33,7 +33,8 @@ class MapGenerator
         void NumberRooms();
 
         void PlaceStartingAndEndPosition();
-        std::pair<int,int>* GetFreePosition();
+        //for deadEnd == true look for a Room without adjacent rooms
+        std::pair<int,int>* GetFreePosition(bool deadEnd = false);
 
     protected:
     private:
