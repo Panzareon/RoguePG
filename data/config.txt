@@ -7,4 +7,5 @@ accept = 57
 cancel = 66
 
 //other settings
+//Wall Transparency in Percent, between 0 and 100
 wall_transparency = 80
