@@ -111,7 +111,7 @@ SceneManagerBattle::SceneManagerBattle(sf::RenderTarget * target, int windowWidt
 
     //Setting Startpositions for teams
     //TODO: for more than 2 teams?
-    m_posPerTeam.push_back(sf::Vector2f(50,150));
+    m_posPerTeam.push_back(sf::Vector2f(100,150));
     m_posPerTeam.push_back(sf::Vector2f(GameController::getInstance()->GetWindowWidth() - 100,155));
     m_posChangePerTeam.push_back(sf::Vector2f(40,40));
     m_posChangePerTeam.push_back(sf::Vector2f(-40,40));
