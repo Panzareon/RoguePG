@@ -5,7 +5,7 @@ class Animation;
 class AnimationPart
 {
     public:
-        AnimationPart(Animation* animation = 0);
+        AnimationPart();
         virtual ~AnimationPart();
         void SetTiming(float start, float end);
         virtual void animate(float newTime);
@@ -13,7 +13,6 @@ class AnimationPart
         virtual void Stop() = 0;
         virtual void AnimationStep(float percent) = 0;
     protected:
-        Animation* m_animation;
         float m_start;
         float m_end;
         int m_status;

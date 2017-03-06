@@ -18,6 +18,8 @@ class AnimationFactory
         static Animation* GetAnimation(AnimationList anim, std::vector<Entity* >* targets);
         static Animation* GetAnimation(AnimationList anim, sf::FloatRect startPos);
 
+        static Animation* GetTextAnimation(Entity* target, std::string text, sf::Color color);
+
     protected:
 
     private:

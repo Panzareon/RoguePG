@@ -51,6 +51,8 @@
 		<Unit filename="include/AnimationFactory.h" />
 		<Unit filename="include/AnimationPart.h" />
 		<Unit filename="include/AnimationPartSprite.h" />
+		<Unit filename="include/AnimationPartText.h" />
+		<Unit filename="include/AnimationPartWithNode.h" />
 		<Unit filename="include/Attack.h" />
 		<Unit filename="include/CharacterClass.h" />
 		<Unit filename="include/Configuration.h" />
@@ -117,6 +119,8 @@
 		<Unit filename="src/AnimationFactory.cpp" />
 		<Unit filename="src/AnimationPart.cpp" />
 		<Unit filename="src/AnimationPartSprite.cpp" />
+		<Unit filename="src/AnimationPartText.cpp" />
+		<Unit filename="src/AnimationPartWithNode.cpp" />
 		<Unit filename="src/Attack.cpp" />
 		<Unit filename="src/CharacterClass.cpp" />
 		<Unit filename="src/Configuration.cpp" />

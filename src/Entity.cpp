@@ -87,13 +87,30 @@ void Entity::GetHit(Attack* attack, Entity* attacker)
     {
         defense = GetAttribute(BattleEnums::AttributeMagicDefense);
     }
-    float dmg = attack->m_dmg / std::sqrt(defense);
+    float baseDmg = attack->m_dmg / std::sqrt(defense);
+    float dmg = baseDmg;
     //add resistance or weakness to Attack type
     for(auto it = attack->m_type.begin(); it != attack->m_type.end(); it++)
     {
         dmg *= GetResistanceFor(*it);
     }
-    m_hp -= dmg;
+
+    sf::Color color = sf::Color::Black;
+    if(dmg > baseDmg)
+    {
+        //effective Attack
+        color = sf::Color::Red;
+    }
+    else if(dmg < baseDmg)
+    {
+        //resisted Attack
+        color = sf::Color::Blue;
+    }
+    int finalDmg = dmg;
+    Animation * newAnim = AnimationFactory::GetTextAnimation(this, std::to_string(finalDmg), color);
+    GameController::getInstance()->GetActiveSceneManager()->AddAnimation(newAnim);
+
+    m_hp -= finalDmg;
     //TODO: play get hit animation
     if(m_hp <= 0)
     {

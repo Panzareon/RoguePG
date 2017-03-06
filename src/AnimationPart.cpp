@@ -1,10 +1,9 @@
 #include "AnimationPart.h"
 
-AnimationPart::AnimationPart(Animation* animation)
+AnimationPart::AnimationPart()
 {
     //ctor
     m_status = 0;
-    m_animation = animation;
 }
 
 AnimationPart::~AnimationPart()

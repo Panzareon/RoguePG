@@ -1,5 +1,6 @@
 #include "AnimationFactory.h"
 #include "AnimationPartSprite.h"
+#include "AnimationPartText.h"
 
 AnimationFactory::AnimationFactory()
 {
@@ -81,4 +82,22 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
         return nullptr;
     }
 
+}
+
+Animation* AnimationFactory::GetTextAnimation(Entity* target, std::string text, sf::Color color)
+{
+    sf::FloatRect startPos = target->GetNode()->getGlobalBoundingBox();
+    sf::Transform startTransform;
+    startTransform.translate(startPos.left, startPos.top);
+    Animation* ret;
+    ret = new Animation(0.4f);
+    AnimationPartText* part = new AnimationPartText(text, color, 12);
+    sf::FloatRect bounds = part->GetText()->getLocalBounds();
+    startTransform.translate((startPos.width - bounds.width) / 2, (startPos.height - bounds.height) / 2);
+    part->SetTiming(0.2f, 0.4f);
+    part->SetStartTransform(startTransform);
+    part->SetTranslation(-2.0f, - 10.0f);
+    part->SetScaling(1.5f);
+    ret->AddStep(part);
+    return ret;
 }
