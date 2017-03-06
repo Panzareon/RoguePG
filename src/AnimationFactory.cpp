@@ -90,11 +90,11 @@ Animation* AnimationFactory::GetTextAnimation(Entity* target, std::string text, 
     sf::Transform startTransform;
     startTransform.translate(startPos.left, startPos.top);
     Animation* ret;
-    ret = new Animation(0.4f);
+    ret = new Animation(0.2f);
     AnimationPartText* part = new AnimationPartText(text, color, 12);
     sf::FloatRect bounds = part->GetText()->getLocalBounds();
     startTransform.translate((startPos.width - bounds.width) / 2, (startPos.height - bounds.height) / 2);
-    part->SetTiming(0.2f, 0.4f);
+    part->SetTiming(0.0f, 0.2f);
     part->SetStartTransform(startTransform);
     part->SetTranslation(-2.0f, - 10.0f);
     part->SetScaling(1.5f);
