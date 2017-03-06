@@ -470,7 +470,7 @@ bool SceneManagerBattle::IsEntityTargeted(Entity* entity)
         std::vector<PartyMember*>* party = m_party->GetActivePartyMembers();
         return std::find(party->begin(), party->end(), entity) != party->end();
     }
-    if(m_targetType == BattleEnums::TargetOwnTeam)
+    if(m_targetType == BattleEnums::TargetEnemyTeam)
     {
         return std::find(m_enemies.begin(), m_enemies.end(), entity) != m_enemies.end();
     }
