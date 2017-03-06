@@ -31,7 +31,7 @@ class SceneManagerDungeon: public SceneManagerMoveable
         TileMap* m_tileMapAboveWall;
         TileMap* m_tileMapWallDecoration;
 
-        TileMap* m_tileMapRoomNumber;
+        Node* m_roomNumberNode;
 
         DungeonConfiguration* m_dungeonConfig;
 

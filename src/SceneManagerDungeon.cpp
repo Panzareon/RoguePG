@@ -64,9 +64,11 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
 
     #ifdef DEBUG_FLAG
 
-    m_tileMapRoomNumber = new TileMap();
-    m_tileMapRoomNumber->setTexture(TextureList::getTexture(TextureList::DebugTileMap));
-    m_belowHero->addChild(new DrawableNode(m_tileMapRoomNumber));
+    TileMap* tileMapRoomNumber = new TileMap();
+    tileMapRoomNumber->setTexture(TextureList::getTexture(TextureList::DebugTileMap));
+    m_roomNumberNode = new DrawableNode(tileMapRoomNumber);
+    m_roomNumberNode->setVisibility(false);
+    m_belowHero->addChild(m_roomNumberNode);
 
     #endif // DEBUG_FLAG
 
@@ -113,7 +115,7 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
             m_map.SetTileId(x,y,m_map.GetRoomNr(x,y), 5);
     }
 
-    m_map.writeToTileMap(*m_tileMapRoomNumber,5);
+    m_map.writeToTileMap(*tileMapRoomNumber,5);
 
     #endif // DEBUG_FLAG
 
@@ -198,6 +200,19 @@ void SceneManagerDungeon::Tick()
         SpawnEnemy();
     }
     SceneManagerMoveable::Tick();
+
+    #ifdef DEBUG_FLAG
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+    {
+        m_roomNumberNode->setVisibility(true);
+    }
+    else
+    {
+        m_roomNumberNode->setVisibility(false);
+    }
+
+    #endif // DEBUG_FLAG
 }
 
 void SceneManagerDungeon::SpawnEnemy()
@@ -268,7 +283,7 @@ void SceneManagerDungeon::PlaceChest()
         placed = m_mapFill->PlaceItemAt(1,2,4,MapFill::TileChest,pos->first, pos->second);
     }
     while(!placed && nrTries < 200);
-    std::cout << "Chest at " << pos->first << " " << pos->second << " dead end: " << (nrTries < 100) << std::endl;
+    std::cout << "Chest at " << pos->first << " " << pos->second << " nr tries:" << nrTries << " placeable: " << placed << std::endl;
     m_events.push_back(new MapEventChest(pos->first, pos->second));
 
     //look for adjacent free tile
