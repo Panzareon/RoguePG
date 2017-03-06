@@ -86,6 +86,7 @@
 		<Unit filename="include/MapGenerator.h" />
 		<Unit filename="include/MapGeneratorUtil.h" />
 		<Unit filename="include/MapRoom.h" />
+		<Unit filename="include/MathHelper.h" />
 		<Unit filename="include/MenuNode.h" />
 		<Unit filename="include/MenuNodeItems.h" />
 		<Unit filename="include/Node.h" />
@@ -150,6 +151,7 @@
 		<Unit filename="src/MapGenerator.cpp" />
 		<Unit filename="src/MapGeneratorUtil.cpp" />
 		<Unit filename="src/MapRoom.cpp" />
+		<Unit filename="src/MathHelper.cpp" />
 		<Unit filename="src/MenuNode.cpp" />
 		<Unit filename="src/MenuNodeItems.tpp" />
 		<Unit filename="src/Node.cpp" />

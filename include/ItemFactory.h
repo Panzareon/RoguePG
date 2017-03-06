@@ -17,7 +17,6 @@ class ItemFactory
         Item* GetRandomEquipment(Equipment::EquipmentPosition pos);
 
     protected:
-        int GetRandomInt(int max = 10, int min = 5);
         static ItemFactory* m_instance;
         ItemFactory();
 
