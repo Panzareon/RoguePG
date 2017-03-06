@@ -45,6 +45,7 @@ class Entity
 
         //Getter/Setter
         float GetResistanceFor(BattleEnums::AttackType type);
+        void SetResistance(BattleEnums::AttackType type, float value);
         int GetAttribute(BattleEnums::Attribute attr);
         void InitAttribute(BattleEnums::Attribute attr, int value);
         void InitAllAttributes(int maxHp, int maxMp, int strength, int intelligence, int defense, int magicDefense, int speed);
@@ -72,6 +73,7 @@ class Entity
         int GetMp();
         float GetHpPercent();
         float GetMpPercent();
+        void CheckMaxValues();
         virtual std::string GetName();
 
         //Sets the Node showing this Entity on Screen

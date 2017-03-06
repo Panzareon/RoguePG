@@ -216,6 +216,11 @@ float Entity::GetResistanceFor(BattleEnums::AttackType type)
     return atmValue;
 }
 
+void Entity::SetResistance(BattleEnums::AttackType type, float value)
+{
+    m_resistances[type] = value;
+}
+
 int Entity::GetAttribute(BattleEnums::Attribute attr)
 {
     float atmValue = (float)m_attributes[attr];
@@ -356,6 +361,16 @@ float Entity::GetMpPercent()
     if(maxMp == 0.0f)
         return 0.0f;
     return (float)GetMp() / maxMp;
+}
+
+void Entity::CheckMaxValues()
+{
+    float maxHp = (float)GetAttribute(BattleEnums::AttributeMaxHp);
+    if(maxHp < GetHp())
+        m_hp = maxHp;
+    float maxMp = (float)GetAttribute(BattleEnums::AttributeMaxMp);
+    if(maxMp < GetMp())
+        m_mp = maxMp;
 }
 
 std::string Entity::GetName()

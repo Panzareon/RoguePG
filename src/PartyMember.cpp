@@ -123,6 +123,7 @@ void PartyMember::SetEquipment(Equipment::EquipmentPosition position, Equipment*
         AddPassiveEffect(equipment);
     }
     m_equipment[position] = equipment;
+    CheckMaxValues();
 }
 
 Equipment* PartyMember::GetEquipment(Equipment::EquipmentPosition position)
