@@ -49,6 +49,11 @@ class SceneManagerBattle : public SceneManager
         Party* m_party;
         std::vector<Entity*> m_enemies;
 
+        float m_timeHeight;
+        Node* m_timeDisplay;
+        std::vector<sf::Text*> m_partyMemberTime;
+        std::vector<sf::Text*> m_enemyTime;
+
         std::function<void(BattleEnums::Target, Entity*)>* m_useOnTarget;
         Entity* m_targetEntity;
         BattleEnums::Target m_targetType;

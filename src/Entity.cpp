@@ -257,7 +257,7 @@ void Entity::PassTime(float Time)
 
 void Entity::StartBattle()
 {
-    m_toNextAttack = 1.0f;
+    m_toNextAttack = (float)rand()/RAND_MAX;
 }
 
 void Entity::StartTurn()
