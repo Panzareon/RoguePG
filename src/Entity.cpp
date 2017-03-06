@@ -12,6 +12,7 @@ Entity::Entity(int exp)
     //ctor
     m_controllTypeAtm = Entity::ControllAI;
     m_teamId = -1;
+    m_lastAttackWasEffective = false;
 
     m_AI = new AIRandom(this);
     //Setting attribute values to default: 0
@@ -42,6 +43,12 @@ Entity::~Entity()
         delete iter->second;
     delete m_battleSprite;
 }
+
+void Entity::AttackWasEffective()
+{
+    m_lastAttackWasEffective = true;
+}
+
 void Entity::AttackEntity(Entity* target)
 {
     //TODO: play actual Attack animation (get from Weapon)
@@ -100,6 +107,7 @@ void Entity::GetHit(Attack* attack, Entity* attacker)
     {
         //effective Attack
         color = sf::Color::Red;
+        attacker->AttackWasEffective();
     }
     else if(dmg < baseDmg)
     {
@@ -247,6 +255,16 @@ void Entity::PassTime(float Time)
     m_toNextAttack -= Time * GetAttribute(BattleEnums::AttributeSpeed);
 }
 
+void Entity::StartBattle()
+{
+    m_toNextAttack = 1.0f;
+}
+
+void Entity::StartTurn()
+{
+    m_lastAttackWasEffective = false;
+}
+
 void Entity::FinishedTurn()
 {
     m_toNextAttack += 1.0f;
@@ -267,7 +285,15 @@ void Entity::FinishedTurn()
 
 float Entity::GetTimeToNextAttack()
 {
-    return m_toNextAttack / GetAttribute(BattleEnums::AttributeSpeed);
+    if(m_lastAttackWasEffective)
+    {
+        //reduce Time if last Attack was effective
+        return m_toNextAttack / GetAttribute(BattleEnums::AttributeSpeed) * 0.75;
+    }
+    else
+    {
+        return m_toNextAttack / GetAttribute(BattleEnums::AttributeSpeed);
+    }
 }
 Entity::ControllType Entity::GetControllType()
 {

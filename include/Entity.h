@@ -22,8 +22,11 @@ class Entity
         virtual ~Entity();
 
         void PassTime(float Time);
+        void StartBattle();
+        void StartTurn();
         void FinishedTurn();
 
+        void AttackWasEffective();
         //Deal dmg and play Attack animation
         void AttackEntity(Entity* target);
         void AttackEntity(Entity* target, Attack* attack);
@@ -94,6 +97,7 @@ class Entity
 
         sf::Sprite* m_battleSprite;
         int m_numberSprites;
+        bool m_lastAttackWasEffective;
 
         EntityNode* m_node;
     private:

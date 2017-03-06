@@ -120,6 +120,11 @@ SceneManagerBattle::SceneManagerBattle(sf::RenderTarget * target, int windowWidt
     {
         AddSpriteForEntity(member);
     }
+
+    for(PartyMember* member : (*m_party->GetAllPartyMembers()))
+    {
+        member->StartBattle();
+    }
 }
 
 SceneManagerBattle::~SceneManagerBattle()
@@ -307,6 +312,7 @@ void SceneManagerBattle::AddEnemy(Entity* enemy)
 {
     m_enemies.push_back(enemy);
     AddSpriteForEntity(enemy);
+    enemy->StartBattle();
 }
 
 
@@ -348,6 +354,7 @@ void SceneManagerBattle::CalculateNext()
     }
     m_next = next;
     PassTime(smallestNext);
+    m_next->StartTurn();
     if(m_next->GetControllType() == Entity::ControllUser)
     {
         //Show menu
