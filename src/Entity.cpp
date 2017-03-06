@@ -99,7 +99,7 @@ void Entity::GetHit(Attack* attack, Entity* attacker)
     //add resistance or weakness to Attack type
     for(auto it = attack->m_type.begin(); it != attack->m_type.end(); it++)
     {
-        dmg *= GetResistanceFor(*it);
+        dmg /= GetResistanceFor(*it);
     }
 
     sf::Color color = sf::Color::Black;
