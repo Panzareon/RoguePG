@@ -279,6 +279,7 @@ void SceneManagerGameMenu::SelectMember(PartyMember* member)
                 {
                     //Equip first available Item if not equipped otherwise
                     SetEquipmentSkillMenu(equip);
+                    m_selectedEquipment = equip;
                     if(!equip->IsEquiped())
                         SelectEquipment(equip);
                     first = false;
