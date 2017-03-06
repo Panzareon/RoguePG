@@ -69,6 +69,18 @@ Configuration::Configuration()
     {
         m_keys.at(Cancel) = sf::Keyboard::Escape;
     }
+    try
+    {
+        m_wallTransparency = std::stof(GetString("wall_transparency")) / 100.0f;
+        if(m_wallTransparency < 0.0f || m_wallTransparency > 1.0f)
+            m_wallTransparency = 0.8f;
+    }
+    catch(...)
+    {
+        m_wallTransparency = 0.8f;
+    }
+
+
     m_defaultKeys.at(MoveDown) = sf::Keyboard::Down;
     m_defaultKeys.at(MoveUp) = sf::Keyboard::Up;
     m_defaultKeys.at(MoveRight) = sf::Keyboard::Right;
@@ -174,4 +186,9 @@ std::string Configuration::KeyToString(sf::Keyboard::Key key)
     {
         return Localization::GetInstance()->GetLocalization(std::string("menu.keyBindings.") + std::to_string((int)key));
     }
+}
+
+float Configuration::GetWallTransparency()
+{
+    return m_wallTransparency;
 }

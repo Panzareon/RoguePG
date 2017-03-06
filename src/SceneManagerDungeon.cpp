@@ -173,7 +173,7 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     m_map.writeToTileMap(*m_tileMap,0);
     m_map.writeToTileMap(*m_tileMapItems,1);
     m_map.writeToTileMap(*m_tileMapAboveHero,2);
-    sf::Color halfTransparent(255,255,255,220);
+    sf::Color halfTransparent(255,255,255,Configuration::GetInstance()->GetWallTransparency() * 255);
     m_map.writeToTileMap(*m_tileMapAboveWall,3, halfTransparent);
     m_map.writeToTileMap(*m_tileMapWallDecoration,4);
 

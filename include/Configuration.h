@@ -28,12 +28,16 @@ class Configuration : FileConfig
         std::string KeyToString(Keys key);
         std::string KeyToString(sf::Keyboard::Key key);
 
+        float GetWallTransparency();
+
     protected:
         Configuration();
         static Configuration* m_instance;
     private:
         sf::Keyboard::Key m_lastPressed;
         sf::Font m_font;
+
+        float m_wallTransparency;
 
         std::vector<sf::Keyboard::Key> m_keys;
         std::vector<sf::Keyboard::Key> m_defaultKeys;

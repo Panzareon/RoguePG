@@ -5,3 +5,6 @@ move_right = 3
 move_left = 0
 accept = 57
 cancel = 66
+
+//other settings
+wall_transparency = 80
