@@ -9,6 +9,8 @@ AnimationPart::AnimationPart()
 AnimationPart::~AnimationPart()
 {
     //dtor
+    if(m_status != 2)
+        Stop();
 }
 
 void AnimationPart::SetTiming(float start, float end)
@@ -26,7 +28,7 @@ void AnimationPart::animate(float newTime)
         m_status = 1;
         Start();
     }
-    else if(m_status == 1 && newTime > m_end)
+    else if(m_status == 1 && newTime >= m_end)
     {
         //Stop Animation
         m_status = 2;
