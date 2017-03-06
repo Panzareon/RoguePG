@@ -15,11 +15,25 @@ void AIRandom::UseNextSkill()
 {
     //select random skill and use it
     std::vector<std::shared_ptr<Skill>>* skillList = m_entity->GetSkillList();
-    int nrSkills = skillList->size();
+    int nrSkills = 0;
+    for(int i = 0; i < skillList->size(); i++)
+    {
+        if(skillList->at(i)->GetManaUse() <= m_entity->GetMp())
+            nrSkills++;
+    }
     int skill = rand() % (nrSkills + 1);
     if(skill < nrSkills)
     {
-        std::shared_ptr<Skill> toUse = skillList->at(skill);
+        std::shared_ptr<Skill> toUse;
+        for(int i = 0; i < skillList->size(); i++)
+        {
+            if(skillList->at(i)->GetManaUse() <= m_entity->GetMp())
+            {
+                if(skill == 0)
+                    toUse = skillList->at(i);
+                skill--;
+            }
+        }
         BattleEnums::Target target = toUse->GetDefaultTarget();
         if(target == BattleEnums::TargetEnemyTeamEntity)
             toUse->Use(m_entity, target, GetRandomEntity(m_entity->GetTeamId(), true));
