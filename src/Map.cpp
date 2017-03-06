@@ -15,7 +15,11 @@ Map::Map(int width, int height)
         m_tiles[j] = new int[m_height];
     m_roomNr = new int*[m_width];
     for(unsigned int j = 0; j < m_width; j++)
+    {
         m_roomNr[j] = new int[m_height];
+        for(unsigned int k = 0; k < m_height; k++)
+            m_roomNr[j][k] = 0;
+    }
 }
 
 Map::~Map()

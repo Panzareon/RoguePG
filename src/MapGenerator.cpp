@@ -641,21 +641,17 @@ void MapGenerator::NumberRooms()
         {
             if(checkedTiles[i][j] > 2)
             {
-                for(int k = 0; k < 4; k++)
+                for(int k = 0; k < 2; k++)
                 {
+                    xAdd = 0;
+                    yAdd = 0;
                     switch(k)
                     {
                     case 0:
                         xAdd = 1;
                         break;
                     case 1:
-                        xAdd = -1;
-                        break;
-                    case 2:
                         yAdd = 1;
-                        break;
-                    case 3:
-                        yAdd = -1;
                         break;
                     }
                     if(i + xAdd >= 0 && i + xAdd < m_width && j + yAdd >= 0 && j + yAdd < m_height)
