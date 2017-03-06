@@ -218,6 +218,13 @@ void SceneManagerDungeon::SpawnEnemy()
     }
     while(m_map.GetRoomNr(pos->first, pos->second) == playerRoomNumber && nrTries < 10);
 
+    SpawnEnemy(pos->first, pos->second, m_lvlId, 110.0f, 220.0f, 4, 2);
+
+    m_timeToNextSpawn = rand()%10 + 10;
+}
+
+void SceneManagerDungeon::SpawnEnemy(int x, int y, int lvl, float movementSpeed, float followSpeed, int followRange, int nr)
+{
     sf::Sprite sprite;
     Texture* tex = TextureList::getTexture(TextureList::EnemySpriteSheet);
     sprite.setTexture(*tex);
@@ -228,23 +235,23 @@ void SceneManagerDungeon::SpawnEnemy()
 
     sf::Transform enemyTransform;
     //Place Enemy at Position
-    enemyTransform.translate(pos->first * TileMap::GetTileWith(), pos->second * TileMap::GetTileWith() - 14);
+    enemyTransform.translate(x * TileMap::GetTileWith(), y * TileMap::GetTileWith() - 14);
     enemy->setTransform(enemyTransform);
 
     std::vector<Entity*>* enemies = new std::vector<Entity*>();
     //TODO: get Entities of this Map from somewhere else
-    Entity* e = m_dungeonConfig->GetDungeonEnemy(m_lvlId);
-    e->SetTeamId(1);
-    enemies->push_back(e);
-    e = m_dungeonConfig->GetDungeonEnemy(m_lvlId);
-    e->SetTeamId(1);
-    enemies->push_back(e);
+    Entity* e;
+    for(int i = 0; i < nr; i++)
+    {
+        e = m_dungeonConfig->GetDungeonEnemy(lvl);
+        e->SetTeamId(1);
+        enemies->push_back(e);
+    }
 
 
-    MapEventEnemy* mapEvent = new MapEventEnemy(&m_map, enemy,  110.0f, enemies);
+    MapEventEnemy* mapEvent = new MapEventEnemy(&m_map, enemy,  movementSpeed, enemies);
     m_events.push_back(mapEvent);
-    mapEvent->FollowPlayer(true, 4, 220.0f);
-    m_timeToNextSpawn = rand()%10 + 10;
+    mapEvent->FollowPlayer(true, followRange, followSpeed);
 }
 
 void SceneManagerDungeon::PlaceChest()
@@ -263,4 +270,24 @@ void SceneManagerDungeon::PlaceChest()
     while(!placed && nrTries < 200);
     std::cout << "Chest at " << pos->first << " " << pos->second << " dead end: " << (nrTries < 100) << std::endl;
     m_events.push_back(new MapEventChest(pos->first, pos->second));
+
+    //look for adjacent free tile
+    if(!m_map.DoesCollide(pos->first + 1, pos->second))
+    {
+        pos->first +=1;
+    }
+    else if(!m_map.DoesCollide(pos->first - 1, pos->second))
+    {
+        pos->first -=1;
+    }
+    else if(!m_map.DoesCollide(pos->first, pos->second + 1))
+    {
+        pos->second +=1;
+    }
+    else if(!m_map.DoesCollide(pos->first, pos->second - 1))
+    {
+        pos->second -=1;
+    }
+
+    SpawnEnemy(pos->first,pos->second,m_lvlId + 2, 0.0f, 256.0f,2,3);
 }
