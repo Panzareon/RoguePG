@@ -929,7 +929,7 @@ std::pair<int,int>* MapGenerator::GetFreePosition(bool deadEnd)
                 {
                     if(randNr == 0)
                     {
-                        pos = rooms->at(i).GetRandomPosition();
+                        pos = it->second.GetRandomPosition();
                     }
                     randNr--;
                 }
