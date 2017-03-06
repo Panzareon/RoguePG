@@ -26,6 +26,10 @@ Texture* TextureList::getTexture(TextureFiles file)
         case DungeonTileMap:
             filename = "TileMap.png";
             break;
+        case DebugTileMap:
+            filename = "TileMap-Test.png";
+            break;
+
 
 
         case HeroSpriteSheet:

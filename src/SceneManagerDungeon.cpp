@@ -20,7 +20,17 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     //ctor
     //Define Tile Maps
     SetMemberStats();
+
+
+    #ifdef DEBUG_FLAG
+
+    m_map.init(6);
+
+    #else
+
     m_map.init(5);
+
+    #endif // DEBUG_FLAG
     m_dungeonConfig = config;
     m_lvlId = lvlId;
     m_tileMap = new TileMap();
@@ -29,11 +39,14 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     m_tileMapAboveWall = new TileMap();
     m_tileMapWallDecoration = new TileMap();
 
+
+
     m_tileMap->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
     m_tileMapItems->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
     m_tileMapAboveHero->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
     m_tileMapAboveWall->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
     m_tileMapWallDecoration->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
+
 
     //Build Scene Graph
     m_mainNode = new Node();
@@ -48,6 +61,15 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     m_mainNode->addChild(m_aboveHero);
 
     m_belowHero->addChild(new DrawableNode(m_tileMap));
+
+    #ifdef DEBUG_FLAG
+
+    m_tileMapRoomNumber = new TileMap();
+    m_tileMapRoomNumber->setTexture(TextureList::getTexture(TextureList::DebugTileMap));
+    m_belowHero->addChild(new DrawableNode(m_tileMapRoomNumber));
+
+    #endif // DEBUG_FLAG
+
     m_belowHero->addChild(new DrawableNode(m_tileMapItems));
 
     m_aboveHero->addChild(new DrawableNode(m_tileMapAboveHero));
@@ -82,6 +104,18 @@ SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWi
     //Fill Wall Topping
     m_mapFill->FillLayer(MapFill::WallTopping, 3);
 
+
+    #ifdef DEBUG_FLAG
+
+    for(int x = 0; x < m_map.GetWidth(); x++)
+    {
+        for(int y = 0; y < m_map.GetHeight(); y++)
+            m_map.SetTileId(x,y,m_map.GetRoomNr(x,y), 5);
+    }
+
+    m_map.writeToTileMap(*m_tileMapRoomNumber,5);
+
+    #endif // DEBUG_FLAG
 
     m_generator.PlaceStartingAndEndPosition();
 

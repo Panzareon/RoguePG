@@ -9,7 +9,7 @@ class TextureList
     public:
         //List of Texture file names
         enum TextureFiles{
-            DungeonTileMap,
+            DungeonTileMap,DebugTileMap,
 
             HeroSpriteSheet,
             EnemySpriteSheet,
