@@ -11,6 +11,10 @@ Equipment::Equipment(int itemId, EquipmentPosition pos) : Item(itemId, Item::Ite
     m_target = nullptr;
     m_position = pos;
     m_neededExpMultiplier = 20;
+    for(int i = 0; i < (int)BattleEnums::ATTACK_TYPE_END; i++)
+    {
+        m_typeResistance[(BattleEnums::AttackType)i] = 1.0f;
+    }
 }
 
 Equipment::~Equipment()
