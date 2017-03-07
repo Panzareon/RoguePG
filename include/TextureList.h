@@ -20,6 +20,10 @@ class TextureList
             TargetCursor,
 
             FireballAnimation,
+            WaterAnimation,
+            EarthAnimation,
+            AirAnimation,
+            SwordAnimation,
 
             DungeonBattleBackground,
 

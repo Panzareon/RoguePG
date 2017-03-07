@@ -8,7 +8,11 @@ class AnimationFactory
 {
     public:
         enum AnimationList{
-            Fireball
+            Fireball,
+            Water,
+            Earth,
+            Air,
+            Sword
         };
         AnimationFactory();
         virtual ~AnimationFactory();

@@ -14,7 +14,24 @@ AnimationFactory::~AnimationFactory()
 
 AnimationFactory::AnimationList AnimationFactory::GetAnimationTypeFor(std::set<BattleEnums::AttackType>* att, std::set<BattleEnums::EffectType>* eff)
 {
-    //TODO: return Animation according to Attack and Effect Type
+    //return Animation according to Attack and Effect Type
+    if(att->size() > 0)
+    {
+        switch(*att->begin())
+        {
+        case BattleEnums::AttackTypeFire:
+            return Fireball;
+        case BattleEnums::AttackTypeEarth:
+            return Earth;
+        case BattleEnums::AttackTypeWater:
+            return Water;
+        case BattleEnums::AttackTypeAir:
+            return Air;
+        case BattleEnums::AttackTypePhysical:
+            return Sword;
+        }
+    }
+    //Default return is Fireball
     return Fireball;
 }
 
@@ -78,6 +95,58 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
             return ret;
         }
         break;
+    case Water:
+        {
+            float yMovement = 50.0f;
+            ret = new Animation(0.2f);
+            AnimationPartSprite* part = new AnimationPartSprite(TextureList::WaterAnimation);
+            sf::FloatRect spriteBounds = part->GetSprite()->getLocalBounds();
+            startTransform.translate((startPos.width - spriteBounds.width) / 2, (startPos.height - spriteBounds.height) / 2 - yMovement);
+            part->SetTiming(0.0f, 0.2f);
+            part->SetStartTransform(startTransform);
+            part->SetTranslation(0.0f, yMovement);
+            ret->AddStep(part);
+            return ret;
+        }
+    case Earth:
+        {
+            float yMovement = 75.0f;
+            ret = new Animation(0.2f);
+            AnimationPartSprite* part = new AnimationPartSprite(TextureList::EarthAnimation);
+            sf::FloatRect spriteBounds = part->GetSprite()->getLocalBounds();
+            startTransform.translate((startPos.width - spriteBounds.width) / 2, (startPos.height - spriteBounds.height) / 2 - yMovement);
+            part->SetTiming(0.0f, 0.2f);
+            part->SetStartTransform(startTransform);
+            part->SetTranslation(0.0f, yMovement);
+            ret->AddStep(part);
+            return ret;
+        }
+    case Air:
+        {
+            float xMovement = -30.0f;
+            ret = new Animation(0.2f);
+            AnimationPartSprite* part = new AnimationPartSprite(TextureList::WaterAnimation);
+            sf::FloatRect spriteBounds = part->GetSprite()->getLocalBounds();
+            startTransform.translate((startPos.width - spriteBounds.width) / 2 - xMovement, (startPos.height - spriteBounds.height) / 2);
+            part->SetTiming(0.0f, 0.2f);
+            part->SetStartTransform(startTransform);
+            part->SetTranslation(xMovement, 0.0f);
+            ret->AddStep(part);
+            return ret;
+        }
+    case Sword:
+        {
+            float yMovement = 75.0f;
+            ret = new Animation(0.2f);
+            AnimationPartSprite* part = new AnimationPartSprite(TextureList::SwordAnimation);
+            sf::FloatRect spriteBounds = part->GetSprite()->getLocalBounds();
+            startTransform.translate((startPos.width - spriteBounds.width) / 2, (startPos.height - spriteBounds.height) / 2 - yMovement);
+            part->SetTiming(0.0f, 0.2f);
+            part->SetStartTransform(startTransform);
+            part->SetTranslation(0.0f, yMovement);
+            ret->AddStep(part);
+            return ret;
+        }
     default:
         return nullptr;
     }

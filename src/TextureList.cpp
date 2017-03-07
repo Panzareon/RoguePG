@@ -60,6 +60,18 @@ Texture* TextureList::getTexture(TextureFiles file)
         case FireballAnimation:
             filename = "fireball.png";
             break;
+        case WaterAnimation:
+            filename = "water.png";
+            break;
+        case EarthAnimation:
+            filename = "stone.png";
+            break;
+        case AirAnimation:
+            filename = "wind.png";
+            break;
+        case SwordAnimation:
+            filename = "sword.png";
+            break;
 
 
         case DungeonBattleBackground:
