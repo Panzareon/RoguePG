@@ -125,7 +125,7 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
         {
             float xMovement = -30.0f;
             ret = new Animation(0.2f);
-            AnimationPartSprite* part = new AnimationPartSprite(TextureList::WaterAnimation);
+            AnimationPartSprite* part = new AnimationPartSprite(TextureList::AirAnimation);
             sf::FloatRect spriteBounds = part->GetSprite()->getLocalBounds();
             startTransform.translate((startPos.width - spriteBounds.width) / 2 - xMovement, (startPos.height - spriteBounds.height) / 2);
             part->SetTiming(0.0f, 0.2f);
