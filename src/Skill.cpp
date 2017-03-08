@@ -44,20 +44,29 @@ void Skill::Use(Entity* user, BattleEnums::Target targetType, Entity* target)
         int teamId = user->GetTeamId();
         if(targetType == BattleEnums::TargetAll)
         {
-            targets.insert(targets.end(), e->begin(), e->end());
-            targets.insert(targets.end(), p->begin(), p->end());
+            //add all that are not dead
+            for(int i = 0; i < e->size(); i++)
+            {
+                if(!e->at(i)->IsDead())
+                    targets.push_back(e->at(i));
+            }
+            for(int i = 0; i < p->size(); i++)
+            {
+                if(!p->at(i)->IsDead())
+                    targets.push_back(p->at(i));
+            }
         }
         else if(targetType == BattleEnums::TargetEnemyTeam)
         {
             //add all with different Team Id
             for(int i = 0; i < e->size(); i++)
             {
-                if(e->at(i)->GetTeamId() != teamId)
+                if(e->at(i)->GetTeamId() != teamId && !e->at(i)->IsDead())
                     targets.push_back(e->at(i));
             }
             for(int i = 0; i < p->size(); i++)
             {
-                if(p->at(i)->GetTeamId() != teamId)
+                if(p->at(i)->GetTeamId() != teamId && !p->at(i)->IsDead())
                     targets.push_back(p->at(i));
             }
         }
@@ -66,12 +75,12 @@ void Skill::Use(Entity* user, BattleEnums::Target targetType, Entity* target)
             //add all with same Team Id
             for(int i = 0; i < e->size(); i++)
             {
-                if(e->at(i)->GetTeamId() == teamId)
+                if(e->at(i)->GetTeamId() == teamId && !e->at(i)->IsDead())
                     targets.push_back(e->at(i));
             }
             for(int i = 0; i < p->size(); i++)
             {
-                if(p->at(i)->GetTeamId() == teamId)
+                if(p->at(i)->GetTeamId() == teamId && !p->at(i)->IsDead())
                     targets.push_back(p->at(i));
             }
         }
