@@ -1,6 +1,7 @@
 #include "EnemyFactory.h"
 #include "EffectFactoryList.h"
 #include "InvalidArgumentException.h"
+#include "Localization.h"
 
 EnemyFactory::EnemyFactory()
 {
@@ -15,6 +16,7 @@ EnemyFactory::~EnemyFactory()
 Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
 {
     Entity* ret = nullptr;
+    Localization* localization = Localization::GetInstance();
 
     switch(type)
     {
@@ -22,6 +24,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
     {
         //Exp to give after Battle
         ret = new Entity(10);
+        ret->SetName(localization->GetLocalization("enemy.bat"));
         ret->InitAllAttributes(13 + lvl,9 + lvl,7 + lvl,2 + lvl/3,9 + lvl,6 + lvl/2,9 + lvl);
         ret->SetBattleSprite(TextureList::BatBattleSprite);
         ret->SetResistance(BattleEnums::AttackTypePhysical, 0.9f);
@@ -37,6 +40,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
 
         //Exp to give after Battle
         ret = new Entity(20);
+        ret->SetName(localization->GetLocalization("enemy.dead_wizard"));
         ret->InitAllAttributes(28 + lvl*2,35 + lvl*3,7 + lvl,14 + lvl,11 + lvl,15 + lvl,14 + lvl);
         ret->SetBattleSprite(TextureList::DeadWizardBattleSprite);
         ret->SetResistance(BattleEnums::AttackTypeFire, 0.7f);
@@ -51,6 +55,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
 
         //Exp to give after Battle
         ret = new Entity(15);
+        ret->SetName(localization->GetLocalization("enemy.stone_golem"));
         ret->InitAllAttributes(28 + lvl*2,10 + lvl,5 + lvl/2,5 + lvl/2,8 + lvl,7 + lvl,10 + lvl);
         ret->SetBattleSprite(TextureList::StoneGolemBattleSprite);
         ret->SetResistance(BattleEnums::AttackTypePhysical, 2.0f);

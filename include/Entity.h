@@ -75,6 +75,7 @@ class Entity
         float GetMpPercent();
         void CheckMaxValues();
         virtual std::string GetName();
+        void SetName(std::string name);
 
         //Sets the Node showing this Entity on Screen
         void SetNode(EntityNode* node);
@@ -87,6 +88,8 @@ class Entity
         std::map<BattleEnums::Attribute, int> m_attributes;
         std::map<BattleEnums::AttackType, float> m_resistances;
         int m_giveExp;
+
+        std::string m_name;
 
         int m_hp;
         int m_mp;

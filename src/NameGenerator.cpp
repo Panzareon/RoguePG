@@ -53,6 +53,16 @@ std::string NameGenerator::GetName(int minLength, int maxLength)
     return ret;
 }
 
+std::string NameGenerator::GetCapitalizedName(int minLength, int maxLength)
+{
+    std::string ret = GetName(minLength, maxLength);
+    if(ret.size() > 0 )
+    {
+        ret.at(0) = ret.at(0) - 'a' + 'A';
+    }
+    return ret;
+}
+
 bool NameGenerator::AddLetterToString(std::string & s, bool canEnd)
 {
     bool ok = false;

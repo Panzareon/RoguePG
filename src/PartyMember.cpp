@@ -2,6 +2,7 @@
 #include "CharacterClass.h"
 #include "GameController.h"
 #include "Equipment.h"
+#include "NameGenerator.h"
 #include <iostream>
 
 PartyMember::PartyMember(CharacterClass* chrClass)
@@ -11,6 +12,10 @@ PartyMember::PartyMember(CharacterClass* chrClass)
     m_chrClass = chrClass;
     m_exp = 0;
     m_lvl = 1;
+
+    std::string name = NameGenerator::GetInstance()->GetCapitalizedName(5, 10);
+    SetName(name);
+
     for(int i = 0; i < Equipment::EQUIPMENT_POSITION_END; i++)
     {
         m_equipment[(Equipment::EquipmentPosition)i] = nullptr;

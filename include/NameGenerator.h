@@ -11,6 +11,7 @@ class NameGenerator : FileConfig
         static NameGenerator* GetInstance();
 
         std::string GetName(int minLength, int maxLength);
+        std::string GetCapitalizedName(int minLength, int maxLength);
 
     protected:
 

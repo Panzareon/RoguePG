@@ -31,6 +31,8 @@ Entity::Entity(int exp)
 
     m_toNextAttack = 1.0f;
 
+    m_name = "Entity";
+
     m_giveExp = exp;
 }
 
@@ -375,9 +377,13 @@ void Entity::CheckMaxValues()
 
 std::string Entity::GetName()
 {
-    return "Entity";
+    return m_name;
 }
 
+void Entity::SetName(std::string name)
+{
+    m_name = name;
+}
 
 int Entity::GetTeamId()
 {
