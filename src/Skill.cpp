@@ -3,6 +3,7 @@
 #include "Effect.h"
 #include "GameController.h"
 #include "Localization.h"
+#include "NameGenerator.h"
 
 #include <math.h>
 
@@ -11,6 +12,8 @@ Skill::Skill(BattleEnums::Target target)
     //ctor
     m_defaultTarget = target;
     m_manaUseBase = 0.0f;
+
+    m_name = NameGenerator::GetInstance()->GetCapitalizedName(3,6);
 }
 
 Skill::~Skill()
@@ -99,12 +102,7 @@ BattleEnums::Target Skill::GetDefaultTarget()
 
 std::string Skill::GetName()
 {
-    //TODO: return actual name
-    if(m_effects.size() >= 1)
-    {
-        return m_effects[0]->GetName();
-    }
-    return "Test-Skill";
+    return m_name;
 }
 
 std::string Skill::GetLocalizedDescription()

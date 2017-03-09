@@ -30,6 +30,8 @@ class Skill
         std::vector<Effect*> m_effects;
         std::vector<bool> m_isPositive;
 
+        std::string m_name;
+
         float m_manaUseBase;
         BattleEnums::Target m_defaultTarget;
 };
