@@ -17,7 +17,7 @@ class TextureList
             BatBattleSprite, DeadWizardBattleSprite, StoneGolemBattleSprite,
             DefaultBattleSprite,
 
-            TargetCursor,
+            TargetCursor, TimeArrow,
 
             FireballAnimation,
             WaterAnimation,

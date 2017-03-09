@@ -96,10 +96,17 @@ SceneManagerBattle::SceneManagerBattle(sf::RenderTarget * target, int windowWidt
     m_mainNode->addChild(m_description);
     m_mainMenu->SetPadding(5,0);
 
-    m_timeDisplay = new Node();
+    sf::Sprite* timeArrow = new sf::Sprite(*TextureList::getTexture(TextureList::TimeArrow));
+    m_timeDisplay = new DrawableNode(timeArrow);
     m_timeDisplay->moveNode(20.0f, 50.0f);
     m_gui->addChild(m_timeDisplay);
-    m_timeHeight = 300.0f;
+    m_timeHeight = 294.0f;
+
+
+    TextNode* timeNext = new TextNode(Localization::GetInstance()->GetLocalization("battle_gui.next"));
+    timeNext->SetFontSize(14);
+    timeNext->moveNode(30.0f, m_timeHeight - timeNext->getBoundingBox().height);
+    m_timeDisplay->addChild(timeNext);
 
     m_party = GameController::getInstance()->getParty();
 
@@ -126,8 +133,9 @@ SceneManagerBattle::SceneManagerBattle(sf::RenderTarget * target, int windowWidt
         AddSpriteForEntity(party->at(i));
         sf::Text* text = new sf::Text("H" + std::to_string(i+1), *Configuration::GetInstance()->GetFont(), 12);
         m_partyMemberTime.push_back(text);
+        sf::FloatRect textBounds = text->getLocalBounds();
         DrawableNode* node = new DrawableNode(text);
-        node->moveNode(-10.0f, 0.0f);
+        node->moveNode(-textBounds.width / 2, -textBounds.height);
         m_timeDisplay->addChild(node);
     }
 
@@ -325,8 +333,9 @@ void SceneManagerBattle::AddEnemy(Entity* enemy)
     enemy->StartBattle();
     sf::Text* text = new sf::Text("E" + std::to_string(m_enemies.size()), *Configuration::GetInstance()->GetFont(), 12);
     m_enemyTime.push_back(text);
+    sf::FloatRect textBounds = text->getLocalBounds();
     DrawableNode* node = new DrawableNode(text);
-    node->moveNode(10.0f, 0.0f);
+    node->moveNode(20.0f - textBounds.width / 2, -textBounds.height);
     m_timeDisplay->addChild(node);
 }
 
@@ -474,6 +483,10 @@ bool SceneManagerBattle::IsEntityTargeted(Entity* entity)
     {
         return std::find(m_enemies.begin(), m_enemies.end(), entity) != m_enemies.end();
     }
+
+    //Target the Entity that acts next
+    if(m_useOnTarget == nullptr && m_animationList.size() == 0 && m_next == entity && entity->GetControllType() == Entity::ControllUser)
+        return true;
     return false;
 }
 

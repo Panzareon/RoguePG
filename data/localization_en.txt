@@ -6,6 +6,8 @@ battle_menu.attack.desc = Attack the enemy with your weapon
 battle_menu.skill = Skill
 battle_menu.skill.desc = Use a learnt skill.
 
+battle_gui.next = Next
+
 //Menu-Texts
 menu.startDungeon = Start Dungeon
 menu.keyBindings = Key Bindings

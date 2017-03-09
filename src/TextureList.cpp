@@ -56,6 +56,9 @@ Texture* TextureList::getTexture(TextureFiles file)
         case TargetCursor:
             filename = "target.png";
             break;
+        case TimeArrow:
+            filename = "time_arrow.png";
+            break;
 
         case FireballAnimation:
             filename = "fireball.png";
