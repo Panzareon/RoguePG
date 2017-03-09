@@ -1,6 +1,7 @@
 #include "DungeonConfiguration.h"
 #include "SceneManagerDungeon.h"
 #include "GameController.h"
+#include "MusicController.h"
 
 DungeonConfiguration::DungeonConfiguration(int nrLevels, unsigned int seed)
 {
@@ -30,6 +31,11 @@ DungeonConfiguration::DungeonConfiguration(int nrLevels, unsigned int seed)
 DungeonConfiguration::~DungeonConfiguration()
 {
     //dtor
+}
+
+void DungeonConfiguration::PlayMusic()
+{
+    MusicController::GetInstance()->PlayMusic(MusicController::Cave);
 }
 
 SceneManager* DungeonConfiguration::GetLevel(int id)

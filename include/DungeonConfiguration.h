@@ -15,6 +15,8 @@ class DungeonConfiguration
         Entity* GetDungeonEnemy(int lvl);
         Entity* GetDungeonBoss(int lvl);
 
+        void PlayMusic();
+
     protected:
         int m_nrLevels;
         unsigned int m_seed;

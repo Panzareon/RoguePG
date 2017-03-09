@@ -43,6 +43,7 @@
 			<Add library="sfml-graphics" />
 			<Add library="sfml-window" />
 			<Add library="sfml-system" />
+			<Add library="sfml-audio" />
 			<Add directory="SFML-2.3.2/build/lib" />
 		</Linker>
 		<Unit filename="include/AIBase.h" />
@@ -92,6 +93,7 @@
 		<Unit filename="include/MathHelper.h" />
 		<Unit filename="include/MenuNode.h" />
 		<Unit filename="include/MenuNodeItems.h" />
+		<Unit filename="include/MusicController.h" />
 		<Unit filename="include/NameGenerator.h" />
 		<Unit filename="include/Node.h" />
 		<Unit filename="include/Party.h" />
@@ -160,6 +162,7 @@
 		<Unit filename="src/MathHelper.cpp" />
 		<Unit filename="src/MenuNode.cpp" />
 		<Unit filename="src/MenuNodeItems.tpp" />
+		<Unit filename="src/MusicController.cpp" />
 		<Unit filename="src/NameGenerator.cpp" />
 		<Unit filename="src/Node.cpp" />
 		<Unit filename="src/Party.cpp" />

@@ -98,6 +98,7 @@ void SceneManagerMainMenu::StartDungeon()
     }
 
     DungeonConfiguration * config = new DungeonConfiguration(5, time(NULL));
+    config->PlayMusic();
     controller->SetDungeonConfiguration(config);
     controller->GotoNextLevel();
 }
