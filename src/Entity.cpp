@@ -105,13 +105,13 @@ void Entity::GetHit(Attack* attack, Entity* attacker)
     }
 
     sf::Color color = sf::Color::Black;
-    if(dmg > baseDmg)
+    if(dmg > baseDmg * 1.001f)
     {
         //effective Attack
         color = sf::Color::Red;
         attacker->AttackWasEffective();
     }
-    else if(dmg < baseDmg)
+    else if(dmg < baseDmg * 0.999f)
     {
         //resisted Attack
         color = sf::Color::Blue;
