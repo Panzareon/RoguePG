@@ -14,4 +14,6 @@ barbarian.png
 paladin.png
 thief.png
 cleric.png
+wind-eye.png
+water-slime.png
 from: http://pousse.rapiere.free.fr/tome/

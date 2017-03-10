@@ -11,6 +11,8 @@ DungeonConfiguration::DungeonConfiguration(int nrLevels, unsigned int seed)
 
     //Init all Enemies
     m_enemies[EnemyFactory::EnemyListBat] = 10.0f;
+    m_enemies[EnemyFactory::EnemyListWaterSlime] = 10.0f;
+    m_enemies[EnemyFactory::EnemyListWindEye] = 10.0f;
     m_enemies[EnemyFactory::EnemyListStoneGolem] = 2.0f;
 
     m_bosses[EnemyFactory::EnemyListDeadWizard] = 10.0f;

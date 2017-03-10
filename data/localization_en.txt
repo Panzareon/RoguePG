@@ -117,3 +117,5 @@ effect.10055.desc = Decreases resistance against fire attacks by %1% for %0 turn
 enemy.bat = Bat
 enemy.stone_golem = Stone Golem
 enemy.dead_wizard = Dead Wizard
+enemy.wind_eye = Wind Eye
+enemy.water_slime = Water Slime

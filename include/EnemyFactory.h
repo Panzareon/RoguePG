@@ -10,7 +10,9 @@ class EnemyFactory
         enum EnemyList{
             EnemyListBat,
             EnemyListDeadWizard,
-            EnemyListStoneGolem
+            EnemyListStoneGolem,
+            EnemyListWindEye,
+            EnemyListWaterSlime
 
         };
         EnemyFactory();

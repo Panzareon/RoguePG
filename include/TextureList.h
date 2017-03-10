@@ -14,7 +14,7 @@ class TextureList
             HeroSpriteSheet,
             EnemySpriteSheet,
 
-            BatBattleSprite, DeadWizardBattleSprite, StoneGolemBattleSprite,
+            BatBattleSprite, DeadWizardBattleSprite, StoneGolemBattleSprite, WindEyeBattleSprite, WaterSlimeBattleSprite,
             MageBattleSprite, BarbarianBattleSprite, PaladinBattleSprite, ThiefBattleSprite, ClericBattleSprite,
             DefaultBattleSprite,
 

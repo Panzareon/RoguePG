@@ -69,6 +69,43 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         ret->AddSkill(sk);
         break;
     }
+    case EnemyListWindEye:
+    {
+
+        //Exp to give after Battle
+        ret = new Entity(10);
+        ret->SetName(localization->GetLocalization("enemy.wind_eye"));
+        ret->InitAllAttributes(10 + lvl,9 + lvl,5 + lvl,12 + lvl,6 + lvl/2,9 + lvl,9 + lvl);
+        ret->SetBattleSprite(TextureList::WindEyeBattleSprite);
+        ret->SetResistance(BattleEnums::AttackTypePhysical, 0.9f);
+        ret->SetResistance(BattleEnums::AttackTypeEarth, 0.7f);
+        ret->SetResistance(BattleEnums::AttackTypeFire, 0.9f);
+        ret->SetResistance(BattleEnums::AttackTypeAir, 1.3f);
+        BattleEnums::Target target = BattleEnums::TargetEnemyTeamEntity;
+        Skill* sk = new Skill(target);
+        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(2)->GetEffectWithValue(6 + lvl,target),true);
+        ret->AddSkill(sk);
+        break;
+    }
+    case EnemyListWaterSlime:
+    {
+
+        //Exp to give after Battle
+        ret = new Entity(10);
+        ret->SetName(localization->GetLocalization("enemy.water_slime"));
+        ret->InitAllAttributes(15 + lvl,9 + lvl,3 + lvl/3,9 + lvl,12 + lvl,3 + lvl/3,9 + lvl);
+        ret->SetBattleSprite(TextureList::WaterSlimeBattleSprite);
+        ret->SetResistance(BattleEnums::AttackTypePhysical, 1.5f);
+        ret->SetResistance(BattleEnums::AttackTypeEarth, 1.3f);
+        ret->SetResistance(BattleEnums::AttackTypeWater, 1.3f);
+        ret->SetResistance(BattleEnums::AttackTypeFire, 1.5f);
+        ret->SetResistance(BattleEnums::AttackTypeAir, 1.2f);
+        BattleEnums::Target target = BattleEnums::TargetEnemyTeamEntity;
+        Skill* sk = new Skill(target);
+        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(3)->GetEffectWithValue(3 + lvl,target),true);
+        ret->AddSkill(sk);
+        break;
+    }
     }
 
     if(ret == nullptr)
