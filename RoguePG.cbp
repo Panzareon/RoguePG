@@ -110,6 +110,7 @@
 		<Unit filename="include/ShaderList.h" />
 		<Unit filename="include/Skill.h" />
 		<Unit filename="include/SkillGenerator.h" />
+		<Unit filename="include/SoundController.h" />
 		<Unit filename="include/StrengthCalculation.h" />
 		<Unit filename="include/TextNode.h" />
 		<Unit filename="include/Texture.h" />
@@ -179,6 +180,7 @@
 		<Unit filename="src/ShaderList.cpp" />
 		<Unit filename="src/Skill.cpp" />
 		<Unit filename="src/SkillGenerator.cpp" />
+		<Unit filename="src/SoundController.cpp" />
 		<Unit filename="src/StrengthCalculation.cpp" />
 		<Unit filename="src/TextNode.cpp" />
 		<Unit filename="src/Texture.cpp" />

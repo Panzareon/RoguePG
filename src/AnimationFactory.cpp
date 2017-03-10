@@ -1,6 +1,7 @@
 #include "AnimationFactory.h"
 #include "AnimationPartSprite.h"
 #include "AnimationPartText.h"
+#include "SoundController.h"
 
 AnimationFactory::AnimationFactory()
 {
@@ -92,6 +93,7 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
             part->SetStartTransform(startTransform);
             part->SetScaling(3.0f);
             ret->AddStep(part);
+            SoundController::GetInstance()->PlaySound(SoundController::Fire);
             return ret;
         }
         break;
@@ -106,6 +108,7 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
             part->SetStartTransform(startTransform);
             part->SetTranslation(0.0f, yMovement);
             ret->AddStep(part);
+            SoundController::GetInstance()->PlaySound(SoundController::Water);
             return ret;
         }
     case Earth:
@@ -119,6 +122,7 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
             part->SetStartTransform(startTransform);
             part->SetTranslation(0.0f, yMovement);
             ret->AddStep(part);
+            SoundController::GetInstance()->PlaySound(SoundController::Earth);
             return ret;
         }
     case Air:
@@ -132,6 +136,7 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
             part->SetStartTransform(startTransform);
             part->SetTranslation(xMovement, 0.0f);
             ret->AddStep(part);
+            SoundController::GetInstance()->PlaySound(SoundController::Wind);
             return ret;
         }
     case Sword:
@@ -145,6 +150,7 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
             part->SetStartTransform(startTransform);
             part->SetTranslation(0.0f, yMovement);
             ret->AddStep(part);
+            SoundController::GetInstance()->PlaySound(SoundController::Hit);
             return ret;
         }
     default:

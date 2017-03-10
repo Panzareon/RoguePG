@@ -1,0 +1,14 @@
+hit.wav
+from: http://opengameart.org/content/battle-sound-effects
+
+fire.wav
+from: http://opengameart.org/content/spell-4-fire
+
+wind.wav
+from: http://opengameart.org/content/swishes-sound-pack
+
+water.wav
+from: http://opengameart.org/content/water-splashes
+
+stone.wav
+from: http://opengameart.org/content/37-hitspunches
