@@ -39,3 +39,8 @@ void AnimationPart::animate(float newTime)
         AnimationStep(percent);
     }
 }
+
+bool AnimationPart::IsFinished()
+{
+    return m_status == 2;
+}

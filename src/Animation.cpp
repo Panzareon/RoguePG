@@ -28,6 +28,11 @@ void Animation::PassTime(float Time)
 
 bool Animation::IsFinished()
 {
+    for(auto it = m_animationParts.begin(); it != m_animationParts.end(); it++)
+    {
+        if(!(*it)->IsFinished())
+            return false;
+    }
     return m_animationTime >= m_maxTime;
 }
 

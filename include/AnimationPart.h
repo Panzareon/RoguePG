@@ -12,6 +12,8 @@ class AnimationPart
         virtual void Start() = 0;
         virtual void Stop() = 0;
         virtual void AnimationStep(float percent) = 0;
+
+        bool IsFinished();
     protected:
         float m_start;
         float m_end;
