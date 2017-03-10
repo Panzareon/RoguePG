@@ -118,6 +118,8 @@ void MenuNode::ResetOptions()
         delete m_children[i];
     }
     m_children.clear();
+    m_selectFunction.clear();
+    m_optionAvailable.clear();
     UpdateBackground();
 }
 void MenuNode::MoveUp()
