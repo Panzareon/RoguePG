@@ -15,6 +15,7 @@ class TextureList
             EnemySpriteSheet,
 
             BatBattleSprite, DeadWizardBattleSprite, StoneGolemBattleSprite,
+            MageBattleSprite, BarbarianBattleSprite, PaladinBattleSprite, ThiefBattleSprite, ClericBattleSprite,
             DefaultBattleSprite,
 
             TargetCursor, TimeArrow,

@@ -49,6 +49,21 @@ Texture* TextureList::getTexture(TextureFiles file)
         case StoneGolemBattleSprite:
             filename = "stone-golem.png";
             break;
+        case MageBattleSprite:
+            filename = "mage.png";
+            break;
+        case BarbarianBattleSprite:
+            filename = "barbarian.png";
+            break;
+        case PaladinBattleSprite:
+            filename = "paladin.png";
+            break;
+        case ThiefBattleSprite:
+            filename = "thief.png";
+            break;
+        case ClericBattleSprite:
+            filename = "cleric.png";
+            break;
         case DefaultBattleSprite:
             filename = "rogue.png";
             break;

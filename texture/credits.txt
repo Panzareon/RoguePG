@@ -9,4 +9,9 @@ fireball.png
 rogue.png
 deadWizard.png
 stone-golem.png
+mage.png
+barbarian.png
+paladin.png
+thief.png
+cleric.png
 from: http://pousse.rapiere.free.fr/tome/

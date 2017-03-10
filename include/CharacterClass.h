@@ -3,14 +3,15 @@
 
 #include "PartyMember.h"
 #include "SkillGenerator.h"
+#include "TextureList.h"
 #include <vector>
 #include <map>
 
 class CharacterClass
 {
     public:
-        enum CharacterClassEnum{CharacterClassFireMage, CHARACTER_CLASS_END};
-        CharacterClass(CharacterClassEnum chrClass, float skillChance);
+        enum CharacterClassEnum{CharacterClassMage, CharacterClassBarbarian, CharacterClassPaladin, CharacterClassThief, CharacterClassCleric, CHARACTER_CLASS_END};
+        CharacterClass(CharacterClassEnum chrClass, float skillChance, TextureList::TextureFiles battleSprite);
         virtual ~CharacterClass();
         static CharacterClass* GetCharacterClass(CharacterClassEnum chrClass);
         static CharacterClass* GetRandomCharacterClass();
@@ -24,6 +25,8 @@ class CharacterClass
 
     protected:
         static std::vector<CharacterClass*>* m_classes;
+
+        TextureList::TextureFiles m_battleSprite;
 
         SkillGenerator m_skillGenerator;
         CharacterClassEnum m_classType;

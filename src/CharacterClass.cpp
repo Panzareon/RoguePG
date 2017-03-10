@@ -5,11 +5,12 @@
 
 std::vector<CharacterClass*>* CharacterClass::m_classes = nullptr;
 
-CharacterClass::CharacterClass(CharacterClassEnum chrClass, float skillChance)
+CharacterClass::CharacterClass(CharacterClassEnum chrClass, float skillChance,TextureList::TextureFiles battleSprite)
 {
     //ctor
     m_classType = chrClass;
     m_skillChance = skillChance;
+    m_battleSprite = battleSprite;
     //Set default Attribute increase per level to 1.0f
     for(int i = 0; i < BattleEnums::ATTRIBUTE_END; i++)
     {
@@ -31,7 +32,7 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         CharacterClass * newClass;
         SkillGenerator* skillGenerator;
         //TODO: initialize Character Classes
-        newClass = new CharacterClass(CharacterClassFireMage, 0.8f);
+        newClass = new CharacterClass(CharacterClassMage, 0.8f, TextureList::MageBattleSprite);
 
         newClass->SetBaseAttribute(BattleEnums::AttributeMaxHp, 10);
         newClass->SetBaseAttribute(BattleEnums::AttributeMaxMp, 15);
@@ -52,13 +53,149 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         skillGenerator->AddSkillTarget(BattleEnums::TargetSelf, 0.05f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.05f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.05f);
-        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeFire, 1.0f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.04f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.24f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.24f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.24f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.24f);
 
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.8f, false);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.2f, false);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeBuff, 1.0f, true);
 
-        m_classes->at(CharacterClassFireMage) = newClass;
+        m_classes->at(CharacterClassMage) = newClass;
+
+
+        newClass = new CharacterClass(CharacterClassBarbarian, 0.0f, TextureList::BarbarianBattleSprite);
+
+        newClass->SetBaseAttribute(BattleEnums::AttributeMaxHp, 15);
+        newClass->SetBaseAttribute(BattleEnums::AttributeMaxMp, 7);
+        newClass->SetBaseAttribute(BattleEnums::AttributeStrength, 12);
+        newClass->SetBaseAttribute(BattleEnums::AttributeInt, 5);
+        newClass->SetBaseAttribute(BattleEnums::AttributeDefense, 8);
+        newClass->SetBaseAttribute(BattleEnums::AttributeMagicDefense, 7);
+        newClass->SetBaseAttribute(BattleEnums::AttributeSpeed, 10);
+
+        //Set increased and decreased Attribute per Level values
+        newClass->SetAttributePerLevel(BattleEnums::AttributeMaxHp, 1.3f);
+        newClass->SetAttributePerLevel(BattleEnums::AttributeMaxMp, 0.7f);
+        newClass->SetAttributePerLevel(BattleEnums::AttributeStrength, 1.3f);
+        newClass->SetAttributePerLevel(BattleEnums::AttributeInt, 0.7f);
+
+        m_classes->at(CharacterClassBarbarian) = newClass;
+
+
+        newClass = new CharacterClass(CharacterClassPaladin, 0.8f, TextureList::PaladinBattleSprite);
+
+        newClass->SetBaseAttribute(BattleEnums::AttributeMaxHp, 13);
+        newClass->SetBaseAttribute(BattleEnums::AttributeMaxMp, 15);
+        newClass->SetBaseAttribute(BattleEnums::AttributeStrength, 12);
+        newClass->SetBaseAttribute(BattleEnums::AttributeInt, 9);
+        newClass->SetBaseAttribute(BattleEnums::AttributeDefense, 8);
+        newClass->SetBaseAttribute(BattleEnums::AttributeMagicDefense, 8);
+        newClass->SetBaseAttribute(BattleEnums::AttributeSpeed, 8);
+
+        //Set increased and decreased Attribute per Level values
+        newClass->SetAttributePerLevel(BattleEnums::AttributeMaxHp, 1.2f);
+        newClass->SetAttributePerLevel(BattleEnums::AttributeMaxMp, 1.3f);
+        newClass->SetAttributePerLevel(BattleEnums::AttributeStrength, 1.2f);
+        newClass->SetAttributePerLevel(BattleEnums::AttributeSpeed, 0.7f);
+
+        skillGenerator = newClass->GetSkillGenerator();
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.09f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.3f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetSelf, 0.1f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.5f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.01f);
+
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.05f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.35f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.05f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.25f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.3f);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.2f, true);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.2f, true);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.6f, true);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.35f, false);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.35f, false);
+
+        m_classes->at(CharacterClassPaladin) = newClass;
+
+        newClass = new CharacterClass(CharacterClassThief, 0.3f, TextureList::ThiefBattleSprite);
+
+        newClass->SetBaseAttribute(BattleEnums::AttributeMaxHp, 8);
+        newClass->SetBaseAttribute(BattleEnums::AttributeMaxMp, 10);
+        newClass->SetBaseAttribute(BattleEnums::AttributeStrength, 12);
+        newClass->SetBaseAttribute(BattleEnums::AttributeInt, 9);
+        newClass->SetBaseAttribute(BattleEnums::AttributeDefense, 8);
+        newClass->SetBaseAttribute(BattleEnums::AttributeMagicDefense, 8);
+        newClass->SetBaseAttribute(BattleEnums::AttributeSpeed, 15);
+
+        //Set increased and decreased Attribute per Level values
+        newClass->SetAttributePerLevel(BattleEnums::AttributeStrength, 1.2f);
+        newClass->SetAttributePerLevel(BattleEnums::AttributeSpeed, 1.5f);
+
+        skillGenerator = newClass->GetSkillGenerator();
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.8f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetSelf, 0.09f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.01f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.09f);
+
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.8f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.05f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.05f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.05f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.05f);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.5f, true);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.2f, true);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.3f, true);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.5f, false);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.25f, false);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.25f, false);
+
+        m_classes->at(CharacterClassThief) = newClass;
+
+
+        newClass = new CharacterClass(CharacterClassCleric, 0.8f, TextureList::ClericBattleSprite);
+
+        newClass->SetBaseAttribute(BattleEnums::AttributeMaxHp, 10);
+        newClass->SetBaseAttribute(BattleEnums::AttributeMaxMp, 15);
+        newClass->SetBaseAttribute(BattleEnums::AttributeStrength, 5);
+        newClass->SetBaseAttribute(BattleEnums::AttributeInt, 12);
+        newClass->SetBaseAttribute(BattleEnums::AttributeDefense, 8);
+        newClass->SetBaseAttribute(BattleEnums::AttributeMagicDefense, 10);
+        newClass->SetBaseAttribute(BattleEnums::AttributeSpeed, 10);
+
+        //Set increased and decreased Attribute per Level values
+        newClass->SetAttributePerLevel(BattleEnums::AttributeMaxMp, 1.3f);
+        newClass->SetAttributePerLevel(BattleEnums::AttributeStrength, 0.7f);
+        newClass->SetAttributePerLevel(BattleEnums::AttributeInt, 1.3f);
+
+        skillGenerator = newClass->GetSkillGenerator();
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.09f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.3f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetSelf, 0.1f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.5f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.01f);
+
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.05f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.35f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.05f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.25f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.3f);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.1f, true);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.1f, true);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.8f, true);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.35f, false);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.35f, false);
+
+        m_classes->at(CharacterClassCleric) = newClass;
+
+
+
         //finished Initializing Character Classes
     }
     if(chrClass >= 0 && chrClass < CHARACTER_CLASS_END)
@@ -85,6 +222,7 @@ PartyMember* CharacterClass::GetNewPartyMember()
     {
         ret->InitAttribute((BattleEnums::Attribute)i, m_baseAttributes[(BattleEnums::Attribute)i]);
     }
+    ret->SetBattleSprite(m_battleSprite);
     return ret;
 }
 
