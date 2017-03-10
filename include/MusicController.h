@@ -18,8 +18,11 @@ class MusicController
 
         static MusicController* GetInstance();
 
+        void PauseMusic(bool pause);
+
     protected:
         sf::Music m_music;
+        bool m_pause;
 
         std::string GetFile(MusicFiles music);
 

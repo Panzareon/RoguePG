@@ -23,7 +23,10 @@ void MusicController::PlayMusic(MusicFiles music)
         throw InvalidArgumentException(msg);
     }
     m_music.setLoop(true);
-    m_music.play();
+    if(!m_pause)
+    {
+        m_music.play();
+    }
 }
 
 std::string MusicController::GetFile(MusicFiles music)
@@ -40,4 +43,18 @@ MusicController* MusicController::GetInstance()
     if(m_instance == nullptr)
         m_instance = new MusicController();
     return m_instance;
+}
+
+
+void MusicController::PauseMusic(bool pause)
+{
+    m_pause = pause;
+    if(pause)
+    {
+        m_music.pause();
+    }
+    else
+    {
+        m_music.play();
+    }
 }

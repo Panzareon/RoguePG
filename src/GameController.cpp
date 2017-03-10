@@ -3,6 +3,7 @@
 #include "SceneManagerGameOver.h"
 #include "SceneManagerMessage.h"
 #include "Localization.h"
+#include "MusicController.h"
 
 #include <iostream>
 
@@ -60,6 +61,7 @@ bool GameController::IsWindowFocused()
 void GameController::SetWindowFocus(bool focused)
 {
     m_windowFocused = focused;
+    MusicController::GetInstance()->PauseMusic(!focused);
 }
 
 void GameController::setParty(Party* party)
