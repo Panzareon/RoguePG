@@ -114,6 +114,12 @@ void Node::addChild(Node* child)
     m_children.push_back(child);
 }
 
+void Node::addChild(Node* child, int position)
+{
+    child->setParent(this);
+    m_children.insert(m_children.begin() + position, child);
+}
+
 void Node::removeChild(Node* child)
 {
     m_children.erase(std::remove(m_children.begin(), m_children.end(), child));

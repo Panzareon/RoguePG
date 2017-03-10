@@ -99,7 +99,7 @@ SceneManagerBattle::SceneManagerBattle(sf::RenderTarget * target, int windowWidt
     sf::Sprite* timeArrow = new sf::Sprite(*TextureList::getTexture(TextureList::TimeArrow));
     m_timeDisplay = new DrawableNode(timeArrow);
     m_timeDisplay->moveNode(20.0f, 50.0f);
-    m_gui->addChild(m_timeDisplay);
+    m_gui->addChild(m_timeDisplay, 0);
     m_timeHeight = 294.0f;
 
 

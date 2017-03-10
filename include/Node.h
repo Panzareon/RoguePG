@@ -24,6 +24,7 @@ class Node
         void setParent(Node* parent);
         Node* GetParent();
         void addChild(Node* child);
+        void addChild(Node* child, int position);
         void removeChild(Node* child);
 
         virtual void Tick(float seconds);
