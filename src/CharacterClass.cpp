@@ -32,7 +32,7 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         CharacterClass * newClass;
         SkillGenerator* skillGenerator;
         //TODO: initialize Character Classes
-        newClass = new CharacterClass(CharacterClassMage, 0.8f, TextureList::MageBattleSprite);
+        newClass = new CharacterClass(CharacterClassMage, 1.0f, TextureList::MageBattleSprite);
 
         newClass->SetBaseAttribute(BattleEnums::AttributeMaxHp, 10);
         newClass->SetBaseAttribute(BattleEnums::AttributeMaxMp, 15);
@@ -85,7 +85,7 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         m_classes->at(CharacterClassBarbarian) = newClass;
 
 
-        newClass = new CharacterClass(CharacterClassPaladin, 0.8f, TextureList::PaladinBattleSprite);
+        newClass = new CharacterClass(CharacterClassPaladin, 0.5f, TextureList::PaladinBattleSprite);
 
         newClass->SetBaseAttribute(BattleEnums::AttributeMaxHp, 13);
         newClass->SetBaseAttribute(BattleEnums::AttributeMaxMp, 15);
@@ -158,7 +158,7 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         m_classes->at(CharacterClassThief) = newClass;
 
 
-        newClass = new CharacterClass(CharacterClassCleric, 0.8f, TextureList::ClericBattleSprite);
+        newClass = new CharacterClass(CharacterClassCleric, 1.0f, TextureList::ClericBattleSprite);
 
         newClass->SetBaseAttribute(BattleEnums::AttributeMaxHp, 10);
         newClass->SetBaseAttribute(BattleEnums::AttributeMaxMp, 15);
@@ -223,6 +223,7 @@ PartyMember* CharacterClass::GetNewPartyMember()
         ret->InitAttribute((BattleEnums::Attribute)i, m_baseAttributes[(BattleEnums::Attribute)i]);
     }
     ret->SetBattleSprite(m_battleSprite);
+    ret->GetStartingSkills(1);
     return ret;
 }
 
@@ -254,5 +255,5 @@ SkillGenerator* CharacterClass::GetSkillGenerator()
 
 Skill* CharacterClass::GetNewSkill(PartyMember* user)
 {
-    return m_skillGenerator.GetNewSkill(user->GetLevel());
+    return m_skillGenerator.GetNewSkill(10 + user->GetLevel());
 }
