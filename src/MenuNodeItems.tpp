@@ -43,6 +43,8 @@ template<class T> void MenuNodeItems<T>::MoveUp()
         m_selected--;
         m_onSelect(m_optionItems[m_selected]);
     }
+    if(m_selected < m_scrollPosition)
+        m_scrollPosition--;
 }
 
 template<class T> void MenuNodeItems<T>::MoveDown()
@@ -52,6 +54,8 @@ template<class T> void MenuNodeItems<T>::MoveDown()
         m_selected ++;
         m_onSelect(m_optionItems[m_selected]);
     }
+    if(m_selected - m_scrollPosition >= m_maxShownNumber)
+        m_scrollPosition++;
 }
 
 
