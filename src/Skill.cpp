@@ -102,6 +102,8 @@ BattleEnums::Target Skill::GetDefaultTarget()
 
 std::string Skill::GetName()
 {
+    if(m_effects.size() > 0)
+        return Localization::GetInstance()->GetLocalization(m_effects[0]->GetName());
     return m_name;
 }
 
