@@ -18,9 +18,14 @@ class EntityBarsNode : public Node
 
     protected:
         virtual void onDraw(sf::RenderTarget& target, const sf::Transform& transform) const;
+        void DrawBar(sf::RenderTarget& target, const sf::Transform& transform, float barWidth, sf::Color barColor, std::string text) const;
         Entity* m_shownEntity;
         bool m_showForParty;
         Party* m_party;
+
+        bool m_showHp;
+        bool m_showMp;
+        bool m_showNumbers;
 
         int m_entityNrInList;
 

@@ -40,7 +40,7 @@ void SceneManager::SetMemberStats()
     Party* p = GameController::getInstance()->getParty();
     int nr = Configuration::GetInstance()->GetMaxPartySize();
     int posX = 10;
-    int posY = m_windowHeight - 40;
+    int posY = m_windowHeight - 45;
     int posXDelta = (m_windowWidth - 10) / nr;
     for(int i = 0; i < nr; i++)
     {

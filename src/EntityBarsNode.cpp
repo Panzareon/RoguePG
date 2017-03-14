@@ -1,4 +1,5 @@
 #include "EntityBarsNode.h"
+#include "Configuration.h"
 
 EntityBarsNode::EntityBarsNode(int entityNr, Party* party)
 {
@@ -7,6 +8,9 @@ EntityBarsNode::EntityBarsNode(int entityNr, Party* party)
     m_party = party;
     m_showForParty = true;
     m_shownEntity = nullptr;
+    m_showHp = true;
+    m_showMp = true;
+    m_showNumbers = true;
     SetDefaultSize();
 }
 
@@ -15,6 +19,9 @@ EntityBarsNode::EntityBarsNode(Entity* entity)
     //ctor
     m_showForParty = false;
     m_shownEntity = entity;
+    m_showHp = true;
+    m_showMp = false;
+    m_showNumbers = false;
     SetDefaultSize();
 }
 
@@ -26,7 +33,7 @@ EntityBarsNode::~EntityBarsNode()
 void EntityBarsNode::SetDefaultSize()
 {
     m_width = 100;
-    m_height = 10;
+    m_height = 15;
     m_spacing = 7;
     UpdateShape();
 }
@@ -61,25 +68,54 @@ void EntityBarsNode::onDraw(sf::RenderTarget& target, const sf::Transform& trans
     if(m_shownEntity == nullptr)
         return;
     sf::Transform transform(transformBase);
-    //Draw Hp Bar Background
-    target.draw(m_background, transform);
-    //Draw Mp Bar Background
-    transform.translate(0.0f, m_height + m_spacing);
-    target.draw(m_background, transform);
-    //Draw Mp Bar
-    float barWidth = m_width - 2.0f;
-    barWidth *= m_shownEntity->GetMpPercent();
-    sf::RectangleShape bar(sf::Vector2f(barWidth, m_height - 2.0f));
-    bar.setFillColor(sf::Color::Blue);
-    transform.translate(1.0f, 1.0f);
-    target.draw(bar, transform);
     //Draw Hp Bar
-    transform = transformBase;
-    barWidth = m_width - 2.0f;
-    barWidth *= m_shownEntity->GetHpPercent();
-    bar.setSize(sf::Vector2f(barWidth, m_height - 2.0f));
-    bar.setFillColor(sf::Color::Red);
-    transform.translate(1.0f, 1.0f);
-    target.draw(bar, transform);
+    if(m_showHp)
+    {
+        float barWidth = m_width - 2.0f;
+        barWidth *= m_shownEntity->GetHpPercent();
+        std::string str;
+        if(m_showNumbers)
+        {
+            str = std::to_string(m_shownEntity->GetHp());
+            str += " / " + std::to_string(m_shownEntity->GetAttribute(BattleEnums::AttributeMaxHp));
+        }
+
+        DrawBar(target, transform, barWidth, sf::Color::Red , str);
+    }
+    if(m_showMp)
+    {
+        if(m_showHp)
+        {
+            transform = transformBase;
+            transform.translate(0.0f, m_height + m_spacing);
+        }
+        float barWidth = m_width - 2.0f;
+        barWidth *= m_shownEntity->GetMpPercent();
+        std::string str;
+        if(m_showNumbers)
+        {
+            str = std::to_string(m_shownEntity->GetMp());
+            str += " / " + std::to_string(m_shownEntity->GetAttribute(BattleEnums::AttributeMaxMp));
+        }
+
+        DrawBar(target, transform, barWidth, sf::Color::Blue, str);
+    }
 }
 
+void EntityBarsNode::DrawBar(sf::RenderTarget& target, const sf::Transform& transformBase, float barWidth, sf::Color barColor, std::string str) const
+{
+    sf::Transform transform(transformBase);
+    target.draw(m_background, transform);
+    sf::RectangleShape bar(sf::Vector2f(barWidth, m_height - 2.0f));
+    bar.setFillColor(barColor);
+    transform.translate(1.0f, 1.0f);
+    target.draw(bar, transform);
+
+    if(m_showNumbers)
+    {
+        sf::Font* font = Configuration::GetInstance()->GetFont();
+        sf::Text text(str, *font, 14);
+        transform.translate((m_width - text.getLocalBounds().width) / 2, -2.0f);
+        target.draw(text, transform);
+    }
+}
