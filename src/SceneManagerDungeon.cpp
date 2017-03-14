@@ -83,9 +83,9 @@ SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned
     sf::Sprite hero;
     Texture* tex = TextureList::getTexture(TextureList::HeroSpriteSheet);
     hero.setTexture(*tex);
-    hero.setTextureRect(sf::IntRect(15,13,32,36));
+    hero.setTextureRect(sf::IntRect(0,0,32,36));
     m_hero = new AnimatedNode(&hero, tex->GetNumberAnimationSteps());
-    m_hero->setBoundingBox(sf::FloatRect(8.0f,22.0f,16.0f,16.0f));
+    m_hero->setBoundingBox(sf::FloatRect(8.0f,20.0f,16.0f,16.0f));
     m_eventLayer->addChild(m_hero);
 
     //Generate Map
@@ -139,16 +139,16 @@ SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned
 
     //Place Boss at Stairs
     sf::Sprite sprite;
-    tex = TextureList::getTexture(TextureList::EnemySpriteSheet);
+    tex = TextureList::getTexture(TextureList::BossSpriteSheet);
     sprite.setTexture(*tex);
-    sprite.setTextureRect(sf::IntRect(15,13,32,36));
+    sprite.setTextureRect(sf::IntRect(0,0,32,32));
     Node* enemy = new AnimatedNode(&sprite, tex->GetNumberAnimationSteps());
-    enemy->setBoundingBox(sf::FloatRect(0.0f,14.0f,32.0f,32.0f));
+    enemy->setBoundingBox(sf::FloatRect(0.0f,0.0f,32.0f,32.0f));
     m_eventLayer->addChild(enemy);
 
     sf::Transform enemyTransform;
     //Place Enemy at Position
-    enemyTransform.translate(m_map.m_endX * TileMap::GetTileWith(), m_map.m_endY * TileMap::GetTileWith() - 14);
+    enemyTransform.translate(m_map.m_endX * TileMap::GetTileWith(), m_map.m_endY * TileMap::GetTileWith());
     enemy->setTransform(enemyTransform);
 
     std::vector<Entity*>* enemies = new std::vector<Entity*>();
@@ -243,9 +243,9 @@ void SceneManagerDungeon::SpawnEnemy(int x, int y, int lvl, float movementSpeed,
     sf::Sprite sprite;
     Texture* tex = TextureList::getTexture(TextureList::EnemySpriteSheet);
     sprite.setTexture(*tex);
-    sprite.setTextureRect(sf::IntRect(15,13,32,36));
+    sprite.setTextureRect(sf::IntRect(0,0,32,32));
     Node* enemy = new AnimatedNode(&sprite, tex->GetNumberAnimationSteps());
-    enemy->setBoundingBox(sf::FloatRect(8.0f,22.0f,16.0f,16.0f));
+    enemy->setBoundingBox(sf::FloatRect(4.0f,16.0f,20.0f,16.0f));
     m_eventLayer->addChild(enemy);
 
     sf::Transform enemyTransform;

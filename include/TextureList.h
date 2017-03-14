@@ -12,7 +12,7 @@ class TextureList
             DungeonTileMap,DebugTileMap,
 
             HeroSpriteSheet,
-            EnemySpriteSheet,
+            EnemySpriteSheet, BossSpriteSheet,
 
             BatBattleSprite, DeadWizardBattleSprite, StoneGolemBattleSprite, WindEyeBattleSprite, WaterSlimeBattleSprite,
             MageBattleSprite, BarbarianBattleSprite, PaladinBattleSprite, ThiefBattleSprite, ClericBattleSprite,

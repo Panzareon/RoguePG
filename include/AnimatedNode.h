@@ -2,6 +2,7 @@
 #define ANIMATEDNODE_H
 
 #include "Node.h"
+#include "Enums.h"
 
 class AnimatedNode : public Node
 {
@@ -12,6 +13,7 @@ class AnimatedNode : public Node
 
 
         void Tick(float seconds);
+        void SetDirection(Enums::Direction);
     protected:
         sf::Shader* m_shader;
         float m_elapsedSeconds;

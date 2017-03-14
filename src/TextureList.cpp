@@ -33,10 +33,16 @@ Texture* TextureList::getTexture(TextureFiles file)
 
 
         case HeroSpriteSheet:
-            filename = "skeleton-large.png";
+            filename = "hero.png";
+            AnimationSteps = 3;
             break;
         case EnemySpriteSheet:
-            filename = "skeleton-large.png";
+            filename = "enemy.png";
+            AnimationSteps = 3;
+            break;
+        case BossSpriteSheet:
+            filename = "boss.png";
+            AnimationSteps = 3;
             break;
 
 

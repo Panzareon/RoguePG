@@ -75,6 +75,7 @@ void SceneManagerMoveable::Tick()
     if(doChange == false)
     {
         m_heroDirection = newDirection;
+        m_hero->SetDirection(m_heroDirection);
     }
 
     //Check menu Key

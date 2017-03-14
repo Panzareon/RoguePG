@@ -30,8 +30,28 @@ void AnimatedNode::onDraw(sf::RenderTarget& target, const sf::Transform& transfo
     if(sf::Shader::isAvailable())
     {
         rs.shader = m_shader;
-        m_shader->setParameter("frameId",(int)m_elapsedSeconds % m_numberFrames);
+        m_shader->setParameter("frameId",(int)(m_elapsedSeconds*4) % m_numberFrames);
         m_shader->setParameter("numberFrames", m_numberFrames);
     }
     target.draw(m_sprite, rs);
+}
+
+void AnimatedNode::SetDirection(Enums::Direction direction)
+{
+    int textureDeltaY = 0;
+    switch(direction)
+    {
+    case Enums::East:
+        textureDeltaY = 1;
+        break;
+    case Enums::South:
+        textureDeltaY = 2;
+        break;
+    case Enums::West:
+        textureDeltaY = 3;
+        break;
+    }
+    sf::IntRect rect = m_sprite.getTextureRect();
+    rect.top = textureDeltaY * rect.height;
+    m_sprite.setTextureRect(rect);
 }
