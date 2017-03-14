@@ -23,7 +23,12 @@ class SoundController
 
         void PlaySound(Sounds sound, int soundIndex);
 
+
+        float GetVolume();
+        void SetVolume(float volume);
+
     protected:
+        float m_volume;
 
         std::vector<sf::Sound> m_sounds;
 

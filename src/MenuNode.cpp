@@ -48,6 +48,11 @@ void MenuNode::UpdateBackground()
 MenuNode::~MenuNode()
 {
     //dtor
+    for(int i = 0; i < m_optionNode.size(); i++)
+    {
+        if(m_optionNode[i] != nullptr)
+            delete m_optionNode[i];
+    }
 }
 
 void MenuNode::AddOption(std::string name, std::function<void()> func, bool available)
@@ -83,6 +88,14 @@ void MenuNode::AddValueToOption(int optionNr, std::string value)
         m_optionValue.resize(optionNr + 1);
     m_optionValue[optionNr] = value;
 }
+
+void MenuNode::AddNodeToOption(int optionNr, Node* node)
+{
+    if(m_optionNode.size() <= optionNr)
+        m_optionNode.resize(optionNr + 1, nullptr);
+    m_optionNode[optionNr] = node;
+}
+
 void MenuNode::CallOnCancel(std::function<void()>func)
 {
     m_cancelFunction = func;
@@ -208,6 +221,10 @@ void MenuNode::onDraw(sf::RenderTarget& target, const sf::Transform& transformBa
 
         target.draw(text, transform);
 
+        if(m_optionNode.size() > m_scrollPosition+i && m_optionNode[m_scrollPosition+i] != nullptr)
+        {
+            m_optionNode[m_scrollPosition+i]->draw(target, transform);
+        }
         if(m_optionValue.size() > m_scrollPosition+i && m_optionValue[m_scrollPosition+i] != "")
         {
             sf::Text value(m_optionValue[m_scrollPosition+i], *font);

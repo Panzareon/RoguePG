@@ -1,10 +1,12 @@
 #include "SoundController.h"
+#include "Configuration.h"
 
 SoundController* SoundController::m_instance = nullptr;
 
 SoundController::SoundController()
 {
     //ctor
+    m_volume = Configuration::GetInstance()->GetSfxVolume();
 }
 
 SoundController::~SoundController()
@@ -78,5 +80,18 @@ void SoundController::PlaySound(Sounds sound, int soundIndex)
     }
     m_sounds[soundIndex].setBuffer(*buffer);
     m_sounds[soundIndex].play();
+    m_sounds[soundIndex].setVolume(m_volume);
 }
 
+float SoundController::GetVolume()
+{
+    return m_volume;
+}
+
+void SoundController::SetVolume(float volume)
+{
+    if(volume >= 0.0f && volume <= 100.0f)
+    {
+        m_volume = volume;
+    }
+}

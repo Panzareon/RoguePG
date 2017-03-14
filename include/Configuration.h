@@ -23,6 +23,11 @@ class Configuration : FileConfig
 
         int GetMaxPartySize();
 
+        void SetMusicVolume(float volume);
+        void SetSfxVolume(float volume);
+        float GetMusicVolume();
+        float GetSfxVolume();
+
         int GetNumberKeys();
 
         std::string KeyToString(Keys key);

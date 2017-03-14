@@ -192,3 +192,45 @@ float Configuration::GetWallTransparency()
 {
     return m_wallTransparency;
 }
+
+void Configuration::SetMusicVolume(float volume)
+{
+    UpdateKey("music_volume", std::to_string(volume), true);
+}
+
+void Configuration::SetSfxVolume(float volume)
+{
+    UpdateKey("sfx_volume", std::to_string(volume), true);
+}
+
+float Configuration::GetMusicVolume()
+{
+    try
+    {
+        float retval = std::stof(GetString("music_volume"));
+        if(retval >= 0.0f && retval <= 100.0f)
+            return retval;
+        else
+            return 50.0f;
+    }
+    catch(...)
+    {
+        return 50.0f;
+    }
+}
+
+float Configuration::GetSfxVolume()
+{
+    try
+    {
+        float retval = std::stof(GetString("sfx_volume"));
+        if(retval >= 0.0f && retval <= 100.0f)
+            return retval;
+        else
+            return 50.0f;
+    }
+    catch(...)
+    {
+        return 50.0f;
+    }
+}

@@ -17,6 +17,9 @@ menu.close = Close
 menu.equipment = Equipment
 menu.quit = Quit
 
+menu.sound.music = Music
+menu.sound.sfx = Sfx
+
 menu.keyBindings.move_up = Move Up
 menu.keyBindings.move_down = Move Down
 menu.keyBindings.move_right = Move Right

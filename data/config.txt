@@ -9,3 +9,7 @@ cancel = 66
 //other settings
 //Wall Transparency in Percent, between 0 and 100
 wall_transparency = 80
+
+//Sound options in percent
+music_volume = 10.000000
+sfx_volume = 10.000000

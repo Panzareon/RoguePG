@@ -17,6 +17,7 @@ class MenuNode : public Node
         virtual void AddOption(std::string name, std::function<void()> func, std::function<void()> onSelect, bool available = true);
         //Add Value at the right on this Option
         virtual void AddValueToOption(int optionNr, std::string value);
+        virtual void AddNodeToOption(int optionNr, Node* node);
         virtual void CallOnCancel(std::function<void()> func);
         void CancelAvailable(bool cancel);
         //Does Right Button do something (Default disabled)
@@ -74,6 +75,7 @@ class MenuNode : public Node
 
         std::vector<std::string> m_optionName;
         std::vector<std::string> m_optionValue;
+        std::vector<Node*> m_optionNode;
         std::vector<bool> m_optionAvailable;
         std::vector<std::function<void()>> m_optionFunction;
         std::vector<std::function<void()>> m_selectFunction;

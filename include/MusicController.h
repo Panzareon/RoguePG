@@ -20,7 +20,12 @@ class MusicController
 
         void PauseMusic(bool pause);
 
+        float GetVolume();
+        void SetVolume(float volume);
+        void SetVolume();
+
     protected:
+        float m_volume;
         sf::Music m_music;
         bool m_pause;
 
