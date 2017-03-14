@@ -68,6 +68,8 @@ void Entity::AttackEntity(Entity* target)
         attack *= GetAttribute(BattleEnums::AttributeInt);
     }
     Attack att(attack, isPhysical);
+    //TODO: Get Attack Type from weapon
+    att.m_type.insert(BattleEnums::AttackTypePhysical);
     AttackEntity(target, &att);
 }
 
