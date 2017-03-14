@@ -166,15 +166,16 @@ SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned
 
 
     MapEventEnemy* mapEvent = new MapEventEnemy(&m_map, enemy,  0.0f, enemies);
-   m_events.push_back(mapEvent);
+    m_events.push_back(mapEvent);
 
 
 
     //Place Chests
     PlaceChest();
 
-    //Place additional heroes
-    PlaceHero();
+    //Place additional heroes with a chance of 50%
+    if(rand() % 2 == 0)
+        PlaceHero();
 
     m_map.writeToTileMap(*m_tileMap,0);
     m_map.writeToTileMap(*m_tileMapItems,1);

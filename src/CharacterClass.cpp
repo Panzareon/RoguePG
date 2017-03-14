@@ -72,9 +72,9 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         newClass->SetBaseAttribute(BattleEnums::AttributeMaxMp, 7);
         newClass->SetBaseAttribute(BattleEnums::AttributeStrength, 12);
         newClass->SetBaseAttribute(BattleEnums::AttributeInt, 5);
-        newClass->SetBaseAttribute(BattleEnums::AttributeDefense, 8);
-        newClass->SetBaseAttribute(BattleEnums::AttributeMagicDefense, 7);
-        newClass->SetBaseAttribute(BattleEnums::AttributeSpeed, 10);
+        newClass->SetBaseAttribute(BattleEnums::AttributeDefense, 10);
+        newClass->SetBaseAttribute(BattleEnums::AttributeMagicDefense, 9);
+        newClass->SetBaseAttribute(BattleEnums::AttributeSpeed, 7);
 
         //Set increased and decreased Attribute per Level values
         newClass->SetAttributePerLevel(BattleEnums::AttributeMaxHp, 1.3f);
