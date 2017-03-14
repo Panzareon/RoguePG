@@ -26,6 +26,7 @@ class StrengthCalculation
         std::vector<float> m_step;
 
         static float TeamTargetMali;
+        static float SelfTargetBoni;
         static float AllTargetMali;
 };
 

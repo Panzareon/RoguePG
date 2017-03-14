@@ -2,6 +2,7 @@
 #include <random>
 
 //Define Muliplier for Value if More Entities can be targeted
+float StrengthCalculation::SelfTargetBoni = 1.5f;
 float StrengthCalculation::TeamTargetMali = 3.0f;
 float StrengthCalculation::AllTargetMali = 6.0f;
 
@@ -43,6 +44,10 @@ float StrengthCalculation::GetValue(std::vector<float>* strength, BattleEnums::T
     {
         value *= AllTargetMali;
     }
+    else if(target = BattleEnums::TargetSelf)
+    {
+        value /= SelfTargetBoni;
+    }
 
     return value;
 }
@@ -56,6 +61,10 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
     else if(target == BattleEnums::TargetAll)
     {
         value /= AllTargetMali;
+    }
+    else if(target = BattleEnums::TargetSelf)
+    {
+        value *= SelfTargetBoni;
     }
 
     float minV = m_multiplyWith;
