@@ -44,7 +44,7 @@ float StrengthCalculation::GetValue(std::vector<float>* strength, BattleEnums::T
     {
         value *= AllTargetMali;
     }
-    else if(target = BattleEnums::TargetSelf)
+    else if(target == BattleEnums::TargetSelf)
     {
         value /= SelfTargetBoni;
     }
@@ -62,7 +62,7 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
     {
         value /= AllTargetMali;
     }
-    else if(target = BattleEnums::TargetSelf)
+    else if(target == BattleEnums::TargetSelf)
     {
         value *= SelfTargetBoni;
     }

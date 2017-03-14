@@ -44,7 +44,6 @@ void DungeonConfiguration::PlayMusic()
 SceneManager* DungeonConfiguration::GetLevel(int id)
 {
     //create next Level
-    GameController* controller = GameController::getInstance();
 
     SceneManagerDungeon* sceneManager = new SceneManagerDungeon(60,60, m_seed + id, id, this, new MapFillDungeon(), SceneManagerDungeon::Cave);
     return sceneManager;
