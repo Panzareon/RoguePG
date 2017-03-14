@@ -54,6 +54,18 @@ void Party::UpdateActiveParty()
             it++;
         }
     }
+    it = m_activePartyMembers.begin();
+    while(it != m_activePartyMembers.end())
+    {
+        if((*it)->IsDead())
+        {
+            it = m_activePartyMembers.erase(it);
+        }
+        else
+        {
+            it++;
+        }
+    }
     //Check if there are Members that are not in the active Party
     int maxPartySize = Configuration::GetInstance()->GetMaxPartySize();
     if(m_activePartyMembers.size() < maxPartySize && m_partyMembers.size() > m_activePartyMembers.size())

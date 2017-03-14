@@ -48,9 +48,11 @@ class Map
 
         int m_startX;
         int m_startY;
+        int m_startRoomNr;
 
         int m_endX;
         int m_endY;
+        int m_endRoomNr;
     protected:
     private:
         int** m_tiles;

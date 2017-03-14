@@ -870,6 +870,7 @@ void MapGenerator::PlaceStartingAndEndPosition()
         }
         m_map->m_startX = pos->first;
         m_map->m_startY = pos->second;
+        m_map->m_startRoomNr = m_map->GetRoomNr(m_map->m_startX, m_map->m_startY);
         m_map->SetTileToType(m_map->m_startX, m_map->m_startY, Map::WalkthroughItem);
     }
     else
@@ -886,6 +887,7 @@ void MapGenerator::PlaceStartingAndEndPosition()
         }
         m_map->m_endX = pos->first;
         m_map->m_endY = pos->second;
+        m_map->m_endRoomNr = m_map->GetRoomNr(m_map->m_endX, m_map->m_endY);
         m_map->SetTileToType(m_map->m_endX, m_map->m_endY, Map::WalkthroughItem);
     }
     else

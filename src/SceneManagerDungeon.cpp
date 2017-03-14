@@ -7,6 +7,7 @@
 #include "TextureList.h"
 #include "MapEventStairs.h"
 #include "MapEventEnemy.h"
+#include "MapEventHero.h"
 #include "MapEventChest.h"
 #include "GameController.h"
 #include "EnemyFactory.h"
@@ -165,12 +166,15 @@ SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned
 
 
     MapEventEnemy* mapEvent = new MapEventEnemy(&m_map, enemy,  0.0f, enemies);
-    m_events.push_back(mapEvent);
+   m_events.push_back(mapEvent);
 
 
 
     //Place Chests
     PlaceChest();
+
+    //Place additional heroes
+    PlaceHero();
 
     m_map.writeToTileMap(*m_tileMap,0);
     m_map.writeToTileMap(*m_tileMapItems,1);
@@ -280,6 +284,12 @@ void SceneManagerDungeon::PlaceChest()
     {
         nrTries++;
         pos = m_generator.GetFreePosition(nrTries < 100);
+        int roomNr = m_map.GetRoomNr(pos->first, pos->second);
+        if((roomNr == m_map.m_endRoomNr || roomNr == m_map.m_startRoomNr) && nrTries < 200)
+        {
+            //Do not place chest in start or end Room
+            continue;
+        }
         placed = m_mapFill->PlaceItemAt(1,2,4,MapFill::TileChest,pos->first, pos->second);
     }
     while(!placed && nrTries < 200);
@@ -305,4 +315,37 @@ void SceneManagerDungeon::PlaceChest()
     }
 
     SpawnEnemy(pos->first,pos->second,m_lvlId + 2, 0.0f, 256.0f,2,3);
+}
+
+void SceneManagerDungeon::PlaceHero()
+{
+    std::pair<int, int>* pos;
+    //Add a maximum number of tries to prevent endless loop
+    //For the first 100 try to find a dead end to put the hero into
+    int nrTries = 0;
+    int roomNr;
+    do
+    {
+        nrTries++;
+        pos = m_generator.GetFreePosition(nrTries < 100);
+        roomNr = m_map.GetRoomNr(pos->first, pos->second);
+    }
+    while((roomNr == m_map.m_endRoomNr || roomNr == m_map.m_startRoomNr) && nrTries < 200);
+    std::cout << "Hero at " << pos->first << " " << pos->second << " nr tries:" << nrTries << std::endl;
+
+    //Display player sprite
+    sf::Sprite* sprite = new sf::Sprite();
+    Texture* tex = TextureList::getTexture(TextureList::HeroSpriteSheet);
+    sprite->setTexture(*tex);
+    sprite->setTextureRect(sf::IntRect(0,0,32,32));
+    Node* hero = new DrawableNode(sprite);
+    m_eventLayer->addChild(hero);
+
+    sf::Transform heroTransform;
+    //Place Enemy at Position
+    heroTransform.translate(pos->first * TileMap::GetTileWith(), pos->second * TileMap::GetTileWith() - 14);
+    hero->setTransform(heroTransform);
+
+
+    m_events.push_back(new MapEventHero(hero, pos->first, pos->second));
 }

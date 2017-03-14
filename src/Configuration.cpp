@@ -88,7 +88,7 @@ Configuration::Configuration()
     m_defaultKeys.at(Accept) = sf::Keyboard::Return;
     m_defaultKeys.at(Cancel) = sf::Keyboard::Escape;
 
-    m_maxPartySize = 4;
+    m_maxPartySize = 3;
 }
 
 Configuration::~Configuration()

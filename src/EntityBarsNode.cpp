@@ -55,7 +55,7 @@ void EntityBarsNode::Tick(float seconds)
         {
             m_shownEntity = nullptr;
         }
-        else if(m_party->GetActivePartyMembers()->at(m_entityNrInList) != m_shownEntity)
+        else
         {
             m_shownEntity = m_party->GetActivePartyMembers()->at(m_entityNrInList);
         }

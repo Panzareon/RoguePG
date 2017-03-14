@@ -8,6 +8,7 @@
 SceneManagerMoveable::SceneManagerMoveable(int tileWidth, int tileHeight): m_map(tileWidth, tileHeight)
 {
     //ctor
+    m_heroDirection = Enums::North;
     m_minViewPosX = m_windowWidth / 2;
     m_minViewPosY = m_windowHeight / 2;
 

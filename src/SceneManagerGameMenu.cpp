@@ -172,25 +172,21 @@ void SceneManagerGameMenu::OpenEquipment()
     m_equipmentMenu->NextAvailable(true);
     Party* party = GameController::getInstance()->getParty();
     std::vector<PartyMember*>* member = party->GetAllPartyMembers();
-    m_attributeNodes.resize(m_maxShownHeroes);
+    m_attributeNodes.resize(member->size());
     for(int i = 0; i < member->size(); i++)
     {
         m_equipmentMenu->AddOption(member->at(i)->GetName(), std::function<void()>(std::bind(&MenuFunctions::SelectMember,this,member->at(i))));
-        if(i < m_maxShownHeroes)
+        Node* nextMember = new Node();
+        m_equipmentMenu->AddNodeToOption(i, nextMember);
+        for(int j = 0; j < BattleEnums::ATTRIBUTE_END; j++)
         {
-            Node* nextMember = new Node();
-            nextMember->moveNode(0,MemberHeight*i);
-            m_background->addChild(nextMember);
-            for(int j = 0; j < BattleEnums::ATTRIBUTE_END; j++)
-            {
-                TextNode* node = new TextNode(std::to_string(member->at(i)->GetAttribute((BattleEnums::Attribute)j)));
-                node->SetColor(sf::Color::Black);
-                node->SetFontSize(25);
-                m_attributeNodes[i][(BattleEnums::Attribute)j] = node;
-                nextMember->addChild(node);
-                std::pair<int,int> pos = m_attributeNodePosition[(BattleEnums::Attribute)j];
-                node->moveNode(pos.first,pos.second);
-            }
+            TextNode* node = new TextNode(std::to_string(member->at(i)->GetAttribute((BattleEnums::Attribute)j)));
+            node->SetColor(sf::Color::Black);
+            node->SetFontSize(25);
+            m_attributeNodes[i][(BattleEnums::Attribute)j] = node;
+            nextMember->addChild(node);
+            std::pair<int,int> pos = m_attributeNodePosition[(BattleEnums::Attribute)j];
+            node->moveNode(pos.first,pos.second);
         }
     }
     m_background->addChild(m_equipmentMenu);

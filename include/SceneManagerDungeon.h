@@ -18,6 +18,7 @@ class SceneManagerDungeon: public SceneManagerMoveable
         virtual void Tick();
     protected:
         void PlaceChest();
+        void PlaceHero();
         MapGenerator m_generator;
 
         float m_timeToNextSpawn;
