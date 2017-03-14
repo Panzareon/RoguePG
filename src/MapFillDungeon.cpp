@@ -5,6 +5,7 @@ MapFillDungeon::MapFillDungeon()
     //ctor
     m_chanceForTile.resize(TILE_INDEX_END);
     InitItemChances();
+    m_defaultType = Map::Wall;
 }
 
 MapFillDungeon::~MapFillDungeon()

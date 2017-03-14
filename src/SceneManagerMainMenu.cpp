@@ -7,6 +7,8 @@
 #include "CharacterClass.h"
 #include "ItemFactory.h"
 #include "SceneManagerOptions.h"
+#include "MapFillVillage.h"
+#include "SceneManagerVillage.h"
 
 #include <iostream>
 
@@ -93,10 +95,13 @@ void SceneManagerMainMenu::StartDungeon()
 
     }
 
+    controller->LoadSceneManager(new SceneManagerVillage(50,30,time(NULL),new MapFillVillage()));
+    //TODO: Dungeon spawning somewhere else
+    /*
     DungeonConfiguration * config = new DungeonConfiguration(5, time(NULL));
     config->PlayMusic();
     controller->SetDungeonConfiguration(config);
-    controller->GotoNextLevel();
+    controller->GotoNextLevel();*/
 }
 
 

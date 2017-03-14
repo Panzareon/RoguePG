@@ -36,60 +36,8 @@ SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned
     #endif // DEBUG_FLAG
     m_dungeonConfig = config;
     m_lvlId = lvlId;
-    m_tileMap = new TileMap();
-    m_tileMapItems = new TileMap();
-    m_tileMapAboveHero = new TileMap();
-    m_tileMapAboveWall = new TileMap();
-    m_tileMapWallDecoration = new TileMap();
 
 
-
-    m_tileMap->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
-    m_tileMapItems->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
-    m_tileMapAboveHero->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
-    m_tileMapAboveWall->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
-    m_tileMapWallDecoration->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
-
-
-    //Build Scene Graph
-    m_mainNode = new Node();
-    m_belowHero = new Node();
-    m_mainNode->addChild(m_belowHero);
-
-    m_eventLayer = new Node();
-    m_mainNode->addChild(m_eventLayer);
-    m_mainNode->addChild(m_animationNode);
-
-    m_aboveHero = new Node();
-    m_mainNode->addChild(m_aboveHero);
-
-    m_belowHero->addChild(new DrawableNode(m_tileMap));
-
-    #ifdef DEBUG_FLAG
-
-    TileMap* tileMapRoomNumber = new TileMap();
-    tileMapRoomNumber->setTexture(TextureList::getTexture(TextureList::DebugTileMap));
-    m_roomNumberNode = new DrawableNode(tileMapRoomNumber);
-    m_roomNumberNode->setVisibility(false);
-    m_belowHero->addChild(m_roomNumberNode);
-
-    #endif // DEBUG_FLAG
-
-    m_belowHero->addChild(new DrawableNode(m_tileMapItems));
-
-    m_aboveHero->addChild(new DrawableNode(m_tileMapAboveHero));
-    m_aboveHero->addChild(new DrawableNode(m_tileMapAboveWall));
-    m_aboveHero->addChild(new DrawableNode(m_tileMapWallDecoration));
-
-
-    //Add Hero
-    sf::Sprite hero;
-    Texture* tex = TextureList::getTexture(TextureList::HeroSpriteSheet);
-    hero.setTexture(*tex);
-    hero.setTextureRect(sf::IntRect(0,0,32,36));
-    m_hero = new AnimatedNode(&hero, tex->GetNumberAnimationSteps());
-    m_hero->setBoundingBox(sf::FloatRect(8.0f,20.0f,16.0f,16.0f));
-    m_eventLayer->addChild(m_hero);
 
     //Generate Map
 
@@ -125,7 +73,7 @@ SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned
             m_map.SetTileId(x,y,m_map.GetRoomNr(x,y), 5);
     }
 
-    m_map.writeToTileMap(*tileMapRoomNumber,5);
+    m_map.writeToTileMap(*m_tileMapRoomNumber,5);
 
     #endif // DEBUG_FLAG
 
@@ -149,7 +97,7 @@ SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned
 
     //Place Boss at Stairs
     sf::Sprite sprite;
-    tex = TextureList::getTexture(TextureList::BossSpriteSheet);
+    Texture* tex = TextureList::getTexture(TextureList::BossSpriteSheet);
     sprite.setTexture(*tex);
     sprite.setTextureRect(sf::IntRect(0,0,32,32));
     Node* enemy = new AnimatedNode(&sprite, tex->GetNumberAnimationSteps());

@@ -27,19 +27,9 @@ class SceneManagerDungeon: public SceneManagerMoveable
 
         MapFill* m_mapFill;
 
-        TileMap* m_tileMap;
-        TileMap* m_tileMapItems;
-        TileMap* m_tileMapAboveHero;
-        TileMap* m_tileMapAboveWall;
-        TileMap* m_tileMapWallDecoration;
-
-        Node* m_roomNumberNode;
 
         DungeonConfiguration* m_dungeonConfig;
 
-        Node* m_belowHero;
-        Node* m_eventLayer;
-        Node* m_aboveHero;
     private:
 };
 

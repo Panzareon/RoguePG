@@ -38,18 +38,18 @@ void MapFill::FillLayerByTiles(Map::TileType checkTile, int LayerId, int TileId,
                 else if(fillType == WithAdjacent)
                 {
                     int newTileIdTL = TileId;
-                    if(i <= 0 || m_map->GetTileType(i-1,j) != checkTile)
+                    if((i <= 0 && m_defaultType != checkTile) || (i > 0 && m_map->GetTileType(i-1,j) != checkTile))
                         newTileIdTL += 2;
-                    if(j <= 0 || m_map->GetTileType(i,j-1) != checkTile)
+                    if((j <= 0 && m_defaultType != checkTile) || (j > 0 && m_map->GetTileType(i,j-1) != checkTile))
                         newTileIdTL += 1;
                     if(newTileIdTL == TileId && i > 0 && j > 0)
                         if(m_map->GetTileType(i-1,j-1) != checkTile)
                             newTileIdTL +=4;
 
                     int newTileIdTR = TileId;
-                    if(i >= m_width - 1 || m_map->GetTileType(i+1,j) != checkTile)
+                    if((i >= m_width - 1 && m_defaultType != checkTile) || (i < m_width - 1 && m_map->GetTileType(i+1,j) != checkTile))
                         newTileIdTR += 2;
-                    if(j <= 0 || m_map->GetTileType(i,j-1) != checkTile)
+                    if((j <= 0 && m_defaultType != checkTile) || (j > 0 && m_map->GetTileType(i,j-1) != checkTile))
                         newTileIdTR += 1;
                     if(newTileIdTR == TileId && i < m_width - 1 && j > 0)
                         if(m_map->GetTileType(i+1,j-1) != checkTile)
@@ -57,18 +57,18 @@ void MapFill::FillLayerByTiles(Map::TileType checkTile, int LayerId, int TileId,
 
 
                     int newTileIdBL = TileId;
-                    if(i <= 0 || m_map->GetTileType(i-1,j) != checkTile)
+                    if((i <= 0 && m_defaultType != checkTile) ||  (i > 0 && m_map->GetTileType(i-1,j) != checkTile))
                         newTileIdBL += 2;
-                    if(j >= m_height - 1 || m_map->GetTileType(i,j+1) != checkTile)
+                    if((j >= m_height - 1 && m_defaultType != checkTile) || (j < m_height - 1 && m_map->GetTileType(i,j+1) != checkTile))
                         newTileIdBL += 1;
                     if(newTileIdBL == TileId && i > 0 && j < m_height - 1)
                         if(m_map->GetTileType(i-1,j+1) != checkTile)
                             newTileIdBL +=4;
 
                     int newTileIdBR = TileId;
-                    if(i >= m_width - 1 || m_map->GetTileType(i+1,j) != checkTile)
+                    if((i >= m_width - 1 && m_defaultType != checkTile) || (i < m_width - 1 && m_map->GetTileType(i+1,j) != checkTile))
                         newTileIdBR += 2;
-                    if(j >= m_height - 1 || m_map->GetTileType(i,j+1) != checkTile)
+                    if((j >= m_height - 1 && m_defaultType != checkTile) || (j < m_height - 1 && m_map->GetTileType(i,j+1) != checkTile))
                         newTileIdBR += 1;
                     if(newTileIdBR == TileId && i < m_width - 1 && j < m_height - 1)
                         if(m_map->GetTileType(i+1,j+1) != checkTile)
@@ -83,7 +83,7 @@ void MapFill::FillLayerByTiles(Map::TileType checkTile, int LayerId, int TileId,
         }
     }
 }
-void MapFill::FillLayerWallByTiles(Map::TileType checkTile, int LayerId, int LayerAboveHeroId, int TileId, int wallHeight)
+void MapFill::FillLayerWallByTiles(Map::TileType checkTile, int LayerId, int LayerAboveHeroId, int TileId, int wallHeight, int yDelta)
 {
     for(int i = 0; i < m_width; i++)
     {
@@ -99,13 +99,15 @@ void MapFill::FillLayerWallByTiles(Map::TileType checkTile, int LayerId, int Lay
                     right = 1;
 
                 int id = TileId;
-                for(int k = 1; k <= wallHeight; k++)
+                for(int k = yDelta; k < wallHeight + yDelta; k++)
                 {
-                    if(k == 1)
+                    if(k == yDelta)
+                    {
                         m_map->SetTileId(i, j-k,id + left, id + right, id + left, id + right, LayerId);
+                        id += 2;
+                    }
                     else
                         m_map->SetTileId(i, j-k,id + left, id + right, id + left, id + right, LayerAboveHeroId);
-                    id += 2;
                 }
 
             }

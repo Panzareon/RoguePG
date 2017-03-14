@@ -25,6 +25,23 @@ class SceneManagerMoveable : public SceneManager
         int m_minViewPosY;
         int m_maxViewPosX;
         int m_maxViewPosY;
+
+        TileMap* m_tileMap;
+        TileMap* m_tileMapItems;
+        TileMap* m_tileMapAboveHero;
+        TileMap* m_tileMapAboveWall;
+        TileMap* m_tileMapWallDecoration;
+
+
+        #ifdef DEBUG_FLAG
+        Node* m_roomNumberNode;
+        TileMap* m_tileMapRoomNumber;
+        #endif // DEBUG_FLAG
+
+
+        Node* m_belowHero;
+        Node* m_eventLayer;
+        Node* m_aboveHero;
     private:
 };
 

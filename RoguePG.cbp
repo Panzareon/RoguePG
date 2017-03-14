@@ -88,8 +88,10 @@
 		<Unit filename="include/MapEventTile.h" />
 		<Unit filename="include/MapFill.h" />
 		<Unit filename="include/MapFillDungeon.h" />
+		<Unit filename="include/MapFillVillage.h" />
 		<Unit filename="include/MapGenerator.h" />
 		<Unit filename="include/MapGeneratorUtil.h" />
+		<Unit filename="include/MapGeneratorVillage.h" />
 		<Unit filename="include/MapRoom.h" />
 		<Unit filename="include/MathHelper.h" />
 		<Unit filename="include/MenuNode.h" />
@@ -109,6 +111,7 @@
 		<Unit filename="include/SceneManagerMessage.h" />
 		<Unit filename="include/SceneManagerMoveable.h" />
 		<Unit filename="include/SceneManagerOptions.h" />
+		<Unit filename="include/SceneManagerVillage.h" />
 		<Unit filename="include/ShaderList.h" />
 		<Unit filename="include/Skill.h" />
 		<Unit filename="include/SkillGenerator.h" />
@@ -160,8 +163,10 @@
 		<Unit filename="src/MapEventTile.cpp" />
 		<Unit filename="src/MapFill.cpp" />
 		<Unit filename="src/MapFillDungeon.cpp" />
+		<Unit filename="src/MapFillVillage.cpp" />
 		<Unit filename="src/MapGenerator.cpp" />
 		<Unit filename="src/MapGeneratorUtil.cpp" />
+		<Unit filename="src/MapGeneratorVillage.cpp" />
 		<Unit filename="src/MapRoom.cpp" />
 		<Unit filename="src/MathHelper.cpp" />
 		<Unit filename="src/MenuNode.cpp" />
@@ -181,6 +186,7 @@
 		<Unit filename="src/SceneManagerMessage.cpp" />
 		<Unit filename="src/SceneManagerMoveable.cpp" />
 		<Unit filename="src/SceneManagerOptions.cpp" />
+		<Unit filename="src/SceneManagerVillage.cpp" />
 		<Unit filename="src/ShaderList.cpp" />
 		<Unit filename="src/Skill.cpp" />
 		<Unit filename="src/SkillGenerator.cpp" />

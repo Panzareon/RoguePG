@@ -2,6 +2,7 @@
 #include "SceneManagerGameMenu.h"
 #include "Configuration.h"
 #include "GameController.h"
+#include "DrawableNode.h"
 
 #include "EnemyFactory.h"
 
@@ -14,6 +15,62 @@ SceneManagerMoveable::SceneManagerMoveable(int tileWidth, int tileHeight): m_map
 
     m_maxViewPosX = m_map.GetWidth() * TileMap::GetTileWith() - m_windowWidth / 2;
     m_maxViewPosY = m_map.GetHeight() * TileMap::GetTileWith() - m_windowHeight / 2;
+
+
+    m_tileMap = new TileMap();
+    m_tileMapItems = new TileMap();
+    m_tileMapAboveHero = new TileMap();
+    m_tileMapAboveWall = new TileMap();
+    m_tileMapWallDecoration = new TileMap();
+
+
+
+    m_tileMap->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
+    m_tileMapItems->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
+    m_tileMapAboveHero->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
+    m_tileMapAboveWall->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
+    m_tileMapWallDecoration->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
+
+
+    //Build Scene Graph
+    m_mainNode = new Node();
+    m_belowHero = new Node();
+    m_mainNode->addChild(m_belowHero);
+
+    m_eventLayer = new Node();
+    m_mainNode->addChild(m_eventLayer);
+    m_mainNode->addChild(m_animationNode);
+
+    m_aboveHero = new Node();
+    m_mainNode->addChild(m_aboveHero);
+
+    m_belowHero->addChild(new DrawableNode(m_tileMap));
+
+    #ifdef DEBUG_FLAG
+
+    m_tileMapRoomNumber = new TileMap();
+    m_tileMapRoomNumber->setTexture(TextureList::getTexture(TextureList::DebugTileMap));
+    m_roomNumberNode = new DrawableNode(m_tileMapRoomNumber);
+    m_roomNumberNode->setVisibility(false);
+    m_belowHero->addChild(m_roomNumberNode);
+
+    #endif // DEBUG_FLAG
+
+    m_belowHero->addChild(new DrawableNode(m_tileMapItems));
+
+    m_aboveHero->addChild(new DrawableNode(m_tileMapAboveHero));
+    m_aboveHero->addChild(new DrawableNode(m_tileMapAboveWall));
+    m_aboveHero->addChild(new DrawableNode(m_tileMapWallDecoration));
+
+
+    //Add Hero
+    sf::Sprite hero;
+    Texture* tex = TextureList::getTexture(TextureList::HeroSpriteSheet);
+    hero.setTexture(*tex);
+    hero.setTextureRect(sf::IntRect(0,0,32,36));
+    m_hero = new AnimatedNode(&hero, tex->GetNumberAnimationSteps());
+    m_hero->setBoundingBox(sf::FloatRect(8.0f,20.0f,16.0f,16.0f));
+    m_eventLayer->addChild(m_hero);
 }
 
 SceneManagerMoveable::~SceneManagerMoveable()
