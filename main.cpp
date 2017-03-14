@@ -25,7 +25,7 @@ int main()
     window.setVerticalSyncEnabled(true);
     controller->SetRenderTarget(&window);
 
-    SceneManager* sm = new SceneManagerMainMenu(&window,width, height );
+    SceneManager* sm = new SceneManagerMainMenu();
     controller->LoadSceneManager(sm);
 
     try

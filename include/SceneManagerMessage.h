@@ -9,7 +9,7 @@
 class SceneManagerMessage : public SceneManager
 {
     public:
-        SceneManagerMessage(sf::RenderTarget * target, int windowWidth, int windowHeight, std::string toDisplay);
+        SceneManagerMessage(std::string toDisplay);
         virtual ~SceneManagerMessage();
 
         virtual void Tick();

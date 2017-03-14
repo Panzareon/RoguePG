@@ -1,7 +1,7 @@
 #include "SceneManagerMessage.h"
 #include "GameController.h"
 
-SceneManagerMessage::SceneManagerMessage(sf::RenderTarget * target, int windowWidth, int windowHeight, std::string toDisplay): SceneManager(target, windowWidth, windowHeight)
+SceneManagerMessage::SceneManagerMessage(std::string toDisplay)
 {
     //ctor
     m_text = new TextNode(toDisplay);

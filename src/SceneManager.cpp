@@ -4,12 +4,13 @@
 #include "EntityBarsNode.h"
 #include <cmath>
 
-SceneManager::SceneManager(sf::RenderTarget* target, int windowWidth, int windowHeight)
+SceneManager::SceneManager()
 {
     //ctor
-    m_target = target;
-    m_windowWidth = windowWidth;
-    m_windowHeight = windowHeight;
+    GameController* controller = GameController::getInstance();
+    m_target = controller->GetRenderTarget();
+    m_windowWidth = controller->GetWindowWidth();
+    m_windowHeight = controller->GetWindowHeight();
 
 
     m_posx = m_windowWidth / 2;

@@ -32,7 +32,7 @@ void MapEventChest::Activate()
         std::vector<std::string> itemName;
         itemName.push_back(localization->GetLocalization(item->GetName()));
         toDisplay = localization->GetLocalizationWithStrings("chest.receive_item", &itemName);
-        SceneManagerMessage* message = new SceneManagerMessage(controller->GetRenderTarget(), controller->GetWindowWidth(), controller->GetWindowHeight(), toDisplay);
+        SceneManagerMessage* message = new SceneManagerMessage(toDisplay);
         controller->LoadSceneManager(message);
     }
 }

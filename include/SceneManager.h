@@ -8,7 +8,7 @@
 class SceneManager
 {
     public:
-        SceneManager(sf::RenderTarget * target, int windowWidth, int windowHeight);
+        SceneManager();
         virtual ~SceneManager();
         virtual void NextTick();
         virtual void Draw();

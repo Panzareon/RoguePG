@@ -77,7 +77,7 @@ namespace BattleFunctions
     }
 }
 
-SceneManagerBattle::SceneManagerBattle(sf::RenderTarget * target, int windowWidth, int windowHeight): SceneManager(target, windowWidth, windowHeight)
+SceneManagerBattle::SceneManagerBattle()
 {
     //ctor
     //Build Scene Graph

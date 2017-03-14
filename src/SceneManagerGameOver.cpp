@@ -4,7 +4,7 @@
 #include "Configuration.h"
 #include "GameController.h"
 
-SceneManagerGameOver::SceneManagerGameOver(sf::RenderTarget * target, int windowWidth, int windowHeight): SceneManager(target, windowWidth, windowHeight)
+SceneManagerGameOver::SceneManagerGameOver()
 {
     //ctor
     m_finished = false;

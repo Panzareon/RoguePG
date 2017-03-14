@@ -5,7 +5,7 @@
 
 #include "EnemyFactory.h"
 
-SceneManagerMoveable::SceneManagerMoveable(sf::RenderTarget * target, int windowWidth, int windowHeight, int tileWidth, int tileHeight): SceneManager(target, windowWidth, windowHeight), m_map(tileWidth, tileHeight)
+SceneManagerMoveable::SceneManagerMoveable(int tileWidth, int tileHeight): m_map(tileWidth, tileHeight)
 {
     //ctor
     m_minViewPosX = m_windowWidth / 2;
@@ -81,7 +81,7 @@ void SceneManagerMoveable::Tick()
     if(controller->IsKeyPressed(Configuration::Cancel))
     {
         //Open Menu
-        SceneManager* sm = new SceneManagerGameMenu(controller->GetRenderTarget(), controller->GetWindowWidth(), controller->GetWindowHeight());
+        SceneManager* sm = new SceneManagerGameMenu();
         controller->LoadSceneManager(sm);
     }
 

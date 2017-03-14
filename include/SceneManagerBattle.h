@@ -13,7 +13,7 @@
 class SceneManagerBattle : public SceneManager
 {
     public:
-        SceneManagerBattle(sf::RenderTarget * target, int windowWidth, int windowHeight);
+        SceneManagerBattle();
 
         void UseOnTarget(std::function<void(BattleEnums::Target, Entity*)>* func, BattleEnums::Target defaultTarget, Entity* attacking);
         virtual ~SceneManagerBattle();

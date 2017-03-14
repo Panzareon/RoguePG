@@ -11,6 +11,9 @@ battle_gui.next = Next
 //Menu-Texts
 menu.startDungeon = Start Dungeon
 menu.keyBindings = Key Bindings
+menu.option = Options
+menu.sound = Sound Options
+menu.close = Close
 menu.equipment = Equipment
 menu.quit = Quit
 

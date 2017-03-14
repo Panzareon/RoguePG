@@ -11,7 +11,7 @@
 class SceneManagerMoveable : public SceneManager
 {
     public:
-        SceneManagerMoveable(sf::RenderTarget * target, int windowWidth, int windowHeight, int tileWidth, int tileHeight);
+        SceneManagerMoveable(int tileWidth, int tileHeight);
         virtual ~SceneManagerMoveable();
         virtual void Tick();
     protected:

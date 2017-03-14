@@ -15,7 +15,7 @@ Class to display the ingame menu
 class SceneManagerGameMenu : public SceneManager
 {
     public:
-        SceneManagerGameMenu(sf::RenderTarget * target, int windowWidth, int windowHeight);
+        SceneManagerGameMenu();
         virtual ~SceneManagerGameMenu();
 
         virtual void OpenEquipment();

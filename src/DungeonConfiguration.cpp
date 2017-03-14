@@ -45,7 +45,7 @@ SceneManager* DungeonConfiguration::GetLevel(int id)
     //create next Level
     GameController* controller = GameController::getInstance();
 
-    SceneManagerDungeon* sceneManager = new SceneManagerDungeon(controller->GetRenderTarget(),controller->GetWindowWidth(),controller->GetWindowHeight(), 60,60, m_seed + id, id, this);
+    SceneManagerDungeon* sceneManager = new SceneManagerDungeon(60,60, m_seed + id, id, this);
     return sceneManager;
 }
 

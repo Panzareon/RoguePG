@@ -11,7 +11,7 @@ class DungeonConfiguration;
 class SceneManagerDungeon: public SceneManagerMoveable
 {
     public:
-        SceneManagerDungeon(sf::RenderTarget * target, int windowWidth, int windowHeight, int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config);
+        SceneManagerDungeon(int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config);
         virtual ~SceneManagerDungeon();
         void SpawnEnemy();
         void SpawnEnemy(int x, int y, int lvl, float movementSpeed, float followSpeed, int followRange, int nr);

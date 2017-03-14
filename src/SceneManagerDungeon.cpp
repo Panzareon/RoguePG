@@ -15,7 +15,7 @@
 #include <iostream>
 
 
-SceneManagerDungeon::SceneManagerDungeon(sf::RenderTarget * target, int windowWidth, int windowHeight, int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config): SceneManagerMoveable(target, windowWidth, windowHeight, tileWidth, tileHeight), m_generator(&m_map, seed)
+SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config): SceneManagerMoveable(tileWidth, tileHeight), m_generator(&m_map, seed)
 {
     //ctor
     //Define Tile Maps

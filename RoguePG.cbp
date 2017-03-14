@@ -107,6 +107,7 @@
 		<Unit filename="include/SceneManagerMainMenu.h" />
 		<Unit filename="include/SceneManagerMessage.h" />
 		<Unit filename="include/SceneManagerMoveable.h" />
+		<Unit filename="include/SceneManagerOptions.h" />
 		<Unit filename="include/ShaderList.h" />
 		<Unit filename="include/Skill.h" />
 		<Unit filename="include/SkillGenerator.h" />
@@ -177,6 +178,7 @@
 		<Unit filename="src/SceneManagerMainMenu.cpp" />
 		<Unit filename="src/SceneManagerMessage.cpp" />
 		<Unit filename="src/SceneManagerMoveable.cpp" />
+		<Unit filename="src/SceneManagerOptions.cpp" />
 		<Unit filename="src/ShaderList.cpp" />
 		<Unit filename="src/Skill.cpp" />
 		<Unit filename="src/SkillGenerator.cpp" />

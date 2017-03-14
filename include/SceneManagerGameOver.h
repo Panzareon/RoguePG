@@ -7,7 +7,7 @@
 class SceneManagerGameOver : public SceneManager
 {
     public:
-        SceneManagerGameOver(sf::RenderTarget * target, int windowWidth, int windowHeight);
+        SceneManagerGameOver();
         virtual ~SceneManagerGameOver();
         virtual bool IsFinished();
 

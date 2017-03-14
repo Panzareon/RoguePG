@@ -152,7 +152,7 @@ void GameController::Tick()
 }
 void GameController::StartBattle(std::vector<Entity*>* enemies)
 {
-    SceneManagerBattle* newBattle = new SceneManagerBattle(GetRenderTarget(), GetWindowWidth(), GetWindowHeight());
+    SceneManagerBattle* newBattle = new SceneManagerBattle();
 
     for(auto it = enemies->begin(); it != enemies->end(); it++)
     {
@@ -181,7 +181,7 @@ void GameController::GotoNextLevel()
     else
     {
         //finish the dungeon
-        SceneManagerMessage* message = new SceneManagerMessage(GetRenderTarget(), GetWindowWidth(), GetWindowHeight(), Localization::GetInstance()->GetLocalization("dungeon.finished"));
+        SceneManagerMessage* message = new SceneManagerMessage(Localization::GetInstance()->GetLocalization("dungeon.finished"));
         message->OnAccept(std::function<void()>(ControllerFunctions::QuitToMainMenu));
         LoadSceneManager(message);
     }
@@ -286,7 +286,7 @@ void GameController::GameOver()
     {
         ToMainMenu();
         //display Game Over screen
-        SceneManagerGameOver* gameOver = new SceneManagerGameOver(GetRenderTarget(), GetWindowWidth(), GetWindowHeight());
+        SceneManagerGameOver* gameOver = new SceneManagerGameOver();
         LoadSceneManager(gameOver);
         m_gameOver = false;
     }

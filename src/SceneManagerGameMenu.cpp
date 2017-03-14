@@ -51,9 +51,11 @@ namespace MenuFunctions
     {
         sm->CloseEquipment();
     }
+
+    void Options();
 }
 
-SceneManagerGameMenu::SceneManagerGameMenu(sf::RenderTarget * target, int windowWidth, int windowHeight): SceneManager(target, windowWidth, windowHeight)
+SceneManagerGameMenu::SceneManagerGameMenu()
 {
     //ctor
     int padding = 8;
@@ -90,6 +92,7 @@ SceneManagerGameMenu::SceneManagerGameMenu(sf::RenderTarget * target, int window
     m_mainMenu = new MenuNode(background->getBoundingBox().width - 2* padding);
     Localization* local = Localization::GetInstance();
     m_mainMenu->AddOption(local->GetLocalization("menu.equipment"),std::function<void()>(std::bind(&MenuFunctions::OpenEquipment,this)),true);
+    m_mainMenu->AddOption(local->GetLocalization("menu.option"),std::function<void()>(&MenuFunctions::Options),true);
     m_mainMenu->AddOption(local->GetLocalization("menu.quit"),std::function<void()>(std::bind(&MenuFunctions::Quit,this)),true);
     background->addChild(m_mainMenu);
 
