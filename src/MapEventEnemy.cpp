@@ -109,7 +109,21 @@ bool MapEventEnemy::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirec
 
 void MapEventEnemy::Activate()
 {
+
+    #ifdef DEBUG_FLAG
+    //DebugKey to not start battles
+    if(!sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+    {
+
+    #endif // DEBUG_FLAG
+
     GameController::getInstance()->StartBattle(m_enemies);
+
+    #ifdef DEBUG_FLAG
+
+    }
+
+    #endif // DEBUG_FLAG
 
     m_finished = true;
     m_node->GetParent()->removeChild(m_node);
