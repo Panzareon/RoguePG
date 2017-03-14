@@ -1,16 +1,9 @@
 #include "MapGeneratorUtil.h"
 #include <iostream>
 
-MapGeneratorUtil::MapGeneratorUtil(int width, int height)
+MapGeneratorUtil::MapGeneratorUtil()
 {
     //ctor
-    m_width = width;
-    m_height = height;
-    m_checked2 = new int*[m_width];
-    for(int x = 0; x < m_width; x++)
-    {
-        m_checked2[x] = new int[m_height];
-    }
 }
 
 MapGeneratorUtil::~MapGeneratorUtil()
@@ -22,6 +15,19 @@ MapGeneratorUtil::~MapGeneratorUtil()
     }
     delete[] m_checked2;
 }
+
+void MapGeneratorUtil::SetSize(int width, int height)
+{
+    m_width = width;
+    m_height = height;
+    m_checked2 = new int*[m_width];
+    for(int x = 0; x < m_width; x++)
+    {
+        m_checked2[x] = new int[m_height];
+    }
+}
+
+
 int MapGeneratorUtil::SetTilesToChecked(int** checkArray, int x, int y, int fromId, int toId, bool useToId)
 {
     if(checkArray[x][y] != fromId && (!useToId || checkArray[x][y] != toId))

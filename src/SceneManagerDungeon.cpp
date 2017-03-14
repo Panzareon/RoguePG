@@ -16,9 +16,11 @@
 #include <iostream>
 
 
-SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config): SceneManagerMoveable(tileWidth, tileHeight), m_generator(&m_map, seed)
+SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config, MapFill* mapFill, GenerationType type): SceneManagerMoveable(tileWidth, tileHeight), m_generator(&m_map, seed)
 {
     //ctor
+
+    mapFill->SetMap(&m_map);
     //Define Tile Maps
     SetMemberStats();
 
@@ -91,15 +93,22 @@ SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned
 
     //Generate Map
 
-    if(tileHeight > 200 || tileWidth > 200)
-        m_generator.FasterCellularAutomata(0.45f);
-    else
-        m_generator.CellularAutomata(0.45f);
+    switch(type)
+    {
+    case Cave:
+        if(tileHeight > 200 || tileWidth > 200)
+            m_generator.FasterCellularAutomata(0.45f);
+        else
+            m_generator.CellularAutomata(0.45f);
+        break;
+    case Dungeon:
+        m_generator.ConnectedRooms(10,8, tileHeight * tileWidth / 160);
+    }
 
     m_generator.NumberRooms();
 
 
-    m_mapFill = new MapFillDungeon(&m_map);
+    m_mapFill = mapFill;
     //Fill Base Layer with walkable Tile
     m_mapFill->FillLayer(MapFill::Ground, 0);
     //Fill Wall

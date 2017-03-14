@@ -2,21 +2,27 @@
 
 #include <cstdlib>
 
-MapFill::MapFill(Map* map) : m_MGUtil(map->GetWidth(), map->GetHeight())
+MapFill::MapFill()
 {
     //ctor
-    m_map = map;
 
     m_maxTries = 50;
 
-    m_width = m_map->GetWidth();
-    m_height = m_map->GetHeight();
 }
 
 MapFill::~MapFill()
 {
     //dtor
 }
+
+void MapFill::SetMap(Map* map)
+{
+    m_map = map;
+    m_width = m_map->GetWidth();
+    m_height = m_map->GetHeight();
+    m_MGUtil.SetSize(m_width, m_height);
+}
+
 void MapFill::FillLayerByTiles(Map::TileType checkTile, int LayerId, int TileId, FillType fillType)
 {
     for(int i = 0; i < m_width; i++)

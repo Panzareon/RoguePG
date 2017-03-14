@@ -7,11 +7,12 @@
 #include <limits>
 #include <cmath>
 
-MapGenerator::MapGenerator(Map* map, unsigned int seed) : m_MGUtil(map->GetWidth(), map->GetHeight())
+MapGenerator::MapGenerator(Map* map, unsigned int seed)
 {
     //ctor
     m_width = map->GetWidth();
     m_height = map->GetHeight();
+    m_MGUtil.SetSize(m_width, m_height);
     m_map = map;
 
     if(seed == 0)
@@ -164,6 +165,51 @@ void MapGenerator::CellularAutomataStep(int minWallTiles, int orMaxWallTiles, fl
                 m_map->SetTileToSpace(i,j);
         }
 }
+
+void MapGenerator::ConnectedRooms(int roomSizeX, int roomSizeY, int nrRooms)
+{
+    for(int i = 0; i < nrRooms; i++)
+    {
+        int x,y;
+        int nrTries = 0;
+        do
+        {
+            x = rand() % (m_width - roomSizeX);
+            y = rand() % (m_height - roomSizeY);
+            nrTries++;
+        }
+        while (!IsRoomFree(x,y,roomSizeX, roomSizeY) && nrTries < 100);
+        if(nrTries >= 100)
+            break;
+        AddRoom(x,y,roomSizeX, roomSizeY);
+    }
+    ConnectAllRooms(true);
+}
+
+void MapGenerator::AddRoom(int x, int y, int width, int height)
+{
+    for(int i = x; i < x + width; i++)
+    {
+        for(int j = y; j < y + height; j++)
+        {
+            m_map->SetTileToSpace(i,j);
+        }
+    }
+}
+
+bool MapGenerator::IsRoomFree(int x, int y, int width, int height)
+{
+    for(int i = x - 1; i < x + width + 1; i++)
+    {
+        for(int j = y - 1; j < y + height + 1; j++)
+        {
+            if(i >= 0 && i < m_width && j >= 0 && j < m_height && !m_map->IsTileWall(i,j))
+                return false;
+        }
+    }
+    return true;
+}
+
 
 void MapGenerator::MorphologicalCloseOperator()
 {

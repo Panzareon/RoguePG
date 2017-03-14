@@ -6,8 +6,10 @@
 class MapGeneratorUtil
 {
     public:
-        MapGeneratorUtil(int width, int height);
+        MapGeneratorUtil();
         virtual ~MapGeneratorUtil();
+
+        void SetSize(int width, int height);
 
         int SetTilesToChecked(int** checkArray, int x, int y, int fromId = 0, int toId = 1, bool useToId = false);
         int GetNumberOfConnected(int** checkArray, int x, int y, int checkId, int maxCount = -1);

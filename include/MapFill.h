@@ -12,8 +12,10 @@ class MapFill
     public:
         enum ToFillLayer{Ground, Wall, WallTopping, AdditionalItems};
         enum TileIndex{TileStairsUp, TileStairsDown, TileRandomItem, TileChest, TILE_INDEX_END};
-        MapFill(Map* map);
+        MapFill();
         virtual ~MapFill();
+
+        void SetMap(Map* map);
 
         virtual void FillLayer(ToFillLayer type, int LayerId, int LayerAboveHeroId = -1, int LayerWallDecoration = -1) = 0;
 

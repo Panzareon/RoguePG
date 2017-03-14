@@ -7,7 +7,7 @@
 class MapFillDungeon : public MapFill
 {
     public:
-        MapFillDungeon(Map* map);
+        MapFillDungeon();
         virtual ~MapFillDungeon();
 
         virtual void FillLayer(ToFillLayer type, int LayerId, int LayerAboveHeroId = -1, int LayerWallDecoration = -1);

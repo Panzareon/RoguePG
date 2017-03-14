@@ -11,7 +11,8 @@ class DungeonConfiguration;
 class SceneManagerDungeon: public SceneManagerMoveable
 {
     public:
-        SceneManagerDungeon(int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config);
+        enum GenerationType {Cave, Dungeon};
+        SceneManagerDungeon(int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config, MapFill* mapFill, GenerationType type);
         virtual ~SceneManagerDungeon();
         void SpawnEnemy();
         void SpawnEnemy(int x, int y, int lvl, float movementSpeed, float followSpeed, int followRange, int nr);

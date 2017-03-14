@@ -18,6 +18,10 @@ class MapGenerator
         void CellularAutomataStart(float startPercent);
         void CellularAutomataStep(int minWallTiles, int orMaxWallTiles = -1, float chanceAtThreshhold = 1.0f, bool onlyChangeToWall = false);
 
+        void ConnectedRooms(int roomSizeX, int roomSizeY, int nrRooms);
+        void AddRoom(int x, int y, int width, int height);
+        bool IsRoomFree(int x, int y, int width, int height);
+
         void MorphologicalCloseOperator();
 
         //has really bad Performance, not recommended to use with Maps larger than 200x200

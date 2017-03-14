@@ -1,6 +1,6 @@
 #include "MapFillDungeon.h"
 
-MapFillDungeon::MapFillDungeon(Map* map) : MapFill(map)
+MapFillDungeon::MapFillDungeon()
 {
     //ctor
     m_chanceForTile.resize(TILE_INDEX_END);
