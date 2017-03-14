@@ -6,6 +6,7 @@ MusicController* MusicController::m_instance = nullptr;
 MusicController::MusicController()
 {
     //ctor
+    m_pause = false;
 }
 
 MusicController::~MusicController()
