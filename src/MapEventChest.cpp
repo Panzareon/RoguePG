@@ -22,7 +22,7 @@ void MapEventChest::Activate()
     {
         m_isActivated = true;
         //start this event (Give an item)
-        Item* item = ItemFactory::GetInstance()->GetRandomEquipment(Equipment::MainHand);
+        Item* item = ItemFactory::GetInstance()->GetRandomEquipment(Equipment::MainHand, ItemFactory::BaseItem);
         GameController* controller = GameController::getInstance();
         controller->getParty()->AddItem(item);
         std::cout << "Got Item" << std::endl;

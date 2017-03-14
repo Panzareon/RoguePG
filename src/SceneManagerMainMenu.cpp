@@ -83,7 +83,7 @@ void SceneManagerMainMenu::StartDungeon()
     ItemFactory* itemFactory = ItemFactory::GetInstance();
     for(int i = 0; i < 3; i++)
     {
-        Equipment* equipment = (Equipment*)itemFactory->GetRandomEquipment(Equipment::MainHand);
+        Equipment* equipment = (Equipment*)itemFactory->GetRandomEquipment(Equipment::MainHand, ItemFactory::StartingItem);
         party->AddItem(equipment);
         if(partyMember->size() > i)
         {

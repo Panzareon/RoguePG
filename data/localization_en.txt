@@ -49,6 +49,14 @@ item.3 = Staff
 item.3.desc = A healing staff
 item.4 = Spell Book
 item.4.desc = A magic spell book
+item.101 = Broadsword
+item.101.desc = A broad sword
+item.102 = Hard Shield
+item.102.desc = A stronger shield
+item.103 = Healing Staff
+item.103.desc = A stronger healing staff
+item.104 = Magicians Book
+item.104.desc = A magicians spell book
 
 //Effect Base Description
 effect.target.0 = Targets one hero.
