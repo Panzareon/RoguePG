@@ -85,7 +85,6 @@ void SceneManagerMoveable::Tick()
     //Movement
     //TODO: calculate movement Speed
     float MoveSpeed = 256.0f;
-    Configuration* conf = Configuration::GetInstance();
 
     float moveX = 0.0f;
     float moveY = 0.0f;

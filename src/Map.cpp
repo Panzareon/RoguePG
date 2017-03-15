@@ -15,7 +15,7 @@ Map::Map(int width, int height)
     {
         m_tiles[j] = new int[m_height];
         for(unsigned int k = 0; k < m_height; k++)
-            m_tiles[j][k] = Wall;
+            m_tiles[j][k] = 0;
     }
 
     m_roomNr = new int*[m_width];
@@ -74,24 +74,15 @@ void Map::writeToTileMap(TileMap& in, int layer, sf::Color color)
     in.load(m_layers.at(layer), m_width, m_height, color);
 }
 
-void Map::SetTileToWall(unsigned int x, unsigned int y)
-{
-    m_tiles[x][y] = Wall;
-}
-
-void Map::SetTileToSpace(unsigned int x, unsigned int y)
-{
-    m_tiles[x][y] = Space;
-}
-
-void Map::SetTileToType(unsigned int x, unsigned int y, TileType type)
+void Map::SetTileToType(unsigned int x, unsigned int y, int type)
 {
     m_tiles[x][y] = type;
 }
 
+//TODO: Remove
 bool Map::IsTileWall(unsigned int x, unsigned int y)
 {
-    return m_tiles[x][y] == Wall;
+    return DoesCollide(x,y);
 }
 
 void Map::SetRoomNr(unsigned int x, unsigned int y, int roomNr)
@@ -148,22 +139,31 @@ int Map::GetTileId(unsigned int x, unsigned int y, int layerId)
 }
 
 
-Map::TileType Map::GetTileType(unsigned int x, unsigned int y)
+int Map::GetTileType(unsigned int x, unsigned int y)
 {
     if(x >= 0 && y >= 0 && x < m_width && y < m_height)
     {
-        return (TileType)m_tiles[x][y];
+        return m_tiles[x][y];
     }
     else
     {
-        return Wall;
+        return 0;
     }
 }
+
+void Map::AddCollidingType(int type)
+{
+    m_collidingTiles.push_back(type);
+}
+
 bool Map::DoesCollide(unsigned int x, unsigned int y)
 {
-    TileType type = GetTileType(x,y);
-    if(type == Wall || type == InteractableWall || type == BlockingItem)
-        return true;
+    int type = GetTileType(x,y);
+    for(int i = 0; i < m_collidingTiles.size(); i++)
+    {
+        if(type == m_collidingTiles[i])
+            return true;
+    }
     return false;
 }
 

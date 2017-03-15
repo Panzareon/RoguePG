@@ -6,11 +6,11 @@
 #include "Map.h"
 
 //A class to generate Basic Layout of Maps
-class MapGenerator
+class MapGeneratorDungeon
 {
     public:
-        MapGenerator(Map* map, unsigned int seed = 0);
-        virtual ~MapGenerator();
+        MapGeneratorDungeon(Map* map, unsigned int seed = 0);
+        virtual ~MapGeneratorDungeon();
 
         void CellularAutomata(float startPercent);
         //Faster Generation for Maps > than 200 x 200
@@ -44,6 +44,7 @@ class MapGenerator
     private:
         int m_width;
         int m_height;
+
 
         MapGeneratorUtil m_MGUtil;
         Map* m_map;

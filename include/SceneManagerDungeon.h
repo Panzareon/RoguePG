@@ -2,7 +2,7 @@
 #define SCENEMANAGERDUNGEON_H
 
 #include "SceneManagerMoveable.h"
-#include "MapGenerator.h"
+#include "MapGeneratorDungeon.h"
 
 
 class MapFill;
@@ -20,7 +20,7 @@ class SceneManagerDungeon: public SceneManagerMoveable
     protected:
         void PlaceChest();
         void PlaceHero();
-        MapGenerator m_generator;
+        MapGeneratorDungeon m_generator;
 
         float m_timeToNextSpawn;
         int m_lvlId;

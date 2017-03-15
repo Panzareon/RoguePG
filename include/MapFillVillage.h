@@ -6,6 +6,7 @@
 class MapFillVillage : public MapFill
 {
     public:
+        enum TileType {Wall, Space, Street};
         MapFillVillage();
         virtual ~MapFillVillage();
 

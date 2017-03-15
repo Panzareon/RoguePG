@@ -7,7 +7,12 @@ SceneManagerVillage::SceneManagerVillage(int tileWidth, int tileHeight, unsigned
     m_mapFill->SetMap(&m_map);
     m_map.init(5);
 
-    m_generator.PlaceHouses(5,2, tileHeight*tileWidth / 50);
+    m_map.m_startX = 0;
+    m_map.m_startY = rand() % tileHeight;
+
+    m_generator.PlaceHouses(6,3, tileHeight*tileWidth / 100);
+
+    m_generator.StartStreet(m_map.m_startX, m_map.m_startY, Enums::East);
 
     //Fill Base Layer with walkable Tile
     m_mapFill->FillLayer(MapFill::Ground, 0);

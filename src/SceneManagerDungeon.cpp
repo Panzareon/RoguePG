@@ -192,6 +192,7 @@ void SceneManagerDungeon::SpawnEnemy()
     do
     {
         pos = m_generator.GetFreePosition();
+        nrTries++;
     }
     while(m_map.GetRoomNr(pos->first, pos->second) == playerRoomNumber && nrTries < 10);
 

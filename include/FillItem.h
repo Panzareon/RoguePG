@@ -10,7 +10,7 @@ class FillItem
         enum PlacingRestriction{Default, None, AtWall};
         enum Type{Blocking, Walkable, Wall};
 
-        FillItem(int Item, int chance, Type type = Blocking, ItemSize size = Single, PlacingRestriction restr = Default);
+        FillItem(int Item, int chance, int neededTile, int newTile, Type type = Blocking, ItemSize size = Single, PlacingRestriction restr = Default);
         virtual ~FillItem();
 
         bool CanInsertAt(Map* map, int x, int y, int LayerId, int LayerAboveHero);
@@ -25,6 +25,10 @@ class FillItem
 
         int m_itemId;
         int m_chance;
+
+        int m_insertType;
+
+        int m_placeAtTile;
         ItemSize m_size;
         Type m_type;
         PlacingRestriction m_restr;

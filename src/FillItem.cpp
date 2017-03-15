@@ -1,7 +1,7 @@
 #include "FillItem.h"
 #include "TileMap.h"
 
-FillItem::FillItem(int Item, int chance, Type type, ItemSize size, PlacingRestriction restr)
+FillItem::FillItem(int Item, int chance, int neededTile, int newTile, Type type, ItemSize size, PlacingRestriction restr)
 {
     //ctor
     m_itemId = Item;
@@ -9,6 +9,8 @@ FillItem::FillItem(int Item, int chance, Type type, ItemSize size, PlacingRestri
     m_size = size;
     m_type = type;
     m_restr = restr;
+    m_placeAtTile = neededTile;
+    m_insertType = newTile;
 }
 
 FillItem::~FillItem()
@@ -21,20 +23,20 @@ bool FillItem::CanInsertAt(Map* map, int x, int y, int LayerId, int LayerAboveHe
         return false;
     if(x == map->m_endX && y == map->m_endY)
         return false;
+    if(map->GetTileType(x,y) != m_placeAtTile)
+        return false;
     switch(m_size)
     {
         case AndOneAbove:
             if(map->GetTileId(x,y-1,LayerAboveHero) != 0)
                 return false;
         case Single: case AboveHero:
-            if(map->GetTileType(x,y) != Map::Space)
-                return false;
             if(map->GetTileId(x,y,LayerId) != 0)
                 return false;
 
         break;
         case AtWallDouble:
-            if(map->GetTileType(x,y) != Map::Wall || map->GetTileType(x,y+1) == Map::Wall)
+            if(map->GetTileType(x,y+1) == m_placeAtTile)
                 return false;
             if(map->GetTileId(x,y,LayerAboveHero) != 0 || map->GetTileId(x,y-1,LayerAboveHero) != 0)
                 return false;
@@ -45,7 +47,7 @@ bool FillItem::CanInsertAt(Map* map, int x, int y, int LayerId, int LayerAboveHe
     {
         for(int j = y - 1; j <= y +1; j++)
         {
-            if(map->GetTileType(i,j) == Map::Wall)
+            if(map->DoesCollide(i,j))
                 nrWalls++;
         }
     }
@@ -66,22 +68,20 @@ void FillItem::Insert(Map* map, int x, int y, int layerId, int layerAboveHero, i
     {
         case Single:
             map->SetTileId(x,y,m_itemId,layerId);
-            if(m_type == Blocking)
-                map->SetTileToType(x,y, Map::BlockingItem);
+            map->SetTileToType(x,y, m_insertType);
         break;
         case AboveHero:
             map->SetTileId(x,y,m_itemId,layerAboveHero);
-            if(m_type == Blocking)
-                map->SetTileToType(x,y, Map::BlockingItem);
+            map->SetTileToType(x,y, m_insertType);
         break;
         case AndOneAbove:
             map->SetTileId(x,y,m_itemId,layerId);
-            if(m_type == Blocking)
-                map->SetTileToType(x,y, Map::BlockingItem);
+            map->SetTileToType(x,y, m_insertType);
             map->SetTileId(x,y-1, m_itemId - TileMap::GetTileMapWith(), layerAboveHero);
         break;
         case AtWallDouble:
             map->SetTileId(x,y,m_itemId,layerId);
+            map->SetTileToType(x,y, m_insertType);
             map->SetTileId(x,y-1, m_itemId - TileMap::GetTileMapWith(), LayerWallDecoration);
 
 
@@ -97,5 +97,3 @@ FillItem::Type FillItem::GetType()
 {
     return m_type;
 }
-
-

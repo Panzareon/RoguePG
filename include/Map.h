@@ -10,18 +10,16 @@
 class Map
 {
     public:
-        enum TileType {Wall, Space, InteractableWall, BlockingItem, WalkthroughItem};
 
 
         Map(int width, int height);
         virtual ~Map();
         void init(unsigned int layerNr);
         bool IsTileWall(unsigned int x, unsigned int y);
-        void SetTileToWall(unsigned int x, unsigned int y);
-        void SetTileToSpace(unsigned int x, unsigned int y);
 
-        void SetTileToType(unsigned int x, unsigned int y, TileType type);
-        TileType GetTileType(unsigned int x, unsigned int y);
+        void SetTileToType(unsigned int x, unsigned int y, int type);
+        int GetTileType(unsigned int x, unsigned int y);
+        void AddCollidingType(int type);
 
 
         void SetRoomNr(unsigned int x, unsigned int y,  int roomNr);
@@ -56,6 +54,7 @@ class Map
     protected:
     private:
         int** m_tiles;
+        std::vector<int> m_collidingTiles;
         int** m_roomNr;
         int m_maxRoomNr;
         std::vector<int**> m_layers;

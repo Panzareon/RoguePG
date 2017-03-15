@@ -1,5 +1,6 @@
-#include "MapGenerator.h"
+#include "MapGeneratorDungeon.h"
 #include "GenericException.h"
+#include "MapFillDungeon.h"
 
 #include <cstdlib>
 #include <ctime>
@@ -7,13 +8,15 @@
 #include <limits>
 #include <cmath>
 
-MapGenerator::MapGenerator(Map* map, unsigned int seed)
+MapGeneratorDungeon::MapGeneratorDungeon(Map* map, unsigned int seed)
 {
     //ctor
     m_width = map->GetWidth();
     m_height = map->GetHeight();
     m_MGUtil.SetSize(m_width, m_height);
     m_map = map;
+    m_map->AddCollidingType(MapFillDungeon::Wall);
+    m_map->AddCollidingType(MapFillDungeon::BlockingItem);
 
     if(seed == 0)
         std::srand(std::time(0));
@@ -21,12 +24,12 @@ MapGenerator::MapGenerator(Map* map, unsigned int seed)
         std::srand(seed);
 }
 
-MapGenerator::~MapGenerator()
+MapGeneratorDungeon::~MapGeneratorDungeon()
 {
     //dtor
 }
 
-void MapGenerator::CellularAutomata(float startPercent)
+void MapGeneratorDungeon::CellularAutomata(float startPercent)
 {
     std::cout << "Starting Generation" << std::endl;
     CellularAutomataStart(startPercent);
@@ -58,7 +61,7 @@ void MapGenerator::CellularAutomata(float startPercent)
             generator.RemoveUnconnectedRooms();*/
 }
 
-void MapGenerator::FasterCellularAutomata(float startPercent)
+void MapGeneratorDungeon::FasterCellularAutomata(float startPercent)
 {
     std::cout << "Starting Generation" << std::endl;
     CellularAutomataStart(startPercent);
@@ -74,21 +77,21 @@ void MapGenerator::FasterCellularAutomata(float startPercent)
 }
 
 
-void MapGenerator::CellularAutomataStart(float startPercent)
+void MapGeneratorDungeon::CellularAutomataStart(float startPercent)
 {
     for(int i = 0; i < m_width; i++)
     {
         for(int j = 0; j < m_height; j++)
         {
             if(std::rand()/((float) RAND_MAX) < startPercent)
-                m_map->SetTileToWall(i,j);
+                m_map->SetTileToType(i,j,MapFillDungeon::Wall);
             else
-                m_map->SetTileToSpace(i,j);
+                m_map->SetTileToType(i,j,MapFillDungeon::Space);
         }
     }
 }
 
-void MapGenerator::CellularAutomataStep(int minWallTiles, int orMaxWallTiles, float chanceAtThreshhold, bool onlyChangeToWall)
+void MapGeneratorDungeon::CellularAutomataStep(int minWallTiles, int orMaxWallTiles, float chanceAtThreshhold, bool onlyChangeToWall)
 {
     //new Array for the new map
 
@@ -160,13 +163,13 @@ void MapGenerator::CellularAutomataStep(int minWallTiles, int orMaxWallTiles, fl
         for(int j = 0; j < m_height; j++)
         {
             if(newTiles[i][j] == 0)
-                m_map->SetTileToWall(i,j);
+                m_map->SetTileToType(i,j,MapFillDungeon::Wall);
             else
-                m_map->SetTileToSpace(i,j);
+                m_map->SetTileToType(i,j,MapFillDungeon::Space);
         }
 }
 
-void MapGenerator::ConnectedRooms(int roomSizeX, int roomSizeY, int nrRooms)
+void MapGeneratorDungeon::ConnectedRooms(int roomSizeX, int roomSizeY, int nrRooms)
 {
     for(int i = 0; i < nrRooms; i++)
     {
@@ -186,18 +189,18 @@ void MapGenerator::ConnectedRooms(int roomSizeX, int roomSizeY, int nrRooms)
     ConnectAllRooms(true);
 }
 
-void MapGenerator::AddRoom(int x, int y, int width, int height)
+void MapGeneratorDungeon::AddRoom(int x, int y, int width, int height)
 {
     for(int i = x; i < x + width; i++)
     {
         for(int j = y; j < y + height; j++)
         {
-            m_map->SetTileToSpace(i,j);
+            m_map->SetTileToType(i,j,MapFillDungeon::Space);
         }
     }
 }
 
-bool MapGenerator::IsRoomFree(int x, int y, int width, int height)
+bool MapGeneratorDungeon::IsRoomFree(int x, int y, int width, int height)
 {
     for(int i = x - 1; i < x + width + 1; i++)
     {
@@ -211,14 +214,14 @@ bool MapGenerator::IsRoomFree(int x, int y, int width, int height)
 }
 
 
-void MapGenerator::MorphologicalCloseOperator()
+void MapGeneratorDungeon::MorphologicalCloseOperator()
 {
     CellularAutomataStep(9);
     CellularAutomataStep(1);
 }
 
 
-void MapGenerator::ConnectAllRooms(bool straight, int maxRemovedTiles)
+void MapGeneratorDungeon::ConnectAllRooms(bool straight, int maxRemovedTiles)
 {
     //flags for every Tile: 0 = not checked; 1 = checked; 2 = wall
     int** checkedTiles = new int*[m_width];
@@ -304,7 +307,7 @@ void MapGenerator::ConnectAllRooms(bool straight, int maxRemovedTiles)
         for(int j = 0; j < m_height; j++)
         {
             if(checkedTiles[i][j] == 0)
-                m_map->SetTileToWall(i,j);
+                m_map->SetTileToType(i,j,MapFillDungeon::Wall);
         }
     }
 
@@ -313,7 +316,7 @@ void MapGenerator::ConnectAllRooms(bool straight, int maxRemovedTiles)
         delete[] checkedTiles[i];
     delete[] checkedTiles;
 }
-void MapGenerator::RemoveUnconnectedRooms()
+void MapGeneratorDungeon::RemoveUnconnectedRooms()
 {
 
     int** checkedTiles = new int*[m_width];
@@ -365,7 +368,7 @@ void MapGenerator::RemoveUnconnectedRooms()
         for(int j = 0; j < m_height; j++)
         {
             if(checkedTiles[i][j] == 0)
-                m_map->SetTileToWall(i,j);
+                m_map->SetTileToType(i,j,MapFillDungeon::Wall);
         }
 
 
@@ -375,10 +378,10 @@ void MapGenerator::RemoveUnconnectedRooms()
 }
 
 
-void MapGenerator::ConnectTwoPoints(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2)
+void MapGeneratorDungeon::ConnectTwoPoints(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2)
 {
-    m_map->SetTileToSpace(x1,y1);
-    m_map->SetTileToSpace(x2,y2);
+    m_map->SetTileToType(x1,y1,MapFillDungeon::Space);
+    m_map->SetTileToType(x2,y2,MapFillDungeon::Space);
     //flags for every Tile: 0 = not checked; 1 = checkedStartPoint; 2 = wall; 3 = checkedEndPoint
     int** checkedTiles = new int*[m_width];
     for(int i = 0; i < m_width; i++)
@@ -445,7 +448,7 @@ void MapGenerator::ConnectTwoPoints(unsigned int x1, unsigned int y1, unsigned i
         delete[] checkedTiles[i];
     delete[] checkedTiles;
 }
-void MapGenerator::NumberRooms()
+void MapGeneratorDungeon::NumberRooms()
 {
     //flags for every Tile: 0 = not checked; 1 = wall; 2 = outer line of Room; 3 or greater Room Nr
     int** checkedTiles = new int*[m_width];
@@ -722,7 +725,7 @@ void MapGenerator::NumberRooms()
     delete[] checkedTiles;
 }
 
-void MapGenerator::DigTunnel(int fromX, int fromY, int toX, int toY)
+void MapGeneratorDungeon::DigTunnel(int fromX, int fromY, int toX, int toY)
 {
     if(abs(fromX - toX) > abs(fromY - toY))
     {
@@ -746,13 +749,13 @@ void MapGenerator::DigTunnel(int fromX, int fromY, int toX, int toY)
         int y = fromY;
         for(int x = fromX; x <= toX; x++)
         {
-            m_map->SetTileToSpace(x,y);
+            m_map->SetTileToType(x,y,MapFillDungeon::Space);
             fehler -= dY;
             if(fehler < 0)
             {
                 fehler += dX;
                 y += yStep;
-                m_map->SetTileToSpace(x,y);
+                m_map->SetTileToType(x,y,MapFillDungeon::Space);
             }
         }
     }
@@ -778,20 +781,20 @@ void MapGenerator::DigTunnel(int fromX, int fromY, int toX, int toY)
         int x = fromX;
         for(int y = fromY; y <= toY; y++)
         {
-            m_map->SetTileToSpace(x,y);
+            m_map->SetTileToType(x,y,MapFillDungeon::Space);
             fehler -= dX;
             if(fehler < 0)
             {
                 fehler += dY;
                 x += xStep;
-                m_map->SetTileToSpace(x,y);
+                m_map->SetTileToType(x,y,MapFillDungeon::Space);
             }
         }
     }
 }
 
 
-void MapGenerator::CheckTiles(int** checkArray, int x, int y, bool straight)
+void MapGeneratorDungeon::CheckTiles(int** checkArray, int x, int y, bool straight)
 {
     int direction = std::rand() % 4;
 
@@ -838,7 +841,7 @@ void MapGenerator::CheckTiles(int** checkArray, int x, int y, bool straight)
                     x -= xChange;
                     y -= yChange;
                     checkArray[x][y] = 0;
-                    m_map->SetTileToSpace(x,y);
+                    m_map->SetTileToType(x,y,MapFillDungeon::Space);
                 }
                 while(x > 0 && y > 0 && x < m_width - 1 && y < m_height - 1 && checkArray[x - xChange][y - yChange] != 0);
                 m_MGUtil.SetTilesToChecked(checkArray,x,y);
@@ -847,7 +850,7 @@ void MapGenerator::CheckTiles(int** checkArray, int x, int y, bool straight)
         else
         {
             checkArray[x][y] = 0;
-            m_map->SetTileToSpace(x,y);
+            m_map->SetTileToType(x,y,MapFillDungeon::Space);
             if(x > 0 && y > 0 && x < m_width - 1 && y < m_height - 1 )
                 if(checkArray[x-1][y] == 1 || checkArray[x+1][y] == 1 || checkArray[x][y-1] == 1 || checkArray[x][y+1] == 1)
                     m_MGUtil.SetTilesToChecked(checkArray,x,y);
@@ -855,7 +858,7 @@ void MapGenerator::CheckTiles(int** checkArray, int x, int y, bool straight)
     }
 }
 
-void MapGenerator::PlaceStartingAndEndPosition()
+void MapGeneratorDungeon::PlaceStartingAndEndPosition()
 {
     int nr = 0;
     std::map<int,MapRoom>* rooms = m_map->GetAllRooms();
@@ -910,14 +913,14 @@ void MapGenerator::PlaceStartingAndEndPosition()
     if(startRoom != nullptr)
     {
         pos = startRoom->GetRandomPosition();
-        if(m_map->GetTileType(pos->first, pos->second) != Map::Space)
+        if(m_map->DoesCollide(pos->first, pos->second))
         {
             throw GenericException("Invalid starting position found!");
         }
         m_map->m_startX = pos->first;
         m_map->m_startY = pos->second;
         m_map->m_startRoomNr = m_map->GetRoomNr(m_map->m_startX, m_map->m_startY);
-        m_map->SetTileToType(m_map->m_startX, m_map->m_startY, Map::WalkthroughItem);
+        m_map->SetTileToType(m_map->m_startX, m_map->m_startY, MapFillDungeon::WalkthroughItem);
     }
     else
     {
@@ -927,14 +930,14 @@ void MapGenerator::PlaceStartingAndEndPosition()
     if(endRoom != nullptr)
     {
         pos = endRoom->GetRandomPosition();
-        if(m_map->GetTileType(pos->first, pos->second) != Map::Space)
+        if(m_map->DoesCollide(pos->first, pos->second))
         {
             throw GenericException("Invalid end position found!");
         }
         m_map->m_endX = pos->first;
         m_map->m_endY = pos->second;
         m_map->m_endRoomNr = m_map->GetRoomNr(m_map->m_endX, m_map->m_endY);
-        m_map->SetTileToType(m_map->m_endX, m_map->m_endY, Map::WalkthroughItem);
+        m_map->SetTileToType(m_map->m_endX, m_map->m_endY, MapFillDungeon::WalkthroughItem);
     }
     else
     {
@@ -943,7 +946,7 @@ void MapGenerator::PlaceStartingAndEndPosition()
     }
 }
 
-std::pair<int,int>* MapGenerator::GetFreePosition(bool deadEnd)
+std::pair<int,int>* MapGeneratorDungeon::GetFreePosition(bool deadEnd)
 {
     std::map<int,MapRoom>* rooms = m_map->GetAllRooms();
     int roomsSize = rooms->size();
@@ -987,7 +990,7 @@ std::pair<int,int>* MapGenerator::GetFreePosition(bool deadEnd)
         {
             pos = rooms->at(i).GetRandomPosition();
         }
-        if(m_map->GetTileType(pos->first, pos->second) == Map::Space)
+        if(!m_map->DoesCollide(pos->first, pos->second))
             return pos;
     }
     //if no free space is found, return last one

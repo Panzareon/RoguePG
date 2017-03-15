@@ -89,7 +89,7 @@
 		<Unit filename="include/MapFill.h" />
 		<Unit filename="include/MapFillDungeon.h" />
 		<Unit filename="include/MapFillVillage.h" />
-		<Unit filename="include/MapGenerator.h" />
+		<Unit filename="include/MapGeneratorDungeon.h" />
 		<Unit filename="include/MapGeneratorUtil.h" />
 		<Unit filename="include/MapGeneratorVillage.h" />
 		<Unit filename="include/MapRoom.h" />
@@ -164,7 +164,7 @@
 		<Unit filename="src/MapFill.cpp" />
 		<Unit filename="src/MapFillDungeon.cpp" />
 		<Unit filename="src/MapFillVillage.cpp" />
-		<Unit filename="src/MapGenerator.cpp" />
+		<Unit filename="src/MapGeneratorDungeon.cpp" />
 		<Unit filename="src/MapGeneratorUtil.cpp" />
 		<Unit filename="src/MapGeneratorVillage.cpp" />
 		<Unit filename="src/MapRoom.cpp" />

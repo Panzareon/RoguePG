@@ -23,7 +23,7 @@ class MapFill
         //Place item of layer at position x,y
         bool PlaceItemAt(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, TileIndex index, int x, int y, bool checkPlacement = true);
     protected:
-        Map::TileType m_defaultType;
+        int m_defaultType;
         enum FillType {Simple, WithAdjacent};
         Map* m_map;
 
@@ -37,10 +37,10 @@ class MapFill
 
         bool CanBlockBeFilled(int x, int y);
 
-        void FillLayerByTiles(Map::TileType checkTile, int LayerId, int TileId, FillType fillType);
+        void FillLayerByTiles(int checkTile, int LayerId, int TileId, FillType fillType);
         //yDelta changes the y position of the wall to be displayed
-        void FillLayerWallByTiles(Map::TileType checkTile, int LayerId, int LayerAboveHeroId, int TileId, int wallHeight, int yDelta = 1);
-        void FillLayerWallAbove(Map::TileType checkTile, int LayerId, int TileId, int wallHeight);
+        void FillLayerWallByTiles(int checkTile, int LayerId, int LayerAboveHeroId, int TileId, int wallHeight, int yDelta = 1);
+        void FillLayerWallAbove(int checkTile, int LayerId, int TileId, int wallHeight);
         //index of m_chanceForTile
         void FillWithItems(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, TileIndex index, int NrItems);
     private:
