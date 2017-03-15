@@ -96,12 +96,6 @@ void SceneManagerMainMenu::StartDungeon()
     }
 
     controller->LoadSceneManager(new SceneManagerVillage(30,20,time(NULL),new MapFillVillage()));
-    //TODO: Dungeon spawning somewhere else
-    /*
-    DungeonConfiguration * config = new DungeonConfiguration(5, time(NULL));
-    config->PlayMusic();
-    controller->SetDungeonConfiguration(config);
-    controller->GotoNextLevel();*/
 }
 
 

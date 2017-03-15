@@ -26,6 +26,7 @@ GameController::GameController() : m_randomGenerator(time(NULL))
     m_gameOver = false;
     m_dungeonConfiguration = nullptr;
     m_quit = false;
+    m_quitDungeon = false;
     m_windowFocused = true;
     m_party = nullptr;
 
@@ -149,6 +150,16 @@ void GameController::Tick()
         ToMainMenu();
         m_quit = false;
     }
+    if(m_quitDungeon)
+    {
+        CloseActiveSceneManger();
+        for(int i = 0; i < m_nextLevels.size(); i++)
+        {
+            delete m_nextLevels[i];
+        }
+        m_nextLevels.clear();
+        m_quitDungeon = false;
+    }
 }
 void GameController::StartBattle(std::vector<Entity*>* enemies)
 {
@@ -200,7 +211,8 @@ void GameController::GotoPreviousLevel()
     else
     {
         //exit Dungeon
-        QuitToMainMenu();
+        m_quitDungeon = true;
+        m_levelId = 0;
     }
 }
 

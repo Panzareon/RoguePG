@@ -48,6 +48,7 @@ class GameController
         void ToMainMenu();
         void GameOver();
         bool m_quit;
+        bool m_quitDungeon;
         bool m_gameOver;
         Party* m_party;
         sf::RenderTarget* m_renderTarget;

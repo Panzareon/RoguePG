@@ -105,6 +105,7 @@ void MapGeneratorVillage::PlaceStreets()
         }
         StartStreet(m_doors[i].first, m_doors[i].second, (Enums::Direction)minDir);
     }
+    StartStreet(m_map->m_endX, m_map->m_endY, Enums::North);
 }
 
 int MapGeneratorVillage::StartStreet(int xStart, int yStart, Enums::Direction dir, bool placeStreet)

@@ -1,5 +1,6 @@
 #include "SceneManagerVillage.h"
 #include "MapEventShop.h"
+#include "MapEventDungeonEntrance.h"
 
 SceneManagerVillage::SceneManagerVillage(int tileWidth, int tileHeight, unsigned int seed, MapFill* mapFill) : SceneManagerMoveable (tileWidth, tileHeight), m_generator(&m_map, seed, (MapFillVillage*)mapFill)
 {
@@ -10,6 +11,12 @@ SceneManagerVillage::SceneManagerVillage(int tileWidth, int tileHeight, unsigned
 
     m_map.m_startX = 0;
     m_map.m_startY = rand() % tileHeight;
+
+    m_map.m_endX = rand()% tileWidth;
+    m_map.m_endY = tileHeight - 1;
+
+    m_mapFill->PlaceItemAt(1,2,4,MapFillVillage::TileStairsDown,m_map.m_endX, m_map.m_endY, false);
+    m_events.push_back(new MapEventDungeonEntrance( m_map.m_endX, m_map.m_endY));
 
     m_generator.PlaceHouses(6,3, tileHeight*tileWidth / 100);
 

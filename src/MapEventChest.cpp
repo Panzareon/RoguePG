@@ -3,6 +3,7 @@
 #include "ItemFactory.h"
 #include "Localization.h"
 #include "SceneManagerMessage.h"
+#include "MathHelper.h"
 
 #include <iostream>
 
@@ -22,17 +23,35 @@ void MapEventChest::Activate()
     {
         m_isActivated = true;
         //start this event (Give an item)
-        Item* item = ItemFactory::GetInstance()->GetRandomEquipment(Equipment::MainHand, ItemFactory::BaseItem);
-        GameController* controller = GameController::getInstance();
-        controller->getParty()->AddItem(item);
-        std::cout << "Got Item" << std::endl;
-        //Receive message
-        std::string toDisplay;
-        Localization* localization = Localization::GetInstance();
-        std::vector<std::string> itemName;
-        itemName.push_back(localization->GetLocalization(item->GetName()));
-        toDisplay = localization->GetLocalizationWithStrings("chest.receive_item", &itemName);
-        SceneManagerMessage* message = new SceneManagerMessage(toDisplay);
-        controller->LoadSceneManager(message);
+        if(rand() % 3 == 0)
+        {
+            //Get Item
+            Item* item = ItemFactory::GetInstance()->GetRandomEquipment(Equipment::MainHand, ItemFactory::BaseItem);
+            GameController* controller = GameController::getInstance();
+            controller->getParty()->AddItem(item);
+            //Receive message
+            std::string toDisplay;
+            Localization* localization = Localization::GetInstance();
+            std::vector<std::string> itemName;
+            itemName.push_back(localization->GetLocalization(item->GetName()));
+            toDisplay = localization->GetLocalizationWithStrings("chest.receive_item", &itemName);
+            SceneManagerMessage* message = new SceneManagerMessage(toDisplay);
+            controller->LoadSceneManager(message);
+        }
+        else
+        {
+            //Get money
+            int gold = MathHelper::GetInstance()->GetRandomInt(150, 50, true);
+            GameController* controller = GameController::getInstance();
+            controller->getParty()->AddMoney(gold);
+            //Receive message
+            std::string toDisplay;
+            Localization* localization = Localization::GetInstance();
+            std::vector<std::string> moneyValue;
+            moneyValue.push_back(std::to_string(gold));
+            toDisplay = localization->GetLocalizationWithStrings("chest.receive_gold", &moneyValue);
+            SceneManagerMessage* message = new SceneManagerMessage(toDisplay);
+            controller->LoadSceneManager(message);
+        }
     }
 }
