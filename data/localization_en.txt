@@ -40,11 +40,13 @@ menu.keyBindings.73 = Up Arrow
 menu.keyBindings.74 = Down Arrow
 
 menu.shop.buy = Select the item to buy.
+menu.shop.buy.nothing = Nothing to buy is left here.
 menu.shop.inn = Stay in this inn for %0 gold?
 
 dungeon.finished = You Won!
 
 chest.receive_item = You got a %0!
+chest.receive_gold = You got %0 gold!
 
 //Item-Names
 item.1 = Sword

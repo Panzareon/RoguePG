@@ -70,18 +70,26 @@ void MapEventShop::ShowShop()
 {
     Party* party = GameController::getInstance()->getParty();
     Localization* localization = Localization::GetInstance();
-    SceneManagerMessage* sm = new SceneManagerMessage(localization->GetLocalization("menu.shop.buy"));
-    m_node = new MenuNode(300);
-    m_node->CancelAvailable(true);
-    int i = 0;
-    for(auto it = m_sellItems.begin(); it != m_sellItems.end(); it++)
+    SceneManagerMessage* sm;
+    if(m_sellItems.size() > 0)
     {
-        m_node->AddOption(localization->GetLocalization(it->second->GetName()),std::function<void()>(std::bind(MenuFunctions::BuyItem,this, it->second)), party->GetMoney() >= it->first);
-        m_node->AddValueToOption(i, std::to_string(it->first));
-        i++;
+        sm = new SceneManagerMessage(localization->GetLocalization("menu.shop.buy"));
+        m_node = new MenuNode(300);
+        m_node->CancelAvailable(true);
+        int i = 0;
+        for(auto it = m_sellItems.begin(); it != m_sellItems.end(); it++)
+        {
+            m_node->AddOption(localization->GetLocalization(it->second->GetName()),std::function<void()>(std::bind(MenuFunctions::BuyItem,this, it->second)), party->GetMoney() >= it->first);
+            m_node->AddValueToOption(i, std::to_string(it->first));
+            i++;
+        }
+        m_node->moveNode(0.0f, 5.0f);
+        sm->AddMenuNode(m_node);
     }
-    m_node->moveNode(0.0f, 5.0f);
-    sm->AddMenuNode(m_node);
+    else
+    {
+        sm = new SceneManagerMessage(localization->GetLocalization("menu.shop.buy.nothing"));
+    }
 
     GameController::getInstance()->LoadSceneManager(sm);
 }
