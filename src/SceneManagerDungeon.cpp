@@ -89,8 +89,8 @@ SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned
     m_mapFill->FillLayer(MapFill::AdditionalItems, 1,2,4);
 
     //Place Stairs
-    m_mapFill->PlaceItemAt(1,2,4,MapFill::TileStairsUp,m_map.m_startX, m_map.m_startY, false);
-    m_mapFill->PlaceItemAt(1,2,4,MapFill::TileStairsDown,m_map.m_endX, m_map.m_endY, false);
+    m_mapFill->PlaceItemAt(1,2,4,MapFillDungeon::TileStairsUp,m_map.m_startX, m_map.m_startY, false);
+    m_mapFill->PlaceItemAt(1,2,4,MapFillDungeon::TileStairsDown,m_map.m_endX, m_map.m_endY, false);
     m_events.push_back(new MapEventStairs(false, m_map.m_startX, m_map.m_startY));
     m_events.push_back(new MapEventStairs(true, m_map.m_endX, m_map.m_endY));
 
@@ -249,7 +249,7 @@ void SceneManagerDungeon::PlaceChest()
             //Do not place chest in start or end Room
             continue;
         }
-        placed = m_mapFill->PlaceItemAt(1,2,4,MapFill::TileChest,pos->first, pos->second);
+        placed = m_mapFill->PlaceItemAt(1,2,4,MapFillDungeon::TileChest,pos->first, pos->second);
     }
     while(!placed && nrTries < 200);
     std::cout << "Chest at " << pos->first << " " << pos->second << " nr tries:" << nrTries << " placeable: " << placed << std::endl;

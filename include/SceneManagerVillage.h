@@ -13,6 +13,8 @@ class SceneManagerVillage : public SceneManagerMoveable
         virtual ~SceneManagerVillage();
 
     protected:
+        void AddShops();
+
         MapFill* m_mapFill;
         MapGeneratorVillage m_generator;
 

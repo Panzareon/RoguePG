@@ -17,7 +17,7 @@ FillItem::~FillItem()
 {
     //dtor
 }
-bool FillItem::CanInsertAt(Map* map, int x, int y, int LayerId, int LayerAboveHero)
+bool FillItem::CanInsertAt(Map* map, int x, int y, int LayerId, int LayerAboveHero, int LayerWallDecoration)
 {
     if(x == map->m_startX && y == map->m_startY)
         return false;
@@ -35,10 +35,16 @@ bool FillItem::CanInsertAt(Map* map, int x, int y, int LayerId, int LayerAboveHe
                 return false;
 
         break;
+        case AtWallSingle:
+            if(map->GetTileId(x,y,LayerWallDecoration) != 0)
+                return false;
+            return true;
+
+        break;
         case AtWallDouble:
             if(map->GetTileType(x,y+1) == m_placeAtTile)
                 return false;
-            if(map->GetTileId(x,y,LayerAboveHero) != 0 || map->GetTileId(x,y-1,LayerAboveHero) != 0)
+            if(map->GetTileId(x,y,LayerWallDecoration) != 0 || map->GetTileId(x,y-1,LayerWallDecoration) != 0)
                 return false;
             return true;
     }
@@ -78,6 +84,10 @@ void FillItem::Insert(Map* map, int x, int y, int layerId, int layerAboveHero, i
             map->SetTileId(x,y,m_itemId,layerId);
             map->SetTileToType(x,y, m_insertType);
             map->SetTileId(x,y-1, m_itemId - TileMap::GetTileMapWith(), layerAboveHero);
+        break;
+        case AtWallSingle:
+            map->SetTileId(x,y,m_itemId,LayerWallDecoration);
+            map->SetTileToType(x,y, m_insertType);
         break;
         case AtWallDouble:
             map->SetTileId(x,y,m_itemId,layerId);

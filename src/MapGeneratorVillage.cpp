@@ -1,7 +1,7 @@
 #include "MapGeneratorVillage.h"
 #include "MapFillVillage.h"
 
-MapGeneratorVillage::MapGeneratorVillage(Map* map, unsigned int seed)
+MapGeneratorVillage::MapGeneratorVillage(Map* map, unsigned int seed, MapFillVillage* mapFill)
 {
     //ctor
     m_width = map->GetWidth();
@@ -9,7 +9,9 @@ MapGeneratorVillage::MapGeneratorVillage(Map* map, unsigned int seed)
     m_MGUtil.SetSize(m_width, m_height);
     m_map = map;
     m_map->AddCollidingType(MapFillVillage::Wall);
+    m_map->AddCollidingType(MapFillVillage::BlockingItem);
     m_spaceBetweenHouses = 3;
+    m_mapFill = mapFill;
 
     if(seed == 0)
         std::srand(std::time(0));
@@ -59,6 +61,14 @@ void MapGeneratorVillage::AddHouse(int x, int y, int width, int height)
             m_map->SetTileToType(i,j,MapFillVillage::Wall);
         }
     }
+    int doorX = x + 1 + rand() % (width - 2);
+    m_mapFill->PlaceItemAt(1,2,4,MapFillVillage::TileDoor, doorX ,y + height - 1);
+    m_doors.push_back(std::pair<int, int>(doorX, y + height));
+    int nr = rand()%3 + 1;
+    for(int i = 0; i < nr; i++)
+    {
+        m_mapFill->PlaceItemAt(1,2,4,MapFillVillage::TileWallDecoration, x + 1 + rand() % (width - 2),y + height - 1);
+    }
 }
 
 bool MapGeneratorVillage::IsRoomFree(int x, int y, int width, int height)
@@ -76,16 +86,41 @@ bool MapGeneratorVillage::IsRoomFree(int x, int y, int width, int height)
     return true;
 }
 
-void MapGeneratorVillage::StartStreet(int xStart, int yStart, Enums::Direction dir)
+void MapGeneratorVillage::PlaceStreets()
 {
+    StartStreet(m_map->m_startX, m_map->m_startY, Enums::East);
+
+    for(int i = 0; i < m_doors.size(); i++)
+    {
+        int minLength = m_width*m_height;
+        int minDir = 0;
+        for(int dir = 0; dir < 4; dir++)
+        {
+            int length = StartStreet(m_doors[i].first, m_doors[i].second, (Enums::Direction)dir, false);
+            if(length < minLength && length != -1)
+            {
+                minDir = dir;
+                minLength = length;
+            }
+        }
+        StartStreet(m_doors[i].first, m_doors[i].second, (Enums::Direction)minDir);
+    }
+}
+
+int MapGeneratorVillage::StartStreet(int xStart, int yStart, Enums::Direction dir, bool placeStreet)
+{
+    int nrStreets = 1;
     int x = xStart;
     int y = yStart;
-    int xLast,yLast;
+    int xLast = xStart;
+    int yLast = yStart;
+    int type;
     if(m_map->GetTileType(x,y) == MapFillVillage::Space)
     {
-        m_map->SetTileToType(x,y,MapFillVillage::Street);
+        if(placeStreet)
+            m_map->SetTileToType(x,y,MapFillVillage::Street);
     }
-    while(x >= 0 && y >= 0 && x < m_width && y < m_height)
+    while(x >= 0 && y >= 0 && x < m_width && y < m_height && nrStreets < m_width*m_height)
     {
         switch(dir)
         {
@@ -103,10 +138,18 @@ void MapGeneratorVillage::StartStreet(int xStart, int yStart, Enums::Direction d
             break;
         }
 
-        //Check if space for Street
-        if(m_map->GetTileType(x,y) == MapFillVillage::Space)
+        type = m_map->GetTileType(x,y);
+        if(type == MapFillVillage::Street)
         {
-            m_map->SetTileToType(x,y,MapFillVillage::Street);
+            break;
+        }
+
+        //Check if space for Street
+        if(type == MapFillVillage::Space)
+        {
+            nrStreets++;
+            if(placeStreet)
+                m_map->SetTileToType(x,y,MapFillVillage::Street);
         }
         else if(x >= 0 && y >= 0 && x < m_width && y < m_height)
         {
@@ -129,9 +172,17 @@ void MapGeneratorVillage::StartStreet(int xStart, int yStart, Enums::Direction d
                 break;
             }
 
-            if(m_map->GetTileType(x,y) == MapFillVillage::Space)
+            type = m_map->GetTileType(x,y);
+            if(type == MapFillVillage::Street)
             {
-                m_map->SetTileToType(x,y,MapFillVillage::Street);
+                break;
+            }
+
+            if(type == MapFillVillage::Space)
+            {
+                nrStreets++;
+                if(placeStreet)
+                    m_map->SetTileToType(x,y,MapFillVillage::Street);
             }
             else if(x >= 0 && y >= 0 && x < m_width && y < m_height)
             {
@@ -154,9 +205,16 @@ void MapGeneratorVillage::StartStreet(int xStart, int yStart, Enums::Direction d
                     break;
                 }
 
-                if(m_map->GetTileType(x,y) == MapFillVillage::Space)
+                type = m_map->GetTileType(x,y);
+                if(type == MapFillVillage::Street)
                 {
-                    m_map->SetTileToType(x,y,MapFillVillage::Street);
+                    break;
+                }
+                if(type == MapFillVillage::Space)
+                {
+                    nrStreets++;
+                    if(placeStreet)
+                        m_map->SetTileToType(x,y,MapFillVillage::Street);
                 }
             }
         }
@@ -164,5 +222,15 @@ void MapGeneratorVillage::StartStreet(int xStart, int yStart, Enums::Direction d
         yLast = y;
 
     }
+    if(x >= 0 && y >= 0 && x < m_width && y < m_height)
+        return nrStreets;
+    else
+        return -1;
 }
 
+std::pair<int,int> MapGeneratorVillage::PopDoor()
+{
+    std::pair<int,int> pos = m_doors.at(m_doors.size() - 1);
+    m_doors.resize(m_doors.size() - 1);
+    return pos;
+}

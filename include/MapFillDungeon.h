@@ -8,6 +8,7 @@ class MapFillDungeon : public MapFill
 {
     public:
         enum TileType {Wall, Space, InteractableWall, BlockingItem, WalkthroughItem};
+        enum TileIndex{TileStairsUp, TileStairsDown, TileRandomItem, TileChest, TILE_INDEX_END};
         MapFillDungeon();
         virtual ~MapFillDungeon();
 

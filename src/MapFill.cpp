@@ -245,7 +245,7 @@ bool MapFill::CanBlockBeFilled(int x, int y)
 
 }
 
-void MapFill::FillWithItems(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, TileIndex index, int NrItems)
+void MapFill::FillWithItems(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, int index, int NrItems)
 {
     int maxChance = 0.0f;
     for(unsigned int i = 0; i < m_chanceForTile[index].size(); i++)
@@ -274,7 +274,7 @@ void MapFill::FillWithItems(int LayerId, int LayerAboveHeroId, int LayerWallDeco
             y = rand() % m_height;
             tryNr++;
         }
-        while(!newItem->CanInsertAt(m_map, x, y, LayerId, LayerAboveHeroId) && tryNr < m_maxTries);
+        while(!newItem->CanInsertAt(m_map, x, y, LayerId, LayerAboveHeroId, LayerWallDecoration) && tryNr < m_maxTries);
 
         if(tryNr < m_maxTries)
         {
@@ -288,9 +288,10 @@ void MapFill::FillWithItems(int LayerId, int LayerAboveHeroId, int LayerWallDeco
     }
 }
 
-bool MapFill::PlaceItemAt(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, TileIndex index, int x, int y, bool checkPlacement)
+bool MapFill::PlaceItemAt(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, int index, int x, int y, bool checkPlacement)
 {
     int maxChance = 0.0f;
+    std::vector<FillItem>* test = &m_chanceForTile[index];
     for(unsigned int i = 0; i < m_chanceForTile[index].size(); i++)
     {
         maxChance += m_chanceForTile[index][i].GetChance();
@@ -307,7 +308,7 @@ bool MapFill::PlaceItemAt(int LayerId, int LayerAboveHeroId, int LayerWallDecora
     i--;
     FillItem* newItem = &(m_chanceForTile[index][i]);
 
-    if(checkPlacement && !newItem->CanInsertAt(m_map, x, y, LayerId, LayerAboveHeroId))
+    if(checkPlacement && !newItem->CanInsertAt(m_map, x, y, LayerId, LayerAboveHeroId, LayerWallDecoration))
     {
         return false;
     }

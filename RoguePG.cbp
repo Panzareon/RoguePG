@@ -84,6 +84,7 @@
 		<Unit filename="include/MapEventChest.h" />
 		<Unit filename="include/MapEventEnemy.h" />
 		<Unit filename="include/MapEventHero.h" />
+		<Unit filename="include/MapEventShop.h" />
 		<Unit filename="include/MapEventStairs.h" />
 		<Unit filename="include/MapEventTile.h" />
 		<Unit filename="include/MapFill.h" />
@@ -159,6 +160,7 @@
 		<Unit filename="src/MapEventChest.cpp" />
 		<Unit filename="src/MapEventEnemy.cpp" />
 		<Unit filename="src/MapEventHero.cpp" />
+		<Unit filename="src/MapEventShop.cpp" />
 		<Unit filename="src/MapEventStairs.cpp" />
 		<Unit filename="src/MapEventTile.cpp" />
 		<Unit filename="src/MapFill.cpp" />

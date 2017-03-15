@@ -1,6 +1,7 @@
 #include "SceneManagerVillage.h"
+#include "MapEventShop.h"
 
-SceneManagerVillage::SceneManagerVillage(int tileWidth, int tileHeight, unsigned int seed, MapFill* mapFill) : SceneManagerMoveable (tileWidth, tileHeight), m_generator(&m_map, seed)
+SceneManagerVillage::SceneManagerVillage(int tileWidth, int tileHeight, unsigned int seed, MapFill* mapFill) : SceneManagerMoveable (tileWidth, tileHeight), m_generator(&m_map, seed, (MapFillVillage*)mapFill)
 {
     //ctor
     m_mapFill = mapFill;
@@ -12,7 +13,9 @@ SceneManagerVillage::SceneManagerVillage(int tileWidth, int tileHeight, unsigned
 
     m_generator.PlaceHouses(6,3, tileHeight*tileWidth / 100);
 
-    m_generator.StartStreet(m_map.m_startX, m_map.m_startY, Enums::East);
+    m_generator.PlaceStreets();
+
+    AddShops();
 
     //Fill Base Layer with walkable Tile
     m_mapFill->FillLayer(MapFill::Ground, 0);
@@ -42,4 +45,13 @@ SceneManagerVillage::SceneManagerVillage(int tileWidth, int tileHeight, unsigned
 SceneManagerVillage::~SceneManagerVillage()
 {
     //dtor
+}
+
+void SceneManagerVillage::AddShops()
+{
+    for(int i = 0; i < MapEventShop::SHOP_TYPES_END; i++)
+    {
+        std::pair<int,int> pos = m_generator.PopDoor();
+        m_mapFill->PlaceItemAt(1,2,4,(MapFillVillage::TileIndex)(MapFillVillage::TileSwordShop + i),pos.first, pos.second - 3, false);
+    }
 }
