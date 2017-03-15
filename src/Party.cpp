@@ -4,6 +4,7 @@
 Party::Party()
 {
     //ctor
+    m_money = 0;
 }
 
 Party::~Party()
@@ -135,3 +136,23 @@ std::vector<std::pair<int,Item*>>* Party::GetItems()
     return &m_items;
 }
 
+int Party::GetMoney()
+{
+    return m_money;
+}
+
+void Party::AddMoney(int money)
+{
+    if(money > 0)
+        m_money += money;
+}
+
+bool Party::RemoveMoney(int money)
+{
+    if(money > 0 && m_money >= money)
+    {
+        m_money -= money;
+        return true;
+    }
+    return false;
+}

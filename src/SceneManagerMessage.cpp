@@ -13,6 +13,7 @@ SceneManagerMessage::SceneManagerMessage(std::string toDisplay)
     y /= 2;
     m_text->moveNode(x,y);
     m_finished = false;
+    m_menu = nullptr;
 }
 
 SceneManagerMessage::~SceneManagerMessage()
@@ -32,6 +33,15 @@ bool SceneManagerMessage::PausesSceneManagerBelow()
 
 void SceneManagerMessage::Tick()
 {
+    if(m_menu != nullptr)
+    {
+        m_menu->CheckKeyboardInput();
+        if(!m_menu->IsVisible())
+        {
+            m_finished = true;
+        }
+        return;
+    }
     GameController* controller = GameController::getInstance();
     //Check menu Key
     if(controller->IsKeyPressed(Configuration::Cancel) || controller->IsKeyPressed(Configuration::Accept))
@@ -52,3 +62,9 @@ void SceneManagerMessage::OnAccept(std::function<void()>func)
     m_onAccept = func;
 }
 
+void SceneManagerMessage::AddMenuNode(MenuNode* node)
+{
+    m_text->addChild(node);
+    node->moveNode(0.0f, m_text->getBoundingBox().height);
+    m_menu = node;
+}

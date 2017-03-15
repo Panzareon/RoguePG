@@ -53,5 +53,6 @@ void SceneManagerVillage::AddShops()
     {
         std::pair<int,int> pos = m_generator.PopDoor();
         m_mapFill->PlaceItemAt(1,2,4,(MapFillVillage::TileIndex)(MapFillVillage::TileSwordShop + i),pos.first, pos.second - 3, false);
+        m_events.push_back(new MapEventShop(pos.first, pos.second - 1, (MapEventShop::ShopTypes)i));
     }
 }

@@ -17,6 +17,9 @@ menu.close = Close
 menu.equipment = Equipment
 menu.quit = Quit
 
+menu.yes = Yes
+menu.no = No
+
 menu.sound.music = Music
 menu.sound.sfx = Sfx
 
@@ -35,6 +38,9 @@ menu.keyBindings.71 = Left Arrow
 menu.keyBindings.72 = Right Arrow
 menu.keyBindings.73 = Up Arrow
 menu.keyBindings.74 = Down Arrow
+
+menu.shop.buy = Select the item to buy.
+menu.shop.inn = Stay in this inn for %0 gold?
 
 dungeon.finished = You Won!
 

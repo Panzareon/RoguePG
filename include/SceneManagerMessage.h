@@ -3,6 +3,7 @@
 
 #include "SceneManager.h"
 #include "TextNode.h"
+#include "MenuNode.h"
 #include <functional>
 
 
@@ -22,8 +23,11 @@ class SceneManagerMessage : public SceneManager
 
         void OnAccept(std::function<void()> func);
 
+        void AddMenuNode(MenuNode* node);
     protected:
         TextNode* m_text;
+        MenuNode* m_menu;
+
         std::function<void()> m_onAccept;
 
         bool m_finished;

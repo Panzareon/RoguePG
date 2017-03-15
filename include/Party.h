@@ -16,12 +16,17 @@ class Party
 
         void AddPartyMember(PartyMember* member);
 
+        int GetMoney();
+        void AddMoney(int money);
+        bool RemoveMoney(int money);
+
         void AddItem(Item* item);
         int GetNumberOfItem(int itemId);
         bool RemoveItem(int itemId);
         std::vector<std::pair<int,Item*>>* GetItems();
     protected:
     private:
+        int m_money;
         std::vector<PartyMember*> m_partyMembers;
         std::vector<PartyMember*> m_deadMembers;
         std::vector<PartyMember*> m_activePartyMembers;

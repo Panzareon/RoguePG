@@ -38,6 +38,24 @@ Item* ItemFactory::GetRandomItem(Item::ItemType type, ItemRarity rarity)
         return GetRandomEquipment(rarity);
     int random = rand() % m_itemIds[type][rarity].size();
     int itemId = m_itemIds[type][rarity][random];
+    return GetItem(type, itemId);
+}
+
+Item* ItemFactory::GetRandomEquipment(ItemRarity rarity)
+{
+    int random = rand() % Equipment::EQUIPMENT_POSITION_END;
+    return GetRandomEquipment((Equipment::EquipmentPosition) random, rarity);
+}
+
+Item* ItemFactory::GetRandomEquipment(Equipment::EquipmentPosition pos, ItemRarity rarity)
+{
+    int random = rand() % m_equipmentIds[pos][rarity].size();
+    int itemId = m_equipmentIds[pos][rarity][random];
+    return GetEquipment(pos, itemId);
+}
+
+Item* ItemFactory::GetItem(Item::ItemType type, int itemId)
+{
     Item* retval = new Item(itemId, type);
     switch(itemId)
     {
@@ -52,16 +70,8 @@ Item* ItemFactory::GetRandomItem(Item::ItemType type, ItemRarity rarity)
     return retval;
 }
 
-Item* ItemFactory::GetRandomEquipment(ItemRarity rarity)
+Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
 {
-    int random = rand() % Equipment::EQUIPMENT_POSITION_END;
-    return GetRandomEquipment((Equipment::EquipmentPosition) random, rarity);
-}
-
-Item* ItemFactory::GetRandomEquipment(Equipment::EquipmentPosition pos, ItemRarity rarity)
-{
-    int random = rand() % m_equipmentIds[pos][rarity].size();
-    int itemId = m_equipmentIds[pos][rarity][random];
     Equipment* retval = new Equipment(itemId,pos);
     SkillGenerator* gen = retval->GetSkillGenerator();
 
