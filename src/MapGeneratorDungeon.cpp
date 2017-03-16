@@ -171,20 +171,23 @@ void MapGeneratorDungeon::CellularAutomataStep(int minWallTiles, int orMaxWallTi
 
 void MapGeneratorDungeon::ConnectedRooms(int roomSizeX, int roomSizeY, int nrRooms)
 {
+    int width, height;
     for(int i = 0; i < nrRooms; i++)
     {
+        width = roomSizeX + rand()%3 - 1;
+        height = roomSizeY + rand()%3 - 1;
         int x,y;
         int nrTries = 0;
         do
         {
-            x = rand() % (m_width - roomSizeX);
-            y = rand() % (m_height - roomSizeY);
+            x = rand() % (m_width - width);
+            y = rand() % (m_height - height);
             nrTries++;
         }
-        while (!IsRoomFree(x,y,roomSizeX, roomSizeY) && nrTries < 100);
+        while (!IsRoomFree(x,y,width, height) && nrTries < 100);
         if(nrTries >= 100)
             break;
-        AddRoom(x,y,roomSizeX, roomSizeY);
+        AddRoom(x,y,width, height);
     }
     ConnectAllRooms(true);
 }

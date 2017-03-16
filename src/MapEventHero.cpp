@@ -16,7 +16,10 @@ void MapEventHero::Activate()
 {
     PartyMember* p = CharacterClass::GetRandomCharacterClass()->GetNewPartyMember();
     p->SetTeamId(0);
-    GameController::getInstance()->getParty()->AddPartyMember(p);
+    Party* party = GameController::getInstance()->getParty();
+    p->AddExp(party->GetActivePartyMembers()->at(0)->GetExp());
+    p->GetStartingSkills(p->GetLevel() - 1);
+    party->AddPartyMember(p);
 
     m_finished = true;
     m_node->GetParent()->removeChild(m_node);

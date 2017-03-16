@@ -10,9 +10,9 @@
 
 namespace ControllerFunctions
 {
-    void QuitToMainMenu()
+    void QuitToVillage()
     {
-        GameController::getInstance()->QuitTo(SceneManager::TypeMainMenu);
+        GameController::getInstance()->QuitTo(SceneManager::TypeVillage);
     }
 }
 
@@ -21,6 +21,7 @@ GameController::GameController() : m_randomGenerator(time(NULL))
 {
     //ctor
     m_renderTarget = 0;
+    m_lastDungeon = 0;
     m_keysPressed.resize(Configuration::GetInstance()->GetNumberKeys());
     m_defaultKeysPressed.resize(Configuration::GetInstance()->GetNumberKeys());
     m_gameOver = false;
@@ -50,6 +51,8 @@ void GameController::InitValues()
     if(m_party != nullptr)
         delete m_party;
     m_party = nullptr;
+
+    m_lastDungeon = 0;
 }
 
 bool GameController::IsWindowFocused()
@@ -181,8 +184,9 @@ void GameController::GotoNextLevel()
     {
         //finish the dungeon
         SceneManagerMessage* message = new SceneManagerMessage(Localization::GetInstance()->GetLocalization("dungeon.finished"));
-        message->OnAccept(std::function<void()>(ControllerFunctions::QuitToMainMenu));
+        message->OnAccept(std::function<void()>(ControllerFunctions::QuitToVillage));
         LoadSceneManager(message);
+        m_lastDungeon = m_dungeonConfiguration->GetDungeonId();
     }
 }
 
@@ -318,6 +322,10 @@ void GameController::QuitTo(SceneManager::SceneManagerType type)
 std::default_random_engine* GameController::GetRandomGenerator()
 {
     return &m_randomGenerator;
+}
+int GameController::GetLastDungeonBeated()
+{
+    return m_lastDungeon;
 }
 
 

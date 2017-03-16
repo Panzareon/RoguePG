@@ -20,6 +20,7 @@ class PartyMember : public Entity
         void GetStartingSkills(int nr);
         void LevelUp();
         int GetLevel();
+        int GetExp();
         void SetEquipment(Equipment::EquipmentPosition position, Equipment* equipment = nullptr);
         Equipment* GetEquipment(Equipment::EquipmentPosition position);
     protected:

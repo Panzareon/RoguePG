@@ -142,7 +142,8 @@ SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned
     m_map.writeToTileMap(*m_tileMapWallDecoration,4);
 
 
-    for(int i = 0; i < 10; i++)
+    int nrEnemies = m_map.GetWidth() * m_map.GetHeight() / 300;
+    for(int i = 0; i < nrEnemies; i++)
     {
         SpawnEnemy();
     }

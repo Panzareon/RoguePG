@@ -14,9 +14,18 @@ MapEventDungeonEntrance::~MapEventDungeonEntrance()
 
 void MapEventDungeonEntrance::Activate()
 {
-    DungeonConfiguration * config = new DungeonConfiguration(5, time(NULL));
-    config->PlayMusic();
     GameController* controller = GameController::getInstance();
+    int dungeonId = controller->GetLastDungeonBeated();
+    DungeonConfiguration * config;
+    if(dungeonId == 0)
+    {
+        config = new DungeonConfiguration(2, time(NULL), dungeonId + 1);
+    }
+    else
+    {
+        config = new DungeonConfiguration(5, time(NULL), dungeonId + 1);
+    }
+    config->PlayMusic();
     controller->SetDungeonConfiguration(config);
     controller->GotoNextLevel();
 }

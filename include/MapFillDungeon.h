@@ -13,10 +13,10 @@ class MapFillDungeon : public MapFill
         virtual ~MapFillDungeon();
 
         virtual void FillLayer(ToFillLayer type, int LayerId, int LayerAboveHeroId = -1, int LayerWallDecoration = -1);
+        virtual void InitItemChances();
     protected:
+        virtual void FillBaseLayer(int LayerId);
     private:
-        void FillBaseLayer(int LayerId);
-        void InitItemChances();
 };
 
 #endif // MAPFILLDUNGEON_H

@@ -3,20 +3,33 @@
 #include "GameController.h"
 #include "MusicController.h"
 #include "MapFillDungeon.h"
+#include "MapFillDungeon2.h"
 
-DungeonConfiguration::DungeonConfiguration(int nrLevels, unsigned int seed)
+DungeonConfiguration::DungeonConfiguration(int nrLevels, unsigned int seed, int dungeonId)
 {
     //ctor
     m_nrLevels = nrLevels;
     m_seed = seed;
+    m_dungeonId = dungeonId;
 
     //Init all Enemies
-    m_enemies[EnemyFactory::EnemyListBat] = 10.0f;
-    m_enemies[EnemyFactory::EnemyListWaterSlime] = 10.0f;
-    m_enemies[EnemyFactory::EnemyListWindEye] = 10.0f;
-    m_enemies[EnemyFactory::EnemyListStoneGolem] = 2.0f;
+    if(dungeonId == 1)
+    {
+        m_enemies[EnemyFactory::EnemyListBat] = 10.0f;
+        m_enemies[EnemyFactory::EnemyListWaterSlime] = 3.0f;
 
-    m_bosses[EnemyFactory::EnemyListDeadWizard] = 10.0f;
+        m_bosses[EnemyFactory::EnemyListDeadWizard] = 3.0f;
+        m_bosses[EnemyFactory::EnemyListStoneGolem] = 10.0f;
+    }
+    else
+    {
+        m_enemies[EnemyFactory::EnemyListBat] = 3.0f;
+        m_enemies[EnemyFactory::EnemyListWaterSlime] = 5.0f;
+        m_enemies[EnemyFactory::EnemyListWindEye] = 10.0f;
+        m_enemies[EnemyFactory::EnemyListStoneGolem] = 7.0f;
+
+        m_bosses[EnemyFactory::EnemyListDeadWizard] = 10.0f;
+    }
 
     m_enemiesSumChance = 0.0f;
     for(auto it = m_enemies.begin(); it != m_enemies.end(); it++)
@@ -44,9 +57,25 @@ void DungeonConfiguration::PlayMusic()
 SceneManager* DungeonConfiguration::GetLevel(int id)
 {
     //create next Level
-
-    SceneManagerDungeon* sceneManager = new SceneManagerDungeon(60,60, m_seed + id, id, this, new MapFillDungeon(), SceneManagerDungeon::Cave);
+    SceneManagerDungeon* sceneManager;
+    if(m_dungeonId == 1)
+    {
+        MapFillDungeon* mf = new MapFillDungeon();
+        mf->InitItemChances();
+        sceneManager = new SceneManagerDungeon(40,30, m_seed + id, id, this, mf, SceneManagerDungeon::Cave);
+    }
+    else
+    {
+        MapFillDungeon* mf = new MapFillDungeon2();
+        mf->InitItemChances();
+        sceneManager = new SceneManagerDungeon(100,70, m_seed + id, id, this, mf, SceneManagerDungeon::Dungeon);
+    }
     return sceneManager;
+}
+
+int DungeonConfiguration::GetDungeonId()
+{
+    return m_dungeonId;
 }
 
 int DungeonConfiguration::GetNrLevels()
@@ -62,7 +91,16 @@ Entity* DungeonConfiguration::GetDungeonEnemy(int lvl)
     {
         rand -= it->second;
         if(rand <= 0.0f)
-            return EnemyFactory::GetEntity(it->first, lvl);
+        {
+            if(m_dungeonId == 1)
+            {
+                return EnemyFactory::GetEntity(it->first, lvl);
+            }
+            else
+            {
+                return EnemyFactory::GetEntity(it->first, lvl + 5);
+            }
+        }
     }
 }
 
@@ -74,6 +112,15 @@ Entity* DungeonConfiguration::GetDungeonBoss(int lvl)
     {
         rand -= it->second;
         if(rand <= 0.0f)
-            return EnemyFactory::GetEntity(it->first, lvl);
+        {
+            if(m_dungeonId == 1)
+            {
+                return EnemyFactory::GetEntity(it->first, lvl);
+            }
+            else
+            {
+                return EnemyFactory::GetEntity(it->first, lvl + 5);
+            }
+        }
     }
 }

@@ -43,7 +43,7 @@ menu.shop.buy = Select the item to buy.
 menu.shop.buy.nothing = Nothing to buy is left here.
 menu.shop.inn = Stay in this inn for %0 gold?
 
-dungeon.finished = You Won!
+dungeon.finished = You finished this dungeon!
 
 chest.receive_item = You got a %0!
 chest.receive_gold = You got %0 gold!

@@ -90,6 +90,7 @@
 		<Unit filename="include/MapEventTile.h" />
 		<Unit filename="include/MapFill.h" />
 		<Unit filename="include/MapFillDungeon.h" />
+		<Unit filename="include/MapFillDungeon2.h" />
 		<Unit filename="include/MapFillVillage.h" />
 		<Unit filename="include/MapGeneratorDungeon.h" />
 		<Unit filename="include/MapGeneratorUtil.h" />
@@ -167,6 +168,7 @@
 		<Unit filename="src/MapEventTile.cpp" />
 		<Unit filename="src/MapFill.cpp" />
 		<Unit filename="src/MapFillDungeon.cpp" />
+		<Unit filename="src/MapFillDungeon2.cpp" />
 		<Unit filename="src/MapFillVillage.cpp" />
 		<Unit filename="src/MapGeneratorDungeon.cpp" />
 		<Unit filename="src/MapGeneratorUtil.cpp" />

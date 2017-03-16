@@ -43,10 +43,13 @@ class GameController
         void SetWindowFocus(bool focused);
         Party* getParty();
         std::default_random_engine* GetRandomGenerator();
+
+        int GetLastDungeonBeated();
     protected:
     private:
         void ToQuitScreen();
         void GameOver();
+        int m_lastDungeon;
         bool m_quit;
         SceneManager::SceneManagerType m_quitTo;
         bool m_gameOver;

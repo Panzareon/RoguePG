@@ -456,11 +456,16 @@ void SceneManagerBattle::Finished()
     {
         exp += m_enemies[i]->GetExpToGive();
     }
+    std::vector<PartyMember*> * party = m_party->GetAllPartyMembers();
+    for(unsigned int i = 0; i < party->size(); i++)
+    {
+        PartyMember* member = party->at(i);
+        member->AddExp(exp);
+    }
     std::vector<PartyMember*> * activeParty = m_party->GetActivePartyMembers();
     for(unsigned int i = 0; i < activeParty->size(); i++)
     {
         PartyMember* member = activeParty->at(i);
-        member->AddExp(exp);
         member->BattleFinished();
         member->Heal(member->GetAttribute(BattleEnums::AttributeMaxHp) * m_restoreHpPercent);
         member->RestoreMana(member->GetAttribute(BattleEnums::AttributeMaxMp) * m_restoreMpPercent);

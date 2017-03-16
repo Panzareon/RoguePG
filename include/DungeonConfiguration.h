@@ -7,7 +7,7 @@
 class DungeonConfiguration
 {
     public:
-        DungeonConfiguration(int nrLevels, unsigned int seed);
+        DungeonConfiguration(int nrLevels, unsigned int seed, int dungeonId);
         virtual ~DungeonConfiguration();
         SceneManager* GetLevel(int id);
         int GetNrLevels();
@@ -17,8 +17,11 @@ class DungeonConfiguration
 
         void PlayMusic();
 
+        int GetDungeonId();
+
     protected:
         int m_nrLevels;
+        int m_dungeonId;
         unsigned int m_seed;
 
         //Dungeon Enemies and Bosses with chance

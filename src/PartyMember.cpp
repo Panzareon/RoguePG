@@ -107,6 +107,11 @@ int PartyMember::GetLevel()
     return m_lvl;
 }
 
+int PartyMember::GetExp()
+{
+    return m_exp;
+}
+
 void PartyMember::SetEquipment(Equipment::EquipmentPosition position, Equipment* equipment)
 {
     if(m_equipment[position] != nullptr)
