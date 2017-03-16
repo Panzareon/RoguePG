@@ -119,6 +119,8 @@ void Entity::GetHit(Attack* attack, Entity* attacker)
         color = sf::Color::Blue;
     }
     int finalDmg = dmg;
+    if(finalDmg < 1)
+        finalDmg = 1;
     Animation * newAnim = AnimationFactory::GetTextAnimation(this, std::to_string(finalDmg), color);
     GameController::getInstance()->GetActiveSceneManager()->AddAnimation(newAnim);
 
