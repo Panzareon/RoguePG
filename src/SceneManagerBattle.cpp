@@ -113,6 +113,8 @@ SceneManagerBattle::SceneManagerBattle()
 
     m_next = nullptr;
     m_useOnTarget = nullptr;
+    m_lastEnemyTargeted = nullptr;
+    m_lastHeroTargeted = nullptr;
     m_restoreHpPercent = 0.25f;
     m_restoreMpPercent = 0.25f;
 
@@ -165,23 +167,49 @@ void SceneManagerBattle::UseOnTarget(std::function<void(BattleEnums::Target, Ent
     m_targetNr = 0;
     if(m_targetType == BattleEnums::TargetEnemyTeamEntity)
     {
-        int i = 0;
-        do
+        if(m_lastEnemyTargeted != nullptr && !m_lastEnemyTargeted->IsDead())
         {
-            m_targetEntity = m_enemies[i];
-            i++;
+            m_targetNr = -1;
+            do
+            {
+                m_targetNr++;
+                m_targetEntity = m_enemies[m_targetNr];
+            }
+            while(m_targetEntity != m_lastEnemyTargeted && m_targetNr < m_enemies.size());
         }
-        while(m_targetEntity->IsDead() && i < m_enemies.size());
+        else
+        {
+            m_targetNr = -1;
+            do
+            {
+                m_targetNr++;
+                m_targetEntity = m_enemies[m_targetNr];
+            }
+            while(m_targetEntity->IsDead() && m_targetNr < m_enemies.size());
+        }
     }
     else if(m_targetType == BattleEnums::TargetOwnTeamEntity)
     {
-        int i = 0;
-        do
+        if(m_lastHeroTargeted != nullptr && !m_lastHeroTargeted->IsDead())
         {
-            m_targetEntity = m_party->GetActivePartyMembers()->at(i);
-            i++;
+            m_targetNr = -1;
+            do
+            {
+                m_targetNr++;
+                m_targetEntity = m_party->GetActivePartyMembers()->at(m_targetNr);
+            }
+            while(m_targetEntity != m_lastHeroTargeted && m_targetNr < m_party->GetActivePartyMembers()->size());
         }
-        while(m_targetEntity->IsDead() && i < m_party->GetActivePartyMembers()->size());
+        else
+        {
+            m_targetNr = -1;
+            do
+            {
+                m_targetNr++;
+                m_targetEntity = m_party->GetActivePartyMembers()->at(m_targetNr);
+            }
+            while(m_targetEntity->IsDead() && m_targetNr < m_party->GetActivePartyMembers()->size());
+        }
     }
     else if(m_targetType == BattleEnums::TargetSelf)
     {
@@ -290,6 +318,11 @@ void SceneManagerBattle::Tick()
 
         if(controller->IsKeyPressed(Configuration::Accept))
         {
+            if(m_targetType == BattleEnums::TargetOwnTeamEntity)
+                m_lastHeroTargeted = m_targetEntity;
+            if(m_targetType == BattleEnums::TargetEnemyTeamEntity)
+                m_lastEnemyTargeted = m_targetEntity;
+
             if(m_targetType == BattleEnums::TargetOwnTeamEntity || m_targetType == BattleEnums::TargetEnemyTeamEntity || m_targetType == BattleEnums::TargetSelf)
             {
                 (*m_useOnTarget)(m_targetType, m_targetEntity);

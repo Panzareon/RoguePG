@@ -40,6 +40,9 @@ class SceneManagerBattle : public SceneManager
         void CalculateNext();
         void ShowMenuForNext();
 
+        Entity* m_lastEnemyTargeted;
+        Entity* m_lastHeroTargeted;
+
         void PassTime(float Time);
 
         DrawableNode* m_background;
