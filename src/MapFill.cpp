@@ -161,7 +161,7 @@ void MapFill::FillLayerWallAbove(int checkTile, int LayerId, int TileId, int wal
 
 
 
-                if(m_map->GetTileType(i,j-wallHeight) != checkTile || newTileIdBL != TileId || newTileIdBR != TileId || newTileIdTL != TileId || newTileIdTR != TileId)
+                //if(m_map->GetTileType(i,j-wallHeight) != checkTile || newTileIdBL != TileId || newTileIdBR != TileId || newTileIdTL != TileId || newTileIdTR != TileId)
                     m_map->SetTileId(i,j-wallHeight,newTileIdTL,newTileIdTR,newTileIdBL,newTileIdBR,LayerId);
             }
         }
