@@ -141,12 +141,3 @@ Equipment* PartyMember::GetEquipment(Equipment::EquipmentPosition position)
     return m_equipment[position];
 }
 
-void PartyMember::Died()
-{
-    Entity::Died();
-
-    //Remove this from Party and maybe add new one from inactive Members
-    Party* p = GameController::getInstance()->getParty();
-    p->UpdateActiveParty();
-}
-

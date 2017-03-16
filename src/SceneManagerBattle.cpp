@@ -118,6 +118,7 @@ SceneManagerBattle::SceneManagerBattle()
 
     //Setting Startpositions for teams
     //TODO: for more than 2 teams?
+    m_entityNodes.resize(2);
     m_posPerTeam.push_back(sf::Vector2f(100,150));
     m_posPerTeam.push_back(sf::Vector2f(GameController::getInstance()->GetWindowWidth() - 100,155));
     m_posChangePerTeam.push_back(sf::Vector2f(40,40));
@@ -431,7 +432,8 @@ bool SceneManagerBattle::IsFinished()
         Finished();
         return true;
     }
-    m_party->UpdateActiveParty();
+    if(m_party->UpdateActiveParty() && m_party->GetActivePartyMembers()->size() > 0)
+        UpdatePlayerSprites();
     finished = true;
     for(unsigned int i = 0; i < m_party->GetActivePartyMembers()->size(); i++)
     {
@@ -500,6 +502,24 @@ std::vector<Entity*>* SceneManagerBattle::GetEnemies()
     return &m_enemies;
 }
 
+void SceneManagerBattle::UpdatePlayerSprites()
+{
+    std::vector<PartyMember*> * party = m_party->GetActivePartyMembers();
+    int teamId = party->at(0)->GetTeamId();
+    int i;
+    for(i = 0; i < m_entityNodes[teamId].size(); i++)
+    {
+        if(party->size() > i)
+        {
+            m_entityNodes[teamId][i]->SetEntity(party->at(i));
+        }
+        else
+        {
+            m_entityNodes[teamId][i]->SetEntity(nullptr);
+        }
+    }
+}
+
 void SceneManagerBattle::AddSpriteForEntity(Entity* entity)
 {
     //Adding Cursor if Entity is targeted
@@ -510,13 +530,14 @@ void SceneManagerBattle::AddSpriteForEntity(Entity* entity)
     targetTransform.translate(entity->GetBattleSprite()->getLocalBounds().width / 2 - 8, -10);
     targetNode->setTransform(targetTransform);
 
+    int teamId = entity->GetTeamId();
     //Create Node for Entity
     EntityNode* node = new EntityNode(this, entity);
+    m_entityNodes[teamId].push_back(node);
     //Add Cursor to Entity
     node->SetTargetedNode(targetNode);
     sf::Transform trans;
     //Place at Position depending on Team
-    int teamId = entity->GetTeamId();
     trans.translate(m_posPerTeam[teamId]);
     m_posPerTeam[teamId] += m_posChangePerTeam[teamId];
     m_posChangePerTeam[teamId].x *= -1;

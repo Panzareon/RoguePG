@@ -40,8 +40,9 @@ void Party::AddPartyMember(PartyMember* member)
     }
 }
 
-void Party::UpdateActiveParty()
+bool Party::UpdateActiveParty()
 {
+    bool retval = false;
     auto it = m_partyMembers.begin();
     while(it != m_partyMembers.end())
     {
@@ -49,6 +50,7 @@ void Party::UpdateActiveParty()
         {
             m_deadMembers.push_back(*it);
             it = m_partyMembers.erase(it);
+            retval = true;
         }
         else
         {
@@ -84,7 +86,9 @@ void Party::UpdateActiveParty()
                 }
             }
         }
+        retval = true;
     }
+    return retval;
 }
 
 void Party::AddItem(Item* item)

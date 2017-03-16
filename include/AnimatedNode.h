@@ -14,6 +14,8 @@ class AnimatedNode : public Node
 
         void Tick(float seconds);
         void SetDirection(Enums::Direction);
+
+        void SetSprite(sf::Sprite* sprite, int numberFrames);
     protected:
         sf::Shader* m_shader;
         float m_elapsedSeconds;

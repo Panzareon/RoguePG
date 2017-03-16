@@ -26,7 +26,7 @@ void EntityNode::SetTargetedNode(Node* node)
 void EntityNode::draw(sf::RenderTarget& target, const sf::Transform& parentTransform) const
 {
     //Hide if Entity is dead
-    if(m_visible && !m_entity->IsDead())
+    if(m_visible && m_entity != nullptr && !m_entity->IsDead())
     {
         // combine the parent transform with the node's one
         sf::Transform combinedTransform = parentTransform * m_transform;
@@ -41,5 +41,14 @@ void EntityNode::draw(sf::RenderTarget& target, const sf::Transform& parentTrans
         if(m_smb->IsEntityTargeted(m_entity))
             if(m_targetedNode != nullptr)
                 m_targetedNode->draw(target, combinedTransform);
+    }
+}
+void EntityNode::SetEntity(Entity* entity)
+{
+    m_entity = entity;
+    if(entity != nullptr)
+    {
+        entity->SetNode(this);
+        SetSprite(entity->GetBattleSprite(), entity->GetNumberSprites());
     }
 }

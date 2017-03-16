@@ -10,6 +10,8 @@
 #include "Party.h"
 #include <vector>
 
+class EntityNode;
+
 class SceneManagerBattle : public SceneManager
 {
     public:
@@ -23,6 +25,7 @@ class SceneManagerBattle : public SceneManager
 
         void AddEnemy(Entity* enemy);
         std::vector<Entity*>* GetEnemies();
+        void UpdatePlayerSprites();
 
         void TurnIsFinished();
 
@@ -55,6 +58,8 @@ class SceneManagerBattle : public SceneManager
         Node* m_timeDisplay;
         std::vector<sf::Text*> m_partyMemberTime;
         std::vector<sf::Text*> m_enemyTime;
+
+        std::vector<std::vector<EntityNode*> > m_entityNodes;
 
         std::function<void(BattleEnums::Target, Entity*)>* m_useOnTarget;
         Entity* m_targetEntity;

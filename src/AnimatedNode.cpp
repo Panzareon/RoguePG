@@ -5,20 +5,26 @@ AnimatedNode::AnimatedNode(sf::Sprite* sprite, int numberFrames)
 {
     //ctor
     m_elapsedSeconds = 0.0f;
-    m_sprite = *sprite;
 
     //Load shader
     if(sf::Shader::isAvailable())
         m_shader = ShaderList::GetShader(ShaderList::AnimatedSpriteShader);
 
-    //Set number of Frames to circle through
-    m_numberFrames = numberFrames;
+    SetSprite(sprite, numberFrames);
 }
 
 AnimatedNode::~AnimatedNode()
 {
     //dtor
 }
+
+void AnimatedNode::SetSprite(sf::Sprite* sprite, int numberFrames)
+{
+    m_sprite = *sprite;
+    //Set number of Frames to circle through
+    m_numberFrames = numberFrames;
+}
+
 void AnimatedNode::Tick(float seconds)
 {
     m_elapsedSeconds += seconds;

@@ -273,7 +273,6 @@ bool GameController::IsKeyPressed(Configuration::Keys key, bool once)
 
 void GameController::GameOverCheck()
 {
-    m_party->UpdateActiveParty();
     m_gameOver = true;
     for(unsigned int i = 0; i < m_party->GetActivePartyMembers()->size(); i++)
     {

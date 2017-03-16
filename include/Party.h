@@ -12,7 +12,8 @@ class Party
         virtual ~Party();
         std::vector<PartyMember*> * GetActivePartyMembers();
         std::vector<PartyMember*> * GetAllPartyMembers();
-        void UpdateActiveParty();
+        //Returns true if active party was changed
+        bool UpdateActiveParty();
 
         void AddPartyMember(PartyMember* member);
 
