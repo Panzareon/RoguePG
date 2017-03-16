@@ -211,7 +211,7 @@ void SceneManagerGameMenu::CloseEquipment()
 void SceneManagerGameMenu::Quit()
 {
     //Quit to Main menu
-    GameController::getInstance()->QuitToMainMenu();
+    GameController::getInstance()->QuitTo(SceneManager::TypeMainMenu);
 }
 
 

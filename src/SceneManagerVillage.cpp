@@ -63,3 +63,8 @@ void SceneManagerVillage::AddShops()
         m_events.push_back(new MapEventShop(pos.first, pos.second - 1, (MapEventShop::ShopTypes)i));
     }
 }
+
+SceneManager::SceneManagerType SceneManagerVillage::GetType()
+{
+    return TypeVillage;
+}

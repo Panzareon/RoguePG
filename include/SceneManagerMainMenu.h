@@ -14,6 +14,8 @@ class SceneManagerMainMenu : public SceneManager
 
         virtual void Tick();
         virtual bool IsFinished();
+
+        virtual SceneManagerType GetType();
     protected:
 
 

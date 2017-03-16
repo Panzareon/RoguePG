@@ -12,7 +12,7 @@ namespace ControllerFunctions
 {
     void QuitToMainMenu()
     {
-        GameController::getInstance()->QuitToMainMenu();
+        GameController::getInstance()->QuitTo(SceneManager::TypeMainMenu);
     }
 }
 
@@ -26,7 +26,6 @@ GameController::GameController() : m_randomGenerator(time(NULL))
     m_gameOver = false;
     m_dungeonConfiguration = nullptr;
     m_quit = false;
-    m_quitDungeon = false;
     m_windowFocused = true;
     m_party = nullptr;
 
@@ -51,7 +50,6 @@ void GameController::InitValues()
     if(m_party != nullptr)
         delete m_party;
     m_party = nullptr;
-    m_levelId = 0;
 }
 
 bool GameController::IsWindowFocused()
@@ -147,18 +145,8 @@ void GameController::Tick()
     }
     if(m_quit)
     {
-        ToMainMenu();
+        ToQuitScreen();
         m_quit = false;
-    }
-    if(m_quitDungeon)
-    {
-        CloseActiveSceneManger();
-        for(int i = 0; i < m_nextLevels.size(); i++)
-        {
-            delete m_nextLevels[i];
-        }
-        m_nextLevels.clear();
-        m_quitDungeon = false;
     }
 }
 void GameController::StartBattle(std::vector<Entity*>* enemies)
@@ -211,7 +199,7 @@ void GameController::GotoPreviousLevel()
     else
     {
         //exit Dungeon
-        m_quitDungeon = true;
+        QuitTo(SceneManager::TypeVillage);
         m_levelId = 0;
     }
 }
@@ -223,6 +211,7 @@ void GameController::SetDungeonConfiguration(DungeonConfiguration* config)
         delete m_dungeonConfiguration;
     }
     m_dungeonConfiguration = config;
+    m_levelId = 0;
 }
 
 
@@ -296,7 +285,8 @@ void GameController::GameOver()
     //Only show Game over if not in Main Menu
     if(m_gameOver && m_sceneManager.size() > 1)
     {
-        ToMainMenu();
+        m_quitTo = SceneManager::TypeMainMenu;
+        ToQuitScreen();
         //display Game Over screen
         SceneManagerGameOver* gameOver = new SceneManagerGameOver();
         LoadSceneManager(gameOver);
@@ -304,19 +294,24 @@ void GameController::GameOver()
     }
 }
 
-void GameController::ToMainMenu()
+void GameController::ToQuitScreen()
 {
-    //remove all SceneManager but the Main Menu
-    while(m_sceneManager.size() > 1)
+    for(int i = 0; i < m_nextLevels.size(); i++)
+    {
+        delete m_nextLevels[i];
+    }
+    m_nextLevels.clear();
+    //remove all SceneManager but the declared type
+    while(GetActiveSceneManager()->GetType() != m_quitTo && m_sceneManager.size() > 1)
     {
         CloseActiveSceneManger();
     }
-    InitValues();
 }
 
-void GameController::QuitToMainMenu()
+void GameController::QuitTo(SceneManager::SceneManagerType type)
 {
     m_quit = true;
+    m_quitTo = type;
 }
 
 

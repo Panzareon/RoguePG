@@ -523,3 +523,7 @@ void SceneManagerBattle::SetDescription(std::string str)
 {
     m_description->SetText(str);
 }
+SceneManager::SceneManagerType SceneManagerBattle::GetType()
+{
+    return TypeBattle;
+}

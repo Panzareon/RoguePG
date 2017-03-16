@@ -31,6 +31,8 @@ class SceneManagerBattle : public SceneManager
         void AddSpriteForEntity(Entity* entity);
 
         void SetDescription(std::string str);
+
+        virtual SceneManagerType GetType();
     protected:
         void CalculateNext();
         void ShowMenuForNext();

@@ -137,3 +137,8 @@ bool SceneManager::PausesSceneManagerBelow()
     return true;
 }
 
+SceneManager::SceneManagerType SceneManager::GetType()
+{
+    return TypeDefault;
+}
+

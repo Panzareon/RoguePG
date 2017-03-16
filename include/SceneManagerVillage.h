@@ -12,6 +12,8 @@ class SceneManagerVillage : public SceneManagerMoveable
         SceneManagerVillage(int tileWidth, int tileHeight, unsigned int seed, MapFill* mapFill);
         virtual ~SceneManagerVillage();
 
+        virtual SceneManagerType GetType();
+
     protected:
         void AddShops();
 

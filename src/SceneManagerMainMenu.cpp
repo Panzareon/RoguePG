@@ -70,6 +70,7 @@ SceneManagerMainMenu::~SceneManagerMainMenu()
 void SceneManagerMainMenu::StartDungeon()
 {
     GameController* controller = GameController::getInstance();
+    controller->InitValues();
     Party* party = new Party();
     //create new party with 2 member
     int partyInitialSize = 2;
@@ -112,4 +113,9 @@ void SceneManagerMainMenu::Tick()
 bool SceneManagerMainMenu::IsFinished()
 {
     return false;
+}
+
+SceneManager::SceneManagerType SceneManagerMainMenu::GetType()
+{
+    return TypeMainMenu;
 }

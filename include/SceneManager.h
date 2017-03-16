@@ -8,6 +8,7 @@
 class SceneManager
 {
     public:
+        enum SceneManagerType {TypeBattle, TypeMainMenu, TypeVillage, TypeDefault};
         SceneManager();
         virtual ~SceneManager();
         virtual void NextTick();
@@ -22,6 +23,8 @@ class SceneManager
 
         void AddAnimation(Animation* anim);
         Node* GetAnimationNode();
+
+        virtual SceneManagerType GetType();
     protected:
         void SetMemberStats();
 

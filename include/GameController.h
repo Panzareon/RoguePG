@@ -26,7 +26,7 @@ class GameController
         void SetDungeonConfiguration(DungeonConfiguration* config);
 
         void GameOverCheck();
-        void QuitToMainMenu();
+        void QuitTo(SceneManager::SceneManagerType toType);
 
         void SetRenderTarget(sf::RenderTarget* target);
         sf::RenderTarget* GetRenderTarget();
@@ -45,10 +45,10 @@ class GameController
         std::default_random_engine* GetRandomGenerator();
     protected:
     private:
-        void ToMainMenu();
+        void ToQuitScreen();
         void GameOver();
         bool m_quit;
-        bool m_quitDungeon;
+        SceneManager::SceneManagerType m_quitTo;
         bool m_gameOver;
         Party* m_party;
         sf::RenderTarget* m_renderTarget;
