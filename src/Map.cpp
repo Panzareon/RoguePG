@@ -79,12 +79,6 @@ void Map::SetTileToType(unsigned int x, unsigned int y, int type)
     m_tiles[x][y] = type;
 }
 
-//TODO: Remove
-bool Map::IsTileWall(unsigned int x, unsigned int y)
-{
-    return DoesCollide(x,y);
-}
-
 void Map::SetRoomNr(unsigned int x, unsigned int y, int roomNr)
 {
     m_roomNr[x][y] = roomNr;

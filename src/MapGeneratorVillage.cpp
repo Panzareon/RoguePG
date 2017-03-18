@@ -77,7 +77,7 @@ bool MapGeneratorVillage::IsRoomFree(int x, int y, int width, int height)
     {
         for(int j = y - m_spaceBetweenHouses; j < y + height + m_spaceBetweenHouses; j++)
         {
-            if(i >= 0 && i < m_width && j >= 0 && j < m_height && m_map->IsTileWall(i,j))
+            if(i >= 0 && i < m_width && j >= 0 && j < m_height && m_map->DoesCollide(i,j))
                 return false;
             if(i == m_map->m_startX && j == m_map->m_startY)
                 return false;

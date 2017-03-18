@@ -117,14 +117,14 @@ void MapGeneratorDungeon::CellularAutomataStep(int minWallTiles, int orMaxWallTi
                     {
                         nrWall++;
                     }
-                    else if(m_map->IsTileWall(x,y))
+                    else if(m_map->DoesCollide(x,y))
                     {
                         nrWall++;
                     }
                 }
             }
 
-            if((onlyChangeToWall && m_map->IsTileWall(i,j)) || nrWall > minWallTiles || nrWall < orMaxWallTiles)
+            if((onlyChangeToWall && m_map->DoesCollide(i,j)) || nrWall > minWallTiles || nrWall < orMaxWallTiles)
             {
                 setWall = true;
             }
@@ -209,7 +209,7 @@ bool MapGeneratorDungeon::IsRoomFree(int x, int y, int width, int height)
     {
         for(int j = y - 1; j < y + height + 1; j++)
         {
-            if(i >= 0 && i < m_width && j >= 0 && j < m_height && !m_map->IsTileWall(i,j))
+            if(i >= 0 && i < m_width && j >= 0 && j < m_height && !m_map->DoesCollide(i,j))
                 return false;
         }
     }
@@ -233,7 +233,7 @@ void MapGeneratorDungeon::ConnectAllRooms(bool straight, int maxRemovedTiles)
         checkedTiles[i] = new int[m_height];
         for(int j = 0; j < m_height; j++)
         {
-            if(m_map->IsTileWall(i,j))
+            if(m_map->DoesCollide(i,j))
                 checkedTiles[i][j] = 2;
             else
                 checkedTiles[i][j] = 0;
@@ -328,7 +328,7 @@ void MapGeneratorDungeon::RemoveUnconnectedRooms()
         checkedTiles[i] = new int[m_height];
         for(int j = 0; j < m_height; j++)
         {
-            if(m_map->IsTileWall(i,j))
+            if(m_map->DoesCollide(i,j))
                 checkedTiles[i][j] = 2;
             else
                 checkedTiles[i][j] = 0;
@@ -350,7 +350,7 @@ void MapGeneratorDungeon::RemoveUnconnectedRooms()
                 {
                     for(int j = 0; j < m_height; j++)
                     {
-                        if(m_map->IsTileWall(i,j))
+                        if(m_map->DoesCollide(i,j))
                             checkedTiles[i][j] = 2;
                         else
                             checkedTiles[i][j] = 0;
@@ -392,7 +392,7 @@ void MapGeneratorDungeon::ConnectTwoPoints(unsigned int x1, unsigned int y1, uns
         checkedTiles[i] = new int[m_height];
         for(int j = 0; j < m_height; j++)
         {
-            if(m_map->IsTileWall(i,j))
+            if(m_map->DoesCollide(i,j))
                 checkedTiles[i][j] = 2;
             else
                 checkedTiles[i][j] = 0;
@@ -430,7 +430,7 @@ void MapGeneratorDungeon::ConnectTwoPoints(unsigned int x1, unsigned int y1, uns
                 {
                     for(int j = 0; j < m_height; j++)
                     {
-                        if(m_map->IsTileWall(i,j))
+                        if(m_map->DoesCollide(i,j))
                             checkedTiles[i][j] = 2;
                         else
                             checkedTiles[i][j] = 0;
@@ -460,7 +460,7 @@ void MapGeneratorDungeon::NumberRooms()
         checkedTiles[i] = new int[m_height];
         for(int j = 0; j < m_height; j++)
         {
-            if(m_map->IsTileWall(i,j))
+            if(m_map->DoesCollide(i,j))
                 checkedTiles[i][j] = 1;
             else
                 checkedTiles[i][j] = 0;
@@ -475,7 +475,7 @@ void MapGeneratorDungeon::NumberRooms()
         {
             for(int j = 0; j < m_height; j++)
             {
-                if(!m_map->IsTileWall(i,j))
+                if(!m_map->DoesCollide(i,j))
                 {
                     nrWall = 0;
                     for(int x = i - d; x <= i + d; x ++)
@@ -486,7 +486,7 @@ void MapGeneratorDungeon::NumberRooms()
                             {
                                 nrWall++;
                             }
-                            else if(m_map->IsTileWall(x,y))
+                            else if(m_map->DoesCollide(x,y))
                             {
                                 nrWall++;
                             }

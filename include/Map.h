@@ -15,7 +15,6 @@ class Map
         Map(int width, int height);
         virtual ~Map();
         void init(unsigned int layerNr);
-        bool IsTileWall(unsigned int x, unsigned int y);
 
         void SetTileToType(unsigned int x, unsigned int y, int type);
         int GetTileType(unsigned int x, unsigned int y);
