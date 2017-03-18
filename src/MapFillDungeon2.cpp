@@ -13,9 +13,9 @@ MapFillDungeon2::~MapFillDungeon2()
 void MapFillDungeon2::InitItemChances()
 {
     //Stairs back up
-    m_chanceForTile[TileStairsUp].push_back(FillItem(896 , 1, Space, WalkthroughItem, FillItem::Walkable));
+    m_chanceForTile[TileStairsUp].push_back(FillItem(896 , 1, Space, Stairs, FillItem::Walkable));
     //Stairs further down
-    m_chanceForTile[TileStairsDown].push_back(FillItem(897 , 1, Space, WalkthroughItem, FillItem::Walkable));
+    m_chanceForTile[TileStairsDown].push_back(FillItem(897 , 1, Space, Stairs, FillItem::Walkable));
     //Defining all Items for Layer 0
     //Small Rock
     m_chanceForTile[TileRandomItem].push_back(FillItem(513,50, Space, BlockingItem));

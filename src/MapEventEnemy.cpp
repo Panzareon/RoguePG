@@ -54,10 +54,10 @@ bool MapEventEnemy::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirec
         yDist *= yDist;
         if(xDist + yDist < m_followDistanceSquared)
         {
-            float x1 = (rect.left + rect.width / 2) / TileMap::GetTileWith();
-            float x2 = (enemyBB.left + enemyBB.width / 2) / TileMap::GetTileWith();
-            float y1 = (rect.top + rect.height / 2) / TileMap::GetTileWith();
-            float y2 = (enemyBB.top + enemyBB.height / 2) / TileMap::GetTileWith();
+            float x1 = (rect.left + rect.width / 2) / TileMap::GetTileWidth();
+            float x2 = (enemyBB.left + enemyBB.width / 2) / TileMap::GetTileWidth();
+            float y1 = (rect.top + rect.height / 2) / TileMap::GetTileWidth();
+            float y2 = (enemyBB.top + enemyBB.height / 2) / TileMap::GetTileWidth();
             if(!m_map->DoesCollide(x1,y1,x2,y2))
             {
                 m_xMove = (x1 - x2);
@@ -133,6 +133,6 @@ void MapEventEnemy::Activate()
 void MapEventEnemy::FollowPlayer(bool follow, float followDistance, float followSpeed)
 {
     m_followPlayer = follow;
-    m_followDistanceSquared = followDistance * followDistance * TileMap::GetTileWith() * TileMap::GetTileWith();
+    m_followDistanceSquared = followDistance * followDistance * TileMap::GetTileWidth() * TileMap::GetTileWidth();
     m_followSpeed = followSpeed;
 }

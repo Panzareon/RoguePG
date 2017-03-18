@@ -15,6 +15,7 @@ class SceneManagerMoveable : public SceneManager
         virtual ~SceneManagerMoveable();
         virtual void Tick();
     protected:
+        void UpdateMinimap();
         void UpdateCamPosition();
         Map m_map;
         AnimatedNode* m_hero;
@@ -31,6 +32,15 @@ class SceneManagerMoveable : public SceneManager
         TileMap* m_tileMapAboveHero;
         TileMap* m_tileMapAboveWall;
         TileMap* m_tileMapWallDecoration;
+
+        float m_minimapScale;
+        Node* m_minimapNode;
+        AnimatedNode* m_minimapPlayer;
+        sf::Image m_minimap;
+        sf::Texture m_minimapTexture;
+        float m_heroMoved;
+        int m_minimapViewRange;
+        std::vector<sf::Color> m_minimapColor;
 
 
         #ifdef DEBUG_FLAG

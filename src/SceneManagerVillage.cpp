@@ -9,6 +9,14 @@ SceneManagerVillage::SceneManagerVillage(int tileWidth, int tileHeight, unsigned
     m_mapFill->SetMap(&m_map);
     m_map.init(5);
 
+    m_minimapColor.resize(MapFillVillage::TILE_TYPE_END);
+    m_minimapColor[MapFillVillage::Wall] = sf::Color::White;
+    m_minimapColor[MapFillVillage::Space] = sf::Color::Black;
+    m_minimapColor[MapFillVillage::Street] = sf::Color::Yellow;
+    m_minimapColor[MapFillVillage::BlockingItem] = sf::Color::Black;
+    m_minimapColor[MapFillVillage::WalkthroughItem] = sf::Color::Black;
+    m_minimapColor[MapFillVillage::Stairs] = sf::Color::Red;
+
     m_map.m_startX = 0;
     m_map.m_startY = rand() % tileHeight;
 
@@ -34,7 +42,7 @@ SceneManagerVillage::SceneManagerVillage(int tileWidth, int tileHeight, unsigned
 
     sf::Transform heroTransform;
     //Place Hero at Startposition
-    heroTransform.translate(m_map.m_startX * TileMap::GetTileWith(), m_map.m_startY * TileMap::GetTileWith() - 14);
+    heroTransform.translate(m_map.m_startX * TileMap::GetTileWidth(), m_map.m_startY * TileMap::GetTileWidth() - 14);
     m_hero->setTransform(heroTransform);
     UpdateCamPosition();
 
@@ -56,7 +64,7 @@ SceneManagerVillage::~SceneManagerVillage()
 
 void SceneManagerVillage::AddShops()
 {
-    for(int i = 0; i < MapEventShop::SHOP_TYPES_END; i++)
+    for(int i = 0; i < MapEventShop::SHOP_TYPES_END && m_generator.GetNrOfDoors() >= 1; i++)
     {
         std::pair<int,int> pos = m_generator.PopDoor();
         m_mapFill->PlaceItemAt(1,2,4,(MapFillVillage::TileIndex)(MapFillVillage::TileSwordShop + i),pos.first, pos.second - 3, false);

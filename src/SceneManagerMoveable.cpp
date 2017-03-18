@@ -5,6 +5,7 @@
 #include "DrawableNode.h"
 
 #include "EnemyFactory.h"
+#include <iostream>
 
 SceneManagerMoveable::SceneManagerMoveable(int tileWidth, int tileHeight): m_map(tileWidth, tileHeight)
 {
@@ -12,9 +13,11 @@ SceneManagerMoveable::SceneManagerMoveable(int tileWidth, int tileHeight): m_map
     m_heroDirection = Enums::North;
     m_minViewPosX = m_windowWidth / 2;
     m_minViewPosY = m_windowHeight / 2;
+    m_minimapViewRange = 5;
+    m_heroMoved = TileMap::GetTileWidth();
 
-    m_maxViewPosX = m_map.GetWidth() * TileMap::GetTileWith() - m_windowWidth / 2;
-    m_maxViewPosY = m_map.GetHeight() * TileMap::GetTileWith() - m_windowHeight / 2;
+    m_maxViewPosX = m_map.GetWidth() * TileMap::GetTileWidth() - m_windowWidth / 2;
+    m_maxViewPosY = m_map.GetHeight() * TileMap::GetTileWidth() - m_windowHeight / 2;
 
 
     m_tileMap = new TileMap();
@@ -71,6 +74,28 @@ SceneManagerMoveable::SceneManagerMoveable(int tileWidth, int tileHeight): m_map
     m_hero = new AnimatedNode(&hero, tex->GetNumberAnimationSteps());
     m_hero->setBoundingBox(sf::FloatRect(8.0f,20.0f,16.0f,16.0f));
     m_eventLayer->addChild(m_hero);
+
+    //Init minimap
+    m_minimap.create(tileWidth, tileHeight, sf::Color::Transparent);
+    sf::IntRect minimapSize;
+    minimapSize.left = 0;
+    minimapSize.top = 0;
+    minimapSize.width = tileWidth;
+    minimapSize.height = tileHeight;
+    m_minimapTexture.loadFromImage(m_minimap,minimapSize);
+    DrawableNode* minimap = new DrawableNode(new sf::Sprite(m_minimapTexture));
+    m_minimapScale = 2.0f;
+    m_minimapNode = new Node();
+    minimap->setTransform(minimap->getTransform().scale(m_minimapScale,m_minimapScale));
+    m_gui->addChild(m_minimapNode);
+    m_minimapNode->addChild(minimap);
+    sf::Sprite minimapHero;
+    tex = TextureList::getTexture(TextureList::MinimapHero);
+    minimapHero.setTexture(*tex);
+    minimapHero.setTextureRect(sf::IntRect(0,0,2,2));
+    m_minimapPlayer = new AnimatedNode(&minimapHero, tex->GetNumberAnimationSteps());
+    m_minimapPlayer->SetAnimationSpeed(2.0f);
+    m_minimapNode->addChild(m_minimapPlayer);
 }
 
 SceneManagerMoveable::~SceneManagerMoveable()
@@ -173,6 +198,7 @@ void SceneManagerMoveable::Tick()
         {
             m_hero->moveNode(moveX, moveY);
             UpdateCamPosition();
+            m_heroMoved += std::abs(moveX) + std::abs(moveY);
         }
         else
         {
@@ -183,6 +209,7 @@ void SceneManagerMoveable::Tick()
             {
                 m_hero->moveNode(moveX, 0.0f);
                 UpdateCamPosition();
+                m_heroMoved += std::abs(moveX);
             }
             else
             {
@@ -193,9 +220,15 @@ void SceneManagerMoveable::Tick()
                 {
                     m_hero->moveNode(0.0f, moveY);
                     UpdateCamPosition();
+                    m_heroMoved += std::abs(moveY);
                 }
             }
         }
+    }
+    if(m_heroMoved >= TileMap::GetTileWidth())
+    {
+        UpdateMinimap();
+        m_heroMoved = 0.0f;
     }
 }
 void SceneManagerMoveable::UpdateCamPosition()
@@ -215,3 +248,22 @@ void SceneManagerMoveable::UpdateCamPosition()
         m_posy = m_maxViewPosY;
 }
 
+void SceneManagerMoveable::UpdateMinimap()
+{
+    int heroX,heroY;
+    sf::FloatRect heroBB = m_hero->getGlobalBoundingBox();
+    heroX = (heroBB.left + heroBB.width/2.0f) / TileMap::GetTileWidth();
+    heroY = (heroBB.top + heroBB.height/2.0f) / TileMap::GetTileWidth();
+    for(int x = heroX - m_minimapViewRange; x <= heroX + m_minimapViewRange; x++)
+    {
+        for(int y = heroY - m_minimapViewRange; y <= heroY + m_minimapViewRange; y++)
+        {
+            if(x >= 0 && y >= 0 && x < m_map.GetWidth() && y < m_map.GetHeight())
+            {
+                m_minimap.setPixel(x,y,m_minimapColor[m_map.GetTileType(x,y)]);
+            }
+        }
+    }
+    m_minimapTexture.loadFromImage(m_minimap);
+    m_minimapPlayer->setPosition(heroX * m_minimapScale, heroY * m_minimapScale);
+}

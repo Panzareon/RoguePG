@@ -124,6 +124,11 @@ Texture* TextureList::getTexture(TextureFiles file)
         case EquipmentSelected:
             filename = "equipment-selected.png";
             break;
+
+        case MinimapHero:
+            filename = "hero-minimap.png";
+            AnimationSteps = 2;
+            break;
         }
         Texture* newTexture = new Texture(AnimationSteps);
         texturePath += filename;

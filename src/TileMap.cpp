@@ -18,7 +18,7 @@ int TileMap::GetTileMapWith()
 {
     return 32;
 }
-int TileMap::GetTileWith()
+int TileMap::GetTileWidth()
 {
     return 32;
 }

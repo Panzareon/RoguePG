@@ -7,8 +7,10 @@
 class TileMap : public sf::Drawable, public sf::Transformable
 {
     public:
+        //Get number of Tiles in the Tile map per row
         static int GetTileMapWith();
-        static int GetTileWith();
+        //Get number of Pixels in width and height of a Tile in the Tile map
+        static int GetTileWidth();
         TileMap();
         virtual ~TileMap();
         void setTexture(sf::Texture* texture);

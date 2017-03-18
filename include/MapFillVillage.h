@@ -6,7 +6,7 @@
 class MapFillVillage : public MapFill
 {
     public:
-        enum TileType {Wall, Space, Street, BlockingItem, WalkthroughItem};
+        enum TileType {Space, Wall, Street, BlockingItem, WalkthroughItem,Stairs ,TILE_TYPE_END};
         enum TileIndex{TileDoor, TileWallDecoration, TileRandomItem, TileStairsDown, TileSwordShop, TileShieldShop, TileInn, TileSpellShop, TileStaffShop, TILE_INDEX_END};
         MapFillVillage();
         virtual ~MapFillVillage();

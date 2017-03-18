@@ -32,7 +32,9 @@ class TextureList
             InGameMenu,
             InGameMenuSelected,
             EquipmentMenu,
-            EquipmentSelected
+            EquipmentSelected,
+
+            MinimapHero
         };
         virtual ~TextureList();
 

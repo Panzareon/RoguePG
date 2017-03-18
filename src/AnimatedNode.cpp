@@ -5,6 +5,7 @@ AnimatedNode::AnimatedNode(sf::Sprite* sprite, int numberFrames)
 {
     //ctor
     m_elapsedSeconds = 0.0f;
+    m_framesPerSecond = 4;
 
     //Load shader
     if(sf::Shader::isAvailable())
@@ -30,13 +31,18 @@ void AnimatedNode::Tick(float seconds)
     m_elapsedSeconds += seconds;
 }
 
+void AnimatedNode::SetAnimationSpeed(float framesPerSecond)
+{
+    m_framesPerSecond = framesPerSecond;
+}
+
 void AnimatedNode::onDraw(sf::RenderTarget& target, const sf::Transform& transform) const
 {
     sf::RenderStates rs(transform);
     if(sf::Shader::isAvailable())
     {
         rs.shader = m_shader;
-        m_shader->setParameter("frameId",(int)(m_elapsedSeconds*4) % m_numberFrames);
+        m_shader->setParameter("frameId",(int)(m_elapsedSeconds*m_framesPerSecond) % m_numberFrames);
         m_shader->setParameter("numberFrames", m_numberFrames);
     }
     target.draw(m_sprite, rs);

@@ -26,14 +26,6 @@ MapGeneratorVillage::~MapGeneratorVillage()
 
 void MapGeneratorVillage::PlaceHouses(int houseWidth, int houseHeight, int nrHouses)
 {
-    for(int i = 0; i < m_width; i++)
-    {
-        for(int j = 0; j < m_height; j++)
-        {
-            m_map->SetTileToType(i,j,MapFillVillage::Space);
-        }
-    }
-
     for(int i = 0; i < nrHouses; i++)
     {
         int x,y;
@@ -231,7 +223,16 @@ int MapGeneratorVillage::StartStreet(int xStart, int yStart, Enums::Direction di
 
 std::pair<int,int> MapGeneratorVillage::PopDoor()
 {
-    std::pair<int,int> pos = m_doors.at(m_doors.size() - 1);
-    m_doors.resize(m_doors.size() - 1);
-    return pos;
+    if(m_doors.size() >= 1)
+    {
+        std::pair<int,int> pos = m_doors.at(m_doors.size() - 1);
+        m_doors.resize(m_doors.size() - 1);
+        return pos;
+    }
+    return std::pair<int,int>(0,0);
+}
+
+int MapGeneratorVillage::GetNrOfDoors()
+{
+    return m_doors.size();
 }

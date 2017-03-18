@@ -18,7 +18,7 @@ void MapFillVillage::InitItemChances()
     //Door
     m_chanceForTile[TileDoor].push_back(FillItem(560,20, Wall, Wall,FillItem::Wall,FillItem::AtWallDouble));
     //Stairs further down
-    m_chanceForTile[TileStairsDown].push_back(FillItem(897 , 1, Space, WalkthroughItem, FillItem::Walkable));
+    m_chanceForTile[TileStairsDown].push_back(FillItem(897 , 1, Space, Stairs, FillItem::Walkable));
     //Tree
     m_chanceForTile[TileRandomItem].push_back(FillItem(561,20, Space, BlockingItem,FillItem::Blocking,FillItem::AndOneAbove));
     //Closed small window

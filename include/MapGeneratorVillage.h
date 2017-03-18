@@ -21,6 +21,7 @@ class MapGeneratorVillage
         int StartStreet(int xStart, int yStart, Enums::Direction, bool placeStreet = true);
 
         std::pair<int,int> PopDoor();
+        int GetNrOfDoors();
 
     protected:
 

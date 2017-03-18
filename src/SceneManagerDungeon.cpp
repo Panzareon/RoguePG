@@ -21,6 +21,14 @@ SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned
     //ctor
 
     mapFill->SetMap(&m_map);
+
+    m_minimapColor.resize(MapFillDungeon::TILE_TYPE_END);
+    m_minimapColor[MapFillDungeon::Wall] = sf::Color::White;
+    m_minimapColor[MapFillDungeon::Space] = sf::Color::Black;
+    m_minimapColor[MapFillDungeon::InteractableWall] = sf::Color::White;
+    m_minimapColor[MapFillDungeon::BlockingItem] = sf::Color::Black;
+    m_minimapColor[MapFillDungeon::WalkthroughItem] = sf::Color::Black;
+    m_minimapColor[MapFillDungeon::Stairs] = sf::Color::Red;
     //Define Tile Maps
     SetMemberStats();
 
@@ -81,7 +89,7 @@ SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned
 
     sf::Transform heroTransform;
     //Place Hero at Startposition
-    heroTransform.translate(m_map.m_startX * TileMap::GetTileWith(), m_map.m_startY * TileMap::GetTileWith() - 14);
+    heroTransform.translate(m_map.m_startX * TileMap::GetTileWidth(), m_map.m_startY * TileMap::GetTileWidth() - 14);
     m_hero->setTransform(heroTransform);
     UpdateCamPosition();
 
@@ -106,7 +114,7 @@ SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned
 
     sf::Transform enemyTransform;
     //Place Enemy at Position
-    enemyTransform.translate(m_map.m_endX * TileMap::GetTileWith(), m_map.m_endY * TileMap::GetTileWith());
+    enemyTransform.translate(m_map.m_endX * TileMap::GetTileWidth(), m_map.m_endY * TileMap::GetTileWidth());
     enemy->setTransform(enemyTransform);
 
     std::vector<Entity*>* enemies = new std::vector<Entity*>();
@@ -183,9 +191,9 @@ void SceneManagerDungeon::SpawnEnemy()
     std::cout << "Spawn Enemy" << std::endl;
     sf::FloatRect heroPos = m_hero->getGlobalBoundingBox();
     float x = heroPos.left + heroPos.width/2;
-    x /= TileMap::GetTileWith();
+    x /= TileMap::GetTileWidth();
     float y = heroPos.top + heroPos.height/2;
-    y /= TileMap::GetTileWith();
+    y /= TileMap::GetTileWidth();
     int playerRoomNumber = m_map.GetRoomNr(x,y);
     std::pair<int, int>* pos;
     int nrTries = 0;
@@ -214,7 +222,7 @@ void SceneManagerDungeon::SpawnEnemy(int x, int y, int lvl, float movementSpeed,
 
     sf::Transform enemyTransform;
     //Place Enemy at Position
-    enemyTransform.translate(x * TileMap::GetTileWith(), y * TileMap::GetTileWith() - 14);
+    enemyTransform.translate(x * TileMap::GetTileWidth(), y * TileMap::GetTileWidth() - 14);
     enemy->setTransform(enemyTransform);
 
     std::vector<Entity*>* enemies = new std::vector<Entity*>();
@@ -303,7 +311,7 @@ void SceneManagerDungeon::PlaceHero()
 
     sf::Transform heroTransform;
     //Place Enemy at Position
-    heroTransform.translate(pos->first * TileMap::GetTileWith(), pos->second * TileMap::GetTileWith() - 14);
+    heroTransform.translate(pos->first * TileMap::GetTileWidth(), pos->second * TileMap::GetTileWidth() - 14);
     hero->setTransform(heroTransform);
 
 

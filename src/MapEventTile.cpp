@@ -4,10 +4,10 @@
 MapEventTile::MapEventTile(bool needButton, int x, int y, bool walkableTile) : MapEvent(needButton)
 {
     //ctor
-    m_rect.left = x * TileMap::GetTileWith();
-    m_rect.top = y * TileMap::GetTileWith();
-    m_rect.width = TileMap::GetTileWith();
-    m_rect.height = TileMap::GetTileWith();
+    m_rect.left = x * TileMap::GetTileWidth();
+    m_rect.top = y * TileMap::GetTileWidth();
+    m_rect.width = TileMap::GetTileWidth();
+    m_rect.height = TileMap::GetTileWidth();
     m_walkableTile = walkableTile;
 }
 
@@ -23,16 +23,16 @@ bool MapEventTile::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirect
         switch(lookingDirection)
         {
         case Enums::East:
-            rect.left += TileMap::GetTileWith();
+            rect.left += TileMap::GetTileWidth();
             break;
         case Enums::West:
-            rect.left -= TileMap::GetTileWith();
+            rect.left -= TileMap::GetTileWidth();
             break;
         case Enums::North:
-            rect.top -= TileMap::GetTileWith();
+            rect.top -= TileMap::GetTileWidth();
             break;
         case Enums::South:
-            rect.top += TileMap::GetTileWith();
+            rect.top += TileMap::GetTileWidth();
             break;
         }
     }

@@ -76,7 +76,10 @@ void Map::writeToTileMap(TileMap& in, int layer, sf::Color color)
 
 void Map::SetTileToType(unsigned int x, unsigned int y, int type)
 {
-    m_tiles[x][y] = type;
+    if(x >= 0 && y >= 0 && x < m_width && y < m_height)
+    {
+        m_tiles[x][y] = type;
+    }
 }
 
 void Map::SetRoomNr(unsigned int x, unsigned int y, int roomNr)
@@ -152,6 +155,8 @@ void Map::AddCollidingType(int type)
 
 bool Map::DoesCollide(unsigned int x, unsigned int y)
 {
+    if(x < 0 || y < 0 || x >= m_width || y >= m_height)
+        return true;
     int type = GetTileType(x,y);
     for(int i = 0; i < m_collidingTiles.size(); i++)
     {
@@ -163,9 +168,9 @@ bool Map::DoesCollide(unsigned int x, unsigned int y)
 
 bool Map::DoesCollide(sf::Rect<float> rect)
 {
-    for(int x = std::floor(rect.left / TileMap::GetTileWith()); x <= std::floor((rect.left + rect.width) / TileMap::GetTileWith()); x++)
+    for(int x = std::floor(rect.left / TileMap::GetTileWidth()); x <= std::floor((rect.left + rect.width) / TileMap::GetTileWidth()); x++)
     {
-        for(int y = std::floor(rect.top / TileMap::GetTileWith()); y <= std::floor((rect.top + rect.height) / TileMap::GetTileWith()); y++)
+        for(int y = std::floor(rect.top / TileMap::GetTileWidth()); y <= std::floor((rect.top + rect.height) / TileMap::GetTileWidth()); y++)
         {
             if(DoesCollide(x,y))
                 return true;
