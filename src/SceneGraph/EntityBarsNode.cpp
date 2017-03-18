@@ -20,8 +20,8 @@ EntityBarsNode::EntityBarsNode(Entity* entity)
     m_showForParty = false;
     m_shownEntity = entity;
     m_showHp = true;
-    m_showMp = false;
-    m_showNumbers = false;
+    m_showMp = true;
+    m_showNumbers = true;
     SetDefaultSize();
 }
 
@@ -45,6 +45,11 @@ void EntityBarsNode::UpdateShape()
     m_background.setFillColor(sf::Color(128,128,128));
     m_background.setOutlineColor(sf::Color::Black);
     m_background.setOutlineThickness(1.0f);
+}
+
+void EntityBarsNode::SetEntity(Entity* entity)
+{
+    m_shownEntity = entity;
 }
 
 void EntityBarsNode::Tick(float seconds)

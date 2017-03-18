@@ -14,6 +14,8 @@ class EntityBarsNode : public Node
         void SetDefaultSize();
         void UpdateShape();
 
+        void SetEntity(Entity* entity);
+
         virtual void Tick(float seconds);
 
     protected:

@@ -13,6 +13,8 @@ thief.png
 cleric.png
 wind-eye.png
 water-slime.png
+Attribute sprites in status-menu.png
+Attribute sprites in equipment-menu.png
 from: http://pousse.rapiere.free.fr/tome/
 
 enemy.png

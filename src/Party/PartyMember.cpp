@@ -12,6 +12,7 @@ PartyMember::PartyMember(CharacterClass* chrClass)
     m_chrClass = chrClass;
     m_exp = 0;
     m_lvl = 1;
+    m_neededExpMultiplier = 10.0f;
 
     std::string name = NameGenerator::GetInstance()->GetCapitalizedName(5, 10);
     SetName(name);
@@ -48,11 +49,21 @@ void PartyMember::AddExp(int ammount)
         }
         //Level up if enough Exp
         //TODO: use an other calculation for needed exp
-        while(m_exp > m_lvl * m_lvl * 10)
+        while(m_exp > NeededExp(m_lvl))
         {
             LevelUp();
         }
     }
+}
+
+float PartyMember::GetExpPercent()
+{
+    return ((float)m_exp - NeededExp(m_lvl - 1)) / (float)(NeededExp(m_lvl));
+}
+
+int PartyMember::NeededExp(int lvl)
+{
+    return lvl * lvl * m_neededExpMultiplier;
 }
 
 void PartyMember::BattleFinished()

@@ -33,6 +33,7 @@ class TextureList
             InGameMenuSelected,
             EquipmentMenu,
             EquipmentSelected,
+            StatusMenu,
 
             MinimapHero
         };

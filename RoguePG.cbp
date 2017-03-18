@@ -16,6 +16,7 @@
 					<Add option="-g" />
 					<Add option="-DDEBUG_FLAG" />
 					<Add directory="include" />
+					<Add directory="include/SceneManager" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -28,6 +29,7 @@
 					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add directory="include" />
+					<Add directory="include/SceneManager" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -114,15 +116,18 @@
 		<Unit filename="include/SceneGraph/TextNode.h" />
 		<Unit filename="include/SceneGraph/Texture.h" />
 		<Unit filename="include/SceneGraph/TextureList.h" />
+		<Unit filename="include/SceneManager/AttributeNodesDisplay.h" />
 		<Unit filename="include/SceneManager/SceneManager.h" />
 		<Unit filename="include/SceneManager/SceneManagerBattle.h" />
 		<Unit filename="include/SceneManager/SceneManagerDungeon.h" />
+		<Unit filename="include/SceneManager/SceneManagerEquipment.h" />
 		<Unit filename="include/SceneManager/SceneManagerGameMenu.h" />
 		<Unit filename="include/SceneManager/SceneManagerGameOver.h" />
 		<Unit filename="include/SceneManager/SceneManagerMainMenu.h" />
 		<Unit filename="include/SceneManager/SceneManagerMessage.h" />
 		<Unit filename="include/SceneManager/SceneManagerMoveable.h" />
 		<Unit filename="include/SceneManager/SceneManagerOptions.h" />
+		<Unit filename="include/SceneManager/SceneManagerStatus.h" />
 		<Unit filename="include/SceneManager/SceneManagerVillage.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/AI/AIBase.cpp" />
@@ -133,7 +138,6 @@
 		<Unit filename="src/BattleAnimation/AnimationPartSprite.cpp" />
 		<Unit filename="src/BattleAnimation/AnimationPartText.cpp" />
 		<Unit filename="src/BattleAnimation/AnimationPartWithNode.cpp" />
-		<Unit filename="src/BattleAnimation/DungeonConfiguration.cpp" />
 		<Unit filename="src/Battle/Attack.cpp" />
 		<Unit filename="src/Battle/Configuration.cpp" />
 		<Unit filename="src/Battle/Effect.cpp" />
@@ -157,6 +161,7 @@
 		<Unit filename="src/Exception/GenericException.cpp" />
 		<Unit filename="src/Exception/InvalidArgumentException.cpp" />
 		<Unit filename="src/Exception/InvalidFunctionException.cpp" />
+		<Unit filename="src/MapGeneration/DungeonConfiguration.cpp" />
 		<Unit filename="src/MapGeneration/FillItem.cpp" />
 		<Unit filename="src/MapGeneration/Map.cpp" />
 		<Unit filename="src/MapGeneration/MapEvent.cpp" />
@@ -192,15 +197,18 @@
 		<Unit filename="src/SceneGraph/TextNode.cpp" />
 		<Unit filename="src/SceneGraph/Texture.cpp" />
 		<Unit filename="src/SceneGraph/TextureList.cpp" />
+		<Unit filename="src/SceneManager/AttributeNodesDisplay.cpp" />
 		<Unit filename="src/SceneManager/SceneManager.cpp" />
 		<Unit filename="src/SceneManager/SceneManagerBattle.cpp" />
 		<Unit filename="src/SceneManager/SceneManagerDungeon.cpp" />
+		<Unit filename="src/SceneManager/SceneManagerEquipment.cpp" />
 		<Unit filename="src/SceneManager/SceneManagerGameMenu.cpp" />
 		<Unit filename="src/SceneManager/SceneManagerGameOver.cpp" />
 		<Unit filename="src/SceneManager/SceneManagerMainMenu.cpp" />
 		<Unit filename="src/SceneManager/SceneManagerMessage.cpp" />
 		<Unit filename="src/SceneManager/SceneManagerMoveable.cpp" />
 		<Unit filename="src/SceneManager/SceneManagerOptions.cpp" />
+		<Unit filename="src/SceneManager/SceneManagerStatus.cpp" />
 		<Unit filename="src/SceneManager/SceneManagerVillage.cpp" />
 		<Extensions>
 			<code_completion />

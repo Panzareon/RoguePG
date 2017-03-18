@@ -19,11 +19,14 @@ class PartyMember : public Entity
         void LevelUp();
         int GetLevel();
         int GetExp();
+        int NeededExp(int lvl);
+        float GetExpPercent();
         void SetEquipment(Equipment::EquipmentPosition position, Equipment* equipment = nullptr);
         Equipment* GetEquipment(Equipment::EquipmentPosition position);
     protected:
         int m_exp;
         int m_lvl;
+        float m_neededExpMultiplier;
 
         std::map<Equipment::EquipmentPosition, Equipment*> m_equipment;
 
