@@ -1,15 +1,12 @@
 #include <SFML/Graphics.hpp>
-#include "SceneManagerMainMenu.h"
+#include "SceneManager/SceneManagerMainMenu.h"
 
 #include <random>
 #include <time.h>
 #include <iostream>
-#include "AnimatedNode.h"
-#include "GameController.h"
-#include "EffectFactoryList.h"
-#include "Localization.h"
-#include "CharacterClass.h"
-#include "GenericException.h"
+#include "Controller/GameController.h"
+#include "Controller/Localization.h"
+#include "Exception/GenericException.h"
 
 int main()
 {
