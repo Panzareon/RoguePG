@@ -160,7 +160,7 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
 
         newClass = new CharacterClass(CharacterClassCleric, 1.0f, TextureList::ClericBattleSprite);
 
-        newClass->SetBaseAttribute(BattleEnums::AttributeMaxHp, 10);
+        newClass->SetBaseAttribute(BattleEnums::AttributeMaxHp, 15);
         newClass->SetBaseAttribute(BattleEnums::AttributeMaxMp, 15);
         newClass->SetBaseAttribute(BattleEnums::AttributeStrength, 5);
         newClass->SetBaseAttribute(BattleEnums::AttributeInt, 12);
