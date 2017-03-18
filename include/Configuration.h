@@ -7,7 +7,7 @@
 class Configuration : FileConfig
 {
     public:
-        enum Keys{MoveUp, MoveDown, MoveRight,MoveLeft,Accept,Cancel, KEYS_END};
+        enum Keys{MoveUp, MoveDown, MoveRight,MoveLeft,Accept,Cancel,Minimap, KEYS_END};
         virtual ~Configuration();
         static Configuration* GetInstance();
         sf::Font* GetFont();
@@ -30,6 +30,9 @@ class Configuration : FileConfig
 
         int GetNumberKeys();
 
+        bool ShowMinimap();
+        void ShowMinimap(bool show);
+
         std::string KeyToString(Keys key);
         std::string KeyToString(sf::Keyboard::Key key);
 
@@ -43,6 +46,7 @@ class Configuration : FileConfig
         sf::Font m_font;
 
         float m_wallTransparency;
+        bool m_showMinimap;
 
         std::vector<sf::Keyboard::Key> m_keys;
         std::vector<sf::Keyboard::Key> m_defaultKeys;

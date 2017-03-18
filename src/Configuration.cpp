@@ -71,6 +71,14 @@ Configuration::Configuration()
     }
     try
     {
+        m_keys.at(Minimap) = (sf::Keyboard::Key) std::stoi(GetString(KeyToString(Minimap)));
+    }
+    catch(...)
+    {
+        m_keys.at(Minimap) = sf::Keyboard::M;
+    }
+    try
+    {
         m_wallTransparency = std::stof(GetString("wall_transparency")) / 100.0f;
         if(m_wallTransparency < 0.0f || m_wallTransparency > 1.0f)
             m_wallTransparency = 0.8f;
@@ -87,6 +95,7 @@ Configuration::Configuration()
     m_defaultKeys.at(MoveLeft) = sf::Keyboard::Left;
     m_defaultKeys.at(Accept) = sf::Keyboard::Return;
     m_defaultKeys.at(Cancel) = sf::Keyboard::Escape;
+    m_defaultKeys.at(Minimap) = sf::Keyboard::M;
 
     m_maxPartySize = 3;
 }
@@ -172,6 +181,8 @@ std::string Configuration::KeyToString(Keys key)
         return "accept";
     case Cancel:
         return "cancel";
+    case Minimap:
+        return "minimap";
     }
 }
 
@@ -233,4 +244,14 @@ float Configuration::GetSfxVolume()
     {
         return 50.0f;
     }
+}
+
+bool Configuration::ShowMinimap()
+{
+    return m_showMinimap;
+}
+
+void Configuration::ShowMinimap(bool show)
+{
+    m_showMinimap = show;
 }

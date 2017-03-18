@@ -29,6 +29,7 @@ menu.keyBindings.move_right = Move Right
 menu.keyBindings.move_left = Move Left
 menu.keyBindings.accept = Accept
 menu.keyBindings.cancel = Cancel
+menu.keyBindings.minimap = Show/Hide Minimap
 
 menu.keyBindings.36 = Escape
 menu.keyBindings.57 = Space

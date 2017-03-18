@@ -86,6 +86,7 @@ SceneManagerMoveable::SceneManagerMoveable(int tileWidth, int tileHeight): m_map
     DrawableNode* minimap = new DrawableNode(new sf::Sprite(m_minimapTexture));
     m_minimapScale = 2.0f;
     m_minimapNode = new Node();
+    m_minimapNode->setVisibility(Configuration::GetInstance()->ShowMinimap());
     minimap->setTransform(minimap->getTransform().scale(m_minimapScale,m_minimapScale));
     m_gui->addChild(m_minimapNode);
     m_minimapNode->addChild(minimap);
@@ -152,6 +153,13 @@ void SceneManagerMoveable::Tick()
             newDirection = Enums::South;
             doChange = false;
         }
+    }
+    if (controller->IsKeyPressed(Configuration::Minimap))
+    {
+        bool show = !m_minimapNode->IsVisible();
+        m_minimapNode->setVisibility(show);
+        Configuration::GetInstance()->ShowMinimap(show);
+        UpdateMinimap();
     }
 
     if(doChange == false)
@@ -264,6 +272,9 @@ void SceneManagerMoveable::UpdateMinimap()
             }
         }
     }
-    m_minimapTexture.loadFromImage(m_minimap);
-    m_minimapPlayer->setPosition(heroX * m_minimapScale, heroY * m_minimapScale);
+    if(m_minimapNode->IsVisible())
+    {
+        m_minimapTexture.loadFromImage(m_minimap);
+        m_minimapPlayer->setPosition(heroX * m_minimapScale, heroY * m_minimapScale);
+    }
 }
