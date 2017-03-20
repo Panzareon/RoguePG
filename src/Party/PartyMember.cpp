@@ -152,3 +152,7 @@ Equipment* PartyMember::GetEquipment(Equipment::EquipmentPosition position)
     return m_equipment[position];
 }
 
+CharacterClass* PartyMember::GetClass()
+{
+    return m_chrClass;
+}

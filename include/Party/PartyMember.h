@@ -23,6 +23,7 @@ class PartyMember : public Entity
         float GetExpPercent();
         void SetEquipment(Equipment::EquipmentPosition position, Equipment* equipment = nullptr);
         Equipment* GetEquipment(Equipment::EquipmentPosition position);
+        CharacterClass* GetClass();
     protected:
         int m_exp;
         int m_lvl;

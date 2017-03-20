@@ -52,6 +52,12 @@ dungeon.finished = You finished this dungeon!
 chest.receive_item = You got a %0!
 chest.receive_gold = You got %0 gold!
 
+character_class.mage = Mage
+character_class.barbarian = Barbarian
+character_class.paladin = Palading
+character_class.thief = Thief
+character_class.cleric = Cleric
+
 //Item-Names
 item.1 = Sword
 item.1.desc = A generic sword

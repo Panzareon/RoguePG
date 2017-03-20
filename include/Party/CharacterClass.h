@@ -23,6 +23,8 @@ class CharacterClass
         SkillGenerator* GetSkillGenerator();
         Skill* GetNewSkill(PartyMember* user);
 
+        std::string GetName();
+
     protected:
         static std::vector<CharacterClass*>* m_classes;
 

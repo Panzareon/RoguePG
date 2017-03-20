@@ -3,11 +3,15 @@
 #include "Controller/Configuration.h"
 #include "SceneGraph/DrawableNode.h"
 #include "Controller/Localization.h"
+#include "SceneGraph/EntityNode.h"
+#include "Party/CharacterClass.h"
 
 SceneManagerStatus::SceneManagerStatus()
 {
     //ctor
     m_finished = false;
+    m_expWidth = 100.0f;
+    m_expHeight = 15.0f;
 
     GameController* controller = GameController::getInstance();
     Party* party = controller->getParty();
@@ -30,22 +34,29 @@ SceneManagerStatus::SceneManagerStatus()
 
     m_level = new TextNode();
     m_level->SetColor(sf::Color::Black);
-    m_level->moveNode(5.0f, 105.0f);
+    m_level->moveNode(60.0f, 140.0f);
     m_level->SetFontSize(20);
     background->addChild(m_level);
 
+    m_class = new TextNode();
+    m_class->SetColor(sf::Color::Black);
+    m_class->moveNode(60.0f, 110.0f);
+    m_class->SetFontSize(20);
+    background->addChild(m_class);
+
 
     sf::RectangleShape* expBackground = new sf::RectangleShape(sf::Vector2f(m_expWidth,m_expHeight));
-    expBackground->setFillColor(sf::Color::White);
+    expBackground->setFillColor(sf::Color(128,128,128));
     expBackground->setOutlineColor(sf::Color::Black);
     expBackground->setOutlineThickness(1.0f);
     Node* expBackgroundNode = new DrawableNode(expBackground);
-    expBackgroundNode->moveNode(10.0f, 150.0f);
+    expBackgroundNode->moveNode(60.0f, 170.0f);
     background->addChild(expBackgroundNode);
 
-    m_exp = new sf::RectangleShape(sf::Vector2f(m_expWidth,m_expHeight));
-    m_exp->setFillColor(sf::Color::Yellow);
+    m_exp = new sf::RectangleShape(sf::Vector2f(m_expWidth - 2.0f,m_expHeight - 2.0f));
+    m_exp->setFillColor(sf::Color(244, 208, 63));
     Node* expNode = new DrawableNode(m_exp);
+    expNode->moveNode(1.0f,1.0f);
     expBackgroundNode->addChild(expNode);
 
 
@@ -57,6 +68,10 @@ SceneManagerStatus::SceneManagerStatus()
     Node* nextMember = GetAttributeNode(member, 0);
     nextMember->moveNode(0.0f, 210.0f);
     background->addChild(nextMember);
+
+    m_battleSprite = new EntityNode(nullptr, member);
+    m_battleSprite->moveNode(10.0f, 130.0f);
+    background->addChild(m_battleSprite);
 
 
     ShowForEntity(member);
@@ -97,9 +112,12 @@ bool SceneManagerStatus::PausesSceneManagerBelow()
 
 void SceneManagerStatus::ShowForEntity(PartyMember* partyMember)
 {
+    Localization* localization = Localization::GetInstance();
     m_name->SetText(partyMember->GetName());
     UpdateAttributeNode(partyMember, 0);
     m_manaAndHealth->SetEntity(partyMember);
-    m_level->SetText(Localization::GetInstance()->GetLocalization("menu.status.level") + std::to_string(partyMember->GetLevel()));
-    m_exp->setSize(sf::Vector2f(partyMember->GetExpPercent()* m_expWidth, m_expHeight));
+    m_level->SetText(localization->GetLocalization("menu.status.level") + std::to_string(partyMember->GetLevel()));
+    m_exp->setSize(sf::Vector2f(partyMember->GetExpPercent()* (m_expWidth - 2.0f), m_expHeight - 2.0f));
+    m_battleSprite->SetEntity(partyMember);
+    m_class->SetText(localization->GetLocalization(partyMember->GetClass()->GetName()));
 }

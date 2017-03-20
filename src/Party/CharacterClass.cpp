@@ -257,3 +257,21 @@ Skill* CharacterClass::GetNewSkill(PartyMember* user)
 {
     return m_skillGenerator.GetNewSkill(10 + user->GetLevel());
 }
+
+std::string CharacterClass::GetName()
+{
+    switch(m_classType)
+    {
+    case CharacterClassMage:
+        return "character_class.mage";
+    case CharacterClassBarbarian:
+        return "character_class.barbarian";
+    case CharacterClassPaladin:
+        return "character_class.paladin";
+    case CharacterClassThief:
+        return "character_class.thief";
+    case CharacterClassCleric:
+        return "character_class.cleric";
+    }
+    return "character_class.unknown";
+}

@@ -38,7 +38,7 @@ void EntityNode::draw(sf::RenderTarget& target, const sf::Transform& parentTrans
         for (std::size_t i = 0; i < m_children.size(); ++i)
             m_children[i]->draw(target, combinedTransform);
 
-        if(m_smb->IsEntityTargeted(m_entity))
+        if(m_smb != nullptr && m_smb->IsEntityTargeted(m_entity))
             if(m_targetedNode != nullptr)
                 m_targetedNode->draw(target, combinedTransform);
     }

@@ -25,10 +25,12 @@ class SceneManagerStatus : AttributeNodesDisplay, public SceneManager
 
         TextNode* m_name;
         TextNode* m_level;
+        TextNode* m_class;
         float m_expWidth;
         float m_expHeight;
         sf::RectangleShape* m_exp;
         EntityBarsNode* m_manaAndHealth;
+        EntityNode* m_battleSprite;
 
     private:
 };
