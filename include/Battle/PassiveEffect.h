@@ -6,12 +6,13 @@
 #include "IPassiveEffect.h"
 #include <functional>
 class Entity;
+class Effect;
 
 //Class for Buffs and Debuffs
 class PassiveEffect: public IPassiveEffect
 {
     public:
-        PassiveEffect(Entity* target, bool buff, int duration, bool staysAfterBattle = false);
+        PassiveEffect(Entity* target, bool buff, int duration, Effect* causingEffect, bool staysAfterBattle = false);
         virtual ~PassiveEffect();
 
         //For Effects that trigger every turn
@@ -32,8 +33,12 @@ class PassiveEffect: public IPassiveEffect
         void AddGetExp(std::function<float(float)>* getExp);
         void AddGetResistance(std::function<float(float,BattleEnums::AttackType)>* getResistance);
 
+        virtual std::string GetName();
+        virtual std::string GetLocalizedDescription();
+
     protected:
         Entity* m_target;
+        Effect* m_causingEffect;
         bool m_buff;
         int m_prio;
         //Number of Turns this Effect lasts, -1 means forever

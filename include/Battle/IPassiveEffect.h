@@ -2,6 +2,7 @@
 #define IPASSIVEEFFECT_H
 
 #include "Controller/Enums.h"
+#include <string>
 class Attack;
 class Entity;
 
@@ -23,6 +24,9 @@ class IPassiveEffect
         virtual int GetActivationPriority() = 0;
 
         virtual bool IsEquipment();
+
+        virtual std::string GetName() = 0;
+        virtual std::string GetLocalizedDescription() = 0;
     protected:
     private:
 };

@@ -61,6 +61,7 @@ class Entity
         int GetExpToGive();
 
         std::vector<std::shared_ptr<Skill>>* GetSkillList();
+        std::multimap<int, IPassiveEffect*>* GetPassiveEffects();
 
         int GetTeamId();
         void SetTeamId(int id);

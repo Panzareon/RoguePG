@@ -1,6 +1,7 @@
 #include "Battle/PassiveEffect.h"
+#include "Battle/Effect.h"
 
-PassiveEffect::PassiveEffect(Entity* target, bool buff, int duration, bool staysAfterBattle)
+PassiveEffect::PassiveEffect(Entity* target, bool buff, int duration, Effect* causingEffect, bool staysAfterBattle)
 {
     //ctor
     m_target = target;
@@ -12,6 +13,7 @@ PassiveEffect::PassiveEffect(Entity* target, bool buff, int duration, bool stays
     m_attack = nullptr;
     m_onAttacked = nullptr;
     m_staysAfterBattle = staysAfterBattle;
+    m_causingEffect = causingEffect;
 }
 
 PassiveEffect::~PassiveEffect()
@@ -133,4 +135,14 @@ bool PassiveEffect::StaysAfterBattle()
 int PassiveEffect::GetActivationPriority()
 {
     return m_prio;
+}
+
+std::string PassiveEffect::GetName()
+{
+    m_causingEffect->GetName();
+}
+
+std::string PassiveEffect::GetLocalizedDescription()
+{
+    return m_causingEffect->GetLocalizedDescription();
 }

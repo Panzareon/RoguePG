@@ -4,7 +4,7 @@
 #include "Battle/EffectFactory.h"
 #include <sstream>
 
-Effect::Effect(EffectFactory* factory, std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets)>* func, std::vector<float>* strength, StrengthCalculation* strengthCalculation, BattleEnums::Target target)
+Effect::Effect(EffectFactory* factory, std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, Effect* effect)>* func, std::vector<float>* strength, StrengthCalculation* strengthCalculation, BattleEnums::Target target)
 {
     m_effectFunction = func;
     m_strength = strength;
@@ -24,7 +24,7 @@ void Effect::UseEffectOn(Entity* user, std::vector<Entity* >* targets)
     {
         std::vector<Entity* >* target = new std::vector<Entity* >(1, user);
         //Use the Effect
-        (*m_effectFunction)(m_strength, user, target);
+        (*m_effectFunction)(m_strength, user, target, this);
         //Play the Animation for this effect
         Animation * newAnim = AnimationFactory::GetAnimation(m_anim, target);
         GameController::getInstance()->GetActiveSceneManager()->AddAnimation(newAnim);
@@ -32,7 +32,7 @@ void Effect::UseEffectOn(Entity* user, std::vector<Entity* >* targets)
     else
     {
         //Use the Effect
-        (*m_effectFunction)(m_strength, user, targets);
+        (*m_effectFunction)(m_strength, user, targets, this);
         //Play the Animation for this effect
         Animation * newAnim = AnimationFactory::GetAnimation(m_anim, targets);
         GameController::getInstance()->GetActiveSceneManager()->AddAnimation(newAnim);

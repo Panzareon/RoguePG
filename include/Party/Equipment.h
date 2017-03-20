@@ -55,6 +55,8 @@ class Equipment : public IPassiveEffect, public Item
         void SetTypeResistance(BattleEnums::AttackType type, float multiplier);
         void AddAttackType(BattleEnums::AttackType type);
 
+        virtual std::string GetName();
+        virtual std::string GetLocalizedDescription();
 
         //Methods from IPassiveEffect with NOOP
         virtual void OnTurn();

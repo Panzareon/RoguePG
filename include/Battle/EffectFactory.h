@@ -11,7 +11,7 @@
 class EffectFactory
 {
     public:
-        EffectFactory(std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets)>* func, int id);
+        EffectFactory(std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, Effect* effect)>* func, int id);
         virtual ~EffectFactory();
 
         //Returns new Instance of Effect with a strength defined by the value given, needs to be deleted
@@ -32,7 +32,7 @@ class EffectFactory
     protected:
     private:
         //Function Pointer to Function that implements the Effect
-        std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets)>* m_effectFunction;
+        std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, Effect* effect)>* m_effectFunction;
 
         std::set<BattleEnums::AttackType> m_attackType;
         std::set<BattleEnums::EffectType> m_effectType;

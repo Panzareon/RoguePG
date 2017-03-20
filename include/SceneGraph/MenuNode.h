@@ -14,6 +14,7 @@ class MenuNode : public Node
         virtual void ResetOptions();
         virtual void AddOption(std::string name, std::function<void()> func, bool available = true);
         virtual void AddDisabledOption(std::string name);
+        virtual void AddDisabledOption(std::string name, std::function<void()> onSelect);
         virtual void AddOption(std::string name, std::function<void()> func, std::function<void()> onSelect, bool available = true);
         //Add Value at the right on this Option
         virtual void AddValueToOption(int optionNr, std::string value);
@@ -31,6 +32,7 @@ class MenuNode : public Node
 
 
         int GetScrollPosition();
+        int GetNrOptions();
 
         virtual void ShowSelected(bool show);
         void SetMaxShownOptions(int nr);

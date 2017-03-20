@@ -12,6 +12,10 @@ class SceneManagerStatus : AttributeNodesDisplay, public SceneManager
         virtual ~SceneManagerStatus();
         void ShowForEntity(PartyMember* partyMember);
 
+        void SetDescription(std::string str);
+        void DeselectSkills();
+        void SelectSkills();
+        void DeselectPassiveEffects();
         virtual void Tick();
         virtual bool IsFinished();
 
@@ -21,16 +25,26 @@ class SceneManagerStatus : AttributeNodesDisplay, public SceneManager
         virtual bool PausesSceneManagerBelow();
     protected:
 
+        int m_selectedMember;
+
+        std::vector<PartyMember*>* m_partyMember;
+
         bool m_finished;
 
         TextNode* m_name;
         TextNode* m_level;
         TextNode* m_class;
+        TextNode* m_description;
         float m_expWidth;
         float m_expHeight;
         sf::RectangleShape* m_exp;
         EntityBarsNode* m_manaAndHealth;
         EntityNode* m_battleSprite;
+
+        MenuNode* m_skills;
+        bool m_skillsActive;
+        MenuNode* m_passiveEffects;
+        bool m_passiveEffectsActive;
 
     private:
 };

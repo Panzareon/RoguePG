@@ -36,7 +36,7 @@ namespace PassiveEffectFunctions
 namespace EffectFunctions
 {
     //Strength: one value with strength of dmg
-    void DealMagicDmg(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, BattleEnums::AttackType type = BattleEnums::AttackTypePhysical)
+    void DealMagicDmg(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, Effect* effect, BattleEnums::AttackType type)
     {
         for(unsigned int i = 0; i < targets->size(); i++)
         {
@@ -46,7 +46,7 @@ namespace EffectFunctions
     }
 
     //Strength: one value with strength of dmg
-    void DealPhysicalDmg(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, BattleEnums::AttackType type = BattleEnums::AttackTypePhysical)
+    void DealPhysicalDmg(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, Effect* effect, BattleEnums::AttackType type)
     {
         for(unsigned int i = 0; i < targets->size(); i++)
         {
@@ -56,7 +56,7 @@ namespace EffectFunctions
     }
 
     //Strength: one value with strength of heal
-    void Heal(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets)
+    void Heal(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, Effect* effect)
     {
         for(unsigned int i = 0; i < targets->size(); i++)
         {
@@ -65,44 +65,44 @@ namespace EffectFunctions
     }
 
     //Strength: two values, fist: duration in turns, second: strength of Buff
-    void BuffAttribute(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, BattleEnums::Attribute attribute)
+    void BuffAttribute(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, Effect* effect, BattleEnums::Attribute attribute)
     {
         for(unsigned int i = 0; i < targets->size(); i++)
         {
-            PassiveEffect* eff = new PassiveEffect(targets->at(i), true, (int)strength->at(0));
+            PassiveEffect* eff = new PassiveEffect(targets->at(i), true, (int)strength->at(0), effect);
             eff->AddAttributeEffect(new std::function<float(float,BattleEnums::Attribute)>(
                 std::bind(&PassiveEffectFunctions::BuffAttribute,std::placeholders::_1,std::placeholders::_2,strength->at(1), attribute)));
         }
     }
 
     //Strength: two values, fist: duration in turns, second: strength of Buff
-    void BuffResistance(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, BattleEnums::AttackType type)
+    void BuffResistance(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, Effect* effect, BattleEnums::AttackType type)
     {
         for(unsigned int i = 0; i < targets->size(); i++)
         {
-            PassiveEffect* eff = new PassiveEffect(targets->at(i), true, (int)strength->at(0));
+            PassiveEffect* eff = new PassiveEffect(targets->at(i), true, (int)strength->at(0), effect);
             eff->AddGetResistance(new std::function<float(float,BattleEnums::AttackType)>(
                 std::bind(&PassiveEffectFunctions::BuffResistance,std::placeholders::_1,std::placeholders::_2,strength->at(1), type)));
         }
     }
 
     //Strength: two values, fist: duration in turns, second: strength of Buff
-    void DebuffAttribute(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, BattleEnums::Attribute attribute)
+    void DebuffAttribute(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, Effect* effect, BattleEnums::Attribute attribute)
     {
         for(unsigned int i = 0; i < targets->size(); i++)
         {
-            PassiveEffect* eff = new PassiveEffect(targets->at(i), true, (int)strength->at(0));
+            PassiveEffect* eff = new PassiveEffect(targets->at(i), true, (int)strength->at(0), effect);
             eff->AddAttributeEffect(new std::function<float(float,BattleEnums::Attribute)>(
                 std::bind(&PassiveEffectFunctions::DebuffAttribute,std::placeholders::_1,std::placeholders::_2,strength->at(1), attribute)));
         }
     }
 
     //Strength: two values, fist: duration in turns, second: strength of Buff
-    void DebuffResistance(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, BattleEnums::AttackType type)
+    void DebuffResistance(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, Effect* effect, BattleEnums::AttackType type)
     {
         for(unsigned int i = 0; i < targets->size(); i++)
         {
-            PassiveEffect* eff = new PassiveEffect(targets->at(i), true, (int)strength->at(0));
+            PassiveEffect* eff = new PassiveEffect(targets->at(i), true, (int)strength->at(0), effect);
             eff->AddGetResistance(new std::function<float(float,BattleEnums::AttackType)>(
                 std::bind(&PassiveEffectFunctions::DebuffResistance,std::placeholders::_1,std::placeholders::_2,strength->at(1), type)));
         }
@@ -115,12 +115,12 @@ EffectFactoryList::EffectFactoryList()
 {
     //ctor
     //Add all the Effects for the game
-    std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>* func;
+    std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>* func;
     StrengthCalculation* calc;
     EffectFactory* newEffect;
 
     //Add Fire Damage
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DealMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeFire));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::DealMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeFire));
     newEffect = new EffectFactory(func, 1);
     calc = newEffect->GetStrengthCalculation();
     calc->AddStrengthValue(1.0f, 100.0f);
@@ -130,7 +130,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);;
 
     //Add Air Damage
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DealMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeAir));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::DealMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeAir));
     newEffect = new EffectFactory(func, 2);
     calc = newEffect->GetStrengthCalculation();
     calc->AddStrengthValue(1.0f, 100.0f);
@@ -140,7 +140,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);;
 
     //Add Water Damage
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DealMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeWater));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::DealMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeWater));
     newEffect = new EffectFactory(func, 3);
     calc = newEffect->GetStrengthCalculation();
     calc->AddStrengthValue(1.0f, 100.0f);
@@ -150,7 +150,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Add Earth Damage
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DealMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeEarth));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::DealMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeEarth));
     newEffect = new EffectFactory(func, 4);
     calc = newEffect->GetStrengthCalculation();
     calc->AddStrengthValue(1.0f, 100.0f);
@@ -160,7 +160,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Add Physical Damage
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DealPhysicalDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypePhysical));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::DealPhysicalDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypePhysical));
     newEffect = new EffectFactory(func, 5);
     calc = newEffect->GetStrengthCalculation();
     calc->AddStrengthValue(1.0f, 100.0f);
@@ -170,7 +170,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Add Strength Buff
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::BuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttributeStrength));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::BuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttributeStrength));
     newEffect = new EffectFactory(func, 101);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -187,7 +187,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Add Defense Buff
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::BuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttributeDefense));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::BuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttributeDefense));
     newEffect = new EffectFactory(func, 102);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -202,7 +202,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Add Magic defense Buff
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::BuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttributeMagicDefense));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::BuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttributeMagicDefense));
     newEffect = new EffectFactory(func, 103);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -216,7 +216,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Add Int Buff
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::BuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttributeInt));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::BuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttributeInt));
     newEffect = new EffectFactory(func, 104);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -231,7 +231,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Add Speed Buff
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::BuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttributeSpeed));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::BuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttributeSpeed));
     newEffect = new EffectFactory(func, 105);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -249,7 +249,7 @@ EffectFactoryList::EffectFactoryList()
 
     //Add Elemental Resistance Buffs
     //Physical Defense
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::BuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypePhysical));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::BuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypePhysical));
     newEffect = new EffectFactory(func, 151);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -263,7 +263,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Water Defense
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::BuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeWater));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::BuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeWater));
     newEffect = new EffectFactory(func, 152);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -277,7 +277,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Air Defense
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::BuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeAir));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::BuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeAir));
     newEffect = new EffectFactory(func, 153);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -291,7 +291,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Earth Defense
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::BuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeEarth));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::BuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeEarth));
     newEffect = new EffectFactory(func, 154);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -305,7 +305,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Fire Defense
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::BuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeFire));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::BuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeFire));
     newEffect = new EffectFactory(func, 155);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -321,7 +321,7 @@ EffectFactoryList::EffectFactoryList()
 
 
     //Heal
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::Heal,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::Heal,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4));
     newEffect = new EffectFactory(func, 1001);
     calc = newEffect->GetStrengthCalculation();
     //Everything from 1 to 30 hp heal
@@ -338,7 +338,7 @@ EffectFactoryList::EffectFactoryList()
 
 
     //Add Strength Debuff
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DebuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttributeStrength));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::DebuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttributeStrength));
     newEffect = new EffectFactory(func, 10001);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -354,7 +354,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Add Defense Debuff
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DebuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttributeDefense));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::DebuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttributeDefense));
     newEffect = new EffectFactory(func, 10002);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -369,7 +369,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Add Magic Defense Debuff
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DebuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttributeMagicDefense));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::DebuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttributeMagicDefense));
     newEffect = new EffectFactory(func, 10003);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -384,7 +384,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Add Int Debuff
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DebuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttributeInt));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::DebuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttributeInt));
     newEffect = new EffectFactory(func, 10004);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -399,7 +399,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Add Speed Debuff
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DebuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttributeSpeed));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::DebuffAttribute,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttributeSpeed));
     newEffect = new EffectFactory(func, 10005);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -418,7 +418,7 @@ EffectFactoryList::EffectFactoryList()
 
     //Add Elemental Resistance Debuffs
     //Physical Defense
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DebuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypePhysical));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::DebuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypePhysical));
     newEffect = new EffectFactory(func, 10051);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -432,7 +432,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Water Defense
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DebuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeWater));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::DebuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeWater));
     newEffect = new EffectFactory(func, 10052);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -446,7 +446,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Air Defense
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DebuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeAir));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::DebuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeAir));
     newEffect = new EffectFactory(func, 10053);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -460,7 +460,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Earth Defense
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DebuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeEarth));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::DebuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeEarth));
     newEffect = new EffectFactory(func, 10054);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -474,7 +474,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Fire Defense
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets)>(std::bind(&EffectFunctions::DebuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3, BattleEnums::AttackTypeFire));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, Effect* effect)>(std::bind(&EffectFunctions::DebuffResistance,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeFire));
     newEffect = new EffectFactory(func, 10055);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1

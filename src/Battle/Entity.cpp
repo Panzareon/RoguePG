@@ -315,6 +315,11 @@ std::vector<std::shared_ptr<Skill>>* Entity::GetSkillList()
     return &m_skills;
 }
 
+std::multimap<int, IPassiveEffect*>* Entity::GetPassiveEffects()
+{
+    return &m_passiveEffects;
+}
+
 
 void Entity::CalculateMove(SceneManagerBattle* sm)
 {

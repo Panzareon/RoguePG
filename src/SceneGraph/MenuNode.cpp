@@ -71,6 +71,16 @@ void MenuNode::AddDisabledOption(std::string name)
     UpdateBackground();
 }
 
+void MenuNode::AddDisabledOption(std::string name, std::function<void()> onSelect)
+{
+    m_selectFunction.resize(m_optionName.size());
+    m_selectFunction.push_back(onSelect);
+    m_optionName.push_back(name);
+    m_optionAvailable.push_back(false);
+    m_optionFunction.push_back(std::function<void()>());
+    UpdateBackground();
+}
+
 void MenuNode::AddOption(std::string name, std::function<void()>func, std::function<void()>onSelect, bool available)
 {
     m_selectFunction.resize(m_optionName.size());
@@ -161,17 +171,13 @@ void MenuNode::MoveDown()
 
 void MenuNode::MoveRight()
 {
-    //Check if this should do anything
-    if(m_nextAvailable)
+    if(m_nextFunction == nullptr)
     {
-        if(m_nextFunction == nullptr)
-        {
-            Use();
-        }
-        else
-        {
-            m_nextFunction();
-        }
+        Use();
+    }
+    else
+    {
+        m_nextFunction();
     }
 }
 
@@ -279,7 +285,7 @@ void MenuNode::CheckKeyboardInput()
                 m_cancelFunction();
             }
         }
-        else if(controller->IsKeyPressed(Configuration::MoveRight))
+        else if(m_nextAvailable && controller->IsKeyPressed(Configuration::MoveRight))
         {
             MoveRight();
         }
@@ -300,9 +306,21 @@ int MenuNode::GetScrollPosition()
     return m_scrollPosition;
 }
 
+int MenuNode::GetNrOptions()
+{
+    return m_optionName.size();
+}
+
 void MenuNode::ShowSelected(bool show)
 {
     m_showSelected = show;
+    if(show)
+    {
+        if(m_selectFunction.size() > m_selected && m_selectFunction[m_selected] != nullptr)
+        {
+            m_selectFunction[m_selected]();
+        }
+    }
 }
 
 void MenuNode::SetMaxShownOptions(int nr)

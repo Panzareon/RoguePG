@@ -2,6 +2,7 @@
 #include "Battle/Attack.h"
 #include "Battle/Entity.h"
 #include "Battle/Skill.h"
+#include "Controller/Localization.h"
 
 #include <iostream>
 
@@ -212,6 +213,16 @@ void Equipment::SetTypeResistance(BattleEnums::AttackType type, float multiplier
 void Equipment::AddAttackType(BattleEnums::AttackType type)
 {
     m_attackTypes.insert(type);
+}
+
+std::string Equipment::GetName()
+{
+    return Item::GetName();
+}
+
+std::string Equipment::GetLocalizedDescription()
+{
+    return Localization::GetInstance()->GetLocalization(Item::GetDescription());
 }
 
 
