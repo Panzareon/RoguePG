@@ -4,6 +4,7 @@
 #include "SceneManager.h"
 #include "SceneGraph/EntityBarsNode.h"
 #include "AttributeNodesDisplay.h"
+#include "SceneGraph/AnimatedNode.h"
 
 class SceneManagerStatus : AttributeNodesDisplay, public SceneManager
 {
@@ -39,7 +40,7 @@ class SceneManagerStatus : AttributeNodesDisplay, public SceneManager
         float m_expHeight;
         sf::RectangleShape* m_exp;
         EntityBarsNode* m_manaAndHealth;
-        EntityNode* m_battleSprite;
+        AnimatedNode* m_battleSprite;
 
         MenuNode* m_skills;
         bool m_skillsActive;

@@ -76,6 +76,12 @@ namespace BattleFunctions
         sm->AddSubMenu(skillMenu);
     }
 }
+namespace MenuFunctions
+{
+    void OpenEquipment();
+
+    void OpenStatus();
+}
 
 SceneManagerBattle::SceneManagerBattle()
 {
@@ -428,6 +434,8 @@ void SceneManagerBattle::ShowMenuForNext()
     Localization* local = Localization::GetInstance();
     m_mainMenu->AddOption(local->GetLocalization("battle_menu.attack"), std::function<void()>(std::bind(&BattleFunctions::Attack, this, m_next)), std::function<void()>(std::bind(&BattleFunctions::SetDescription, this, local->GetLocalization("battle_menu.attack.desc"))));
     m_mainMenu->AddOption(local->GetLocalization("battle_menu.skill"), std::function<void()>(std::bind(&BattleFunctions::SkillList, this, m_next)), std::function<void()>(std::bind(&BattleFunctions::SetDescription, this, local->GetLocalization("battle_menu.skill.desc"))), m_next->GetSkillList()->size() > 0);
+    m_mainMenu->AddOption(local->GetLocalization("menu.equipment"),std::function<void()>(&MenuFunctions::OpenEquipment),true);
+    m_mainMenu->AddOption(local->GetLocalization("menu.status"),std::function<void()>(&MenuFunctions::OpenStatus),true);
     SetDescription(local->GetLocalization("battle_menu.attack.desc"));
     //TODO: add other Battle Options
 

@@ -3,7 +3,6 @@
 #include "Controller/Configuration.h"
 #include "SceneGraph/DrawableNode.h"
 #include "Controller/Localization.h"
-#include "SceneGraph/EntityNode.h"
 #include "Party/CharacterClass.h"
 
 namespace MenuFunctions
@@ -88,7 +87,7 @@ SceneManagerStatus::SceneManagerStatus()
     nextMember->moveNode(0.0f, 210.0f);
     background->addChild(nextMember);
 
-    m_battleSprite = new EntityNode(nullptr, member);
+    m_battleSprite = new AnimatedNode(member->GetBattleSprite(), member->GetNumberSprites());
     m_battleSprite->moveNode(10.0f, 130.0f);
     background->addChild(m_battleSprite);
 
@@ -220,7 +219,7 @@ void SceneManagerStatus::ShowForEntity(PartyMember* partyMember)
     m_manaAndHealth->SetEntity(partyMember);
     m_level->SetText(localization->GetLocalization("menu.status.level") + std::to_string(partyMember->GetLevel()));
     m_exp->setSize(sf::Vector2f(partyMember->GetExpPercent()* (m_expWidth - 2.0f), m_expHeight - 2.0f));
-    m_battleSprite->SetEntity(partyMember);
+    m_battleSprite->SetSprite(partyMember->GetBattleSprite(), partyMember->GetNumberSprites());
     m_class->SetText(localization->GetLocalization(partyMember->GetClass()->GetName()));
 
     m_skills->ResetOptions();
