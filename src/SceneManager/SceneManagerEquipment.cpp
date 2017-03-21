@@ -88,6 +88,7 @@ SceneManagerEquipment::SceneManagerEquipment()
     m_mainMenu->SetSelectedTexture(TextureList::getTexture(TextureList::EquipmentSelected));
     m_mainMenu->SetFontSize(30);
     m_mainMenu->SetSpacing(74);
+    m_mainMenu->SetVisibleWithSubmenu(true);
 }
 
 SceneManagerEquipment::~SceneManagerEquipment()

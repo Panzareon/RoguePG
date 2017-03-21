@@ -10,6 +10,7 @@ MenuNode::MenuNode(int width)
     m_scrollPosition = 0;
     m_maxShownNumber = 4;
     m_width = width;
+    m_visibleWithSubmenu = false;
     m_cancelAvailable = false;
     m_nextAvailable = false;
     m_previousAvailable = false;
@@ -189,6 +190,11 @@ void MenuNode::Use()
 }
 void MenuNode::onDraw(sf::RenderTarget& target, const sf::Transform& transformBase) const
 {
+    //if there is a active child do not draw this
+    if(m_children.size() > 0 && !m_visibleWithSubmenu)
+    {
+        return;
+    }
     //Draw Menu
     sf::Transform transform(transformBase);
     target.draw(m_background, transform);
@@ -386,4 +392,8 @@ void MenuNode::SetSpacing(int s)
     m_optionHeight = m_spacing + m_fontSize;
 }
 
+void MenuNode::SetVisibleWithSubmenu(bool visible)
+{
+    m_visibleWithSubmenu = visible;
+}
 

@@ -48,6 +48,9 @@ class MenuNode : public Node
         void SetFontSize(int s);
         void SetSpacing(int s);
 
+        //Is this Menu still visible when a submenu of this is active
+        void SetVisibleWithSubmenu(bool visible);
+
     protected:
         virtual void MoveUp();
         virtual void MoveDown();
@@ -86,6 +89,8 @@ class MenuNode : public Node
         std::function<void()> m_nextFunction;
         bool m_nextAvailable;
         bool m_previousAvailable;
+
+        bool m_visibleWithSubmenu;
 
         sf::Color m_backgroundColor;
         sf::Color m_foregroundColor;
