@@ -42,10 +42,11 @@ class Equipment : public IPassiveEffect, public Item
         virtual int GetLevel(Entity* target);
         virtual std::map<int, std::shared_ptr<Skill>>* GetSkillsToLearn();
         virtual bool CanLearnSomething(Entity* target);
-        bool IsEquiped();
+        bool IsEquipped();
 
         virtual void EquipTo(Entity* target);
         virtual void UnEquip();
+        Entity* GetEquipTarget();
 
         SkillGenerator* GetSkillGenerator();
 

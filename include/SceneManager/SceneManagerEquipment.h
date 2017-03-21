@@ -33,9 +33,11 @@ class SceneManagerEquipment : AttributeNodesDisplay, public SceneManager
         virtual bool PausesSceneManagerBelow();
 
     protected:
-        void UpdateMemberStats();
+        void UpdateMemberStats(bool selectedOnly = false);
         void RemoveEquipmentSkillMenu();
         void SetEquipmentSkillMenu(Equipment* equipment);
+
+        void ReSelectEquipment();
 
         MenuNode* m_mainMenu;
         Node* m_equipmentSkillBase;

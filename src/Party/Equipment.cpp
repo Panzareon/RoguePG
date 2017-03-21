@@ -38,7 +38,12 @@ void Equipment::UnEquip()
     m_target = nullptr;
 }
 
-bool Equipment::IsEquiped()
+Entity* Equipment::GetEquipTarget()
+{
+    return m_target;
+}
+
+bool Equipment::IsEquipped()
 {
     return m_target != nullptr;
 }

@@ -156,3 +156,35 @@ CharacterClass* PartyMember::GetClass()
 {
     return m_chrClass;
 }
+
+void PartyMember::SaveBeforeEquipping()
+{
+    m_missingHp = GetHp() / (float)GetAttribute(BattleEnums::AttributeMaxHp);
+    m_missingMp = GetMp() / (float)GetAttribute(BattleEnums::AttributeMaxMp);
+    m_lastEquipment = m_equipment;
+}
+
+void PartyMember::ResetAfterEquipping()
+{
+    m_hp = GetAttribute(BattleEnums::AttributeMaxHp) * m_missingHp;
+    if(m_hp < 1 && m_missingHp > 0.0f)
+        m_hp = 1;
+
+    m_mp = GetAttribute(BattleEnums::AttributeMaxMp) * m_missingMp;
+    if(m_mp < 0)
+        m_mp = 0;
+
+    //Reequip all lost equipment
+    for(auto it = m_lastEquipment.begin(); it != m_lastEquipment.end(); it++)
+    {
+        if(m_equipment[it->first] == nullptr)
+        {
+            if(it->second != nullptr && !it->second->IsEquipped())
+            {
+                SetEquipment(it->first, it->second);
+            }
+        }
+    }
+    m_lastEquipment = m_equipment;
+}
+

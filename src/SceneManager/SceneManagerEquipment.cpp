@@ -75,6 +75,7 @@ SceneManagerEquipment::SceneManagerEquipment()
         m_mainMenu->AddOption(member->at(i)->GetName(), std::function<void()>(std::bind(&MenuFunctions::SelectMember,this,member->at(i))));
         Node* nextMember = GetAttributeNode(member->at(i), i);
         m_mainMenu->AddNodeToOption(i, nextMember);
+        member->at(i)->SaveBeforeEquipping();
     }
     m_background->addChild(m_mainMenu);
 
@@ -94,6 +95,7 @@ SceneManagerEquipment::SceneManagerEquipment()
 SceneManagerEquipment::~SceneManagerEquipment()
 {
     //dtor
+    ReSelectEquipment();
 }
 
 void SceneManagerEquipment::Tick()
@@ -184,14 +186,14 @@ void SceneManagerEquipment::SelectMember(PartyMember* member)
             if(equip->GetEquipmentPosition() == pos)
             {
                 //Add Item to Menu
-                m_equipmentItems->AddOptionWithItem(loc->GetLocalization(equip->GetName()), std::function<void()>(std::bind(&MenuFunctions::Equip,this,equip)), equip, !equip->IsEquiped());
+                m_equipmentItems->AddOptionWithItem(loc->GetLocalization(equip->GetName()), std::function<void()>(std::bind(&MenuFunctions::Equip,this,equip)), equip, true);
 
                 if(first)
                 {
                     //Equip first available Item if not equipped otherwise
                     SetEquipmentSkillMenu(equip);
                     m_selectedEquipment = equip;
-                    if(!equip->IsEquiped())
+                    if(!equip->IsEquipped())
                         SelectEquipment(equip);
                     first = false;
                 }
@@ -208,11 +210,14 @@ void SceneManagerEquipment::SelectEquipment(Equipment* equipment)
     if(equipment != nullptr)
     {
         SetEquipmentSkillMenu(equipment);
-        if(!equipment->IsEquiped())
+        if(equipment->IsEquipped())
         {
-            m_selectedMember->SetEquipment(Equipment::MainHand, equipment);
-            UpdateMemberStats();
+            Entity* lastEquiped = equipment->GetEquipTarget();
+            ((PartyMember*)lastEquiped)->SetEquipment(Equipment::MainHand, nullptr);
         }
+        m_selectedMember->SetEquipment(Equipment::MainHand, equipment);
+        UpdateMemberStats(true);
+
         m_equipmentDescription->SetText( Localization::GetInstance()->GetLocalization(equipment->GetDescription()));
     }
     else
@@ -232,6 +237,7 @@ void SceneManagerEquipment::Equip(Equipment* equipment)
     m_equipmentDescription->setVisibility(false);
     m_selectedMember = nullptr;
     RemoveEquipmentSkillMenu();
+    ReSelectEquipment();
     UpdateMemberStats();
 }
 
@@ -256,7 +262,7 @@ void SceneManagerEquipment::SelectSkill(Skill* skill)
     m_equipmentDescription->SetText(skill->GetLocalizedDescription());
 }
 
-void SceneManagerEquipment::UpdateMemberStats()
+void SceneManagerEquipment::UpdateMemberStats(bool selectedOnly)
 {
     Party* party = GameController::getInstance()->getParty();
     std::vector<PartyMember*>* member = party->GetAllPartyMembers();
@@ -265,21 +271,24 @@ void SceneManagerEquipment::UpdateMemberStats()
     for(int i = scrollPosition; i < member->size() && i < scrollPosition + m_maxShownHeroes; i++)
     {
         mem = member->at(i);
-        UpdateAttributeNode(mem, i);
-        for(int j = 0; j < BattleEnums::ATTRIBUTE_END; j++)
+        if(!selectedOnly || mem == m_selectedMember)
         {
-            int attributeValue = mem->GetAttribute((BattleEnums::Attribute)j);
-            if(mem == m_selectedMember && attributeValue > m_memberStats[(BattleEnums::Attribute)j])
+            UpdateAttributeNode(mem, i);
+            for(int j = 0; j < BattleEnums::ATTRIBUTE_END; j++)
             {
-                m_attributeNodes[i][(BattleEnums::Attribute)j]->SetColor(sf::Color::Green);
-            }
-            else if(mem == m_selectedMember && attributeValue < m_memberStats[(BattleEnums::Attribute)j])
-            {
-                m_attributeNodes[i][(BattleEnums::Attribute)j]->SetColor(sf::Color::Red);
-            }
-            else
-            {
-                m_attributeNodes[i][(BattleEnums::Attribute)j]->SetColor(sf::Color::Black);
+                int attributeValue = mem->GetAttribute((BattleEnums::Attribute)j);
+                if(mem == m_selectedMember && attributeValue > m_memberStats[(BattleEnums::Attribute)j])
+                {
+                    m_attributeNodes[i][(BattleEnums::Attribute)j]->SetColor(sf::Color::Green);
+                }
+                else if(mem == m_selectedMember && attributeValue < m_memberStats[(BattleEnums::Attribute)j])
+                {
+                    m_attributeNodes[i][(BattleEnums::Attribute)j]->SetColor(sf::Color::Red);
+                }
+                else
+                {
+                    m_attributeNodes[i][(BattleEnums::Attribute)j]->SetColor(sf::Color::Black);
+                }
             }
         }
     }
@@ -367,5 +376,14 @@ void SceneManagerEquipment::SetEquipmentSkillMenu(Equipment* equipment)
     else
     {
         m_equipmentSkillLearningNode->setVisibility(false);
+    }
+}
+
+void SceneManagerEquipment::ReSelectEquipment()
+{
+    std::vector<PartyMember*>* member = GameController::getInstance()->getParty()->GetAllPartyMembers();
+    for(int i = 0; i < member->size(); i++)
+    {
+        member->at(i)->ResetAfterEquipping();
     }
 }

@@ -24,10 +24,19 @@ class PartyMember : public Entity
         void SetEquipment(Equipment::EquipmentPosition position, Equipment* equipment = nullptr);
         Equipment* GetEquipment(Equipment::EquipmentPosition position);
         CharacterClass* GetClass();
+
+        void SaveBeforeEquipping();
+        void ResetAfterEquipping();
     protected:
         int m_exp;
         int m_lvl;
         float m_neededExpMultiplier;
+
+        //For changing Equipment
+        float m_missingHp;
+        float m_missingMp;
+        std::map<Equipment::EquipmentPosition, Equipment*> m_lastEquipment;
+
 
         std::map<Equipment::EquipmentPosition, Equipment*> m_equipment;
 
