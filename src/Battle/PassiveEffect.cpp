@@ -138,7 +138,7 @@ int PassiveEffect::GetActivationPriority()
 
 std::string PassiveEffect::GetName()
 {
-    m_causingEffect->GetName();
+    return m_causingEffect->GetName();
 }
 
 std::string PassiveEffect::GetLocalizedDescription()
