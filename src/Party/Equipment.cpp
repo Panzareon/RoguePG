@@ -228,7 +228,7 @@ std::string Equipment::GetLocalizedDescription()
 
 
 //Not needed Functions from IPassiveEffect
-void Equipment::OnTurn()
+void Equipment::OnTurn(Entity* target)
 {
     //NOOP
 }

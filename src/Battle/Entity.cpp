@@ -282,7 +282,7 @@ void Entity::FinishedTurn()
     auto iter = m_passiveEffects.begin();
     while(iter != m_passiveEffects.end())
     {
-        iter->second->OnTurn();
+        iter->second->OnTurn(this);
         if(iter->second->IsStillActive())
             iter++;
         else

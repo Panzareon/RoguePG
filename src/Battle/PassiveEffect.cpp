@@ -1,10 +1,9 @@
 #include "Battle/PassiveEffect.h"
 #include "Battle/Effect.h"
 
-PassiveEffect::PassiveEffect(Entity* target, bool buff, int duration, Effect* causingEffect, bool staysAfterBattle)
+PassiveEffect::PassiveEffect(bool buff, int duration, Effect* causingEffect, bool staysAfterBattle)
 {
     //ctor
-    m_target = target;
     m_buff = buff;
     m_duration = duration;
     m_onTurn = nullptr;
@@ -40,14 +39,14 @@ void PassiveEffect::AddOnTurnEffect(std::function<void(Entity*, PassiveEffect*)>
     m_onTurn = onTurn;
 }
 
-void PassiveEffect::OnTurn()
+void PassiveEffect::OnTurn(Entity* target)
 {
     if(m_duration > 0)
     {
         m_duration++;
     }
     if(m_onTurn != nullptr)
-        (*m_onTurn)(m_target, this);
+        (*m_onTurn)(target, this);
 }
 
 float PassiveEffect::GetResistance(float resistanceValue, BattleEnums::AttackType type)

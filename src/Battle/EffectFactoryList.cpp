@@ -69,9 +69,10 @@ namespace EffectFunctions
     {
         for(unsigned int i = 0; i < targets->size(); i++)
         {
-            PassiveEffect* eff = new PassiveEffect(targets->at(i), true, (int)strength->at(0), effect);
+            PassiveEffect* eff = new PassiveEffect(true, (int)strength->at(0), effect);
             eff->AddAttributeEffect(new std::function<float(float,BattleEnums::Attribute)>(
                 std::bind(&PassiveEffectFunctions::BuffAttribute,std::placeholders::_1,std::placeholders::_2,strength->at(1), attribute)));
+            targets->at(i)->AddPassiveEffect(eff);
         }
     }
 
@@ -80,9 +81,10 @@ namespace EffectFunctions
     {
         for(unsigned int i = 0; i < targets->size(); i++)
         {
-            PassiveEffect* eff = new PassiveEffect(targets->at(i), true, (int)strength->at(0), effect);
+            PassiveEffect* eff = new PassiveEffect(true, (int)strength->at(0), effect);
             eff->AddGetResistance(new std::function<float(float,BattleEnums::AttackType)>(
                 std::bind(&PassiveEffectFunctions::BuffResistance,std::placeholders::_1,std::placeholders::_2,strength->at(1), type)));
+            targets->at(i)->AddPassiveEffect(eff);
         }
     }
 
@@ -91,9 +93,10 @@ namespace EffectFunctions
     {
         for(unsigned int i = 0; i < targets->size(); i++)
         {
-            PassiveEffect* eff = new PassiveEffect(targets->at(i), true, (int)strength->at(0), effect);
+            PassiveEffect* eff = new PassiveEffect(true, (int)strength->at(0), effect);
             eff->AddAttributeEffect(new std::function<float(float,BattleEnums::Attribute)>(
                 std::bind(&PassiveEffectFunctions::DebuffAttribute,std::placeholders::_1,std::placeholders::_2,strength->at(1), attribute)));
+            targets->at(i)->AddPassiveEffect(eff);
         }
     }
 
@@ -102,9 +105,10 @@ namespace EffectFunctions
     {
         for(unsigned int i = 0; i < targets->size(); i++)
         {
-            PassiveEffect* eff = new PassiveEffect(targets->at(i), true, (int)strength->at(0), effect);
+            PassiveEffect* eff = new PassiveEffect(true, (int)strength->at(0), effect);
             eff->AddGetResistance(new std::function<float(float,BattleEnums::AttackType)>(
                 std::bind(&PassiveEffectFunctions::DebuffResistance,std::placeholders::_1,std::placeholders::_2,strength->at(1), type)));
+            targets->at(i)->AddPassiveEffect(eff);
         }
     }
 }

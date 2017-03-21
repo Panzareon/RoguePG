@@ -12,11 +12,11 @@ class Effect;
 class PassiveEffect: public IPassiveEffect
 {
     public:
-        PassiveEffect(Entity* target, bool buff, int duration, Effect* causingEffect, bool staysAfterBattle = false);
+        PassiveEffect(bool buff, int duration, Effect* causingEffect, bool staysAfterBattle = false);
         virtual ~PassiveEffect();
 
         //For Effects that trigger every turn
-        virtual void OnTurn();
+        virtual void OnTurn(Entity* target);
         virtual float GetResistance(float resistanceValue, BattleEnums::AttackType type);
         virtual float GetAttribute(float attributeValue, BattleEnums::Attribute attribute);
         virtual void AttackEntity(Attack* att, Entity* target, Entity* attacker);
@@ -37,7 +37,6 @@ class PassiveEffect: public IPassiveEffect
         virtual std::string GetLocalizedDescription();
 
     protected:
-        Entity* m_target;
         Effect* m_causingEffect;
         bool m_buff;
         int m_prio;

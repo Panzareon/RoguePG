@@ -12,7 +12,7 @@ class IPassiveEffect
         IPassiveEffect();
         virtual ~IPassiveEffect();
         virtual void OnEffectStart();
-        virtual void OnTurn() = 0;
+        virtual void OnTurn(Entity* target) = 0;
         virtual float GetResistance(float resistanceValue, BattleEnums::AttackType type) = 0;
         virtual float GetAttribute(float attributeValue, BattleEnums::Attribute attribute) = 0;
         virtual void AttackEntity(Attack* att, Entity* target, Entity* attacker) = 0;
