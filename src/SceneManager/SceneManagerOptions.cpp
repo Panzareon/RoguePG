@@ -200,8 +200,6 @@ void SceneManagerOptions::SoundOptions()
     m_soundOptions->SetMaxShownOptions((int)Configuration::KEYS_END);
     m_soundOptions->CancelAvailable(true);
     m_mainMenu->addChild(m_soundOptions);
-    Configuration* config = Configuration::GetInstance();
-    Configuration::Keys key;
     Localization* local = Localization::GetInstance();
     m_soundOptions->AddOption(local->GetLocalization("menu.sound.music"), std::function<void()>(std::bind(&MenuFunctions::ChangeMusic, this)));
     m_soundOptions->AddOption(local->GetLocalization("menu.sound.sfx"), std::function<void()>(std::bind(&MenuFunctions::ChangeSfx, this)));
