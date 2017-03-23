@@ -19,6 +19,8 @@ class IPassiveEffect: public virtual NamedItem
         virtual void AttackEntity(Attack* att, Entity* target, Entity* attacker) = 0;
         virtual void GetAttacked(Attack* att, Entity* target, Entity* attacker) = 0;
         virtual float GetExp(float exp) = 0;
+        virtual void OnBattleFinished(Entity* target);
+
         virtual bool IsStillActive() = 0;
         virtual bool StaysAfterBattle() = 0;
 

@@ -19,3 +19,9 @@ void IPassiveEffect::OnEffectStart()
 {
     //NOOP
 }
+
+void IPassiveEffect::OnBattleFinished(Entity* target)
+{
+    //NOOP
+}
+

@@ -1,7 +1,7 @@
 #include "EffectFactoryPassive.h"
 #include "EffectPassive.h"
 
-EffectFactoryPassive::EffectFactoryPassive(std::function<void(PassiveEffect* addTo)>* func, int id) : EffectFactoryBase(id)
+EffectFactoryPassive::EffectFactoryPassive(std::function<void(std::vector<float>* strength, PassiveEffect* addTo)>* func, int id) : EffectFactoryBase(id)
 {
     //ctor
     m_effectFunction = func;

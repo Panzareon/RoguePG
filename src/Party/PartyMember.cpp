@@ -71,6 +71,7 @@ void PartyMember::BattleFinished()
     auto iter = m_passiveEffects.begin();
     while(iter != m_passiveEffects.end())
     {
+        iter->second->OnBattleFinished(this);
         if(iter->second->StaysAfterBattle())
             iter++;
         else

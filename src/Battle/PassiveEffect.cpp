@@ -73,6 +73,13 @@ float PassiveEffect::GetExp(float exp)
     return (*m_getExp)(exp);
 }
 
+void PassiveEffect::OnBattleFinished(Entity* target)
+{
+    //this is called when the Entity gains Exp
+    if(m_onBattleFinished != nullptr)
+        (*m_onBattleFinished)(target);
+}
+
 void PassiveEffect::AddAttributeEffect(std::function<float(float, BattleEnums::Attribute)>* attributeFunction)
 {
     if(m_attributeFunction != nullptr)
@@ -118,6 +125,13 @@ void PassiveEffect::AddGetResistance(std::function<float(float, BattleEnums::Att
     if(m_resistanceFunction != nullptr)
         delete m_resistanceFunction;
     m_resistanceFunction = getResistance;
+}
+
+void PassiveEffect::AddOnBattleFinished(std::function<void(Entity*)>* onBattleFinished)
+{
+    if(m_onBattleFinished != nullptr)
+        delete m_onBattleFinished;
+    m_onBattleFinished = onBattleFinished;
 }
 
 
