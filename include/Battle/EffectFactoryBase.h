@@ -10,7 +10,7 @@
 class EffectFactoryBase
 {
     public:
-        EffectFactoryBase();
+        EffectFactoryBase(int id);
         virtual ~EffectFactoryBase();
 
         //Returns new Instance of Effect with a strength defined by the value given, needs to be deleted

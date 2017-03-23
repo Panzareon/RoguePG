@@ -34,3 +34,7 @@ void Effect::UseEffectOn(Entity* user, std::vector<Entity* >* targets)
     }
 }
 
+void Effect::SetAnimation(AnimationFactory::AnimationList anim)
+{
+    m_anim = anim;
+}

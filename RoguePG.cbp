@@ -18,6 +18,7 @@
 					<Add directory="include" />
 					<Add directory="include/SceneManager" />
 					<Add directory="include/Battle" />
+					<Add directory="include/Controller" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -32,6 +33,7 @@
 					<Add directory="include" />
 					<Add directory="include/SceneManager" />
 					<Add directory="include/Battle" />
+					<Add directory="include/Controller" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -60,8 +62,12 @@
 		<Unit filename="include/BattleAnimation/AnimationPartWithNode.h" />
 		<Unit filename="include/Battle/Attack.h" />
 		<Unit filename="include/Battle/Effect.h" />
+		<Unit filename="include/Battle/EffectBase.h" />
 		<Unit filename="include/Battle/EffectFactory.h" />
+		<Unit filename="include/Battle/EffectFactoryBase.h" />
 		<Unit filename="include/Battle/EffectFactoryList.h" />
+		<Unit filename="include/Battle/EffectFactoryPassive.h" />
+		<Unit filename="include/Battle/EffectPassive.h" />
 		<Unit filename="include/Battle/EnemyFactory.h" />
 		<Unit filename="include/Battle/Entity.h" />
 		<Unit filename="include/Battle/IPassiveEffect.h" />
@@ -78,9 +84,9 @@
 		<Unit filename="include/Controller/MathHelper.h" />
 		<Unit filename="include/Controller/MusicController.h" />
 		<Unit filename="include/Controller/NameGenerator.h" />
+		<Unit filename="include/Controller/NamedItem.h" />
 		<Unit filename="include/Controller/ShaderList.h" />
 		<Unit filename="include/Controller/SoundController.h" />
-		<Unit filename="include/EffectFactoryBase.h" />
 		<Unit filename="include/Exception/GenericException.h" />
 		<Unit filename="include/Exception/InvalidArgumentException.h" />
 		<Unit filename="include/Exception/InvalidFunctionException.h" />
@@ -145,8 +151,12 @@
 		<Unit filename="src/Battle/Attack.cpp" />
 		<Unit filename="src/Battle/Configuration.cpp" />
 		<Unit filename="src/Battle/Effect.cpp" />
+		<Unit filename="src/Battle/EffectBase.cpp" />
 		<Unit filename="src/Battle/EffectFactory.cpp" />
+		<Unit filename="src/Battle/EffectFactoryBase.cpp" />
 		<Unit filename="src/Battle/EffectFactoryList.cpp" />
+		<Unit filename="src/Battle/EffectFactoryPassive.cpp" />
+		<Unit filename="src/Battle/EffectPassive.cpp" />
 		<Unit filename="src/Battle/EnemyFactory.cpp" />
 		<Unit filename="src/Battle/Entity.cpp" />
 		<Unit filename="src/Battle/FileConfig.cpp" />
@@ -163,7 +173,7 @@
 		<Unit filename="src/Battle/SkillGenerator.cpp" />
 		<Unit filename="src/Battle/SoundController.cpp" />
 		<Unit filename="src/Battle/StrengthCalculation.cpp" />
-		<Unit filename="src/EffectFactoryBase.cpp" />
+		<Unit filename="src/Controller/NamedItem.cpp" />
 		<Unit filename="src/Exception/GenericException.cpp" />
 		<Unit filename="src/Exception/InvalidArgumentException.cpp" />
 		<Unit filename="src/Exception/InvalidFunctionException.cpp" />

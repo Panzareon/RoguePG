@@ -3,6 +3,7 @@
 
 #include <functional>
 #include "EffectBase.h"
+#include "BattleAnimation/AnimationFactory.h"
 
 
 class Effect : public EffectBase
@@ -12,11 +13,13 @@ class Effect : public EffectBase
 
         virtual void UseEffectOn(Entity* user, std::vector<Entity*>* targets);
 
+        void SetAnimation(AnimationFactory::AnimationList anim);
 
         virtual ~Effect();
     protected:
     private:
         std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect)>* m_effectFunction;
+        AnimationFactory::AnimationList m_anim;
 
 };
 

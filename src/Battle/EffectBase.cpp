@@ -42,14 +42,16 @@ std::string EffectBase::GetLocalizedDescription()
     return Localization::GetInstance()->GetLocalizationWithFloats(out.str(), m_strength);
 }
 
-void EffectBase::SetAnimation(AnimationFactory::AnimationList anim)
-{
-    m_anim = anim;
-}
-
 void EffectBase::UseEffectOn(Entity* user, std::vector<Entity*>* targets)
 {
     std::string out = "EffectBase::UseEffectOn not available for Effect: ";
+    out += std::to_string(GetFactory()->GetId());
+    throw InvalidFunctionException(out);
+}
+
+void EffectBase::AddToPassiveEffect(PassiveEffect* target)
+{
+    std::string out = "EffectBase::AddToPassiveEffect not available for Effect: ";
     out += std::to_string(GetFactory()->GetId());
     throw InvalidFunctionException(out);
 }

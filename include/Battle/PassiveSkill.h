@@ -13,6 +13,7 @@ class PassiveSkill : public Skill, public PassiveEffect
         virtual std::string GetName();
         virtual std::string GetLocalizedDescription();
 
+        virtual void AddEffect(EffectBase* eff, bool isPositive);
     protected:
 
     private:

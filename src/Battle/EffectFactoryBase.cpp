@@ -1,8 +1,9 @@
 #include "EffectFactoryBase.h"
 
-EffectFactoryBase::EffectFactoryBase()
+EffectFactoryBase::EffectFactoryBase(int id)
 {
     //ctor
+    m_id = id;
 }
 
 EffectFactoryBase::~EffectFactoryBase()

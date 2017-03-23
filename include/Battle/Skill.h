@@ -25,7 +25,7 @@ class Skill: public virtual NamedItem
         std::vector<EffectBase*>* GetEffects();
 
 
-        void AddEffect(EffectBase* eff, bool isPositive);
+        virtual void AddEffect(EffectBase* eff, bool isPositive);
     protected:
     private:
         std::vector<EffectBase*> m_effects;

@@ -5,9 +5,9 @@
 #include "Controller/NamedItem.h"
 #include "Entity.h"
 #include "StrengthCalculation.h"
-#include "BattleAnimation/AnimationFactory.h"
 
 class EffectFactoryBase;
+class PassiveEffect;
 
 class EffectBase : public virtual NamedItem
 {
@@ -16,7 +16,8 @@ class EffectBase : public virtual NamedItem
         virtual ~EffectBase();
 
         virtual void UseEffectOn(Entity* user, std::vector<Entity*>* targets);
-        void SetAnimation(AnimationFactory::AnimationList anim);
+        virtual void AddToPassiveEffect(PassiveEffect* target);
+
 
         float GetValue();
         EffectFactoryBase* GetFactory();
@@ -27,7 +28,6 @@ class EffectBase : public virtual NamedItem
         std::vector<float> *m_strength;
         StrengthCalculation* m_strengthCalculation;
         BattleEnums::Target m_defaultTarget;
-        AnimationFactory::AnimationList m_anim;
         EffectFactoryBase* m_factory;
 
     private:

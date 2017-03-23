@@ -19,3 +19,9 @@ std::string PassiveSkill::GetLocalizedDescription()
 {
     return Skill::GetLocalizedDescription();
 }
+
+void PassiveSkill::AddEffect(EffectBase* eff, bool isPositive)
+{
+    Skill::AddEffect(eff, isPositive);
+    eff->AddToPassiveEffect(this);
+}
