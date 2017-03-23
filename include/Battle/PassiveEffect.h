@@ -48,13 +48,13 @@ class PassiveEffect: public IPassiveEffect
         //Number of Turns this Effect lasts, -1 means forever
         int m_duration;
         bool m_staysAfterBattle;
-        std::function<void(Entity*,PassiveEffect*)>* m_onTurn;
-        std::function<float(float,BattleEnums::AttackType)>* m_resistanceFunction;
-        std::function<float(float,BattleEnums::Attribute)>* m_attributeFunction;
-        std::function<void(Attack*, Entity*, Entity*)>* m_attack;
-        std::function<void(Attack*, Entity*, Entity*)>* m_onAttacked;
-        std::function<float(float)>* m_getExp;
-        std::function<void(Entity*)>* m_onBattleFinished;
+        std::vector<std::function<void(Entity*,PassiveEffect*)>*> m_onTurn;
+        std::vector<std::function<float(float,BattleEnums::AttackType)>*> m_resistanceFunction;
+        std::vector<std::function<float(float,BattleEnums::Attribute)>*> m_attributeFunction;
+        std::vector<std::function<void(Attack*, Entity*, Entity*)>*> m_attack;
+        std::vector<std::function<void(Attack*, Entity*, Entity*)>*> m_onAttacked;
+        std::vector<std::function<float(float)>*> m_getExp;
+        std::vector<std::function<void(Entity*)>*> m_onBattleFinished;
     private:
 };
 

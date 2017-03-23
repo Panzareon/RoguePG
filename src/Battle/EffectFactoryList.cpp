@@ -33,6 +33,10 @@ namespace PassiveEffectFunctions
             return baseValue;
         return baseValue - strength;
     }
+    void Heal(Entity* target, PassiveEffect* passiveEffect, int hp)
+    {
+        target->Heal(hp);
+    }
 }
 
 namespace EffectFunctions
@@ -63,6 +67,18 @@ namespace EffectFunctions
         for(unsigned int i = 0; i < targets->size(); i++)
         {
             targets->at(i)->Heal(strength->at(0));
+        }
+    }
+
+    //Strength: two values, first duration of heal, second: strength of heal
+    void Regenerate(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect)
+    {
+        for(unsigned int i = 0; i < targets->size(); i++)
+        {
+            PassiveEffect* eff = new PassiveEffect(true, (int)strength->at(0), effect);
+            eff->AddOnTurnEffect(new std::function<void(Entity*, PassiveEffect*)>(
+                std::bind(&PassiveEffectFunctions::Heal,std::placeholders::_1,std::placeholders::_2,strength->at(1))));
+            targets->at(i)->AddPassiveEffect(eff);
         }
     }
 
@@ -115,20 +131,19 @@ namespace EffectFunctions
     }
 }
 
-namespace PassiveSkillFunctions
-{
-    void Heal(Entity* target, int hp)
-    {
-        target->Heal(hp);
-    }
-}
 namespace PassiveSkillEffectFunctions
 {
     //Strength: one value hp to heal
     void HealAfterBattle(std::vector<float>* strength, PassiveEffect* target)
     {
         target->AddOnBattleFinished(new std::function<void(Entity*)>(
-                std::bind(&PassiveSkillFunctions::Heal,std::placeholders::_1,strength->at(0))));
+                std::bind(&PassiveEffectFunctions::Heal,std::placeholders::_1,nullptr,strength->at(0))));
+    }
+    //Strength: one value hp to heal
+    void HealAfterTurn(std::vector<float>* strength, PassiveEffect* target)
+    {
+        target->AddOnTurnEffect(new std::function<void(Entity*, PassiveEffect*)>(
+                std::bind(&PassiveEffectFunctions::Heal,std::placeholders::_1,std::placeholders::_2,strength->at(0))));
     }
 }
 EffectFactoryList* EffectFactoryList::m_instance = 0;
@@ -351,10 +366,22 @@ EffectFactoryList::EffectFactoryList()
     //Everything from 1 to 300 hp heal
     calc->AddStrengthValue(1.0f, 300.0f, 1.0f);
     calc->SetMultiplier(2.0f);
-    newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
     newEffect->AddAttackType(BattleEnums::AttackTypeFire);
-    newEffect->AddAttackType(BattleEnums::AttackTypeWater);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
+    newEffect->AddEffectType(BattleEnums::EffectTypeHeal);
+    m_effects.push_back(newEffect);
+
+    //Regenerate
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(std::bind(&EffectFunctions::Regenerate,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4));
+    newEffect = new EffectFactory(func, 1002);
+    calc = newEffect->GetStrengthCalculation();
+    //Number of turns: from 2 to 10 with step of 1
+    calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
+    //Everything from 1 to 30 hp heal per turn
+    calc->AddStrengthValue(1.0f, 30.0f, 1.0f);
+    calc->SetMultiplier(1.5f);
+    newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
+    newEffect->AddAttackType(BattleEnums::AttackTypeWater);
     newEffect->AddAttackType(BattleEnums::AttackTypeAir);
     newEffect->AddEffectType(BattleEnums::EffectTypeHeal);
     m_effects.push_back(newEffect);
@@ -522,9 +549,19 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(1.0f, 300.0f, 1.0f);
     calc->SetMultiplier(1.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
+    newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
+    newEffect->AddEffectType(BattleEnums::EffectTypePassive);
+    m_effects.push_back(newEffect);
+
+    //Heal on turn
+    passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(std::bind(&PassiveSkillEffectFunctions::HealAfterTurn,std::placeholders::_1,std::placeholders::_2));
+    newEffect = new EffectFactoryPassive(passiveFunc, 100002);
+    calc = newEffect->GetStrengthCalculation();
+    //Everything from 1 to 300 hp heal
+    calc->AddStrengthValue(1.0f, 300.0f, 1.0f);
+    calc->SetMultiplier(10.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeFire);
     newEffect->AddAttackType(BattleEnums::AttackTypeWater);
-    newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddAttackType(BattleEnums::AttackTypeAir);
     newEffect->AddEffectType(BattleEnums::EffectTypePassive);
     m_effects.push_back(newEffect);

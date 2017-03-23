@@ -6,13 +6,6 @@ PassiveEffect::PassiveEffect(bool buff, int duration, NamedItem* causingEffect, 
     //ctor
     m_buff = buff;
     m_duration = duration;
-    m_onTurn = nullptr;
-    m_attributeFunction = nullptr;
-    m_resistanceFunction = nullptr;
-    m_attack = nullptr;
-    m_onAttacked = nullptr;
-    m_onBattleFinished = nullptr;
-    m_getExp = nullptr;
     m_staysAfterBattle = staysAfterBattle;
     m_causingEffect = causingEffect;
 }
@@ -20,25 +13,25 @@ PassiveEffect::PassiveEffect(bool buff, int duration, NamedItem* causingEffect, 
 PassiveEffect::~PassiveEffect()
 {
     //dtor
-    if(m_onTurn != nullptr)
-        delete m_onTurn;
-    if(m_resistanceFunction != nullptr)
-        delete m_resistanceFunction;
-    if(m_attributeFunction != nullptr)
-        delete m_attributeFunction;
-    if(m_attack != nullptr)
-        delete m_attack;
-    if(m_onAttacked != nullptr)
-        delete m_onAttacked;
-    if(m_getExp != nullptr)
-        delete m_getExp;
+    for(int i = 0; i < m_onTurn.size(); i++)
+        delete m_onTurn[i];
+    for(int i = 0; i < m_resistanceFunction.size(); i++)
+        delete m_resistanceFunction[i];
+    for(int i = 0; i < m_attributeFunction.size(); i++)
+        delete m_attributeFunction[i];
+    for(int i = 0; i < m_attack.size(); i++)
+        delete m_attack[i];
+    for(int i = 0; i < m_onAttacked.size(); i++)
+        delete m_onAttacked[i];
+    for(int i = 0; i < m_getExp.size(); i++)
+        delete m_getExp[i];
+    for(int i = 0; i < m_onBattleFinished.size(); i++)
+        delete m_onBattleFinished[i];
 }
 
 void PassiveEffect::AddOnTurnEffect(std::function<void(Entity*, PassiveEffect*)>* onTurn)
 {
-    if(m_onTurn != nullptr)
-        delete m_onTurn;
-    m_onTurn = onTurn;
+    m_onTurn.push_back(onTurn);
 }
 
 void PassiveEffect::OnTurn(Entity* target)
@@ -47,93 +40,81 @@ void PassiveEffect::OnTurn(Entity* target)
     {
         m_duration++;
     }
-    if(m_onTurn != nullptr)
-        (*m_onTurn)(target, this);
+    for(int i = 0; i < m_onTurn.size(); i++)
+        (*m_onTurn[i])(target, this);
 }
 
 float PassiveEffect::GetResistance(float resistanceValue, BattleEnums::AttackType type)
 {
     //If this Effect should change the resistance to a Attack Type, do it here
-    if(m_resistanceFunction == nullptr)
-        return resistanceValue;
-    return (*m_resistanceFunction)(resistanceValue,type);
+    for(int i = 0; i < m_resistanceFunction.size(); i++)
+        resistanceValue = (*m_resistanceFunction[i])(resistanceValue,type);
+    return resistanceValue;
 }
 
 float PassiveEffect::GetAttribute(float attributeValue, BattleEnums::Attribute attribute)
 {
     //If this Effect should change the attribute do it here
-    if(m_attributeFunction == nullptr)
-        return attributeValue;
-    return (*m_attributeFunction)(attributeValue,attribute);
+    for(int i = 0; i < m_attributeFunction.size(); i++)
+        attributeValue = (*m_attributeFunction[i])(attributeValue,attribute);
+    return attributeValue;
 }
 
 float PassiveEffect::GetExp(float exp)
 {
     //this is called when the Entity gains Exp
-    if(m_getExp == nullptr)
-        return exp;
-    return (*m_getExp)(exp);
+    for(int i = 0; i < m_getExp.size(); i++)
+        exp = (*m_getExp[i])(exp);
+    return exp;
 }
 
 void PassiveEffect::OnBattleFinished(Entity* target)
 {
     //this is called when the Entity gains Exp
-    if(m_onBattleFinished != nullptr)
-        (*m_onBattleFinished)(target);
+    for(int i = 0; i < m_onBattleFinished.size(); i++)
+        (*m_onBattleFinished[i])(target);
 }
 
 void PassiveEffect::AddAttributeEffect(std::function<float(float, BattleEnums::Attribute)>* attributeFunction)
 {
-    if(m_attributeFunction != nullptr)
-        delete m_attributeFunction;
-    m_attributeFunction = attributeFunction;
+    m_attributeFunction.push_back(attributeFunction);
 }
 void PassiveEffect::AttackEntity(Attack* att, Entity* target, Entity* attacker)
 {
     //Change Attack Damage or add Attack Type
-    if(m_attack != nullptr)
-        (*m_attack)(att, target, attacker);
+    for(int i = 0; i < m_attack.size(); i++)
+        (*m_attack[i])(att, target, attacker);
 }
 
 void PassiveEffect::GetAttacked(Attack* att, Entity* target, Entity* attacker)
 {
-    if(m_onAttacked != nullptr)
-        (*m_onAttacked)(att, target, attacker);
+    for(int i = 0; i < m_onAttacked.size(); i++)
+        (*m_onAttacked[i])(att, target, attacker);
 }
 
 void PassiveEffect::AddAttack(std::function<void(Attack*, Entity*, Entity*)>* attack)
 {
-    if(m_attack != nullptr)
-        delete m_attack;
-    m_attack = attack;
+    m_attack.push_back(attack);
 }
 
 void PassiveEffect::AddOnAttacked(std::function<void(Attack*, Entity*, Entity*)>* onAttacked)
 {
-    if(m_onAttacked != nullptr)
-        delete m_onAttacked;
-    m_onAttacked = onAttacked;
+    m_onAttacked.push_back(onAttacked);
 }
 
 void PassiveEffect::AddGetExp(std::function<float(float)>* getExp)
 {
-    if(m_getExp != nullptr)
-        delete m_getExp;
-    m_getExp = getExp;
+    m_getExp.push_back(getExp);
 }
 
 void PassiveEffect::AddGetResistance(std::function<float(float, BattleEnums::AttackType)>* getResistance)
 {
-    if(m_resistanceFunction != nullptr)
-        delete m_resistanceFunction;
-    m_resistanceFunction = getResistance;
+    m_resistanceFunction.push_back(getResistance);
 }
 
 void PassiveEffect::AddOnBattleFinished(std::function<void(Entity*)>* onBattleFinished)
 {
-    if(m_onBattleFinished != nullptr)
-        delete m_onBattleFinished;
-    m_onBattleFinished = onBattleFinished;
+    m_onBattleFinished.push_back(onBattleFinished);
 }
 
 
