@@ -1,7 +1,7 @@
-#ifndef EFFECTFACTORYLIST_H
+#ifndef EFFECTFACTORYLIST_HEffectFactory
 #define EFFECTFACTORYLIST_H
 
-#include "EffectFactory.h"
+#include "EffectFactoryBase.h"
 #include <vector>
 
 
@@ -10,12 +10,12 @@ class EffectFactoryList
     public:
         virtual ~EffectFactoryList();
         static EffectFactoryList* GetInstance();
-        EffectFactory* getWithId(int id);
-        EffectFactory* getRandom(BattleEnums::AttackType attackType, BattleEnums::EffectType effectType);
-        EffectFactory* getRandom(BattleEnums::AttackType attackType, BattleEnums::EffectType effectType, bool needTarget);
+        EffectFactoryBase* getWithId(int id);
+        EffectFactoryBase* getRandom(BattleEnums::AttackType attackType, BattleEnums::EffectType effectType);
+        EffectFactoryBase* getRandom(BattleEnums::AttackType attackType, BattleEnums::EffectType effectType, bool needTarget);
     protected:
     private:
-        std::vector<EffectFactory*> m_effects;
+        std::vector<EffectFactoryBase*> m_effects;
 
         static  EffectFactoryList* m_instance;
         EffectFactoryList();

@@ -17,6 +17,7 @@
 					<Add option="-DDEBUG_FLAG" />
 					<Add directory="include" />
 					<Add directory="include/SceneManager" />
+					<Add directory="include/Battle" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -30,6 +31,7 @@
 					<Add option="-m64" />
 					<Add directory="include" />
 					<Add directory="include/SceneManager" />
+					<Add directory="include/Battle" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -64,6 +66,7 @@
 		<Unit filename="include/Battle/Entity.h" />
 		<Unit filename="include/Battle/IPassiveEffect.h" />
 		<Unit filename="include/Battle/PassiveEffect.h" />
+		<Unit filename="include/Battle/PassiveSkill.h" />
 		<Unit filename="include/Battle/Skill.h" />
 		<Unit filename="include/Battle/SkillGenerator.h" />
 		<Unit filename="include/Battle/StrengthCalculation.h" />
@@ -77,6 +80,7 @@
 		<Unit filename="include/Controller/NameGenerator.h" />
 		<Unit filename="include/Controller/ShaderList.h" />
 		<Unit filename="include/Controller/SoundController.h" />
+		<Unit filename="include/EffectFactoryBase.h" />
 		<Unit filename="include/Exception/GenericException.h" />
 		<Unit filename="include/Exception/InvalidArgumentException.h" />
 		<Unit filename="include/Exception/InvalidFunctionException.h" />
@@ -153,11 +157,13 @@
 		<Unit filename="src/Battle/MusicController.cpp" />
 		<Unit filename="src/Battle/NameGenerator.cpp" />
 		<Unit filename="src/Battle/PassiveEffect.cpp" />
+		<Unit filename="src/Battle/PassiveSkill.cpp" />
 		<Unit filename="src/Battle/ShaderList.cpp" />
 		<Unit filename="src/Battle/Skill.cpp" />
 		<Unit filename="src/Battle/SkillGenerator.cpp" />
 		<Unit filename="src/Battle/SoundController.cpp" />
 		<Unit filename="src/Battle/StrengthCalculation.cpp" />
+		<Unit filename="src/EffectFactoryBase.cpp" />
 		<Unit filename="src/Exception/GenericException.cpp" />
 		<Unit filename="src/Exception/InvalidArgumentException.cpp" />
 		<Unit filename="src/Exception/InvalidFunctionException.cpp" />

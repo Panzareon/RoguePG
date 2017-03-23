@@ -2,17 +2,18 @@
 #define PASSIVEEFFECT_H
 
 #include "Controller/Enums.h"
+#include "Controller/NamedItem.h"
 #include "Attack.h"
 #include "IPassiveEffect.h"
+#include "EffectFactoryBase.h"
 #include <functional>
 class Entity;
-class Effect;
 
 //Class for Buffs and Debuffs
 class PassiveEffect: public IPassiveEffect
 {
     public:
-        PassiveEffect(bool buff, int duration, Effect* causingEffect, bool staysAfterBattle = false);
+        PassiveEffect(bool buff, int duration, NamedItem* causingEffect, bool staysAfterBattle = false);
         virtual ~PassiveEffect();
 
         //For Effects that trigger every turn
@@ -37,7 +38,7 @@ class PassiveEffect: public IPassiveEffect
         virtual std::string GetLocalizedDescription();
 
     protected:
-        Effect* m_causingEffect;
+        NamedItem* m_causingEffect;
         bool m_buff;
         int m_prio;
         //Number of Turns this Effect lasts, -1 means forever

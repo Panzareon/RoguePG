@@ -1,7 +1,7 @@
 #include "Battle/PassiveEffect.h"
-#include "Battle/Effect.h"
+#include "Battle/EffectBase.h"
 
-PassiveEffect::PassiveEffect(bool buff, int duration, Effect* causingEffect, bool staysAfterBattle)
+PassiveEffect::PassiveEffect(bool buff, int duration, NamedItem* causingEffect, bool staysAfterBattle)
 {
     //ctor
     m_buff = buff;

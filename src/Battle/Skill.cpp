@@ -120,12 +120,12 @@ std::string Skill::GetLocalizedDescription()
     return retval;
 }
 
-std::vector<Effect*>* Skill::GetEffects()
+std::vector<EffectBase*>* Skill::GetEffects()
 {
     return &m_effects;
 }
 
-void Skill::AddEffect(Effect* eff, bool isPositive)
+void Skill::AddEffect(EffectBase* eff, bool isPositive)
 {
     m_effects.push_back(eff);
     m_isPositive.push_back(isPositive);

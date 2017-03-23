@@ -3,10 +3,11 @@
 
 #include "Controller/Enums.h"
 #include <string>
+#include "Controller/NamedItem.h"
 class Attack;
 class Entity;
 
-class IPassiveEffect
+class IPassiveEffect: public virtual NamedItem
 {
     public:
         IPassiveEffect();
@@ -24,9 +25,6 @@ class IPassiveEffect
         virtual int GetActivationPriority() = 0;
 
         virtual bool IsEquipment();
-
-        virtual std::string GetName() = 0;
-        virtual std::string GetLocalizedDescription() = 0;
     protected:
     private:
 };

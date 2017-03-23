@@ -3,11 +3,12 @@
 #include <string>
 #include <vector>
 #include "Controller/Enums.h"
+#include "Controller/NamedItem.h"
 
 class Entity;
-class Effect;
+class EffectBase;
 
-class Skill
+class Skill: public virtual NamedItem
 {
     public:
         Skill(BattleEnums::Target target);
@@ -18,16 +19,16 @@ class Skill
         int GetManaBase();
 
         BattleEnums::Target GetDefaultTarget();
-        std::string GetName();
-        std::string GetLocalizedDescription();
+        virtual std::string GetName();
+        virtual std::string GetLocalizedDescription();
 
-        std::vector<Effect*>* GetEffects();
+        std::vector<EffectBase*>* GetEffects();
 
 
-        void AddEffect(Effect* eff, bool isPositive);
+        void AddEffect(EffectBase* eff, bool isPositive);
     protected:
     private:
-        std::vector<Effect*> m_effects;
+        std::vector<EffectBase*> m_effects;
         std::vector<bool> m_isPositive;
 
         std::string m_name;

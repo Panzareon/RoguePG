@@ -1,6 +1,7 @@
 #include "Battle/SkillGenerator.h"
 #include "Battle/EffectFactoryList.h"
 #include <iostream>
+#include "Battle/PassiveSkill.h"
 
 SkillGenerator::SkillGenerator()
 {
@@ -40,20 +41,41 @@ Skill* SkillGenerator::GetNewSkill(float strength)
     bool positive = false;
     if(target == BattleEnums::TargetOwnTeam || target == BattleEnums::TargetOwnTeamEntity || target == BattleEnums::TargetSelf)
         positive = true;
-    Skill* newSkill = new Skill(target);
-    float manaUse = 0.0f;
-
-    do
+    if(target == BattleEnums::TargetPassive)
     {
-        attackType = GetRandomAttackType();
-        effectType = GetRandomEffectType(positive);
+        Skill* newSkill = new PassiveSkill();
+        float manaUse = 0.0f;
+        effectType = BattleEnums::EffectTypePassive;
+
+        do
+        {
+            attackType = GetRandomAttackType();
 
 
-        newSkill->AddEffect(EffectFactoryList::GetInstance()->getRandom(attackType, effectType)->GetEffectWithValue(strength - manaUse, target), true);
-        manaUse = newSkill->GetManaBase();
+            newSkill->AddEffect(EffectFactoryList::GetInstance()->getRandom(attackType, effectType)->GetEffectWithValue(strength - manaUse, target), true);
+            manaUse = newSkill->GetManaBase();
+        }
+        while(manaUse < strength * 0.9);
+        return newSkill;
+
     }
-    while(manaUse < strength * 0.9);
-    return newSkill;
+    else
+    {
+        Skill* newSkill = new Skill(target);
+        float manaUse = 0.0f;
+
+        do
+        {
+            attackType = GetRandomAttackType();
+            effectType = GetRandomEffectType(positive);
+
+
+            newSkill->AddEffect(EffectFactoryList::GetInstance()->getRandom(attackType, effectType)->GetEffectWithValue(strength - manaUse, target), true);
+            manaUse = newSkill->GetManaBase();
+        }
+        while(manaUse < strength * 0.9);
+        return newSkill;
+    }
 }
 
 BattleEnums::Target SkillGenerator::GetRandomTarget()
