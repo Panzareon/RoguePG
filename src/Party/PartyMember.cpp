@@ -189,3 +189,22 @@ void PartyMember::ResetAfterEquipping()
     m_lastEquipment = m_equipment;
 }
 
+bool PartyMember::ShowEnemyHealth()
+{
+    bool ret = false;
+    for(auto iter = m_passiveEffects.begin(); iter != m_passiveEffects.end(); iter++)
+    {
+        ret = iter->second->ShowEnemyHealth(ret);
+    }
+    return ret;
+}
+
+float PartyMember::MovementSpeed(float base)
+{
+    for(auto iter = m_passiveEffects.begin(); iter != m_passiveEffects.end(); iter++)
+    {
+        base = iter->second->Movementspeed(base);
+    }
+    return base;
+}
+

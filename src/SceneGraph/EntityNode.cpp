@@ -7,6 +7,14 @@ EntityNode::EntityNode(SceneManagerBattle* sm, Entity* entity): AnimatedNode(ent
     m_entity = entity;
     entity->SetNode(this);
     m_targetedNode = nullptr;
+    m_entityHpBar = new EntityBarsNode(entity);
+    m_entityHpBar->setVisibility(false);
+    m_entityHpBar->ShowMpBar(false);
+    m_entityHpBar->ShowNumbers(false);
+    sf::FloatRect rect = entity->GetBattleSprite()->getLocalBounds();
+    m_entityHpBar->SetSize(rect.width, 5);
+    m_entityHpBar->moveNode(0.0f, rect.height);
+    addChild(m_entityHpBar);
 }
 
 EntityNode::~EntityNode()
@@ -50,5 +58,11 @@ void EntityNode::SetEntity(Entity* entity)
     {
         entity->SetNode(this);
         SetSprite(entity->GetBattleSprite(), entity->GetNumberSprites());
+        m_entityHpBar->SetEntity(entity);
     }
 }
+void EntityNode::ShowHpBar(bool show)
+{
+    m_entityHpBar->setVisibility(show);
+}
+

@@ -145,6 +145,16 @@ namespace PassiveSkillEffectFunctions
         target->AddOnTurnEffect(new std::function<void(Entity*, PassiveEffect*)>(
                 std::bind(&PassiveEffectFunctions::Heal,std::placeholders::_1,std::placeholders::_2,strength->at(0))));
     }
+    //Strength: %movement speed
+    void Movementspeed(std::vector<float>* strength, PassiveEffect* target)
+    {
+        target->SetMovementSpeedMultiplier(1 + strength->at(0));
+    }
+    //Strength no values
+    void ShowHp(std::vector<float>* strength, PassiveEffect* target)
+    {
+        target->SetShowEnemyHealth(true);
+    }
 }
 EffectFactoryList* EffectFactoryList::m_instance = 0;
 
@@ -563,6 +573,29 @@ EffectFactoryList::EffectFactoryList()
     newEffect->AddAttackType(BattleEnums::AttackTypeFire);
     newEffect->AddAttackType(BattleEnums::AttackTypeWater);
     newEffect->AddAttackType(BattleEnums::AttackTypeAir);
+    newEffect->AddEffectType(BattleEnums::EffectTypePassive);
+    m_effects.push_back(newEffect);
+
+    //Movement boost
+    passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(std::bind(&PassiveSkillEffectFunctions::Movementspeed,std::placeholders::_1,std::placeholders::_2));
+    newEffect = new EffectFactoryPassive(passiveFunc, 100101);
+    calc = newEffect->GetStrengthCalculation();
+    //Everything from 1 to 50 % more speed
+    calc->AddStrengthValue(1.0f, 50.0f);
+    calc->SetMultiplier(1.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypeFire);
+    newEffect->AddAttackType(BattleEnums::AttackTypeWater);
+    newEffect->AddAttackType(BattleEnums::AttackTypeAir);
+    newEffect->AddEffectType(BattleEnums::EffectTypePassive);
+    m_effects.push_back(newEffect);
+
+    //Show hp bar
+    passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(std::bind(&PassiveSkillEffectFunctions::ShowHp,std::placeholders::_1,std::placeholders::_2));
+    newEffect = new EffectFactoryPassive(passiveFunc, 100102);
+    calc = newEffect->GetStrengthCalculation();
+    calc->SetMultiplier(12.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
+    newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddEffectType(BattleEnums::EffectTypePassive);
     m_effects.push_back(newEffect);
 }

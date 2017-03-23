@@ -153,6 +153,11 @@ effect.100001.desc = Heals for %0 hp after a battle.
 effect.100002 = Regenerate
 effect.100002.desc = Heals for %0 hp every turn.
 
+effect.100101 = Movement Boost
+effect.100101.desc = Increases movement speed by %0%.
+effect.100102 = Show Hp
+effect.100102.desc = Shows Hp bars of enemies.
+
 //Enemies
 enemy.bat = Bat
 enemy.stone_golem = Stone Golem

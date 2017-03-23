@@ -27,6 +27,9 @@ class PartyMember : public Entity
 
         void SaveBeforeEquipping();
         void ResetAfterEquipping();
+
+        bool ShowEnemyHealth();
+        float MovementSpeed(float base);
     protected:
         int m_exp;
         int m_lvl;

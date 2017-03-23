@@ -25,6 +25,9 @@ class Party
         int GetNumberOfItem(int itemId);
         bool RemoveItem(int itemId);
         std::vector<std::pair<int,Item*>>* GetItems();
+
+        bool ShowEnemyHealth();
+        float GetMovementSpeed(float base);
     protected:
     private:
         int m_money;

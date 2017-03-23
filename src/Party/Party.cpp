@@ -160,3 +160,22 @@ bool Party::RemoveMoney(int money)
     }
     return false;
 }
+
+bool Party::ShowEnemyHealth()
+{
+    for(int i = 0; i < m_activePartyMembers.size(); i++)
+    {
+        if(m_activePartyMembers[i]->ShowEnemyHealth())
+            return true;
+    }
+    return false;
+}
+
+float Party::GetMovementSpeed(float base)
+{
+    for(int i = 0; i < m_activePartyMembers.size(); i++)
+    {
+        base = m_activePartyMembers[i]->MovementSpeed(base);
+    }
+    return base;
+}

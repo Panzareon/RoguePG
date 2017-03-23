@@ -24,6 +24,8 @@ class PassiveEffect: public IPassiveEffect
         virtual void GetAttacked(Attack* att, Entity* target, Entity* attacker);
         virtual float GetExp(float exp);
         virtual void OnBattleFinished(Entity* target);
+        virtual bool ShowEnemyHealth(bool base);
+        virtual float Movementspeed(float base);
 
 
         virtual bool IsStillActive();
@@ -37,6 +39,8 @@ class PassiveEffect: public IPassiveEffect
         void AddGetExp(std::function<float(float)>* getExp);
         void AddGetResistance(std::function<float(float,BattleEnums::AttackType)>* getResistance);
         void AddOnBattleFinished(std::function<void(Entity*)>* onBattleFinished);
+        void SetMovementSpeedMultiplier(float mult);
+        void SetShowEnemyHealth(bool show);
 
         virtual std::string GetName();
         virtual std::string GetLocalizedDescription();
@@ -55,6 +59,9 @@ class PassiveEffect: public IPassiveEffect
         std::vector<std::function<void(Attack*, Entity*, Entity*)>*> m_onAttacked;
         std::vector<std::function<float(float)>*> m_getExp;
         std::vector<std::function<void(Entity*)>*> m_onBattleFinished;
+
+        float m_movementspeedMultiplier;
+        bool m_showEnemyHealth;
     private:
 };
 

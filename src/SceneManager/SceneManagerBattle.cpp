@@ -120,6 +120,7 @@ SceneManagerBattle::SceneManagerBattle()
     m_timeDisplay->addChild(timeNext);
 
     m_party = GameController::getInstance()->getParty();
+    m_showHpBar = m_party->ShowEnemyHealth();
 
 
     m_next = nullptr;
@@ -144,7 +145,7 @@ SceneManagerBattle::SceneManagerBattle()
     std::vector<PartyMember*> * party = m_party->GetActivePartyMembers();
     for(int i = 0; i < party->size(); i++)
     {
-        AddSpriteForEntity(party->at(i));
+        AddSpriteForEntity(party->at(i),false);
         sf::Text* text = new sf::Text("H" + std::to_string(i+1), *Configuration::GetInstance()->GetFont(), 12);
         m_partyMemberTime.push_back(text);
         sf::FloatRect textBounds = text->getLocalBounds();
@@ -374,7 +375,7 @@ void SceneManagerBattle::Tick()
 void SceneManagerBattle::AddEnemy(Entity* enemy)
 {
     m_enemies.push_back(enemy);
-    AddSpriteForEntity(enemy);
+    AddSpriteForEntity(enemy,true);
     enemy->StartBattle();
     sf::Text* text = new sf::Text("E" + std::to_string(m_enemies.size()), *Configuration::GetInstance()->GetFont(), 12);
     m_enemyTime.push_back(text);
@@ -564,9 +565,19 @@ void SceneManagerBattle::UpdatePlayerSprites()
             m_entityNodes[teamId][i]->SetEntity(nullptr);
         }
     }
+
+    bool showHp = m_party->ShowEnemyHealth();
+    if(showHp != m_showHpBar)
+    {
+        m_showHpBar = showHp;
+        for(auto it = m_entityNodes[1].begin(); it != m_entityNodes[1].end(); it++)
+        {
+            (*it)->ShowHpBar(m_showHpBar);
+        }
+    }
 }
 
-void SceneManagerBattle::AddSpriteForEntity(Entity* entity)
+void SceneManagerBattle::AddSpriteForEntity(Entity* entity, bool hpBar)
 {
     //Adding Cursor if Entity is targeted
     sf::Sprite* target = new sf::Sprite(*TextureList::getTexture(TextureList::TargetCursor));
@@ -588,6 +599,10 @@ void SceneManagerBattle::AddSpriteForEntity(Entity* entity)
     m_posPerTeam[teamId] += m_posChangePerTeam[teamId];
     m_posChangePerTeam[teamId].x *= -1;
     node->setTransform(trans);
+    if(hpBar && m_showHpBar)
+    {
+        node->ShowHpBar(true);
+    }
     m_eventLayer->addChild(node);
 }
 

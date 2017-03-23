@@ -8,6 +8,8 @@ PassiveEffect::PassiveEffect(bool buff, int duration, NamedItem* causingEffect, 
     m_duration = duration;
     m_staysAfterBattle = staysAfterBattle;
     m_causingEffect = causingEffect;
+    m_movementspeedMultiplier = 1.0f;
+    m_showEnemyHealth = false;
 }
 
 PassiveEffect::~PassiveEffect()
@@ -38,7 +40,7 @@ void PassiveEffect::OnTurn(Entity* target)
 {
     if(m_duration > 0)
     {
-        m_duration++;
+        m_duration--;
     }
     for(int i = 0; i < m_onTurn.size(); i++)
         (*m_onTurn[i])(target, this);
@@ -141,4 +143,24 @@ std::string PassiveEffect::GetName()
 std::string PassiveEffect::GetLocalizedDescription()
 {
     return m_causingEffect->GetLocalizedDescription();
+}
+
+bool PassiveEffect::ShowEnemyHealth(bool base)
+{
+    return base || m_showEnemyHealth;
+}
+
+float PassiveEffect::Movementspeed(float base)
+{
+    return base * m_movementspeedMultiplier;
+}
+
+void PassiveEffect::SetMovementSpeedMultiplier(float mult)
+{
+    m_movementspeedMultiplier *= mult;
+}
+
+void PassiveEffect::SetShowEnemyHealth(bool show)
+{
+    m_showEnemyHealth = show;
 }

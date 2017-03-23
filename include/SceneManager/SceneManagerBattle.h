@@ -31,7 +31,7 @@ class SceneManagerBattle : public SceneManager
 
         bool IsEntityTargeted(Entity* entity);
 
-        void AddSpriteForEntity(Entity* entity);
+        void AddSpriteForEntity(Entity* entity, bool hpBar);
 
         void SetDescription(std::string str);
 
@@ -51,6 +51,7 @@ class SceneManagerBattle : public SceneManager
 
         Entity* m_next;
         bool m_nextFinished;
+        bool m_showHpBar;
         float m_restoreHpPercent;
         float m_restoreMpPercent;
 

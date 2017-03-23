@@ -13,6 +13,9 @@ class EntityBarsNode : public Node
         virtual ~EntityBarsNode();
         void SetDefaultSize();
         void UpdateShape();
+        void ShowMpBar(bool show);
+        void ShowNumbers(bool show);
+        void SetSize(int width, int height);
 
         void SetEntity(Entity* entity);
 

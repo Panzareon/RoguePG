@@ -124,3 +124,21 @@ void EntityBarsNode::DrawBar(sf::RenderTarget& target, const sf::Transform& tran
         target.draw(text, transform);
     }
 }
+
+void EntityBarsNode::ShowMpBar(bool show)
+{
+    m_showMp = show;
+}
+
+void EntityBarsNode::ShowNumbers(bool show)
+{
+    m_showNumbers = show;
+}
+
+void EntityBarsNode::SetSize(int width, int height)
+{
+    m_width = width;
+    m_height = height;
+    UpdateShape();
+}
+

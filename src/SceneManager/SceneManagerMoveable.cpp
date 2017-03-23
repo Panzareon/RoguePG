@@ -109,8 +109,8 @@ void SceneManagerMoveable::Tick()
     GameController* controller = GameController::getInstance();
 
     //Movement
-    //TODO: calculate movement Speed
     float MoveSpeed = 256.0f;
+    MoveSpeed = controller->getParty()->GetMovementSpeed(MoveSpeed);
 
     float moveX = 0.0f;
     float moveY = 0.0f;
