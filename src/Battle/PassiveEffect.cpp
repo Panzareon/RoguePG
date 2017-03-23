@@ -11,6 +11,8 @@ PassiveEffect::PassiveEffect(bool buff, int duration, NamedItem* causingEffect, 
     m_resistanceFunction = nullptr;
     m_attack = nullptr;
     m_onAttacked = nullptr;
+    m_onBattleFinished = nullptr;
+    m_getExp = nullptr;
     m_staysAfterBattle = staysAfterBattle;
     m_causingEffect = causingEffect;
 }

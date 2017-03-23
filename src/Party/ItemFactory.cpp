@@ -111,11 +111,13 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(6,3,true));
         retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(6,3,true));
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.4f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.2f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.1f);
-        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.4f);
+        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.3f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.05f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.05f);
+        gen->AddSkillTarget(BattleEnums::TargetPassive, 0.3f);
+
 
         gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.8f);
         gen->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.05f);

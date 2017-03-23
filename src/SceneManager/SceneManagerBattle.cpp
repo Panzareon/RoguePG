@@ -63,14 +63,19 @@ namespace BattleFunctions
 
         std::vector<std::shared_ptr<Skill>>* skillList = attacking->GetSkillList();
         bool setDescription = true;
+        int menuId = 0;
         for(unsigned int i = 0; i < skillList->size(); i++)
         {
-            if(setDescription)
+            if(skillList->at(i)->GetSkillType() == Skill::Usable)
             {
-                SetSkillDescription(sm, skillList->at(i).get());
+                if(setDescription)
+                {
+                    SetSkillDescription(sm, skillList->at(i).get());
+                }
+                skillMenu->AddOptionWithItem(localization->GetLocalization(skillList->at(i)->GetName()),std::function<void()>(std::bind(&UseSkill, sm, attacking, skillList->at(i).get())), skillList->at(i).get(), attacking->GetMp() >= skillList->at(i)->GetManaUse());
+                skillMenu->AddValueToOption(menuId, std::to_string((int)skillList->at(i)->GetManaUse()));
+                menuId ++;
             }
-            skillMenu->AddOptionWithItem(localization->GetLocalization(skillList->at(i)->GetName()),std::function<void()>(std::bind(&UseSkill, sm, attacking, skillList->at(i).get())), skillList->at(i).get(), attacking->GetMp() >= skillList->at(i)->GetManaUse());
-            skillMenu->AddValueToOption(i, std::to_string((int)skillList->at(i)->GetManaUse()));
         }
 
         sm->AddSubMenu(skillMenu);

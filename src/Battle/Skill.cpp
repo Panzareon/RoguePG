@@ -125,6 +125,11 @@ std::vector<EffectBase*>* Skill::GetEffects()
     return &m_effects;
 }
 
+Skill::SkillType Skill::GetSkillType()
+{
+    return Usable;
+}
+
 void Skill::AddEffect(EffectBase* eff, bool isPositive)
 {
     m_effects.push_back(eff);

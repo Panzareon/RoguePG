@@ -11,6 +11,7 @@ class EffectBase;
 class Skill: public virtual NamedItem
 {
     public:
+        enum SkillType{Usable, Passive};
         Skill(BattleEnums::Target target);
         virtual ~Skill();
         void Use(Entity* user, BattleEnums::Target targetType, Entity* target);
@@ -25,6 +26,7 @@ class Skill: public virtual NamedItem
         std::vector<EffectBase*>* GetEffects();
 
 
+        virtual SkillType GetSkillType();
         virtual void AddEffect(EffectBase* eff, bool isPositive);
     protected:
     private:

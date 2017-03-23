@@ -20,6 +20,11 @@ std::string PassiveSkill::GetLocalizedDescription()
     return Skill::GetLocalizedDescription();
 }
 
+Skill::SkillType PassiveSkill::GetSkillType()
+{
+    return Passive;
+}
+
 void PassiveSkill::AddEffect(EffectBase* eff, bool isPositive)
 {
     Skill::AddEffect(eff, isPositive);

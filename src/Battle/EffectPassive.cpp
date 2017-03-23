@@ -4,6 +4,7 @@ EffectPassive::EffectPassive(EffectFactoryBase* factory, std::function<void(std:
                 :EffectBase(factory,strength,strengthCalculation,target)
 {
     //ctor
+    m_addFunction = func;
 }
 
 EffectPassive::~EffectPassive()

@@ -6,6 +6,7 @@
 #include "SceneGraph/TextureList.h"
 #include "BattleAnimation/AnimationFactory.h"
 #include "Controller/GameController.h"
+#include "PassiveSkill.h"
 
 Entity::Entity(int exp)
 {
@@ -182,11 +183,19 @@ bool Entity::IsDead()
 
 void Entity::AddSkill(Skill* skill)
 {
+    if(skill->GetSkillType() == Skill::Passive)
+    {
+        AddPassiveEffect((PassiveSkill*) skill);
+    }
     m_skills.push_back(std::shared_ptr<Skill>(skill));
 }
 
 void Entity::AddSkill(std::shared_ptr<Skill> skill)
 {
+    if(skill->GetSkillType() == Skill::Passive)
+    {
+        AddPassiveEffect((PassiveSkill*) skill.get());
+    }
     m_skills.push_back(skill);
 }
 

@@ -84,6 +84,7 @@ effect.target.3 = Targets all enemies.
 effect.target.4 = Targets the casting hero.
 effect.target.5 = Does not target anything.
 effect.target.6 = Targets all heroes and enemies.
+effect.target.7 = Passive skill.
 
 //Effects
 effect.1 = Fire Damage
@@ -144,6 +145,9 @@ effect.10054 = Earth Weakness
 effect.10054.desc = Decreases resistance against earth attacks by %1% for %0 turns.
 effect.10055 = Fire Weakness
 effect.10055.desc = Decreases resistance against fire attacks by %1% for %0 turns.
+
+effect.100001 = Heal After Battle
+effect.100001.desc = Heals for %0 hp after a battle.
 
 //Enemies
 enemy.bat = Bat
