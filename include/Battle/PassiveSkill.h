@@ -15,6 +15,7 @@ class PassiveSkill : public Skill, public PassiveEffect
 
         virtual SkillType GetSkillType();
         virtual void AddEffect(EffectBase* eff, bool isPositive);
+        virtual bool DeleteEffect();
     protected:
 
     private:

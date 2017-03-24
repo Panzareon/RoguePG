@@ -34,3 +34,8 @@ float IPassiveEffect::Movementspeed(float base)
 {
     return base;
 }
+
+bool IPassiveEffect::DeleteEffect()
+{
+    return true;
+}

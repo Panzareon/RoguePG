@@ -29,6 +29,8 @@ class IPassiveEffect: public virtual NamedItem
         virtual int GetActivationPriority() = 0;
 
         virtual bool IsEquipment();
+
+        virtual bool DeleteEffect();
     protected:
     private:
 };
