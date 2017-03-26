@@ -43,7 +43,7 @@ void Skill::Use(Entity* user, BattleEnums::Target targetType, Entity* target)
     {
         //fill targets vector depending on targetType
         std::vector<Entity*>* e = ((SceneManagerBattle*)GameController::getInstance()->GetActiveSceneManager())->GetEnemies();
-        std::vector<PartyMember*> * p = GameController::getInstance()->getParty()->GetActivePartyMembers();
+        std::vector<std::shared_ptr<PartyMember> > * p = GameController::getInstance()->getParty()->GetActivePartyMembers();
         int teamId = user->GetTeamId();
         if(targetType == BattleEnums::TargetAll)
         {
@@ -56,7 +56,7 @@ void Skill::Use(Entity* user, BattleEnums::Target targetType, Entity* target)
             for(int i = 0; i < p->size(); i++)
             {
                 if(!p->at(i)->IsDead())
-                    targets.push_back(p->at(i));
+                    targets.push_back(p->at(i).get());
             }
         }
         else if(targetType == BattleEnums::TargetEnemyTeam)
@@ -70,7 +70,7 @@ void Skill::Use(Entity* user, BattleEnums::Target targetType, Entity* target)
             for(int i = 0; i < p->size(); i++)
             {
                 if(p->at(i)->GetTeamId() != teamId && !p->at(i)->IsDead())
-                    targets.push_back(p->at(i));
+                    targets.push_back(p->at(i).get());
             }
         }
         else if(targetType == BattleEnums::TargetOwnTeam)
@@ -84,7 +84,7 @@ void Skill::Use(Entity* user, BattleEnums::Target targetType, Entity* target)
             for(int i = 0; i < p->size(); i++)
             {
                 if(p->at(i)->GetTeamId() == teamId && !p->at(i)->IsDead())
-                    targets.push_back(p->at(i));
+                    targets.push_back(p->at(i).get());
             }
         }
     }

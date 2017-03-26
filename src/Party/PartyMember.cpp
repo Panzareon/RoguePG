@@ -5,11 +5,35 @@
 #include "Controller/NameGenerator.h"
 #include <iostream>
 
+PartyMember::PartyMember()
+{
+    m_chrClass = nullptr;
+    Init();
+}
+
 PartyMember::PartyMember(CharacterClass* chrClass)
 {
     //ctor
-    m_controllTypeAtm = Entity::ControllUser;
     m_chrClass = chrClass;
+    Init();
+}
+
+PartyMember::~PartyMember()
+{
+    //dtor
+}
+
+void PartyMember::SetCharacterClass(CharacterClass* chrClass)
+{
+    if(m_chrClass == nullptr)
+    {
+        m_chrClass  = chrClass;
+    }
+}
+
+void PartyMember::Init()
+{
+    m_controllTypeAtm = Entity::ControllUser;
     m_exp = 0;
     m_lvl = 1;
     m_neededExpMultiplier = 10.0f;
@@ -21,11 +45,6 @@ PartyMember::PartyMember(CharacterClass* chrClass)
     {
         m_equipment[(Equipment::EquipmentPosition)i] = nullptr;
     }
-}
-
-PartyMember::~PartyMember()
-{
-    //dtor
 }
 
 void PartyMember::AddExp(int ammount)
@@ -153,7 +172,7 @@ Equipment* PartyMember::GetEquipment(Equipment::EquipmentPosition position)
     return m_equipment[position];
 }
 
-CharacterClass* PartyMember::GetClass()
+CharacterClass* PartyMember::GetClass() const
 {
     return m_chrClass;
 }

@@ -62,7 +62,7 @@ void EntityBarsNode::Tick(float seconds)
         }
         else
         {
-            m_shownEntity = m_party->GetActivePartyMembers()->at(m_entityNrInList);
+            m_shownEntity = m_party->GetActivePartyMembers()->at(m_entityNrInList).get();
         }
     }
     Node::Tick(seconds);

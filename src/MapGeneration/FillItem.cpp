@@ -1,6 +1,11 @@
 #include "MapGeneration/FillItem.h"
 #include "MapGeneration/TileMap.h"
 
+FillItem::FillItem()
+{
+
+}
+
 FillItem::FillItem(int Item, int chance, int neededTile, int newTile, Type type, ItemSize size, PlacingRestriction restr)
 {
     //ctor

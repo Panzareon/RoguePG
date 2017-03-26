@@ -1,12 +1,41 @@
 #include "MapGeneration/Map.h"
 #include <cmath>
 
+Map::Map()
+{
+    m_nrLayers = 0;
+
+    m_startX = -1;
+    m_startY = -1;
+}
 Map::Map(int width, int height)
 {
     m_nrLayers = 0;
 
     m_startX = -1;
     m_startY = -1;
+    InitSize(width, height);
+}
+
+Map::~Map()
+{
+    //dtor
+    for(unsigned int i = 0; i < m_nrLayers; i++)
+    {
+        for(unsigned int j = 0; j < m_width*2; j++)
+            delete[] m_layers[i][j];
+        delete[] m_layers[i];
+    }
+    for(unsigned int j = 0; j < m_width; j++)
+        delete[] m_tiles[j];
+    delete[] m_tiles;
+    for(unsigned int j = 0; j < m_width; j++)
+        delete[] m_roomNr[j];
+    delete[] m_roomNr;
+}
+
+void Map::InitSize(int width, int height)
+{
     m_width = width;
     m_height = height;
 
@@ -27,22 +56,6 @@ Map::Map(int width, int height)
     }
 }
 
-Map::~Map()
-{
-    //dtor
-    for(unsigned int i = 0; i < m_nrLayers; i++)
-    {
-        for(unsigned int j = 0; j < m_width*2; j++)
-            delete[] m_layers[i][j];
-        delete[] m_layers[i];
-    }
-    for(unsigned int j = 0; j < m_width; j++)
-        delete[] m_tiles[j];
-    delete[] m_tiles;
-    for(unsigned int j = 0; j < m_width; j++)
-        delete[] m_roomNr[j];
-    delete[] m_roomNr;
-}
 void Map::init(unsigned int nrLayers)
 {
     //ctor
@@ -58,12 +71,12 @@ void Map::init(unsigned int nrLayers)
         }
     }
 }
-int Map::GetWidth()
+int Map::GetWidth() const
 {
     return m_width;
 }
 
-int Map::GetHeight()
+int Map::GetHeight() const
 {
     return m_height;
 }

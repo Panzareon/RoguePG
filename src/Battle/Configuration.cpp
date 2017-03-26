@@ -204,6 +204,11 @@ float Configuration::GetWallTransparency()
     return m_wallTransparency;
 }
 
+std::string Configuration::GetSaveFilePath()
+{
+    return "saves/save.data";
+}
+
 void Configuration::SetMusicVolume(float volume)
 {
     UpdateKey("music_volume", std::to_string(volume), true);

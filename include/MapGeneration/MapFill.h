@@ -21,6 +21,12 @@ class MapFill
 
         //Place item of layer at position x,y
         bool PlaceItemAt(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, int index, int x, int y, bool checkPlacement = true);
+
+        template<class Archive>
+        void serialize(Archive & archive, std::uint32_t const version)
+        {
+            archive(m_chanceForTile);
+        }
     protected:
         int m_defaultType;
         enum FillType {Simple, WithAdjacent};

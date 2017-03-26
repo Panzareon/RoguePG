@@ -2,6 +2,7 @@
 #include "Exception/InvalidArgumentException.h"
 #include "Battle/EffectFactoryList.h"
 #include <random>
+#include "Party/PartyMember.h"
 
 std::vector<CharacterClass*>* CharacterClass::m_classes = nullptr;
 
@@ -274,4 +275,9 @@ std::string CharacterClass::GetName()
         return "character_class.cleric";
     }
     return "character_class.unknown";
+}
+
+CharacterClass::CharacterClassEnum CharacterClass::GetClassType()
+{
+    return m_classType;
 }

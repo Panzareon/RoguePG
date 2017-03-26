@@ -10,33 +10,26 @@ Party::Party()
 Party::~Party()
 {
     //dtor
-    for(unsigned int i = 0; i < m_partyMembers.size(); i++)
-    {
-        delete m_partyMembers[i];
-    }
-    for(unsigned int i = 0; i < m_deadMembers.size(); i++)
-    {
-        delete m_deadMembers[i];
-    }
 }
 
-std::vector<PartyMember*> * Party::GetActivePartyMembers()
+std::vector<std::shared_ptr<PartyMember> > * Party::GetActivePartyMembers()
 {
     return &m_activePartyMembers;
 }
 
-std::vector<PartyMember*> * Party::GetAllPartyMembers()
+std::vector<std::shared_ptr<PartyMember> > * Party::GetAllPartyMembers()
 {
     return &m_partyMembers;
 }
 
 void Party::AddPartyMember(PartyMember* member)
 {
-    m_partyMembers.push_back(member);
+    std::shared_ptr<PartyMember> mem(member);
+    m_partyMembers.push_back(mem);
     Configuration* conf = Configuration::GetInstance();
     if(m_activePartyMembers.size() < conf->GetMaxPartySize())
     {
-        m_activePartyMembers.push_back(member);
+        m_activePartyMembers.push_back(mem);
     }
 }
 
@@ -140,7 +133,7 @@ std::vector<std::pair<int,Item*>>* Party::GetItems()
     return &m_items;
 }
 
-int Party::GetMoney()
+int Party::GetMoney() const
 {
     return m_money;
 }

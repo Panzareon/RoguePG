@@ -140,7 +140,7 @@ void MapEventShop::Sleep()
     Party* party = GameController::getInstance()->getParty();
     if(party->RemoveMoney(m_innPrice))
     {
-        std::vector<PartyMember*>* member = party->GetAllPartyMembers();
+        std::vector<std::shared_ptr<PartyMember> >* member = party->GetAllPartyMembers();
         for(int i = 0; i < member->size(); i++)
         {
             member->at(i)->Heal(member->at(i)->GetAttribute(BattleEnums::AttributeMaxHp));

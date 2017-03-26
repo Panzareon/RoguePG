@@ -69,11 +69,11 @@ SceneManagerEquipment::SceneManagerEquipment()
     m_mainMenu = new MenuNode(HeroSelectWidth);
     m_mainMenu->NextAvailable(true);
     Party* party = GameController::getInstance()->getParty();
-    std::vector<PartyMember*>* member = party->GetAllPartyMembers();
+    std::vector<std::shared_ptr<PartyMember> >* member = party->GetAllPartyMembers();
     for(int i = 0; i < member->size(); i++)
     {
-        m_mainMenu->AddOption(member->at(i)->GetName(), std::function<void()>(std::bind(&MenuFunctions::SelectMember,this,member->at(i))));
-        Node* nextMember = GetAttributeNode(member->at(i), i);
+        m_mainMenu->AddOption(member->at(i)->GetName(), std::function<void()>(std::bind(&MenuFunctions::SelectMember,this,member->at(i).get())));
+        Node* nextMember = GetAttributeNode(member->at(i).get(), i);
         m_mainMenu->AddNodeToOption(i, nextMember);
         member->at(i)->SaveBeforeEquipping();
     }
@@ -265,12 +265,12 @@ void SceneManagerEquipment::SelectSkill(Skill* skill)
 void SceneManagerEquipment::UpdateMemberStats(bool selectedOnly)
 {
     Party* party = GameController::getInstance()->getParty();
-    std::vector<PartyMember*>* member = party->GetAllPartyMembers();
+    std::vector<std::shared_ptr<PartyMember> >* member = party->GetAllPartyMembers();
     int scrollPosition = m_mainMenu->GetScrollPosition();
     PartyMember* mem;
     for(int i = scrollPosition; i < member->size() && i < scrollPosition + m_maxShownHeroes; i++)
     {
-        mem = member->at(i);
+        mem = member->at(i).get();
         if(!selectedOnly || mem == m_selectedMember)
         {
             UpdateAttributeNode(mem, i);
@@ -381,7 +381,7 @@ void SceneManagerEquipment::SetEquipmentSkillMenu(Equipment* equipment)
 
 void SceneManagerEquipment::ReSelectEquipment()
 {
-    std::vector<PartyMember*>* member = GameController::getInstance()->getParty()->GetAllPartyMembers();
+    std::vector<std::shared_ptr<PartyMember> >* member = GameController::getInstance()->getParty()->GetAllPartyMembers();
     for(int i = 0; i < member->size(); i++)
     {
         member->at(i)->ResetAfterEquipping();

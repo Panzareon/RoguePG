@@ -3,6 +3,8 @@
 
 #include "MapFill.h"
 
+#include <cereal/types/base_class.hpp>
+
 class MapFillVillage : public MapFill
 {
     public:
@@ -12,6 +14,12 @@ class MapFillVillage : public MapFill
         virtual ~MapFillVillage();
 
         virtual void FillLayer(ToFillLayer type, int LayerId, int LayerAboveHeroId = -1, int LayerWallDecoration = -1);
+
+        template<class Archive>
+        void serialize(Archive & archive, std::uint32_t const version)
+        {
+            archive(cereal::base_class<MapFill>( this ));
+        }
     protected:
     private:
         void FillBaseLayer(int LayerId);

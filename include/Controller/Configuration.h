@@ -38,6 +38,8 @@ class Configuration : FileConfig
 
         float GetWallTransparency();
 
+        std::string GetSaveFilePath();
+
     protected:
         Configuration();
         static Configuration* m_instance;

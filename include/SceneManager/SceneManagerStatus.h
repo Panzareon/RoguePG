@@ -24,11 +24,12 @@ class SceneManagerStatus : AttributeNodesDisplay, public SceneManager
         virtual bool IsTransparent();
         //returns false if Tick should be called for the Scene Manager below
         virtual bool PausesSceneManagerBelow();
+        virtual SceneManagerType GetType();
     protected:
 
         int m_selectedMember;
 
-        std::vector<PartyMember*>* m_partyMember;
+        std::vector<std::shared_ptr<PartyMember> >* m_partyMember;
 
         bool m_finished;
 

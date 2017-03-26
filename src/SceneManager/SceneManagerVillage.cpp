@@ -2,12 +2,31 @@
 #include "MapGeneration/MapEventShop.h"
 #include "MapGeneration/MapEventDungeonEntrance.h"
 
-SceneManagerVillage::SceneManagerVillage(int tileWidth, int tileHeight, unsigned int seed, MapFill* mapFill) : SceneManagerMoveable (tileWidth, tileHeight), m_generator(&m_map, seed, (MapFillVillage*)mapFill)
+
+SceneManagerVillage::SceneManagerVillage()
+{
+
+}
+
+
+SceneManagerVillage::SceneManagerVillage(int tileWidth, int tileHeight, unsigned int seed, MapFill* mapFill) : SceneManagerMoveable (tileWidth, tileHeight)
 {
     //ctor
-    m_mapFill = mapFill;
-    m_mapFill->SetMap(&m_map);
+    m_mapFill = std::unique_ptr<MapFill>(mapFill);
+    Generate();
+    m_seed = seed;
+}
+
+SceneManagerVillage::~SceneManagerVillage()
+{
+    //dtor
+}
+
+void SceneManagerVillage::Generate()
+{
+    m_generator.Init(&m_map, m_seed, (MapFillVillage*)m_mapFill.get());
     m_map.init(5);
+    m_mapFill->SetMap(&m_map);
 
     m_minimapColor.resize(MapFillVillage::TILE_TYPE_END);
     m_minimapColor[MapFillVillage::Wall] = sf::Color::White;
@@ -17,6 +36,8 @@ SceneManagerVillage::SceneManagerVillage(int tileWidth, int tileHeight, unsigned
     m_minimapColor[MapFillVillage::WalkthroughItem] = sf::Color::Black;
     m_minimapColor[MapFillVillage::Stairs] = sf::Color::Red;
 
+    int tileWidth = m_map.GetWidth();
+    int tileHeight = m_map.GetHeight();
     m_map.m_startX = 0;
     m_map.m_startY = rand() % tileHeight;
 
@@ -42,7 +63,14 @@ SceneManagerVillage::SceneManagerVillage(int tileWidth, int tileHeight, unsigned
 
     sf::Transform heroTransform;
     //Place Hero at Startposition
-    heroTransform.translate(m_map.m_startX * TileMap::GetTileWidth(), m_map.m_startY * TileMap::GetTileWidth() - 14);
+    if(m_newHeroPos)
+    {
+        heroTransform.translate(m_heroX, m_heroY);
+    }
+    else
+    {
+        heroTransform.translate(m_map.m_startX * TileMap::GetTileWidth(), m_map.m_startY * TileMap::GetTileWidth() - 14);
+    }
     m_hero->setTransform(heroTransform);
     UpdateCamPosition();
 
@@ -55,11 +83,6 @@ SceneManagerVillage::SceneManagerVillage(int tileWidth, int tileHeight, unsigned
     m_map.writeToTileMap(*m_tileMapAboveHero,2);
     m_map.writeToTileMap(*m_tileMapAboveWall,3);
     m_map.writeToTileMap(*m_tileMapWallDecoration,4);
-}
-
-SceneManagerVillage::~SceneManagerVillage()
-{
-    //dtor
 }
 
 void SceneManagerVillage::AddShops()

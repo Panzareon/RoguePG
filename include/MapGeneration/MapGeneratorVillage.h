@@ -9,8 +9,11 @@
 class MapGeneratorVillage
 {
     public:
+        MapGeneratorVillage();
         MapGeneratorVillage(Map* map, unsigned int seed, MapFillVillage* mapFill);
         virtual ~MapGeneratorVillage();
+
+        void Init(Map* map, unsigned int seed, MapFillVillage* mapFill);
 
         void PlaceHouses(int houseWidth, int houseHeight, int nrHouses);
         void AddHouse(int x, int y, int width, int height);

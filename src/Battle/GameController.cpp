@@ -2,10 +2,31 @@
 #include "SceneManager/SceneManagerBattle.h"
 #include "SceneManager/SceneManagerGameOver.h"
 #include "SceneManager/SceneManagerMessage.h"
+#include "SceneManager/SceneManagerGameMenu.h"
+#include "SceneManager/SceneManagerMainMenu.h"
+#include "SceneManager/SceneManagerVillage.h"
 #include "Controller/Localization.h"
 #include "Controller/MusicController.h"
 
+#ifdef DEBUG_FLAG
+#include <cereal/archives/xml.hpp>
+#else
+#include <cereal/archives/portable_binary.hpp>
+#endif
+#include <cereal/types/vector.hpp>
+#include <cereal/types/memory.hpp>
+//Register Derived Classes for cereal
+CEREAL_REGISTER_TYPE(SceneManagerGameMenu);
+CEREAL_REGISTER_TYPE(SceneManagerMainMenu);
+CEREAL_REGISTER_TYPE(SceneManagerVillage);
+CEREAL_REGISTER_TYPE(SceneManagerMoveable);
+
+
+CEREAL_REGISTER_TYPE(MapFillVillage);
+
+
 #include <iostream>
+#include <fstream>
 
 
 namespace ControllerFunctions
@@ -82,20 +103,24 @@ Party* GameController::getParty()
 
 SceneManager* GameController::GetActiveSceneManager()
 {
-    return m_sceneManager.back();
+    return m_sceneManager.back().get();
 }
 
 void GameController::CloseActiveSceneManger()
 {
-    SceneManager* last = GetActiveSceneManager();
     m_sceneManager.pop_back();
-    delete last;
 }
 
 void GameController::LoadSceneManager(SceneManager* sm)
 {
+    m_sceneManager.push_back(std::shared_ptr<SceneManager>(sm));
+}
+
+void GameController::LoadSceneManager(std::shared_ptr<SceneManager> sm)
+{
     m_sceneManager.push_back(sm);
 }
+
 void GameController::Tick()
 {
     m_frameTime = m_clock.getElapsedTime();
@@ -166,19 +191,17 @@ void GameController::StartBattle(std::vector<Entity*>* enemies)
 void GameController::GotoNextLevel()
 {
     m_levelId++;
-    SceneManager* next;
     if(!m_nextLevels.empty())
     {
         //if there is already a created level
-        next = m_nextLevels.at(m_nextLevels.size() - 1);
+        std::shared_ptr<SceneManager> next = m_nextLevels.at(m_nextLevels.size() - 1);
         m_nextLevels.pop_back();
         LoadSceneManager(next);
     }
     else if(m_levelId <= m_dungeonConfiguration->GetNrLevels())
     {
         //if not create a new one
-        next = m_dungeonConfiguration->GetLevel(m_levelId);
-        LoadSceneManager(next);
+        LoadSceneManager(m_dungeonConfiguration->GetLevel(m_levelId));
     }
     else
     {
@@ -196,9 +219,8 @@ void GameController::GotoPreviousLevel()
     {
         m_levelId--;
         //Unload Scene Manager, should be a Dungeon-Level
-        SceneManager* next = GetActiveSceneManager();
+        m_nextLevels.push_back(m_sceneManager.back());
         m_sceneManager.pop_back();
-        m_nextLevels.push_back(next);
     }
     else
     {
@@ -299,11 +321,6 @@ void GameController::GameOver()
 
 void GameController::ToQuitScreen()
 {
-    for(int i = 0; i < m_nextLevels.size(); i++)
-    {
-        delete m_nextLevels[i];
-    }
-    m_nextLevels.clear();
     //remove all SceneManager but the declared type
     while(GetActiveSceneManager()->GetType() != m_quitTo && m_sceneManager.size() > 1)
     {
@@ -327,6 +344,33 @@ int GameController::GetLastDungeonBeated()
     return m_lastDungeon;
 }
 
+void GameController::SaveToFile()
+{
+    std::ofstream f(Configuration::GetInstance()->GetSaveFilePath());
+
+    #ifdef DEBUG_FLAG
+    cereal::XMLOutputArchive oarchive(f);
+    #else
+    cereal::PortableBinaryOutputArchive oarchive(f);
+    #endif
+    oarchive(*m_party, m_sceneManager);
+}
+
+void GameController::LoadFromFile()
+{
+    std::ifstream f(Configuration::GetInstance()->GetSaveFilePath());
+
+    #ifdef DEBUG_FLAG
+    cereal::XMLInputArchive iarchive(f);
+    #else
+    cereal::PortableBinaryInputArchive iarchive(f);
+    #endif
+
+    Party party;
+    iarchive(party, m_sceneManager);
+    InitValues();
+    m_party = new Party(party);
+}
 
 
 

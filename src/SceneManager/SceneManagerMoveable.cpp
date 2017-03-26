@@ -7,9 +7,25 @@
 #include "Battle/EnemyFactory.h"
 #include <iostream>
 
+SceneManagerMoveable::SceneManagerMoveable()
+{
+    m_newHeroPos = false;
+}
+
 SceneManagerMoveable::SceneManagerMoveable(int tileWidth, int tileHeight): m_map(tileWidth, tileHeight)
 {
     //ctor
+    m_newHeroPos = false;
+    Init();
+}
+
+SceneManagerMoveable::~SceneManagerMoveable()
+{
+    //dtor
+}
+
+void SceneManagerMoveable::Init()
+{
     m_heroDirection = Enums::North;
     m_minViewPosX = m_windowWidth / 2;
     m_minViewPosY = m_windowHeight / 2;
@@ -76,6 +92,8 @@ SceneManagerMoveable::SceneManagerMoveable(int tileWidth, int tileHeight): m_map
     m_eventLayer->addChild(m_hero);
 
     //Init minimap
+    int tileWidth = m_map.GetWidth();
+    int tileHeight = m_map.GetHeight();
     m_minimap.create(tileWidth, tileHeight, sf::Color::Transparent);
     sf::IntRect minimapSize;
     minimapSize.left = 0;
@@ -99,10 +117,6 @@ SceneManagerMoveable::SceneManagerMoveable(int tileWidth, int tileHeight): m_map
     m_minimapNode->addChild(m_minimapPlayer);
 }
 
-SceneManagerMoveable::~SceneManagerMoveable()
-{
-    //dtor
-}
 void SceneManagerMoveable::Tick()
 {
     //Calculations fore every tick

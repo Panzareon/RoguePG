@@ -70,8 +70,10 @@ class Entity
         void SetBattleSprite(TextureList::TextureFiles newSprite);
         int GetNumberSprites();
 
-        int GetHp();
-        int GetMp();
+        int GetHp() const;
+        int GetMp() const;
+        void SetHp(int hp);
+        void SetMp(int mp);
         float GetHpPercent();
         float GetMpPercent();
         void CheckMaxValues();

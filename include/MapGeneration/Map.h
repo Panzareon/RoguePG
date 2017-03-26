@@ -11,9 +11,10 @@ class Map
 {
     public:
 
-
+        Map();
         Map(int width, int height);
         virtual ~Map();
+        void InitSize(int width, int height);
         void init(unsigned int layerNr);
 
         void SetTileToType(unsigned int x, unsigned int y, int type);
@@ -40,8 +41,8 @@ class Map
         bool DoesCollide(unsigned int fromX, unsigned int fromY, unsigned int toX, unsigned int toY);
 
 
-        int GetWidth();
-        int GetHeight();
+        int GetWidth() const;
+        int GetHeight() const;
 
         int m_startX;
         int m_startY;

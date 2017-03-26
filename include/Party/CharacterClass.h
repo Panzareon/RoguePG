@@ -1,11 +1,12 @@
 #ifndef CHARACTERCLASS_H
 #define CHARACTERCLASS_H
 
-#include "PartyMember.h"
 #include "Battle/SkillGenerator.h"
 #include "SceneGraph/TextureList.h"
 #include <vector>
 #include <map>
+
+class PartyMember;
 
 class CharacterClass
 {
@@ -24,6 +25,7 @@ class CharacterClass
         Skill* GetNewSkill(PartyMember* user);
 
         std::string GetName();
+        CharacterClassEnum GetClassType();
 
     protected:
         static std::vector<CharacterClass*>* m_classes;

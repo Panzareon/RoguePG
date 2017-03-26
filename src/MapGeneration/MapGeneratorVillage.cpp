@@ -1,9 +1,24 @@
 #include "MapGeneration/MapGeneratorVillage.h"
 #include "MapGeneration/MapFillVillage.h"
 
+MapGeneratorVillage::MapGeneratorVillage()
+{
+
+}
+
 MapGeneratorVillage::MapGeneratorVillage(Map* map, unsigned int seed, MapFillVillage* mapFill)
 {
     //ctor
+    Init(map, seed, mapFill);
+}
+
+MapGeneratorVillage::~MapGeneratorVillage()
+{
+    //dtor
+}
+
+void MapGeneratorVillage::Init(Map* map, unsigned int seed, MapFillVillage* mapFill)
+{
     m_width = map->GetWidth();
     m_height = map->GetHeight();
     m_MGUtil.SetSize(m_width, m_height);
@@ -17,11 +32,6 @@ MapGeneratorVillage::MapGeneratorVillage(Map* map, unsigned int seed, MapFillVil
         std::srand(std::time(0));
     else
         std::srand(seed);
-}
-
-MapGeneratorVillage::~MapGeneratorVillage()
-{
-    //dtor
 }
 
 void MapGeneratorVillage::PlaceHouses(int houseWidth, int houseHeight, int nrHouses)

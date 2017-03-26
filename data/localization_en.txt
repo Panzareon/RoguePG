@@ -16,6 +16,8 @@ menu.sound = Sound Options
 menu.close = Close
 menu.equipment = Equipment
 menu.status = Status
+menu.load = Load
+menu.save = Save
 menu.quit = Quit
 
 menu.status.level = Level:

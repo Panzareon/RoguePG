@@ -142,10 +142,10 @@ SceneManagerBattle::SceneManagerBattle()
     //Change Hero bar positions
     m_memberStats->moveNode(0.0f, -64.0f);
 
-    std::vector<PartyMember*> * party = m_party->GetActivePartyMembers();
+    std::vector<std::shared_ptr<PartyMember> > * party = m_party->GetActivePartyMembers();
     for(int i = 0; i < party->size(); i++)
     {
-        AddSpriteForEntity(party->at(i),false);
+        AddSpriteForEntity(party->at(i).get(),false);
         sf::Text* text = new sf::Text("H" + std::to_string(i+1), *Configuration::GetInstance()->GetFont(), 12);
         m_partyMemberTime.push_back(text);
         sf::FloatRect textBounds = text->getLocalBounds();
@@ -154,7 +154,7 @@ SceneManagerBattle::SceneManagerBattle()
         m_timeDisplay->addChild(node);
     }
 
-    for(PartyMember* member : (*m_party->GetAllPartyMembers()))
+    for(std::shared_ptr<PartyMember>  member : (*m_party->GetAllPartyMembers()))
     {
         member->StartBattle();
     }
@@ -208,7 +208,7 @@ void SceneManagerBattle::UseOnTarget(std::function<void(BattleEnums::Target, Ent
             do
             {
                 m_targetNr++;
-                m_targetEntity = m_party->GetActivePartyMembers()->at(m_targetNr);
+                m_targetEntity = m_party->GetActivePartyMembers()->at(m_targetNr).get();
             }
             while(m_targetEntity != m_lastHeroTargeted && m_targetNr < m_party->GetActivePartyMembers()->size());
         }
@@ -218,7 +218,7 @@ void SceneManagerBattle::UseOnTarget(std::function<void(BattleEnums::Target, Ent
             do
             {
                 m_targetNr++;
-                m_targetEntity = m_party->GetActivePartyMembers()->at(m_targetNr);
+                m_targetEntity = m_party->GetActivePartyMembers()->at(m_targetNr).get();
             }
             while(m_targetEntity->IsDead() && m_targetNr < m_party->GetActivePartyMembers()->size());
         }
@@ -273,7 +273,7 @@ void SceneManagerBattle::Tick()
                     {
                         m_targetNr = 0;
                     }
-                    m_targetEntity = m_party->GetActivePartyMembers()->at(m_targetNr);
+                    m_targetEntity = m_party->GetActivePartyMembers()->at(m_targetNr).get();
                 }
                 while(m_targetEntity->IsDead() && nr++ < 100);
                 if(nr >= 100)
@@ -318,7 +318,7 @@ void SceneManagerBattle::Tick()
                     {
                         m_targetNr = m_party->GetActivePartyMembers()->size() - 1;
                     }
-                    m_targetEntity = m_party->GetActivePartyMembers()->at(m_targetNr);
+                    m_targetEntity = m_party->GetActivePartyMembers()->at(m_targetNr).get();
                 }
                 while(m_targetEntity->IsDead() && nr++ < 100);
                 if(nr >= 100)
@@ -399,12 +399,12 @@ void SceneManagerBattle::CalculateNext()
     m_nextFinished = false;
     float smallestNext;
     Entity * next = 0;
-    std::vector<PartyMember*>* activeParty = m_party->GetActivePartyMembers();
+    std::vector<std::shared_ptr<PartyMember> > * activeParty = m_party->GetActivePartyMembers();
     float newTime;
     Entity* nextEntity;
     for(unsigned int i = 0; i < activeParty->size(); i++)
     {
-        nextEntity = activeParty->at(i);
+        nextEntity = activeParty->at(i).get();
         newTime = nextEntity->GetTimeToNextAttack();
         if(!nextEntity->IsDead() && (next == 0 || smallestNext > newTime))
         {
@@ -450,7 +450,7 @@ void SceneManagerBattle::ShowMenuForNext()
 
 void SceneManagerBattle::PassTime(float Time)
 {
-    std::vector<PartyMember*>* activeParty = m_party->GetActivePartyMembers();
+    std::vector<std::shared_ptr<PartyMember> > * activeParty = m_party->GetActivePartyMembers();
     for(unsigned int i = 0; i < activeParty->size(); i++)
     {
         activeParty->at(i)->PassTime(Time);
@@ -505,16 +505,16 @@ void SceneManagerBattle::Finished()
     {
         exp += m_enemies[i]->GetExpToGive();
     }
-    std::vector<PartyMember*> * party = m_party->GetAllPartyMembers();
+    std::vector<std::shared_ptr<PartyMember> >  * party = m_party->GetAllPartyMembers();
     for(unsigned int i = 0; i < party->size(); i++)
     {
-        PartyMember* member = party->at(i);
+        PartyMember* member = party->at(i).get();
         member->AddExp(exp);
     }
-    std::vector<PartyMember*> * activeParty = m_party->GetActivePartyMembers();
+    std::vector<std::shared_ptr<PartyMember> >  * activeParty = m_party->GetActivePartyMembers();
     for(unsigned int i = 0; i < activeParty->size(); i++)
     {
-        PartyMember* member = activeParty->at(i);
+        PartyMember* member = activeParty->at(i).get();
         member->BattleFinished();
         member->Heal(member->GetAttribute(BattleEnums::AttributeMaxHp) * m_restoreHpPercent);
         member->RestoreMana(member->GetAttribute(BattleEnums::AttributeMaxMp) * m_restoreMpPercent);
@@ -530,8 +530,8 @@ bool SceneManagerBattle::IsEntityTargeted(Entity* entity)
     //Only Player controlled Entities are targeting someone
     if(m_targetType == BattleEnums::TargetOwnTeam)
     {
-        std::vector<PartyMember*>* party = m_party->GetActivePartyMembers();
-        return std::find(party->begin(), party->end(), entity) != party->end();
+        std::vector<std::shared_ptr<PartyMember> > * party = m_party->GetActivePartyMembers();
+        return std::find_if(party->begin(), party->end(), [entity](std::shared_ptr<PartyMember> const & i){return i.get() == entity;} ) != party->end();
     }
     if(m_targetType == BattleEnums::TargetEnemyTeam)
     {
@@ -551,14 +551,14 @@ std::vector<Entity*>* SceneManagerBattle::GetEnemies()
 
 void SceneManagerBattle::UpdatePlayerSprites()
 {
-    std::vector<PartyMember*> * party = m_party->GetActivePartyMembers();
+    std::vector<std::shared_ptr<PartyMember> >  * party = m_party->GetActivePartyMembers();
     int teamId = party->at(0)->GetTeamId();
     int i;
     for(i = 0; i < m_entityNodes[teamId].size(); i++)
     {
         if(party->size() > i)
         {
-            m_entityNodes[teamId][i]->SetEntity(party->at(i));
+            m_entityNodes[teamId][i]->SetEntity(party->at(i).get());
         }
         else
         {

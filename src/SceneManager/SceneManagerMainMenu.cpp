@@ -25,6 +25,10 @@ namespace MenuFunctions
         SceneManagerOptions* sm = new SceneManagerOptions();
         GameController::getInstance()->LoadSceneManager(sm);
     }
+    void Load()
+    {
+        GameController::getInstance()->LoadFromFile();
+    }
 }
 
 SceneManagerMainMenu::SceneManagerMainMenu()
@@ -47,6 +51,7 @@ SceneManagerMainMenu::SceneManagerMainMenu()
     Localization* local = Localization::GetInstance();
     m_mainMenu->AddOption(local->GetLocalization("menu.startDungeon"),std::function<void()>(std::bind(&MenuFunctions::StartDungeon,this)),true);
     m_mainMenu->AddOption(local->GetLocalization("menu.option"),std::function<void()>(&MenuFunctions::Options),true);
+    m_mainMenu->AddOption(local->GetLocalization("menu.load"),std::function<void()>(&MenuFunctions::Load),true);
     m_mainMenu->AddOption(local->GetLocalization("menu.quit"),std::function<void()>(std::bind(&MenuFunctions::Quit,this)),true);
     background->addChild(m_mainMenu);
 
@@ -80,7 +85,7 @@ void SceneManagerMainMenu::StartDungeon()
     }
     controller->setParty(party);
 
-    std::vector<PartyMember*>* partyMember = party->GetActivePartyMembers();
+    std::vector<std::shared_ptr<PartyMember> >* partyMember = party->GetActivePartyMembers();
     ItemFactory* itemFactory = ItemFactory::GetInstance();
     for(int i = 0; i < 3; i++)
     {
@@ -96,7 +101,6 @@ void SceneManagerMainMenu::StartDungeon()
 
     controller->LoadSceneManager(new SceneManagerVillage(30,20,time(NULL),new MapFillVillage()));
 }
-
 
 void SceneManagerMainMenu::Quit()
 {

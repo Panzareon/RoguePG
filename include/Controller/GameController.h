@@ -20,6 +20,7 @@ class GameController
         SceneManager* GetActiveSceneManager();
         void CloseActiveSceneManger();
         void LoadSceneManager(SceneManager*);
+        void LoadSceneManager(std::shared_ptr<SceneManager>);
         void StartBattle(std::vector<Entity*>* enemies);
         void GotoNextLevel();
         void GotoPreviousLevel();
@@ -45,6 +46,9 @@ class GameController
         std::default_random_engine* GetRandomGenerator();
 
         int GetLastDungeonBeated();
+
+        void SaveToFile();
+        void LoadFromFile();
     protected:
     private:
         void ToQuitScreen();
@@ -66,8 +70,8 @@ class GameController
         std::vector<bool> m_keysPressed;
         std::vector<bool> m_defaultKeysPressed;
 
-        std::vector<SceneManager*> m_sceneManager;
-        std::vector<SceneManager*> m_nextLevels;
+        std::vector<std::shared_ptr<SceneManager> > m_sceneManager;
+        std::vector<std::shared_ptr<SceneManager> > m_nextLevels;
         std::default_random_engine m_randomGenerator;
         DungeonConfiguration* m_dungeonConfiguration;
 

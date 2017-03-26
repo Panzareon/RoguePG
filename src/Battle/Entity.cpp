@@ -360,15 +360,26 @@ int Entity::GetNumberSprites()
     return m_numberSprites;
 }
 
-int Entity::GetHp()
+int Entity::GetHp() const
 {
     return m_hp;
 }
 
-int Entity::GetMp()
+int Entity::GetMp() const
 {
     return m_mp;
 }
+
+void Entity::SetHp(int hp)
+{
+    m_hp = hp;
+}
+
+void Entity::SetMp(int mp)
+{
+    m_mp = mp;
+}
+
 
 float Entity::GetHpPercent()
 {

@@ -33,7 +33,7 @@ SceneManagerStatus::SceneManagerStatus()
     GameController* controller = GameController::getInstance();
     Party* party = controller->getParty();
     m_partyMember = party->GetAllPartyMembers();
-    PartyMember* member = m_partyMember->at(0);
+    PartyMember* member = m_partyMember->at(0).get();
     m_selectedMember = 0;
 
     sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::StatusMenu));
@@ -183,7 +183,7 @@ void SceneManagerStatus::Tick()
         if(m_selectedMember > 0)
         {
             m_selectedMember--;
-            ShowForEntity(m_partyMember->at(m_selectedMember));
+            ShowForEntity(m_partyMember->at(m_selectedMember).get());
         }
     }
     else if(controller->IsKeyPressed(Configuration::MoveDown))
@@ -191,7 +191,7 @@ void SceneManagerStatus::Tick()
         if(m_selectedMember < m_partyMember->size() - 1)
         {
             m_selectedMember++;
-            ShowForEntity(m_partyMember->at(m_selectedMember));
+            ShowForEntity(m_partyMember->at(m_selectedMember).get());
         }
     }
 }
@@ -270,4 +270,9 @@ void SceneManagerStatus::DeselectPassiveEffects()
 void SceneManagerStatus::SetDescription(std::string str)
 {
     m_description->SetText(str);
+}
+
+SceneManager::SceneManagerType SceneManagerStatus::GetType()
+{
+    return TypeMenu;
 }

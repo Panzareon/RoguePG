@@ -10,6 +10,7 @@ class FillItem
         enum PlacingRestriction{Default, None, AtWall};
         enum Type{Blocking, Walkable, Wall};
 
+        FillItem();
         FillItem(int Item, int chance, int neededTile, int newTile, Type type = Blocking, ItemSize size = Single, PlacingRestriction restr = Default);
         virtual ~FillItem();
 
@@ -19,6 +20,11 @@ class FillItem
         int GetChance();
         Type GetType();
 
+        template<class Archive>
+        void serialize(Archive & archive, std::uint32_t const version)
+        {
+            archive(m_itemId, m_chance, m_insertType, m_placeAtTile, m_size, m_type, m_restr);
+        }
 
     protected:
     private:

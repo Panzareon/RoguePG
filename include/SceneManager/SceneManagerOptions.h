@@ -20,6 +20,7 @@ class SceneManagerOptions : public SceneManager
 
         virtual void ChangeMusic();
         virtual void ChangeSfx();
+        virtual SceneManagerType GetType();
 
     protected:
         void SetMusicRect();

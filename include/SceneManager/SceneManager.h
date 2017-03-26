@@ -8,7 +8,7 @@
 class SceneManager
 {
     public:
-        enum SceneManagerType {TypeBattle, TypeMainMenu, TypeVillage, TypeDefault};
+        enum SceneManagerType {TypeBattle, TypeMainMenu, TypeVillage, TypeMenu, TypeDefault};
         SceneManager();
         virtual ~SceneManager();
         virtual void NextTick();
@@ -25,6 +25,17 @@ class SceneManager
         Node* GetAnimationNode();
 
         virtual SceneManagerType GetType();
+        template<class Archive>
+        void save(Archive & archive, std::uint32_t const version) const
+        {
+        }
+
+
+        template<class Archive>
+        void load(Archive & archive, std::uint32_t const version)
+        {
+        }
+
     protected:
         void SetMemberStats();
 

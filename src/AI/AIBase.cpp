@@ -20,7 +20,7 @@ Entity* AIBase::GetRandomEntity(int teamId, bool enemy)
     GameController* controller = GameController::getInstance();
     SceneManagerBattle* sm = (SceneManagerBattle*)controller->GetActiveSceneManager();
     std::vector<Entity*>* enemies = sm->GetEnemies();
-    std::vector<PartyMember*>* party = controller->getParty()->GetActivePartyMembers();
+    std::vector<std::shared_ptr<PartyMember> >* party = controller->getParty()->GetActivePartyMembers();
     int nr = 0;
     for(unsigned int i = 0; i < enemies->size(); i++)
     {
@@ -62,7 +62,7 @@ Entity* AIBase::GetRandomEntity(int teamId, bool enemy)
         if((party->at(i)->GetTeamId() == teamId) != enemy && !party->at(i)->IsDead())
         {
             if(ret == 0)
-                return party->at(i);
+                return party->at(i).get();
             ret--;
         }
     }

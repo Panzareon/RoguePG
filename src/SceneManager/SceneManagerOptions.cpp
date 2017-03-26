@@ -244,3 +244,9 @@ void SceneManagerOptions::SetSfxRect()
 {
     m_sfxRect->setSize(sf::Vector2f((SoundController::GetInstance()->GetVolume() / 100.0f) * m_soundOptionWidth, 20));
 }
+
+SceneManager::SceneManagerType SceneManagerOptions::GetType()
+{
+    return TypeMenu;
+}
+
