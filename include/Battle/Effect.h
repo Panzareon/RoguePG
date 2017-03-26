@@ -9,7 +9,7 @@
 class Effect : public EffectBase
 {
     public:
-        Effect(EffectFactoryBase* factory, std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect)>* func, std::vector<float> *strength, StrengthCalculation* strengthCalculation, BattleEnums::Target target);
+        Effect(EffectFactoryBase* factory, std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect)>* func, std::vector<float> *strength, float value, BattleEnums::Target target);
 
         virtual void UseEffectOn(Entity* user, std::vector<Entity*>* targets);
 

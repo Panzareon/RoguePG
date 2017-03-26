@@ -2,8 +2,8 @@
 #include "Controller/GameController.h"
 #include "Battle/EffectFactoryBase.h"
 
-Effect::Effect(EffectFactoryBase* factory, std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect)>* func, std::vector<float>* strength, StrengthCalculation* strengthCalculation, BattleEnums::Target target)
-                :EffectBase(factory,strength,strengthCalculation,target)
+Effect::Effect(EffectFactoryBase* factory, std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect)>* func, std::vector<float>* strength, float value, BattleEnums::Target target)
+                :EffectBase(factory,strength,value,target)
 {
     m_effectFunction = func;
 }
@@ -11,7 +11,6 @@ Effect::Effect(EffectFactoryBase* factory, std::function<void(std::vector<float>
 Effect::~Effect()
 {
     //dtor
-    delete m_strength;
 }
 void Effect::UseEffectOn(Entity* user, std::vector<Entity* >* targets)
 {

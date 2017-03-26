@@ -14,5 +14,11 @@ EffectFactoryPassive::~EffectFactoryPassive()
 
 EffectBase* EffectFactoryPassive::GetEffectWithValue(float value, BattleEnums::Target target)
 {
-    return new EffectPassive(this, m_effectFunction, m_strengthCalculation.GetStrengthVector(value, target), &m_strengthCalculation, target);
+    std::vector<float>* strength = m_strengthCalculation.GetStrengthVector(value, target);
+    return GetEffectWithStrength(strength, target);
+}
+
+EffectBase* EffectFactoryPassive::GetEffectWithStrength(std::vector<float>* strength, BattleEnums::Target target)
+{
+    return new EffectPassive(this, m_effectFunction, strength, m_strengthCalculation.GetValue(strength, target), target);
 }

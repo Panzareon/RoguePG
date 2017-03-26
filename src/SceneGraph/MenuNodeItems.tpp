@@ -3,7 +3,7 @@
 #include "SceneManager/SceneManagerGameMenu.h"
 #include "Party/Equipment.h"
 
-template<class T> MenuNodeItems<T>::MenuNodeItems(int width, std::function<void(T*)> onSelect) : MenuNode(width)
+template<class T> MenuNodeItems<T>::MenuNodeItems(int width, std::function<void(T)> onSelect) : MenuNode(width)
 {
     //ctor
     m_onSelect = onSelect;
@@ -20,7 +20,7 @@ template<class T> void MenuNodeItems<T>::ResetOptions()
     m_optionItems.clear();
 }
 
-template<class T> void MenuNodeItems<T>::AddOptionWithItem(std::string name, std::function<void()>func, T* item, bool available)
+template<class T> void MenuNodeItems<T>::AddOptionWithItem(std::string name, std::function<void()>func, T item, bool available)
 {
     MenuNode::AddOption(name, func, available);
     m_optionItems.push_back(item);
@@ -75,7 +75,7 @@ template<class T> void MenuNodeItems<T>::MoveRight()
     }
 }
 
-template<class T> void MenuNodeItems<T>::CallOnNext(std::function<void(T*)>func)
+template<class T> void MenuNodeItems<T>::CallOnNext(std::function<void(T)>func)
 {
     m_nextFunction = func;
 }

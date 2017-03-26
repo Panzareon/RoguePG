@@ -10,22 +10,22 @@ class SceneManagerGameMenu;
 template<class T> class MenuNodeItems : public MenuNode
 {
     public:
-        MenuNodeItems(int width, std::function<void(T*)> onSelect);
+        MenuNodeItems(int width, std::function<void(T)> onSelect);
         virtual ~MenuNodeItems();
         virtual void ResetOptions();
         virtual void MoveUp();
         virtual void MoveDown();
         virtual void MoveRight();
-        virtual void CallOnNext(std::function<void(T*)> func);
-        virtual void AddOptionWithItem(std::string name, std::function<void()> func, T* item, bool available = true);
+        virtual void CallOnNext(std::function<void(T)> func);
+        virtual void AddOptionWithItem(std::string name, std::function<void()> func, T item, bool available = true);
         virtual void AddOption(std::string name, std::function<void()> func, bool available = true);
         virtual void AddDisabledOption(std::string name);
 
     protected:
-        std::vector<T*> m_optionItems;
+        std::vector<T> m_optionItems;
 
-        std::function<void(T*)> m_onSelect;
-        std::function<void(T*)> m_nextFunction;
+        std::function<void(T)> m_onSelect;
+        std::function<void(T)> m_nextFunction;
 
     private:
 };

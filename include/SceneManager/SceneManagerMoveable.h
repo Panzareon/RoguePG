@@ -24,8 +24,10 @@ class SceneManagerMoveable : public SceneManager
         {
             int height = m_map.GetHeight();
             int width = m_map.GetWidth();
-            float heroX = m_hero->getBoundingBox().left;
-            float heroY = m_hero->getBoundingBox().top;
+            sf::FloatRect rect = m_hero->getGlobalBoundingBox();
+            sf::FloatRect local = m_hero->getBoundingBox();
+            float heroX = rect.left - local.left;
+            float heroY = rect.top - local.top;
             archive(cereal::base_class<SceneManager>( this ), width, height, heroX, heroY);
         }
 
@@ -36,9 +38,9 @@ class SceneManagerMoveable : public SceneManager
             int height;
             int width;
             archive(cereal::base_class<SceneManager>( this ), width, height, m_heroX, m_heroY);
+            m_newHeroPos = true;
             m_map.InitSize(width, height);
             Init();
-            m_newHeroPos = true;
         }
     protected:
         void UpdateMinimap();

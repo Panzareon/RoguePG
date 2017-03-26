@@ -42,11 +42,6 @@ Entity::~Entity()
     //dtor
     if(m_AI != 0)
         delete m_AI;
-    for(auto iter = m_passiveEffects.begin(); iter != m_passiveEffects.end(); iter++)
-    {
-        if(iter->second->DeleteEffect())
-            delete iter->second;
-    }
     delete m_battleSprite;
 }
 
@@ -186,11 +181,12 @@ bool Entity::IsDead()
 
 void Entity::AddSkill(Skill* skill)
 {
+    std::shared_ptr<Skill> sk = std::shared_ptr<Skill>(skill);
     if(skill->GetSkillType() == Skill::Passive)
     {
-        AddPassiveEffect((PassiveSkill*) skill);
+        AddPassiveEffect(std::static_pointer_cast<PassiveSkill>(sk));
     }
-    m_skills.push_back(std::shared_ptr<Skill>(skill));
+    m_skills.push_back(sk);
 }
 
 void Entity::AddSkill(std::shared_ptr<Skill> skill)
@@ -204,7 +200,12 @@ void Entity::AddSkill(std::shared_ptr<Skill> skill)
 
 void Entity::AddPassiveEffect(IPassiveEffect* eff)
 {
-    m_passiveEffects.insert(std::pair<int, IPassiveEffect*>(eff->GetActivationPriority(), eff));
+    AddPassiveEffect(std::shared_ptr<IPassiveEffect>(eff));
+}
+
+void Entity::AddPassiveEffect(std::shared_ptr<IPassiveEffect> eff)
+{
+    m_passiveEffects.insert(std::pair<int, std::shared_ptr<IPassiveEffect>>(eff->GetActivationPriority(), eff));
     eff->OnEffectStart();
 }
 
@@ -212,9 +213,8 @@ void Entity::RemovePassiveEffect(IPassiveEffect* eff)
 {
     for(auto it = m_passiveEffects.begin(); it != m_passiveEffects.end();)
     {
-        if(it->second == eff)
+        if(it->second.get() == eff)
         {
-            delete it->second;
             it = m_passiveEffects.erase(it);
         }
         else
@@ -299,7 +299,6 @@ void Entity::FinishedTurn()
             iter++;
         else
         {
-            delete iter->second;
             iter = m_passiveEffects.erase(iter);
         }
     }
@@ -327,7 +326,7 @@ std::vector<std::shared_ptr<Skill>>* Entity::GetSkillList()
     return &m_skills;
 }
 
-std::multimap<int, IPassiveEffect*>* Entity::GetPassiveEffects()
+std::multimap<int, std::shared_ptr<IPassiveEffect>>* Entity::GetPassiveEffects()
 {
     return &m_passiveEffects;
 }

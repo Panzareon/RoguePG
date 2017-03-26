@@ -63,7 +63,7 @@ void PartyMember::AddExp(int ammount)
         {
             if(iter->second->IsEquipment())
             {
-                ((Equipment*)iter->second)->AddExp(m_exp);
+                ((Equipment*)iter->second.get())->AddExp(m_exp);
             }
         }
         //Level up if enough Exp
@@ -143,11 +143,11 @@ int PartyMember::GetExp()
     return m_exp;
 }
 
-void PartyMember::SetEquipment(Equipment::EquipmentPosition position, Equipment* equipment)
+void PartyMember::SetEquipment(Equipment::EquipmentPosition position, std::shared_ptr<Equipment> equipment)
 {
     if(m_equipment[position] != nullptr)
     {
-        std::multimap<int, IPassiveEffect*> ::iterator it;
+        std::multimap<int, std::shared_ptr<IPassiveEffect>> ::iterator it;
         for(it=m_passiveEffects.begin(); it!=m_passiveEffects.end(); ++it)
         {
             if((*it).second == m_equipment[position])
@@ -160,14 +160,14 @@ void PartyMember::SetEquipment(Equipment::EquipmentPosition position, Equipment*
     }
     if(equipment != nullptr)
     {
-        equipment->EquipTo(this);
+        equipment->EquipTo(GameController::getInstance()->getParty()->GetSharedPointerOf(this));
         AddPassiveEffect(equipment);
     }
     m_equipment[position] = equipment;
     CheckMaxValues();
 }
 
-Equipment* PartyMember::GetEquipment(Equipment::EquipmentPosition position)
+std::shared_ptr<Equipment> PartyMember::GetEquipment(Equipment::EquipmentPosition position)
 {
     return m_equipment[position];
 }

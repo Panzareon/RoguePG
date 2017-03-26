@@ -3,16 +3,16 @@
 
 #include <vector>
 #include "Controller/NamedItem.h"
-#include "Entity.h"
 #include "StrengthCalculation.h"
 
 class EffectFactoryBase;
 class PassiveEffect;
+class Entity;
 
 class EffectBase : public virtual NamedItem
 {
     public:
-        EffectBase(EffectFactoryBase* factory, std::vector<float> *strength, StrengthCalculation* strengthCalculation, BattleEnums::Target target);
+        EffectBase(EffectFactoryBase* factory, std::vector<float> *strength, float value, BattleEnums::Target target);
         virtual ~EffectBase();
 
         virtual void UseEffectOn(Entity* user, std::vector<Entity*>* targets);
@@ -24,9 +24,12 @@ class EffectBase : public virtual NamedItem
 
         virtual std::string GetName();
         virtual std::string GetLocalizedDescription();
+
+        std::vector<float>* GetStrength();
+
     protected:
         std::vector<float> *m_strength;
-        StrengthCalculation* m_strengthCalculation;
+        float m_value;
         BattleEnums::Target m_defaultTarget;
         EffectFactoryBase* m_factory;
 

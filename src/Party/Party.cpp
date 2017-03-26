@@ -22,6 +22,18 @@ std::vector<std::shared_ptr<PartyMember> > * Party::GetAllPartyMembers()
     return &m_partyMembers;
 }
 
+std::shared_ptr<PartyMember> Party::GetSharedPointerOf(PartyMember* member)
+{
+    for(int i = 0; i < m_partyMembers.size(); i++)
+    {
+        if(m_partyMembers[i].get() == member)
+        {
+            return m_partyMembers[i];
+        }
+    }
+    return std::shared_ptr<PartyMember>(member);
+}
+
 void Party::AddPartyMember(PartyMember* member)
 {
     std::shared_ptr<PartyMember> mem(member);
@@ -84,17 +96,19 @@ bool Party::UpdateActiveParty()
     return retval;
 }
 
-void Party::AddItem(Item* item)
+std::shared_ptr<Item> Party::AddItem(Item* item)
 {
     for(int i = 0; i < m_items.size(); i++)
     {
-        if(m_items[i].second == item)
+        if(m_items[i].second.get() == item)
         {
             m_items[i].first++;
-            return;
+            return m_items[i].second;
         }
     }
-    m_items.push_back(std::pair<int, Item*>(1,item));
+    std::shared_ptr<Item> newItem(item);
+    m_items.push_back(std::pair<int, std::shared_ptr<Item>>(1,newItem));
+    return newItem;
 }
 
 int Party::GetNumberOfItem(int itemId)
@@ -119,7 +133,6 @@ bool Party::RemoveItem(int itemId)
             m_items[i].first--;
             if(m_items[i].first <= 0)
             {
-                delete m_items[i].second;
                 m_items.erase(m_items.begin() + i);
             }
             return true;
@@ -128,7 +141,7 @@ bool Party::RemoveItem(int itemId)
     return false;
 }
 
-std::vector<std::pair<int,Item*>>* Party::GetItems()
+std::vector<std::pair<int,std::shared_ptr<Item>>>* Party::GetItems()
 {
     return &m_items;
 }

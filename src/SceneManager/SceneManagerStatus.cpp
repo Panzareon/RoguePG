@@ -231,7 +231,7 @@ void SceneManagerStatus::ShowForEntity(PartyMember* partyMember)
     }
 
     m_passiveEffects->ResetOptions();
-    std::multimap<int, IPassiveEffect*>* passiveEffects = partyMember->GetPassiveEffects();
+    std::multimap<int, std::shared_ptr<IPassiveEffect>>* passiveEffects = partyMember->GetPassiveEffects();
     for(auto it = passiveEffects->begin(); it != passiveEffects->end();it++)
     {
         if(!it->second->IsEquipment())

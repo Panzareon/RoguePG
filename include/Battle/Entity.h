@@ -56,12 +56,13 @@ class Entity
         void AddSkill(std::shared_ptr<Skill> skill);
 
         void AddPassiveEffect(IPassiveEffect* eff);
+        void AddPassiveEffect(std::shared_ptr<IPassiveEffect> eff);
         void RemovePassiveEffect(IPassiveEffect* eff);
 
         int GetExpToGive();
 
         std::vector<std::shared_ptr<Skill>>* GetSkillList();
-        std::multimap<int, IPassiveEffect*>* GetPassiveEffects();
+        std::multimap<int, std::shared_ptr<IPassiveEffect>>* GetPassiveEffects();
 
         int GetTeamId();
         void SetTeamId(int id);
@@ -86,7 +87,7 @@ class Entity
     protected:
         std::vector<std::shared_ptr<Skill>> m_skills;
         //Map of all Passive Effects including the equiped Weapons and Armor with Priority, in which order they are called
-        std::multimap<int, IPassiveEffect*> m_passiveEffects;
+        std::multimap<int, std::shared_ptr<IPassiveEffect>> m_passiveEffects;
 
         std::map<BattleEnums::Attribute, int> m_attributes;
         std::map<BattleEnums::AttackType, float> m_resistances;

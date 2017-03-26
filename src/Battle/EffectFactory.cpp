@@ -18,7 +18,13 @@ EffectFactory::~EffectFactory()
 
 EffectBase* EffectFactory::GetEffectWithValue(float value, BattleEnums::Target target)
 {
-    Effect* ret = new Effect(this, m_effectFunction, m_strengthCalculation.GetStrengthVector(value, target), &m_strengthCalculation, target);
+    std::vector<float>* strength = m_strengthCalculation.GetStrengthVector(value, target);
+    return GetEffectWithStrength(strength, target);
+}
+
+EffectBase* EffectFactory::GetEffectWithStrength(std::vector<float>* strength, BattleEnums::Target target)
+{
+    Effect* ret = new Effect(this, m_effectFunction, strength, m_strengthCalculation.GetValue(strength, target), target);
     ret->SetAnimation(AnimationFactory::GetAnimationTypeFor(&m_attackType, &m_effectType));
     return ret;
 }

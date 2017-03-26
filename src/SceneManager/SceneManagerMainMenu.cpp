@@ -74,27 +74,29 @@ void SceneManagerMainMenu::StartDungeon()
 {
     GameController* controller = GameController::getInstance();
     controller->InitValues();
-    Party* party = new Party();
+    controller->setParty(Party());
+    Party* party = controller->getParty();
     //create new party with 2 member
     int partyInitialSize = 2;
+    PartyMember* p;
     for(int i = 0; i < partyInitialSize; i++)
     {
-        PartyMember* p = CharacterClass::GetRandomCharacterClass()->GetNewPartyMember();
+        p = CharacterClass::GetRandomCharacterClass()->GetNewPartyMember();
         p->SetTeamId(0);
         party->AddPartyMember(p);
     }
-    controller->setParty(party);
 
-    std::vector<std::shared_ptr<PartyMember> >* partyMember = party->GetActivePartyMembers();
+    std::vector<std::shared_ptr<PartyMember> > * partyMember = party->GetActivePartyMembers();
     ItemFactory* itemFactory = ItemFactory::GetInstance();
     for(int i = 0; i < 3; i++)
     {
         Equipment* equipment = (Equipment*)itemFactory->GetRandomEquipment(Equipment::MainHand, ItemFactory::StartingItem);
-        party->AddItem(equipment);
+        std::shared_ptr<Item> item = party->AddItem(equipment);
         if(partyMember->size() > i)
         {
-            partyMember->at(i)->SetEquipment(Equipment::MainHand, equipment);
-            partyMember->at(i)->Heal(partyMember->at(i)->GetAttribute(BattleEnums::AttributeMaxHp));
+            std::shared_ptr<PartyMember> member = partyMember->at(i);
+            member->SetEquipment(Equipment::MainHand, std::static_pointer_cast<Equipment>(item));
+            member->Heal(member->GetAttribute(BattleEnums::AttributeMaxHp));
         }
 
     }

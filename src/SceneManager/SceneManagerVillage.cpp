@@ -13,8 +13,8 @@ SceneManagerVillage::SceneManagerVillage(int tileWidth, int tileHeight, unsigned
 {
     //ctor
     m_mapFill = std::unique_ptr<MapFill>(mapFill);
-    Generate();
     m_seed = seed;
+    Generate();
 }
 
 SceneManagerVillage::~SceneManagerVillage()

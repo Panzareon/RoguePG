@@ -14,17 +14,17 @@ namespace MenuFunctions
         sm->SelectMember(member);
     }
 
-    void SelectEquipment(SceneManagerEquipment* sm, Equipment* item)
+    void SelectEquipment(SceneManagerEquipment* sm, std::shared_ptr<Equipment> item)
     {
-        sm->SelectEquipment(static_cast<Equipment*>(item));
+        sm->SelectEquipment(item);
     }
 
-    void Equip(SceneManagerEquipment* sm, Equipment* item)
+    void Equip(SceneManagerEquipment* sm, std::shared_ptr<Equipment> item)
     {
-        sm->Equip(static_cast<Equipment*>(item));
+        sm->Equip(item);
     }
 
-    void SelectEquipmentSkills(SceneManagerEquipment* sm, Equipment* item)
+    void SelectEquipmentSkills(SceneManagerEquipment* sm, std::shared_ptr<Equipment> item)
     {
         sm->SelectEquipmentSkills(true);
     }
@@ -132,13 +132,13 @@ bool SceneManagerEquipment::PausesSceneManagerBelow()
 void SceneManagerEquipment::SelectMember(PartyMember* member)
 {
     Party* party = GameController::getInstance()->getParty();
-    m_selectedMember = member;
+    m_selectedMember = party->GetSharedPointerOf(member);
     //Show Equipment Menu for this member
-    m_equipmentItems = new MenuNodeItems<Equipment>(150, std::function<void(Equipment*)>(std::bind(&MenuFunctions::SelectEquipment,this,std::placeholders::_1)));
+    m_equipmentItems = new MenuNodeItems<std::shared_ptr<Equipment>>(150, std::function<void(std::shared_ptr<Equipment>)>(std::bind(&MenuFunctions::SelectEquipment,this,std::placeholders::_1)));
     m_mainMenu->addChild(m_equipmentItems);
     m_equipmentItems->CancelAvailable(true);
     m_equipmentItems->NextAvailable(true);
-    m_equipmentItems->CallOnNext(std::function<void(Equipment*)>(std::bind(&MenuFunctions::SelectEquipmentSkills,this,std::placeholders::_1)));
+    m_equipmentItems->CallOnNext(std::function<void(std::shared_ptr<Equipment>)>(std::bind(&MenuFunctions::SelectEquipmentSkills,this,std::placeholders::_1)));
     m_equipmentItems->PreviousAvailable(true);
     //Set Menu looks
     m_equipmentItems->SetMaxShownOptions(9);
@@ -151,7 +151,7 @@ void SceneManagerEquipment::SelectMember(PartyMember* member)
     m_equipmentItems->SetSpacing(5);
     //For now only Weapons
     Equipment::EquipmentPosition pos = Equipment::MainHand;
-    Equipment* equip;
+    std::shared_ptr<Equipment> equip;
     m_equipmentItems->CallOnCancel(std::function<void()>(std::bind(&MenuFunctions::Equip,this,member->GetEquipment(pos))));
     Localization* loc = Localization::GetInstance();
 
@@ -182,7 +182,7 @@ void SceneManagerEquipment::SelectMember(PartyMember* member)
         //Check if this Item can be Equipped
         if((*item).second->GetItemType() == Item::ItemTypeEquipment)
         {
-            equip = (Equipment*)((*item).second);
+            equip = std::static_pointer_cast<Equipment>((*item).second);
             if(equip->GetEquipmentPosition() == pos)
             {
                 //Add Item to Menu
@@ -203,7 +203,7 @@ void SceneManagerEquipment::SelectMember(PartyMember* member)
     }
 }
 
-void SceneManagerEquipment::SelectEquipment(Equipment* equipment)
+void SceneManagerEquipment::SelectEquipment(std::shared_ptr<Equipment> equipment)
 {
     m_selectedEquipment = equipment;
     //For now only Weapons
@@ -212,8 +212,8 @@ void SceneManagerEquipment::SelectEquipment(Equipment* equipment)
         SetEquipmentSkillMenu(equipment);
         if(equipment->IsEquipped())
         {
-            Entity* lastEquiped = equipment->GetEquipTarget();
-            ((PartyMember*)lastEquiped)->SetEquipment(Equipment::MainHand, nullptr);
+            std::shared_ptr<PartyMember> lastEquiped = equipment->GetEquipTarget();
+            lastEquiped->SetEquipment(Equipment::MainHand, nullptr);
         }
         m_selectedMember->SetEquipment(Equipment::MainHand, equipment);
         UpdateMemberStats(true);
@@ -230,7 +230,7 @@ void SceneManagerEquipment::SelectEquipment(Equipment* equipment)
     }
 }
 
-void SceneManagerEquipment::Equip(Equipment* equipment)
+void SceneManagerEquipment::Equip(std::shared_ptr<Equipment> equipment)
 {
     SelectEquipment(equipment);
     m_equipmentItems->setVisibility(false);
@@ -270,18 +270,18 @@ void SceneManagerEquipment::UpdateMemberStats(bool selectedOnly)
     PartyMember* mem;
     for(int i = scrollPosition; i < member->size() && i < scrollPosition + m_maxShownHeroes; i++)
     {
-        mem = member->at(i).get();
-        if(!selectedOnly || mem == m_selectedMember)
+        if(!selectedOnly || member->at(i) == m_selectedMember)
         {
+            mem = member->at(i).get();
             UpdateAttributeNode(mem, i);
             for(int j = 0; j < BattleEnums::ATTRIBUTE_END; j++)
             {
                 int attributeValue = mem->GetAttribute((BattleEnums::Attribute)j);
-                if(mem == m_selectedMember && attributeValue > m_memberStats[(BattleEnums::Attribute)j])
+                if(mem == m_selectedMember.get() && attributeValue > m_memberStats[(BattleEnums::Attribute)j])
                 {
                     m_attributeNodes[i][(BattleEnums::Attribute)j]->SetColor(sf::Color::Green);
                 }
-                else if(mem == m_selectedMember && attributeValue < m_memberStats[(BattleEnums::Attribute)j])
+                else if(mem == m_selectedMember.get() && attributeValue < m_memberStats[(BattleEnums::Attribute)j])
                 {
                     m_attributeNodes[i][(BattleEnums::Attribute)j]->SetColor(sf::Color::Red);
                 }
@@ -302,7 +302,7 @@ void SceneManagerEquipment::RemoveEquipmentSkillMenu()
     }
 }
 
-void SceneManagerEquipment::SetEquipmentSkillMenu(Equipment* equipment)
+void SceneManagerEquipment::SetEquipmentSkillMenu(std::shared_ptr<Equipment> equipment)
 {
     int height = 45;
     int width = 150;
@@ -329,7 +329,7 @@ void SceneManagerEquipment::SetEquipmentSkillMenu(Equipment* equipment)
         m_equipmentSkillBase->addChild(m_equipmentSkillLearningNode);
 
 
-        m_equipmentSkills = new MenuNodeItems<Skill>(width, std::function<void(Skill*)>(std::bind(&MenuFunctions::SelectSkill,this,std::placeholders::_1)));
+        m_equipmentSkills = new MenuNodeItems<Skill*>(width, std::function<void(Skill*)>(std::bind(&MenuFunctions::SelectSkill,this,std::placeholders::_1)));
         m_equipmentSkillBase->addChild(m_equipmentSkills);
         m_equipmentSkills->PreviousAvailable(true);
         m_equipmentSkills->CallOnCancel(std::function<void()>(std::bind(&MenuFunctions::DeselectEquipmentSkills,this)));

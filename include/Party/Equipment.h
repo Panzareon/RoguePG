@@ -8,14 +8,19 @@
 #include "Party/Item.h"
 #include "Battle/SkillGenerator.h"
 #include <memory>
+#include <cereal/types/base_class.hpp>
+#include <cereal/types/map.hpp>
+#include <cereal/types/set.hpp>
 
 class Entity;
+class PartyMember;
 class Skill;
 
 class Equipment : public IPassiveEffect, public Item
 {
     public:
         enum EquipmentPosition{MainHand, SideHand, Helmet, Armor, Ring, EQUIPMENT_POSITION_END};
+        Equipment();
         Equipment(int ItemId, EquipmentPosition pos);
 
         virtual void OnEffectStart();
@@ -32,21 +37,21 @@ class Equipment : public IPassiveEffect, public Item
 
         virtual bool IsEquipment();
         virtual void AddExp(int exp);
-        virtual void AddExp(Entity* target, int exp);
+        virtual void AddExp(std::shared_ptr<PartyMember> target, int exp);
         EquipmentPosition GetEquipmentPosition();
         virtual int GetEquipmentExp();
         virtual float GetEquipmentExpPercent();
         virtual int GetLevel();
-        virtual int GetEquipmentExp(Entity* target);
-        virtual float GetEquipmentExpPercent(Entity* target);
-        virtual int GetLevel(Entity* target);
+        virtual int GetEquipmentExp(std::shared_ptr<PartyMember> target);
+        virtual float GetEquipmentExpPercent(std::shared_ptr<PartyMember> target);
+        virtual int GetLevel(std::shared_ptr<PartyMember> target);
         virtual std::map<int, std::shared_ptr<Skill>>* GetSkillsToLearn();
-        virtual bool CanLearnSomething(Entity* target);
+        virtual bool CanLearnSomething(std::shared_ptr<PartyMember> target);
         bool IsEquipped();
 
-        virtual void EquipTo(Entity* target);
+        virtual void EquipTo(std::shared_ptr<PartyMember> target);
         virtual void UnEquip();
-        Entity* GetEquipTarget();
+        std::shared_ptr<PartyMember> GetEquipTarget();
 
         SkillGenerator* GetSkillGenerator();
 
@@ -63,7 +68,22 @@ class Equipment : public IPassiveEffect, public Item
         virtual void OnTurn(Entity* target);
         virtual void GetAttacked(Attack*, Entity*, Entity*);
         virtual float GetExp(float);
+        virtual bool DeleteEffect();
 
+        template<class Archive>
+        void save(Archive & archive, std::uint32_t const version) const
+        {
+            archive(cereal::base_class<Item>( this ), m_position, m_attributeBuffs, m_typeResistance, m_attackTypes, m_skillsToLearn,
+                    m_level, m_exp);
+        }
+
+
+        template<class Archive>
+        void load(Archive & archive, std::uint32_t const version)
+        {
+            archive(cereal::base_class<Item>( this ), m_position, m_attributeBuffs, m_typeResistance, m_attackTypes, m_skillsToLearn,
+                    m_level, m_exp);
+        }
     protected:
         int NeededExp(int lvl);
         SkillGenerator m_skillGenerator;
@@ -76,15 +96,15 @@ class Equipment : public IPassiveEffect, public Item
         std::map<int, std::shared_ptr<Skill>> m_skillsToLearn;
         float m_skillStrength;
 
-        void initExpAndLevel(Entity* target);
-        std::map<Entity*,int> m_level;
-        std::map<Entity*,int> m_exp;
+        void initExpAndLevel(std::shared_ptr<PartyMember> target);
+        std::map<std::shared_ptr<PartyMember>,int> m_level;
+        std::map<std::shared_ptr<PartyMember>,int> m_exp;
 
         int m_neededExpMultiplier;
 
-        Entity* m_target;
+        std::weak_ptr<PartyMember> m_target;
 
-        virtual void LevelUp(Entity* target);
+        virtual void LevelUp(std::shared_ptr<PartyMember> target);
     private:
 };
 

@@ -1,5 +1,9 @@
 #include "Party/Item.h"
 
+Item::Item()
+{
+    //ctor
+}
 Item::Item(int itemId, ItemType type)
 {
     //ctor

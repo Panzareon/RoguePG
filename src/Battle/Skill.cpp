@@ -7,6 +7,12 @@
 
 #include <math.h>
 
+Skill::Skill()
+{
+    //ctor
+    m_manaUseBase = 0.0f;
+}
+
 Skill::Skill(BattleEnums::Target target)
 {
     //ctor
@@ -132,6 +138,8 @@ Skill::SkillType Skill::GetSkillType()
 
 void Skill::AddEffect(EffectBase* eff, bool isPositive)
 {
+    m_effectIds.push_back(eff->GetFactory()->GetId());
+    m_effectStrength.push_back(*eff->GetStrength());
     m_effects.push_back(eff);
     m_isPositive.push_back(isPositive);
     if(isPositive)

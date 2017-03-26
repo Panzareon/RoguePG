@@ -15,6 +15,7 @@ class EffectFactoryBase
 
         //Returns new Instance of Effect with a strength defined by the value given, needs to be deleted
         virtual EffectBase* GetEffectWithValue(float value, BattleEnums::Target target) = 0;
+        virtual EffectBase* GetEffectWithStrength(std::vector<float>* strength, BattleEnums::Target target) = 0;
 
         void AddAttackType(BattleEnums::AttackType type);
         void AddEffectType(BattleEnums::EffectType type);

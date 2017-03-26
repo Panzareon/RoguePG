@@ -1,15 +1,23 @@
 #include "Party/Equipment.h"
 #include "Battle/Attack.h"
-#include "Battle/Entity.h"
+#include "Party/PartyMember.h"
 #include "Battle/Skill.h"
 #include "Controller/Localization.h"
 
 #include <iostream>
 
+Equipment::Equipment() : Item()
+{
+    //ctor
+    m_neededExpMultiplier = 20;
+    for(int i = 0; i < (int)BattleEnums::ATTACK_TYPE_END; i++)
+    {
+        m_typeResistance[(BattleEnums::AttackType)i] = 1.0f;
+    }
+}
 Equipment::Equipment(int itemId, EquipmentPosition pos) : Item(itemId, Item::ItemTypeEquipment)
 {
     //ctor
-    m_target = nullptr;
     m_position = pos;
     m_neededExpMultiplier = 20;
     for(int i = 0; i < (int)BattleEnums::ATTACK_TYPE_END; i++)
@@ -28,24 +36,24 @@ void Equipment::OnEffectStart()
     //TODO: Add additional Effects of this Equipment to the target
 }
 
-void Equipment::EquipTo(Entity* target)
+void Equipment::EquipTo(std::shared_ptr<PartyMember> target)
 {
     m_target = target;
 }
 
 void Equipment::UnEquip()
 {
-    m_target = nullptr;
+    m_target = std::weak_ptr<PartyMember>();
 }
 
-Entity* Equipment::GetEquipTarget()
+std::shared_ptr<PartyMember> Equipment::GetEquipTarget()
 {
-    return m_target;
+    return m_target.lock();
 }
 
 bool Equipment::IsEquipped()
 {
-    return m_target != nullptr;
+    return !m_target.expired();
 }
 
 
@@ -87,10 +95,10 @@ bool Equipment::IsEquipment()
 
 void Equipment::AddExp(int exp)
 {
-    AddExp(m_target, exp);
+    AddExp(m_target.lock(), exp);
 }
 
-void Equipment::AddExp(Entity* target, int exp)
+void Equipment::AddExp(std::shared_ptr<PartyMember> target, int exp)
 {
     initExpAndLevel(target);
     if(!CanLearnSomething(target))
@@ -109,15 +117,15 @@ Equipment::EquipmentPosition Equipment::GetEquipmentPosition()
 
 int Equipment::GetEquipmentExp()
 {
-    return GetEquipmentExp(m_target);
+    return GetEquipmentExp(m_target.lock());
 }
 
 float Equipment::GetEquipmentExpPercent()
 {
-    return GetEquipmentExp(m_target);
+    return GetEquipmentExp(m_target.lock());
 }
 
-float Equipment::GetEquipmentExpPercent(Entity* target)
+float Equipment::GetEquipmentExpPercent(std::shared_ptr<PartyMember> target)
 {
     initExpAndLevel(target);
     return ((float)m_exp[target] - NeededExp(m_level[target] - 1)) / (float)(NeededExp(m_level[target]));
@@ -130,16 +138,16 @@ int Equipment::NeededExp(int lvl)
 
 int Equipment::GetLevel()
 {
-    return GetLevel(m_target);
+    return GetLevel(m_target.lock());
 }
 
-int Equipment::GetEquipmentExp(Entity* target)
+int Equipment::GetEquipmentExp(std::shared_ptr<PartyMember> target)
 {
     initExpAndLevel(target);
     return m_exp[target];
 }
 
-int Equipment::GetLevel(Entity* target)
+int Equipment::GetLevel(std::shared_ptr<PartyMember> target)
 {
     initExpAndLevel(target);
     return m_level[target];
@@ -150,7 +158,7 @@ std::map<int, std::shared_ptr<Skill>>*  Equipment::GetSkillsToLearn()
     return &m_skillsToLearn;
 }
 
-bool Equipment::CanLearnSomething(Entity* target)
+bool Equipment::CanLearnSomething(std::shared_ptr<PartyMember> target)
 {
     initExpAndLevel(target);
     //Checks if the is a skill target has not learned yet from this Equipment
@@ -163,7 +171,7 @@ bool Equipment::CanLearnSomething(Entity* target)
     return true;
 }
 
-void Equipment::LevelUp(Entity* target)
+void Equipment::LevelUp(std::shared_ptr<PartyMember> target)
 {
     m_level[target]++;
     auto it = m_skillsToLearn.find(m_level[target]);
@@ -173,7 +181,7 @@ void Equipment::LevelUp(Entity* target)
     }
 }
 
-void Equipment::initExpAndLevel(Entity* target)
+void Equipment::initExpAndLevel(std::shared_ptr<PartyMember> target)
 {
     if(m_level.find(target) == m_level.end())
     {
@@ -249,3 +257,7 @@ float Equipment::GetExp(float exp)
     return exp;
 }
 
+bool Equipment::DeleteEffect()
+{
+    return false;
+}

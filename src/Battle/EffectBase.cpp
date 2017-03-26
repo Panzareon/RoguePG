@@ -3,24 +3,26 @@
 #include <sstream>
 #include "Controller/Localization.h"
 #include "Exception/InvalidFunctionException.h"
+#include "Entity.h"
 
-EffectBase::EffectBase(EffectFactoryBase* factory, std::vector<float> *strength, StrengthCalculation* strengthCalculation, BattleEnums::Target target)
+EffectBase::EffectBase(EffectFactoryBase* factory, std::vector<float> *strength, float value, BattleEnums::Target target)
 {
     //ctor
     m_strength = strength;
-    m_strengthCalculation = strengthCalculation;
     m_defaultTarget = target;
     m_factory = factory;
+    m_value = value;
 }
 
 EffectBase::~EffectBase()
 {
     //dtor
+    delete m_strength;
 }
 
 float EffectBase::GetValue()
 {
-    return m_strengthCalculation->GetValue(m_strength, m_defaultTarget);
+    return m_value;
 }
 
 EffectFactoryBase* EffectBase::GetFactory()
@@ -54,4 +56,9 @@ void EffectBase::AddToPassiveEffect(PassiveEffect* target)
     std::string out = "EffectBase::AddToPassiveEffect not available for Effect: ";
     out += std::to_string(GetFactory()->GetId());
     throw InvalidFunctionException(out);
+}
+
+std::vector<float>* EffectBase::GetStrength()
+{
+    return m_strength;
 }

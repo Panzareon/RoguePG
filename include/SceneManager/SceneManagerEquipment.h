@@ -21,8 +21,8 @@ class SceneManagerEquipment : AttributeNodesDisplay, public SceneManager
         virtual bool IsFinished();
 
         virtual void SelectMember(PartyMember* member);
-        virtual void SelectEquipment(Equipment* equipment);
-        virtual void Equip(Equipment* equipment);
+        virtual void SelectEquipment(std::shared_ptr<Equipment> equipment);
+        virtual void Equip(std::shared_ptr<Equipment> equipment);
         virtual void SelectEquipmentSkills(bool selected);
         virtual void SelectSkill(Skill* skill);
 
@@ -35,14 +35,14 @@ class SceneManagerEquipment : AttributeNodesDisplay, public SceneManager
     protected:
         void UpdateMemberStats(bool selectedOnly = false);
         void RemoveEquipmentSkillMenu();
-        void SetEquipmentSkillMenu(Equipment* equipment);
+        void SetEquipmentSkillMenu(std::shared_ptr<Equipment> equipment);
 
         void ReSelectEquipment();
 
         MenuNode* m_mainMenu;
         Node* m_equipmentSkillBase;
-        MenuNodeItems<Equipment>* m_equipmentItems;
-        MenuNodeItems<Skill>* m_equipmentSkills;
+        MenuNodeItems<std::shared_ptr<Equipment>>* m_equipmentItems;
+        MenuNodeItems<Skill*>* m_equipmentSkills;
         sf::RectangleShape* m_equipmentSkillLearned;
         sf::RectangleShape* m_equipmentSkillLearning;
         Node* m_equipmentSkillLearningNode;
@@ -53,9 +53,9 @@ class SceneManagerEquipment : AttributeNodesDisplay, public SceneManager
         TextNode* m_equipmentDescription;
 
         //For Equipment menu
-        Equipment* m_selectedEquipment;
+        std::shared_ptr<Equipment> m_selectedEquipment;
         int m_maxShownHeroes;
-        PartyMember* m_selectedMember;
+        std::shared_ptr<PartyMember> m_selectedMember;
         std::map<BattleEnums::Attribute, int> m_memberStats;
 
         Node* m_background;

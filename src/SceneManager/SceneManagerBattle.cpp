@@ -55,7 +55,7 @@ namespace BattleFunctions
     void SkillList(SceneManagerBattle* sm, Entity* attacking)
     {
         //TODO: different width?
-        MenuNodeItems<Skill>* skillMenu = new MenuNodeItems<Skill>(GameController::getInstance()->GetWindowWidth(), std::function<void(Skill*)>(std::bind(&SetSkillDescription, sm, std::placeholders::_1)));
+        MenuNodeItems<Skill*>* skillMenu = new MenuNodeItems<Skill*>(GameController::getInstance()->GetWindowWidth(), std::function<void(Skill*)>(std::bind(&SetSkillDescription, sm, std::placeholders::_1)));
         skillMenu->CancelAvailable(true);
         skillMenu->SetPadding(5,0);
 

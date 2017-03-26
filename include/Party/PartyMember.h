@@ -24,8 +24,8 @@ class PartyMember : public Entity
         int GetExp();
         int NeededExp(int lvl);
         float GetExpPercent();
-        void SetEquipment(Equipment::EquipmentPosition position, Equipment* equipment = nullptr);
-        Equipment* GetEquipment(Equipment::EquipmentPosition position);
+        void SetEquipment(Equipment::EquipmentPosition position, std::shared_ptr<Equipment> equipment = nullptr);
+        std::shared_ptr<Equipment> GetEquipment(Equipment::EquipmentPosition position);
         CharacterClass* GetClass() const;
 
         void SaveBeforeEquipping();
@@ -39,15 +39,25 @@ class PartyMember : public Entity
         void save(Archive & archive, std::uint32_t const version) const
         {
             CharacterClass::CharacterClassEnum characterClass = m_chrClass->GetClassType();
-            archive(m_hp, m_mp,m_lvl, m_exp, characterClass, m_attributes, m_resistances);
+            archive(m_hp, m_mp,m_lvl, m_exp, characterClass, m_attributes, m_resistances, m_skills, m_equipment);
         }
 
         template<class Archive>
         void load(Archive & archive, std::uint32_t const version)
         {
             CharacterClass::CharacterClassEnum characterClass;
-            archive(m_hp, m_mp,m_lvl, m_exp, characterClass, m_attributes, m_resistances);
+            std::vector<std::shared_ptr<Skill>> m_skills;
+            std::map<Equipment::EquipmentPosition, std::shared_ptr<Equipment>> m_equipment;
+            archive(m_hp, m_mp,m_lvl, m_exp, characterClass, m_attributes, m_resistances, m_skills, m_equipment);
             SetCharacterClass(CharacterClass::GetCharacterClass(characterClass));
+            for(int i = 0; i < m_skills.size(); i++)
+            {
+                AddSkill(m_skills[i]);
+            }
+            for(auto it = m_equipment.begin(); it != m_equipment.end(); it++)
+            {
+                SetEquipment(it->first, it->second);
+            }
         }
     protected:
         void Init();
@@ -58,10 +68,10 @@ class PartyMember : public Entity
         //For changing Equipment
         float m_missingHp;
         float m_missingMp;
-        std::map<Equipment::EquipmentPosition, Equipment*> m_lastEquipment;
+        std::map<Equipment::EquipmentPosition, std::shared_ptr<Equipment>> m_lastEquipment;
 
 
-        std::map<Equipment::EquipmentPosition, Equipment*> m_equipment;
+        std::map<Equipment::EquipmentPosition, std::shared_ptr<Equipment>> m_equipment;
 
 
 

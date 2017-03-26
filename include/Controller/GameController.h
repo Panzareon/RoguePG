@@ -40,7 +40,7 @@ class GameController
         bool IsKeyPressed(Configuration::Keys key, bool once = true);
         bool IsWindowFocused();
 
-        void setParty(Party* party);
+        void setParty(Party party);
         void SetWindowFocus(bool focused);
         Party* getParty();
         std::default_random_engine* GetRandomGenerator();
@@ -57,7 +57,7 @@ class GameController
         bool m_quit;
         SceneManager::SceneManagerType m_quitTo;
         bool m_gameOver;
-        Party* m_party;
+        Party m_party;
         sf::RenderTarget* m_renderTarget;
         int m_windowWidth;
         int m_windowHeight;

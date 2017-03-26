@@ -24,6 +24,8 @@ CEREAL_REGISTER_TYPE(SceneManagerMoveable);
 
 CEREAL_REGISTER_TYPE(MapFillVillage);
 
+CEREAL_REGISTER_TYPE(Equipment);
+
 
 #include <iostream>
 #include <fstream>
@@ -49,7 +51,6 @@ GameController::GameController() : m_randomGenerator(time(NULL))
     m_dungeonConfiguration = nullptr;
     m_quit = false;
     m_windowFocused = true;
-    m_party = nullptr;
 
     InitValues();
 
@@ -61,18 +62,12 @@ GameController::GameController() : m_randomGenerator(time(NULL))
 GameController::~GameController()
 {
     //dtor
-    if(m_party != nullptr)
-        delete m_party;
     if(m_dungeonConfiguration != nullptr)
         delete m_dungeonConfiguration;
 }
 
 void GameController::InitValues()
 {
-    if(m_party != nullptr)
-        delete m_party;
-    m_party = nullptr;
-
     m_lastDungeon = 0;
 }
 
@@ -87,18 +82,14 @@ void GameController::SetWindowFocus(bool focused)
     MusicController::GetInstance()->PauseMusic(!focused);
 }
 
-void GameController::setParty(Party* party)
+void GameController::setParty(Party party)
 {
-    if(m_party != nullptr)
-    {
-        delete m_party;
-    }
     m_party = party;
 }
 
 Party* GameController::getParty()
 {
-    return m_party;
+    return &m_party;
 }
 
 SceneManager* GameController::GetActiveSceneManager()
@@ -296,9 +287,9 @@ bool GameController::IsKeyPressed(Configuration::Keys key, bool once)
 void GameController::GameOverCheck()
 {
     m_gameOver = true;
-    for(unsigned int i = 0; i < m_party->GetActivePartyMembers()->size(); i++)
+    for(unsigned int i = 0; i < m_party.GetActivePartyMembers()->size(); i++)
     {
-        if(!m_party->GetActivePartyMembers()->at(i)->IsDead())
+        if(!m_party.GetActivePartyMembers()->at(i)->IsDead())
         {
             m_gameOver = false;
         }
@@ -353,7 +344,7 @@ void GameController::SaveToFile()
     #else
     cereal::PortableBinaryOutputArchive oarchive(f);
     #endif
-    oarchive(*m_party, m_sceneManager);
+    oarchive(m_party, m_sceneManager);
 }
 
 void GameController::LoadFromFile()
@@ -366,10 +357,8 @@ void GameController::LoadFromFile()
     cereal::PortableBinaryInputArchive iarchive(f);
     #endif
 
-    Party party;
-    iarchive(party, m_sceneManager);
+    iarchive(m_party, m_sceneManager);
     InitValues();
-    m_party = new Party(party);
 }
 
 

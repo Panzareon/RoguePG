@@ -1,4 +1,4 @@
-#ifndef EFFECTFACTORYLIST_HEffectFactory
+#ifndef EFFECTFACTORYLIST_H
 #define EFFECTFACTORYLIST_H
 
 #include "EffectFactoryBase.h"

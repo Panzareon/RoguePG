@@ -7,7 +7,7 @@
 class EffectPassive : public EffectBase
 {
     public:
-        EffectPassive(EffectFactoryBase* factory, std::function<void(std::vector<float>* strength, PassiveEffect* addTo)>* func, std::vector<float> *strength, StrengthCalculation* strengthCalculation, BattleEnums::Target target);
+        EffectPassive(EffectFactoryBase* factory, std::function<void(std::vector<float>* strength, PassiveEffect* addTo)>* func, std::vector<float> *strength, float value, BattleEnums::Target target);
         virtual ~EffectPassive();
 
         virtual void AddToPassiveEffect(PassiveEffect* target);
