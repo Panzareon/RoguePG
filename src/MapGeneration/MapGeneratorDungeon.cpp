@@ -8,9 +8,25 @@
 #include <limits>
 #include <cmath>
 
+MapGeneratorDungeon::MapGeneratorDungeon()
+{
+
+}
+
+
 MapGeneratorDungeon::MapGeneratorDungeon(Map* map, unsigned int seed)
 {
     //ctor
+    Init(map,seed);
+}
+
+MapGeneratorDungeon::~MapGeneratorDungeon()
+{
+    //dtor
+}
+
+void MapGeneratorDungeon::Init(Map* map, unsigned int seed)
+{
     m_width = map->GetWidth();
     m_height = map->GetHeight();
     m_MGUtil.SetSize(m_width, m_height);
@@ -22,11 +38,6 @@ MapGeneratorDungeon::MapGeneratorDungeon(Map* map, unsigned int seed)
         std::srand(std::time(0));
     else
         std::srand(seed);
-}
-
-MapGeneratorDungeon::~MapGeneratorDungeon()
-{
-    //dtor
 }
 
 void MapGeneratorDungeon::CellularAutomata(float startPercent)

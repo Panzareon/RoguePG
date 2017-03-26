@@ -15,13 +15,30 @@
 
 #include <iostream>
 
+SceneManagerDungeon::SceneManagerDungeon()
+{
+
+}
 
 SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config, MapFill* mapFill, GenerationType type): SceneManagerMoveable(tileWidth, tileHeight), m_generator(&m_map, seed)
 {
     //ctor
 
     mapFill->SetMap(&m_map);
+    m_seed = seed;
+    m_dungeonConfig = config;
+    m_lvlId = lvlId;
+    m_mapFill = std::unique_ptr<MapFill>(mapFill);
+    Generate(tileWidth, tileHeight, type);
+}
 
+SceneManagerDungeon::~SceneManagerDungeon()
+{
+    //dtor
+}
+
+void SceneManagerDungeon::Generate(int tileWidth, int tileHeight, GenerationType type)
+{
     m_minimapColor.resize(MapFillDungeon::TILE_TYPE_END);
     m_minimapColor[MapFillDungeon::Wall] = sf::Color::White;
     m_minimapColor[MapFillDungeon::Space] = sf::Color::Black;
@@ -42,8 +59,6 @@ SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned
     m_map.init(5);
 
     #endif // DEBUG_FLAG
-    m_dungeonConfig = config;
-    m_lvlId = lvlId;
 
 
 
@@ -64,7 +79,6 @@ SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned
     m_generator.NumberRooms();
 
 
-    m_mapFill = mapFill;
     //Fill Base Layer with walkable Tile
     m_mapFill->FillLayer(MapFill::Ground, 0);
     //Fill Wall
@@ -155,12 +169,6 @@ SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned
     {
         SpawnEnemy();
     }
-}
-
-SceneManagerDungeon::~SceneManagerDungeon()
-{
-    //dtor
-    delete m_mapFill;
 }
 
 void SceneManagerDungeon::Tick()

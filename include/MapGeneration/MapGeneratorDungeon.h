@@ -9,8 +9,11 @@
 class MapGeneratorDungeon
 {
     public:
+        MapGeneratorDungeon();
         MapGeneratorDungeon(Map* map, unsigned int seed = 0);
         virtual ~MapGeneratorDungeon();
+
+        void Init(Map* map, unsigned int seed);
 
         void CellularAutomata(float startPercent);
         //Faster Generation for Maps > than 200 x 200
