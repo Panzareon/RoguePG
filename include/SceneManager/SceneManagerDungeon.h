@@ -4,10 +4,10 @@
 #include "SceneManagerMoveable.h"
 #include "MapGeneration/MapGeneratorDungeon.h"
 #include "MapGeneration/DungeonConfiguration.h"
+#include "MapGeneration/MapFill.h"
 
 #include <cereal/types/base_class.hpp>
 
-class MapFill;
 
 class SceneManagerDungeon: public SceneManagerMoveable
 {
@@ -34,6 +34,8 @@ class SceneManagerDungeon: public SceneManagerMoveable
             DungeonConfiguration conf;
             archive(cereal::base_class<SceneManagerMoveable>( this ), m_seed, m_mapFill, m_width, m_height, m_type, m_lvlId, conf);
             m_dungeonConfig = new DungeonConfiguration(conf);
+            m_generator.Init(&m_map, m_seed);
+            m_mapFill->SetMap(&m_map);
             Generate(m_width, m_height, m_type);
         }
     protected:

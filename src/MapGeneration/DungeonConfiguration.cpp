@@ -5,6 +5,11 @@
 #include "MapGeneration/MapFillDungeon.h"
 #include "MapGeneration/MapFillDungeon2.h"
 
+DungeonConfiguration::DungeonConfiguration()
+{
+
+}
+
 DungeonConfiguration::DungeonConfiguration(int nrLevels, unsigned int seed, int dungeonId)
 {
     //ctor
@@ -12,8 +17,18 @@ DungeonConfiguration::DungeonConfiguration(int nrLevels, unsigned int seed, int 
     m_seed = seed;
     m_dungeonId = dungeonId;
 
+    Init();
+}
+
+DungeonConfiguration::~DungeonConfiguration()
+{
+    //dtor
+}
+
+void DungeonConfiguration::Init()
+{
     //Init all Enemies
-    if(dungeonId == 1)
+    if(m_dungeonId == 1)
     {
         m_enemies[EnemyFactory::EnemyListBat] = 10.0f;
         m_enemies[EnemyFactory::EnemyListWaterSlime] = 3.0f;
@@ -42,11 +57,6 @@ DungeonConfiguration::DungeonConfiguration(int nrLevels, unsigned int seed, int 
     {
         m_bossesSumChance += it->second;
     }
-}
-
-DungeonConfiguration::~DungeonConfiguration()
-{
-    //dtor
 }
 
 void DungeonConfiguration::PlayMusic()

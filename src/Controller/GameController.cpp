@@ -2,9 +2,6 @@
 #include "SceneManager/SceneManagerBattle.h"
 #include "SceneManager/SceneManagerGameOver.h"
 #include "SceneManager/SceneManagerMessage.h"
-#include "SceneManager/SceneManagerGameMenu.h"
-#include "SceneManager/SceneManagerMainMenu.h"
-#include "SceneManager/SceneManagerVillage.h"
 #include "Controller/Localization.h"
 #include "Controller/MusicController.h"
 
@@ -16,15 +13,27 @@
 #include <cereal/types/vector.hpp>
 #include <cereal/types/memory.hpp>
 //Register Derived Classes for cereal
+#include "SceneManager/SceneManagerGameMenu.h"
 CEREAL_REGISTER_TYPE(SceneManagerGameMenu);
+#include "SceneManager/SceneManagerMainMenu.h"
 CEREAL_REGISTER_TYPE(SceneManagerMainMenu);
+#include "SceneManager/SceneManagerVillage.h"
 CEREAL_REGISTER_TYPE(SceneManagerVillage);
 CEREAL_REGISTER_TYPE(SceneManagerMoveable);
+#include "SceneManager/SceneManagerDungeon.h"
+CEREAL_REGISTER_TYPE(SceneManagerDungeon);
 
 
 CEREAL_REGISTER_TYPE(MapFillVillage);
+#include "MapGeneration/MapFillDungeon.h"
+CEREAL_REGISTER_TYPE(MapFillDungeon);
+#include "MapGeneration/MapFillDungeon2.h"
+CEREAL_REGISTER_TYPE(MapFillDungeon2);
 
 CEREAL_REGISTER_TYPE(Equipment);
+
+#include "Battle/PassiveSkill.h"
+CEREAL_REGISTER_TYPE(PassiveSkill);
 
 
 #include <iostream>

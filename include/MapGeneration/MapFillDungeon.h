@@ -20,7 +20,7 @@ class MapFillDungeon : public MapFill
         template<class Archive>
         void serialize(Archive & archive, std::uint32_t const version)
         {
-            archive(cereal::base_class<MapFillDungeon>( this ));
+            archive(cereal::base_class<MapFill>( this ));
         }
     protected:
         virtual void FillBaseLayer(int LayerId);

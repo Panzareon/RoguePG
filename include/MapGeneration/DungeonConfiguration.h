@@ -7,8 +7,10 @@
 class DungeonConfiguration
 {
     public:
+        DungeonConfiguration();
         DungeonConfiguration(int nrLevels, unsigned int seed, int dungeonId);
         virtual ~DungeonConfiguration();
+        void Init();
         SceneManager* GetLevel(int id);
         int GetNrLevels();
 
@@ -19,6 +21,19 @@ class DungeonConfiguration
 
         int GetDungeonId();
 
+        template<class Archive>
+        void save(Archive & archive, std::uint32_t const version) const
+        {
+            archive(m_nrLevels, m_dungeonId, m_seed);
+        }
+
+
+        template<class Archive>
+        void load(Archive & archive, std::uint32_t const version)
+        {
+            archive(m_nrLevels, m_dungeonId, m_seed);
+            Init();
+        }
     protected:
         int m_nrLevels;
         int m_dungeonId;

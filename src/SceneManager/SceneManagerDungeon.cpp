@@ -103,7 +103,14 @@ void SceneManagerDungeon::Generate(int tileWidth, int tileHeight, GenerationType
 
     sf::Transform heroTransform;
     //Place Hero at Startposition
-    heroTransform.translate(m_map.m_startX * TileMap::GetTileWidth(), m_map.m_startY * TileMap::GetTileWidth() - 14);
+    if(m_newHeroPos)
+    {
+        heroTransform.translate(m_heroX, m_heroY);
+    }
+    else
+    {
+        heroTransform.translate(m_map.m_startX * TileMap::GetTileWidth(), m_map.m_startY * TileMap::GetTileWidth() - 14);
+    }
     m_hero->setTransform(heroTransform);
     UpdateCamPosition();
 
