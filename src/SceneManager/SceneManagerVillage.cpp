@@ -22,7 +22,7 @@ SceneManagerVillage::~SceneManagerVillage()
     //dtor
 }
 
-void SceneManagerVillage::Generate()
+void SceneManagerVillage::Generate(bool loadSaved)
 {
     m_generator.Init(&m_map, m_seed, (MapFillVillage*)m_mapFill.get());
     m_map.init(5);
@@ -45,13 +45,16 @@ void SceneManagerVillage::Generate()
     m_map.m_endY = tileHeight - 1;
 
     m_mapFill->PlaceItemAt(1,2,4,MapFillVillage::TileStairsDown,m_map.m_endX, m_map.m_endY, false);
-    m_events.push_back(new MapEventDungeonEntrance( m_map.m_endX, m_map.m_endY));
+    if(!loadSaved)
+    {
+        m_events.push_back(std::unique_ptr<MapEvent>(new MapEventDungeonEntrance( m_map.m_endX, m_map.m_endY)));
+    }
 
     m_generator.PlaceHouses(6,3, tileHeight*tileWidth / 100);
 
     m_generator.PlaceStreets();
 
-    AddShops();
+    AddShops(loadSaved);
 
     //Fill Base Layer with walkable Tile
     m_mapFill->FillLayer(MapFill::Ground, 0);
@@ -85,13 +88,16 @@ void SceneManagerVillage::Generate()
     m_map.writeToTileMap(*m_tileMapWallDecoration,4);
 }
 
-void SceneManagerVillage::AddShops()
+void SceneManagerVillage::AddShops(bool loadSaved)
 {
     for(int i = 0; i < MapEventShop::SHOP_TYPES_END && m_generator.GetNrOfDoors() >= 1; i++)
     {
         std::pair<int,int> pos = m_generator.PopDoor();
         m_mapFill->PlaceItemAt(1,2,4,(MapFillVillage::TileIndex)(MapFillVillage::TileSwordShop + i),pos.first, pos.second - 3, false);
-        m_events.push_back(new MapEventShop(pos.first, pos.second - 1, (MapEventShop::ShopTypes)i));
+        if(!loadSaved)
+        {
+            m_events.push_back(std::unique_ptr<MapEvent>(new MapEventShop(pos.first, pos.second - 1, (MapEventShop::ShopTypes)i)));
+        }
     }
 }
 

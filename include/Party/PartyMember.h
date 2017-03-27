@@ -39,7 +39,7 @@ class PartyMember : public Entity
         void save(Archive & archive, std::uint32_t const version) const
         {
             CharacterClass::CharacterClassEnum characterClass = m_chrClass->GetClassType();
-            archive(m_hp, m_mp,m_lvl, m_exp, characterClass, m_attributes, m_resistances, m_skills, m_equipment);
+            archive(m_name, m_hp, m_mp,m_lvl, m_exp, characterClass, m_attributes, m_resistances, m_skills, m_equipment, m_teamId, m_battleSpriteTexture);
         }
 
         template<class Archive>
@@ -48,8 +48,9 @@ class PartyMember : public Entity
             CharacterClass::CharacterClassEnum characterClass;
             std::vector<std::shared_ptr<Skill>> m_skills;
             std::map<Equipment::EquipmentPosition, std::shared_ptr<Equipment>> m_equipment;
-            archive(m_hp, m_mp,m_lvl, m_exp, characterClass, m_attributes, m_resistances, m_skills, m_equipment);
+            archive(m_name, m_hp, m_mp,m_lvl, m_exp, characterClass, m_attributes, m_resistances, m_skills, m_equipment, m_teamId, m_battleSpriteTexture);
             SetCharacterClass(CharacterClass::GetCharacterClass(characterClass));
+            SetBattleSprite(m_battleSpriteTexture);
             for(int i = 0; i < m_skills.size(); i++)
             {
                 AddSkill(m_skills[i]);

@@ -1,6 +1,12 @@
 #include "MapGeneration/MapEventTile.h"
 #include "MapGeneration/TileMap.h"
 
+MapEventTile::MapEventTile()
+{
+
+}
+
+
 MapEventTile::MapEventTile(bool needButton, int x, int y, bool walkableTile) : MapEvent(needButton)
 {
     //ctor
@@ -14,6 +20,11 @@ MapEventTile::MapEventTile(bool needButton, int x, int y, bool walkableTile) : M
 MapEventTile::~MapEventTile()
 {
     //dtor
+}
+
+sf::FloatRect MapEventTile::GetPosition()
+{
+    return m_rect;
 }
 
 bool MapEventTile::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, float tickTime)

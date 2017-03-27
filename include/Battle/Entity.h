@@ -105,10 +105,12 @@ class Entity
         int m_teamId;
 
         sf::Sprite* m_battleSprite;
+        TextureList::TextureFiles m_battleSpriteTexture;
         int m_numberSprites;
         bool m_lastAttackWasEffective;
 
         EntityNode* m_node;
+
     private:
 };
 

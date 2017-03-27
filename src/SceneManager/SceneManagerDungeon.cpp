@@ -29,6 +29,7 @@ SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned
     m_dungeonConfig = config;
     m_lvlId = lvlId;
     m_mapFill = std::unique_ptr<MapFill>(mapFill);
+    m_type = type;
     Generate(tileWidth, tileHeight, type);
 }
 
@@ -37,7 +38,7 @@ SceneManagerDungeon::~SceneManagerDungeon()
     //dtor
 }
 
-void SceneManagerDungeon::Generate(int tileWidth, int tileHeight, GenerationType type)
+void SceneManagerDungeon::Generate(int tileWidth, int tileHeight, GenerationType type, bool loadSaved)
 {
     m_minimapColor.resize(MapFillDungeon::TILE_TYPE_END);
     m_minimapColor[MapFillDungeon::Wall] = sf::Color::White;
@@ -117,51 +118,23 @@ void SceneManagerDungeon::Generate(int tileWidth, int tileHeight, GenerationType
     //Add random Items
     m_mapFill->FillLayer(MapFill::AdditionalItems, 1,2,4);
 
+
     //Place Stairs
     m_mapFill->PlaceItemAt(1,2,4,MapFillDungeon::TileStairsUp,m_map.m_startX, m_map.m_startY, false);
     m_mapFill->PlaceItemAt(1,2,4,MapFillDungeon::TileStairsDown,m_map.m_endX, m_map.m_endY, false);
-    m_events.push_back(new MapEventStairs(false, m_map.m_startX, m_map.m_startY));
-    m_events.push_back(new MapEventStairs(true, m_map.m_endX, m_map.m_endY));
-
-
-    //Place Boss at Stairs
-    sf::Sprite sprite;
-    Texture* tex = TextureList::getTexture(TextureList::BossSpriteSheet);
-    sprite.setTexture(*tex);
-    sprite.setTextureRect(sf::IntRect(0,0,32,32));
-    Node* enemy = new AnimatedNode(&sprite, tex->GetNumberAnimationSteps());
-    enemy->setBoundingBox(sf::FloatRect(0.0f,0.0f,32.0f,32.0f));
-    m_eventLayer->addChild(enemy);
-
-    sf::Transform enemyTransform;
-    //Place Enemy at Position
-    enemyTransform.translate(m_map.m_endX * TileMap::GetTileWidth(), m_map.m_endY * TileMap::GetTileWidth());
-    enemy->setTransform(enemyTransform);
-
-    std::vector<Entity*>* enemies = new std::vector<Entity*>();
-    //TODO: get Entities of this Map from somewhere else
-    Entity* e = m_dungeonConfig->GetDungeonEnemy(m_lvlId);
-    e->SetTeamId(1);
-    enemies->push_back(e);
-    e = m_dungeonConfig->GetDungeonBoss(m_lvlId);
-    e->SetTeamId(1);
-    enemies->push_back(e);
-    e = m_dungeonConfig->GetDungeonEnemy(m_lvlId);
-    e->SetTeamId(1);
-    enemies->push_back(e);
-
-
-    MapEventEnemy* mapEvent = new MapEventEnemy(&m_map, enemy,  0.0f, enemies);
-    m_events.push_back(mapEvent);
-
-
 
     //Place Chests
-    PlaceChest();
+    PlaceChest(loadSaved);
 
-    //Place additional heroes with a chance of 50%
-    if(rand() % 2 == 0)
-        PlaceHero();
+    if(!loadSaved)
+    {
+        m_events.push_back(std::unique_ptr<MapEvent>(new MapEventStairs(false, m_map.m_startX, m_map.m_startY)));
+        m_events.push_back(std::unique_ptr<MapEvent>(new MapEventStairs(true, m_map.m_endX, m_map.m_endY)));
+
+        //Place additional heroes with a chance of 50%
+        if(rand() % 2 == 0)
+            PlaceHero();
+    }
 
     m_map.writeToTileMap(*m_tileMap,0);
     m_map.writeToTileMap(*m_tileMapItems,1);
@@ -170,11 +143,18 @@ void SceneManagerDungeon::Generate(int tileWidth, int tileHeight, GenerationType
     m_map.writeToTileMap(*m_tileMapAboveWall,3, halfTransparent);
     m_map.writeToTileMap(*m_tileMapWallDecoration,4);
 
-
-    int nrEnemies = m_map.GetWidth() * m_map.GetHeight() / 300;
-    for(int i = 0; i < nrEnemies; i++)
+    if(!loadSaved)
     {
-        SpawnEnemy();
+        //Place Boss at Stairs
+        MapEventEnemy* mapEvent = new MapEventEnemy(0.0f, Enums::EnemyBoss);
+        SpawnEnemy(mapEvent, Enums::EnemyBoss, m_map.m_endX * TileMap::GetTileWidth(), m_map.m_endY * TileMap::GetTileWidth());
+        m_events.push_back(std::unique_ptr<MapEvent>(mapEvent));
+
+        int nrEnemies = m_map.GetWidth() * m_map.GetHeight() / 300;
+        for(int i = 0; i < nrEnemies; i++)
+        {
+            SpawnEnemy();
+        }
     }
 }
 
@@ -220,43 +200,20 @@ void SceneManagerDungeon::SpawnEnemy()
     }
     while(m_map.GetRoomNr(pos->first, pos->second) == playerRoomNumber && nrTries < 10);
 
-    SpawnEnemy(pos->first, pos->second, m_lvlId, 110.0f, 220.0f, 4, 2);
+    SpawnEnemy(pos->first, pos->second, 110.0f, 220.0f, 4, Enums::EnemyDefault);
 
     m_timeToNextSpawn = rand()%10 + 10;
 }
 
-void SceneManagerDungeon::SpawnEnemy(int x, int y, int lvl, float movementSpeed, float followSpeed, int followRange, int nr)
+void SceneManagerDungeon::SpawnEnemy(int x, int y, float movementSpeed, float followSpeed, int followRange, Enums::EnemyTypes type)
 {
-    sf::Sprite sprite;
-    Texture* tex = TextureList::getTexture(TextureList::EnemySpriteSheet);
-    sprite.setTexture(*tex);
-    sprite.setTextureRect(sf::IntRect(0,0,32,32));
-    Node* enemy = new AnimatedNode(&sprite, tex->GetNumberAnimationSteps());
-    enemy->setBoundingBox(sf::FloatRect(4.0f,16.0f,20.0f,16.0f));
-    m_eventLayer->addChild(enemy);
-
-    sf::Transform enemyTransform;
-    //Place Enemy at Position
-    enemyTransform.translate(x * TileMap::GetTileWidth(), y * TileMap::GetTileWidth() - 14);
-    enemy->setTransform(enemyTransform);
-
-    std::vector<Entity*>* enemies = new std::vector<Entity*>();
-    //TODO: get Entities of this Map from somewhere else
-    Entity* e;
-    for(int i = 0; i < nr; i++)
-    {
-        e = m_dungeonConfig->GetDungeonEnemy(lvl);
-        e->SetTeamId(1);
-        enemies->push_back(e);
-    }
-
-
-    MapEventEnemy* mapEvent = new MapEventEnemy(&m_map, enemy,  movementSpeed, enemies);
-    m_events.push_back(mapEvent);
+    MapEventEnemy* mapEvent = new MapEventEnemy(movementSpeed, type);
+    SpawnEnemy(mapEvent, type, x * TileMap::GetTileWidth(), y * TileMap::GetTileWidth());
+    m_events.push_back(std::unique_ptr<MapEvent>(mapEvent));
     mapEvent->FollowPlayer(true, followRange, followSpeed);
 }
 
-void SceneManagerDungeon::PlaceChest()
+void SceneManagerDungeon::PlaceChest(bool loadSaved)
 {
     std::pair<int, int>* pos;
     //Add a maximum number of tries to prevent endless loop
@@ -276,28 +233,31 @@ void SceneManagerDungeon::PlaceChest()
         placed = m_mapFill->PlaceItemAt(1,2,4,MapFillDungeon::TileChest,pos->first, pos->second);
     }
     while(!placed && nrTries < 200);
-    std::cout << "Chest at " << pos->first << " " << pos->second << " nr tries:" << nrTries << " placeable: " << placed << std::endl;
-    m_events.push_back(new MapEventChest(pos->first, pos->second));
+    if(!loadSaved)
+    {
+        std::cout << "Chest at " << pos->first << " " << pos->second << " nr tries:" << nrTries << " placeable: " << placed << std::endl;
+        m_events.push_back(std::unique_ptr<MapEvent>(new MapEventChest(pos->first, pos->second)));
 
-    //look for adjacent free tile
-    if(!m_map.DoesCollide(pos->first + 1, pos->second))
-    {
-        pos->first +=1;
-    }
-    else if(!m_map.DoesCollide(pos->first - 1, pos->second))
-    {
-        pos->first -=1;
-    }
-    else if(!m_map.DoesCollide(pos->first, pos->second + 1))
-    {
-        pos->second +=1;
-    }
-    else if(!m_map.DoesCollide(pos->first, pos->second - 1))
-    {
-        pos->second -=1;
-    }
+        //look for adjacent free tile
+        if(!m_map.DoesCollide(pos->first + 1, pos->second))
+        {
+            pos->first +=1;
+        }
+        else if(!m_map.DoesCollide(pos->first - 1, pos->second))
+        {
+            pos->first -=1;
+        }
+        else if(!m_map.DoesCollide(pos->first, pos->second + 1))
+        {
+            pos->second +=1;
+        }
+        else if(!m_map.DoesCollide(pos->first, pos->second - 1))
+        {
+            pos->second -=1;
+        }
 
-    SpawnEnemy(pos->first,pos->second,m_lvlId + 2, 0.0f, 256.0f,2,3);
+        SpawnEnemy(pos->first,pos->second, 0.0f, 256.0f,2, Enums::EnemyChest);
+    }
 }
 
 void SceneManagerDungeon::PlaceHero()
@@ -315,7 +275,84 @@ void SceneManagerDungeon::PlaceHero()
     }
     while((roomNr == m_map.m_endRoomNr || roomNr == m_map.m_startRoomNr) && nrTries < 200);
     std::cout << "Hero at " << pos->first << " " << pos->second << " nr tries:" << nrTries << std::endl;
+    MapEventHero* hero = new MapEventHero(pos->first, pos->second);
 
+    PlaceHeroSprite(hero);
+
+    m_events.push_back(std::unique_ptr<MapEvent>(hero));
+}
+
+void SceneManagerDungeon::SpawnEnemy(MapEventEnemy* event, Enums::EnemyTypes type, float x, float y)
+{
+    sf::Sprite sprite;
+    Texture* tex;
+    switch(type)
+    {
+    case Enums::EnemyDefault:
+    case Enums::EnemyChest:
+        tex = TextureList::getTexture(TextureList::EnemySpriteSheet);
+        break;
+    case Enums::EnemyBoss:
+        tex = TextureList::getTexture(TextureList::BossSpriteSheet);
+    }
+    sprite.setTexture(*tex);
+    sprite.setTextureRect(sf::IntRect(0,0,32,32));
+    Node* enemy = new AnimatedNode(&sprite, tex->GetNumberAnimationSteps());
+    switch(type)
+    {
+    case Enums::EnemyDefault:
+    case Enums::EnemyChest:
+        enemy->setBoundingBox(sf::FloatRect(4.0f,16.0f,20.0f,16.0f));
+        break;
+    case Enums::EnemyBoss:
+        enemy->setBoundingBox(sf::FloatRect(0.0f,0.0f,32.0f,32.0f));
+    }
+    m_eventLayer->addChild(enemy);
+
+    sf::Transform enemyTransform;
+    //Place Enemy at Position
+    enemyTransform.translate(x, y);
+    enemy->setTransform(enemyTransform);
+
+    std::vector<Entity*>* enemies = new std::vector<Entity*>();
+
+    Entity* e;
+    switch(type)
+    {
+    case Enums::EnemyDefault:
+        for(int i = 0; i < 2; i++)
+        {
+            e = m_dungeonConfig->GetDungeonEnemy(m_lvlId);
+            e->SetTeamId(1);
+            enemies->push_back(e);
+        }
+        break;
+    case Enums::EnemyBoss:
+        e = m_dungeonConfig->GetDungeonEnemy(m_lvlId);
+        e->SetTeamId(1);
+        enemies->push_back(e);
+        e = m_dungeonConfig->GetDungeonBoss(m_lvlId);
+        e->SetTeamId(1);
+        enemies->push_back(e);
+        e = m_dungeonConfig->GetDungeonEnemy(m_lvlId);
+        e->SetTeamId(1);
+        enemies->push_back(e);
+        break;
+    case Enums::EnemyChest:
+        for(int i = 0; i < 3; i++)
+        {
+            e = m_dungeonConfig->GetDungeonEnemy(m_lvlId + 2);
+            e->SetTeamId(1);
+            enemies->push_back(e);
+        }
+        break;
+    }
+
+    event->Init(&m_map, enemy, enemies);
+}
+
+void SceneManagerDungeon::PlaceHeroSprite(MapEventHero* event)
+{
     //Display player sprite
     sf::Sprite* sprite = new sf::Sprite();
     Texture* tex = TextureList::getTexture(TextureList::HeroSpriteSheet);
@@ -326,9 +363,9 @@ void SceneManagerDungeon::PlaceHero()
 
     sf::Transform heroTransform;
     //Place Enemy at Position
-    heroTransform.translate(pos->first * TileMap::GetTileWidth(), pos->second * TileMap::GetTileWidth() - 14);
+    sf::FloatRect pos = event->GetPosition();
+    heroTransform.translate(pos.left, pos.top);
     hero->setTransform(heroTransform);
 
-
-    m_events.push_back(new MapEventHero(hero, pos->first, pos->second));
+    event->SetNode(hero);
 }

@@ -15,7 +15,7 @@ class SceneManagerVillage : public SceneManagerMoveable
         SceneManagerVillage(int tileWidth, int tileHeight, unsigned int seed, MapFill* mapFill);
         virtual ~SceneManagerVillage();
 
-        void Generate();
+        void Generate(bool loadSaved = false);
 
         virtual SceneManagerType GetType();
 
@@ -30,11 +30,11 @@ class SceneManagerVillage : public SceneManagerMoveable
         void load(Archive & archive, std::uint32_t const version)
         {
             archive(cereal::base_class<SceneManagerMoveable>( this ), m_seed, m_mapFill);
-            Generate();
+            Generate(true);
         }
 
     protected:
-        void AddShops();
+        void AddShops(bool loadSaved);
         unsigned int m_seed;
 
         std::unique_ptr<MapFill> m_mapFill;

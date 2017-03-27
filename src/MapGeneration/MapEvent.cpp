@@ -1,5 +1,13 @@
 #include "MapGeneration/MapEvent.h"
 
+MapEvent::MapEvent()
+{
+    //ctor
+    m_needButton = false;
+    m_isActivated = false;
+    m_finished = false;
+}
+
 MapEvent::MapEvent(bool needButton)
 {
     //ctor
@@ -25,6 +33,12 @@ bool MapEvent::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection,
 {
     return true;
 }
+
+void MapEvent::AfterLoad(SceneManager* sm)
+{
+    //NOOP
+}
+
 
 void MapEvent::Activate()
 {

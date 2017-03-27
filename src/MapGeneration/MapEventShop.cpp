@@ -22,6 +22,11 @@ namespace MenuFunctions
     }
 }
 
+MapEventShop::MapEventShop()
+{
+
+}
+
 MapEventShop::MapEventShop(int x, int y, ShopTypes type) : MapEventTile(true, x, y, false)
 {
     //ctor

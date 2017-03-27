@@ -5,9 +5,12 @@
 #include "MapGeneration/MapGeneratorDungeon.h"
 #include "MapGeneration/DungeonConfiguration.h"
 #include "MapGeneration/MapFill.h"
+#include "Controller/GameController.h"
 
 #include <cereal/types/base_class.hpp>
 
+class MapEventEnemy;
+class MapEventHero;
 
 class SceneManagerDungeon: public SceneManagerMoveable
 {
@@ -16,9 +19,14 @@ class SceneManagerDungeon: public SceneManagerMoveable
         SceneManagerDungeon();
         SceneManagerDungeon(int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config, MapFill* mapFill, GenerationType type);
         virtual ~SceneManagerDungeon();
-        void Generate(int tileWidth, int tileHeight, GenerationType type);
+        void Generate(int tileWidth, int tileHeight, GenerationType type, bool loadSaved = false);
         void SpawnEnemy();
-        void SpawnEnemy(int x, int y, int lvl, float movementSpeed, float followSpeed, int followRange, int nr);
+        void SpawnEnemy(int x, int y, float movementSpeed, float followSpeed, int followRange, Enums::EnemyTypes);
+
+        void SpawnEnemy(MapEventEnemy* event, Enums::EnemyTypes type, float x, float y);
+
+        void PlaceHeroSprite(MapEventHero* event);
+
         virtual void Tick();
 
         template<class Archive>
@@ -34,12 +42,17 @@ class SceneManagerDungeon: public SceneManagerMoveable
             DungeonConfiguration conf;
             archive(cereal::base_class<SceneManagerMoveable>( this ), m_seed, m_mapFill, m_width, m_height, m_type, m_lvlId, conf);
             m_dungeonConfig = new DungeonConfiguration(conf);
+            GameController::getInstance()->SetDungeonConfiguration(m_dungeonConfig);
             m_generator.Init(&m_map, m_seed);
             m_mapFill->SetMap(&m_map);
-            Generate(m_width, m_height, m_type);
+            Generate(m_width, m_height, m_type, true);
+            for(int i = 0; i < m_events.size(); i++)
+            {
+                m_events[i]->AfterLoad(this);
+            }
         }
     protected:
-        void PlaceChest();
+        void PlaceChest(bool loadSaved);
         void PlaceHero();
         MapGeneratorDungeon m_generator;
 
@@ -52,6 +65,7 @@ class SceneManagerDungeon: public SceneManagerMoveable
         int m_width;
         int m_height;
         GenerationType m_type;
+
 
 
         DungeonConfiguration* m_dungeonConfig;

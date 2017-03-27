@@ -7,6 +7,7 @@ Node::Node()
     m_transform = sf::Transform::Identity;
     m_parent = 0;
     m_visible = true;
+    m_moveTime = 0.0f;
 }
 
 Node::~Node()

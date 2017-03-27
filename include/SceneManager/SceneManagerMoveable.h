@@ -28,7 +28,7 @@ class SceneManagerMoveable : public SceneManager
             sf::FloatRect local = m_hero->getBoundingBox();
             float heroX = rect.left - local.left;
             float heroY = rect.top - local.top;
-            archive(cereal::base_class<SceneManager>( this ), width, height, heroX, heroY);
+            archive(cereal::base_class<SceneManager>( this ), width, height, heroX, heroY, m_events);
         }
 
 
@@ -37,7 +37,7 @@ class SceneManagerMoveable : public SceneManager
         {
             int height;
             int width;
-            archive(cereal::base_class<SceneManager>( this ), width, height, m_heroX, m_heroY);
+            archive(cereal::base_class<SceneManager>( this ), width, height, m_heroX, m_heroY, m_events);
             m_newHeroPos = true;
             m_map.InitSize(width, height);
             Init();
@@ -51,7 +51,7 @@ class SceneManagerMoveable : public SceneManager
         float m_heroX;
         float m_heroY;
         Enums::Direction m_heroDirection;
-        std::vector<MapEvent*> m_events;
+        std::vector<std::shared_ptr<MapEvent> > m_events;
 
         int m_minViewPosX;
         int m_minViewPosY;

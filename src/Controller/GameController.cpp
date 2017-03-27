@@ -30,6 +30,21 @@ CEREAL_REGISTER_TYPE(MapFillDungeon);
 #include "MapGeneration/MapFillDungeon2.h"
 CEREAL_REGISTER_TYPE(MapFillDungeon2);
 
+#include "MapGeneration/MapEventTile.h"
+CEREAL_REGISTER_TYPE(MapEventTile);
+#include "MapGeneration/MapEventDungeonEntrance.h"
+CEREAL_REGISTER_TYPE(MapEventDungeonEntrance);
+#include "MapGeneration/MapEventShop.h"
+CEREAL_REGISTER_TYPE(MapEventShop);
+#include "MapGeneration/MapEventHero.h"
+CEREAL_REGISTER_TYPE(MapEventHero);
+#include "MapGeneration/MapEventChest.h"
+CEREAL_REGISTER_TYPE(MapEventChest);
+#include "MapGeneration/MapEventStairs.h"
+CEREAL_REGISTER_TYPE(MapEventStairs);
+#include "MapGeneration/MapEventEnemy.h"
+CEREAL_REGISTER_TYPE(MapEventEnemy);
+
 CEREAL_REGISTER_TYPE(Equipment);
 
 #include "Battle/PassiveSkill.h"
@@ -366,6 +381,7 @@ void GameController::LoadFromFile()
     cereal::PortableBinaryInputArchive iarchive(f);
     #endif
 
+    DungeonConfiguration conf;
     iarchive(m_party, m_sceneManager);
     InitValues();
 }

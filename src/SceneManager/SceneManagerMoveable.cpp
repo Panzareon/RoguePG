@@ -204,7 +204,6 @@ void SceneManagerMoveable::Tick()
         }
         if(m_events[i]->IsFinished())
         {
-            delete m_events[i];
             m_events.erase(m_events.begin() + i);
         }
     }

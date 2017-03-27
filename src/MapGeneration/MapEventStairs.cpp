@@ -1,6 +1,11 @@
 #include "MapGeneration/MapEventStairs.h"
 #include "Controller/GameController.h"
 
+MapEventStairs::MapEventStairs()
+{
+    //ctor
+}
+
 MapEventStairs::MapEventStairs(bool next, int x, int y) : MapEventTile(true,x,y)
 {
     //ctor

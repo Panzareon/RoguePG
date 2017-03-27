@@ -3,32 +3,53 @@
 #include "Battle/Entity.h"
 #include "Battle/EnemyFactory.h"
 #include "Controller/GameController.h"
+#include "SceneManager/SceneManagerDungeon.h"
 
 #define M_PI 3.1415926535897
 #include <math.h>
 #include <iostream>
 
-MapEventEnemy::MapEventEnemy(Map* m, Node* node, float movementSpeed, std::vector<Entity*>* enemies) : MapEvent(false)
+MapEventEnemy::MapEventEnemy() : MapEvent(false)
 {
     //ctor
-    m_map = m;
     m_xMove = 0.0f;
     m_yMove = 0.0f;
-    m_movementSpeed = movementSpeed;
-    m_node = node;
-    m_maxTimeSinceChange = 3.0f;
-    m_enemies = enemies;
     m_followPlayer = false;
     m_followSpeed = -1.0f;
     m_followDistanceSquared = -1.0f;
+    m_maxTimeSinceChange = 3.0f;
 }
 
+MapEventEnemy::MapEventEnemy(float movementSpeed, Enums::EnemyTypes type)
+{
+    m_movementSpeed = movementSpeed;
+    m_type = type;
+    m_xMove = 0.0f;
+    m_yMove = 0.0f;
+    m_followPlayer = false;
+    m_followSpeed = -1.0f;
+    m_followDistanceSquared = -1.0f;
+    m_maxTimeSinceChange = 3.0f;
+}
 
 MapEventEnemy::~MapEventEnemy()
 {
     //dtor
     delete m_enemies;
 }
+
+void MapEventEnemy::Init(Map* m, Node* node, std::vector<Entity*>* enemies)
+{
+    m_map = m;
+    m_node = node;
+    m_enemies = enemies;
+}
+
+void MapEventEnemy::AfterLoad(SceneManager* sm)
+{
+    ((SceneManagerDungeon*)sm)->SpawnEnemy(this,m_type, m_xLoadPos, m_yLoadPos);
+}
+
 
 bool MapEventEnemy::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirection, float tickTime)
 {

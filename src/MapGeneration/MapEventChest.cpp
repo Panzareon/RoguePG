@@ -7,6 +7,11 @@
 
 #include <iostream>
 
+MapEventChest::MapEventChest()
+{
+
+}
+
 MapEventChest::MapEventChest(int x, int y) : MapEventTile(true, x, y, false)
 {
     //ctor

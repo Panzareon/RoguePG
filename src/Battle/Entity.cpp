@@ -349,6 +349,7 @@ sf::Sprite* Entity::GetBattleSprite()
 
 void Entity::SetBattleSprite(TextureList::TextureFiles newSprite)
 {
+    m_battleSpriteTexture = newSprite;
     Texture* tex = TextureList::getTexture(newSprite);
     m_battleSprite->setTexture(*tex);
     m_numberSprites = tex->GetNumberAnimationSteps();

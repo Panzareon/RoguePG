@@ -12,5 +12,6 @@ namespace BattleEnums
 namespace Enums
 {
     enum Direction {North, East, South, West};
+    enum EnemyTypes {EnemyBoss, EnemyChest, EnemyDefault};
 }
 #endif // ENUMS_H_INCLUDED

@@ -14,6 +14,7 @@
 				<Compiler>
 					<Add option="-std=c++11" />
 					<Add option="-g" />
+					<Add option="-Og" />
 					<Add option="-DDEBUG_FLAG" />
 					<Add directory="include" />
 					<Add directory="include/SceneManager" />
@@ -238,7 +239,6 @@
 		<Unit filename="src/Battle/EnemyFactory.cpp" />
 		<Unit filename="src/Battle/Entity.cpp" />
 		<Unit filename="src/Battle/IPassiveEffect.cpp" />
-		<Unit filename="src/Battle/MathHelper.cpp" />
 		<Unit filename="src/Battle/PassiveEffect.cpp" />
 		<Unit filename="src/Battle/PassiveSkill.cpp" />
 		<Unit filename="src/Battle/Skill.cpp" />

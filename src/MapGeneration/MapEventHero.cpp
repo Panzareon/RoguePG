@@ -1,15 +1,32 @@
 #include "MapGeneration/MapEventHero.h"
 #include "Party/CharacterClass.h"
 #include "Controller/GameController.h"
+#include "SceneManager/SceneManagerDungeon.h"
 
-MapEventHero::MapEventHero(Node* node, int x, int y): MapEventTile(true,x,y,false)
+MapEventHero::MapEventHero()
 {
-    m_node = node;
+    m_node = nullptr;
+}
+
+MapEventHero::MapEventHero(int x, int y): MapEventTile(true,x,y,false)
+{
+    m_node = nullptr;
 }
 
 MapEventHero::~MapEventHero()
 {
     //dtor
+}
+
+void MapEventHero::SetNode(Node* node)
+{
+    m_node = node;
+}
+
+
+void MapEventHero::AfterLoad(SceneManager* sm)
+{
+    ((SceneManagerDungeon*)sm)->PlaceHeroSprite(this);
 }
 
 void MapEventHero::Activate()

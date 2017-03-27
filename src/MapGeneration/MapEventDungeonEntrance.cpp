@@ -2,6 +2,10 @@
 #include "MapGeneration/DungeonConfiguration.h"
 #include "Controller/GameController.h"
 
+MapEventDungeonEntrance::MapEventDungeonEntrance()
+{
+    //ctor
+}
 MapEventDungeonEntrance::MapEventDungeonEntrance(int x, int y) : MapEventTile(true, x,y)
 {
     //ctor
