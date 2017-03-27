@@ -382,6 +382,7 @@ void GameController::LoadFromFile()
     #endif
 
     DungeonConfiguration conf;
+    m_party = Party();
     iarchive(m_party, m_sceneManager);
     InitValues();
 }
