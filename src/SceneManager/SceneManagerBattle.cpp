@@ -146,11 +146,13 @@ SceneManagerBattle::SceneManagerBattle()
     for(int i = 0; i < party->size(); i++)
     {
         AddSpriteForEntity(party->at(i).get(),false);
-        sf::Text* text = new sf::Text("H" + std::to_string(i+1), *Configuration::GetInstance()->GetFont(), 12);
+        TextNode* text = new TextNode("H" + std::to_string(i+1));
+        text->SetFontSize(12);
         m_partyMemberTime.push_back(text);
-        sf::FloatRect textBounds = text->getLocalBounds();
-        DrawableNode* node = new DrawableNode(text);
+        sf::FloatRect textBounds = text->getBoundingBox();
+        Node* node = new Node();
         node->moveNode(-textBounds.width / 2, -textBounds.height);
+        node->addChild(text);
         m_timeDisplay->addChild(node);
     }
 
@@ -377,11 +379,13 @@ void SceneManagerBattle::AddEnemy(Entity* enemy)
     m_enemies.push_back(enemy);
     AddSpriteForEntity(enemy,true);
     enemy->StartBattle();
-    sf::Text* text = new sf::Text("E" + std::to_string(m_enemies.size()), *Configuration::GetInstance()->GetFont(), 12);
+    TextNode* text = new TextNode("E" + std::to_string(m_enemies.size()));
+    text->SetFontSize(12);
     m_enemyTime.push_back(text);
-    sf::FloatRect textBounds = text->getLocalBounds();
-    DrawableNode* node = new DrawableNode(text);
+    sf::FloatRect textBounds = text->getBoundingBox();
+    Node* node = new Node();
     node->moveNode(20.0f - textBounds.width / 2, -textBounds.height);
+    node->addChild(text);
     m_timeDisplay->addChild(node);
 }
 
@@ -454,12 +458,12 @@ void SceneManagerBattle::PassTime(float Time)
     for(unsigned int i = 0; i < activeParty->size(); i++)
     {
         activeParty->at(i)->PassTime(Time);
-        m_partyMemberTime[i]->setPosition(0.0f, m_timeHeight - m_timeHeight * activeParty->at(i)->GetTimeToNextAttack() * 10.0f);
+        m_partyMemberTime[i]->setPosition(0.0f, m_timeHeight - m_timeHeight * activeParty->at(i)->GetTimeToNextAttack() * 10.0f, 0.1f);
     }
     for(unsigned int i = 0; i < m_enemies.size(); i++)
     {
         m_enemies.at(i)->PassTime(Time);
-        m_enemyTime[i]->setPosition(0.0f, m_timeHeight - m_timeHeight * m_enemies.at(i)->GetTimeToNextAttack() * 10.0f);
+        m_enemyTime[i]->setPosition(0.0f, m_timeHeight - m_timeHeight * m_enemies.at(i)->GetTimeToNextAttack() * 10.0f, 0.1f);
     }
 }
 bool SceneManagerBattle::IsFinished()

@@ -21,6 +21,8 @@ class Node
 
         void moveNode(float x, float y);
         void setPosition(float x, float y);
+        void setPosition(float x, float y, float time);
+        void interpolatePosition(float x, float y, float percent);
 
 
         void setParent(Node* parent);
@@ -39,6 +41,10 @@ class Node
         sf::Transform m_transform;
         std::vector<Node*> m_children;
         Node* m_parent;
+
+        float m_moveToX;
+        float m_moveToY;
+        float m_moveTime;
 
         //Default: 0x0 at 0,0
         sf::FloatRect m_boundingBox;

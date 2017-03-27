@@ -40,6 +40,18 @@ void Node::Tick(float seconds)
 {
     for (std::size_t i = 0; i < m_children.size(); ++i)
         m_children[i]->Tick(seconds);
+    if(m_moveTime > 0.0f)
+    {
+        if(m_moveTime < seconds)
+        {
+            setPosition(m_moveToX, m_moveToY);
+        }
+        else
+        {
+            interpolatePosition(m_moveToX, m_moveToY, seconds / m_moveTime);
+            m_moveTime -= seconds;
+        }
+    }
 }
 
 void Node::onDraw(sf::RenderTarget& target, const sf::Transform& transform) const
@@ -77,6 +89,7 @@ sf::Transform Node::getGlobalTransform()
 void Node::moveNode(float x, float y)
 {
     m_transform.translate(x,y);
+    m_moveTime = 0.0f;
 }
 
 void Node::setPosition(float x, float y)
@@ -85,6 +98,25 @@ void Node::setPosition(float x, float y)
     sf::Vector2f atmPos = m_transform.transformPoint(0.0f, 0.0f);
     m_transform.translate(x - atmPos.x, y - atmPos.y);
 }
+
+void Node::setPosition(float x, float y, float time)
+{
+    if(time <= 0.0f)
+        setPosition(x,y);
+    else
+    {
+        m_moveToX = x;
+        m_moveToY = y;
+        m_moveTime = time;
+    }
+}
+
+void Node::interpolatePosition(float x, float y, float percent)
+{
+    sf::Vector2f atmPos = m_transform.transformPoint(0.0f, 0.0f);
+    m_transform.translate((x - atmPos.x) * percent, (y - atmPos.y) * percent);
+}
+
 
 sf::Transform Node::getTransform()
 {

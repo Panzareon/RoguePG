@@ -60,8 +60,8 @@ class SceneManagerBattle : public SceneManager
 
         float m_timeHeight;
         Node* m_timeDisplay;
-        std::vector<sf::Text*> m_partyMemberTime;
-        std::vector<sf::Text*> m_enemyTime;
+        std::vector<TextNode*> m_partyMemberTime;
+        std::vector<TextNode*> m_enemyTime;
 
         std::vector<std::vector<EntityNode*> > m_entityNodes;
 
