@@ -26,8 +26,8 @@ class MapEventEnemy : public MapEvent
         template<class Archive>
         void save(Archive & archive, std::uint32_t const version) const
         {
-            float xPos = m_node->getGlobalBoundingBox().left;
-            float yPos = m_node->getGlobalBoundingBox().top;
+            float xPos = m_node->getGlobalBoundingBox().left - m_node->getBoundingBox().left;
+            float yPos = m_node->getGlobalBoundingBox().top - m_node->getBoundingBox().top;
             archive(cereal::base_class<MapEvent>( this ), m_type, xPos, yPos, m_movementSpeed, m_followPlayer, m_followDistanceSquared, m_followSpeed);
         }
 
