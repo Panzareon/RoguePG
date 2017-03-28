@@ -88,7 +88,7 @@ void MapEventShop::ShowShop()
             m_node->AddValueToOption(i, std::to_string(it->first));
             i++;
         }
-        m_node->moveNode(0.0f, 5.0f);
+        m_node->moveNode(-2.0f, 10.0f);
         sm->AddMenuNode(m_node);
     }
     else
@@ -111,7 +111,7 @@ void MapEventShop::ShowInn()
     m_node->AddOption(localization->GetLocalization("menu.yes"),std::function<void()>(std::bind(MenuFunctions::Heal,this)), party->GetMoney() >= m_innPrice);
     m_node->AddOption(localization->GetLocalization("menu.no"),std::function<void()>(std::bind(MenuFunctions::QuitShop, this)));
 
-    m_node->moveNode(0.0f, 5.0f);
+    m_node->moveNode(-2.0f, 10.0f);
     sm->AddMenuNode(m_node);
 
     GameController::getInstance()->LoadSceneManager(sm);

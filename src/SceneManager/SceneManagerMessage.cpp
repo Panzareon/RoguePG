@@ -12,11 +12,14 @@ SceneManagerMessage::SceneManagerMessage(std::string toDisplay)
     int y = GameController::getInstance()->GetWindowHeight() - rect.height;
     y /= 2;
 
-    m_background = new sf::RectangleShape(sf::Vector2f(rect.width, rect.height));
+    m_background = new sf::RectangleShape(sf::Vector2f(rect.width + 4.0f, rect.height + 10.0f));
     m_background->setFillColor(sf::Color::Black);
+    m_background->setOutlineColor(sf::Color::White);
+    m_background->setOutlineThickness(1.0f);
 
     m_backgroundNode = new DrawableNode(m_background);
-    m_backgroundNode->moveNode(x,y);
+    m_backgroundNode->moveNode(x - 2.0f ,y);
+    m_text->moveNode(2.0f, 0.0f);
 
     m_gui->addChild(m_backgroundNode);
     m_backgroundNode->addChild(m_text);
