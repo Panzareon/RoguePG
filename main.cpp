@@ -7,6 +7,7 @@
 #include "Controller/GameController.h"
 #include "Controller/Localization.h"
 #include "Exception/GenericException.h"
+#include <fstream>
 
 int main()
 {
@@ -46,8 +47,10 @@ int main()
             window.display();
         }
     }
-    catch(GenericException ex)
+    catch(std::exception& ex)
     {
+        std::ofstream o("crash.log");
+        o << ex.what() << std::endl;
         std::cout << ex.what() << std::endl;
     }
 
