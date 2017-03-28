@@ -1,6 +1,7 @@
 #include "SceneManager/SceneManagerGameMenu.h"
 #include "SceneManager/SceneManagerEquipment.h"
 #include "SceneManager/SceneManagerStatus.h"
+#include "SceneManager/SceneManagerMessage.h"
 #include "Controller/GameController.h"
 #include "SceneGraph/DrawableNode.h"
 #include "Controller/Localization.h"
@@ -23,6 +24,8 @@ namespace MenuFunctions
     void Save()
     {
         GameController::getInstance()->SaveToFile();
+        SceneManagerMessage* sm = new SceneManagerMessage(Localization::GetInstance()->GetLocalization("menu.save.finished"));
+        GameController::getInstance()->LoadSceneManager(sm);
     }
 
     void Quit(SceneManagerGameMenu* sm)

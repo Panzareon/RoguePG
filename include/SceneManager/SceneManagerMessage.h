@@ -26,6 +26,8 @@ class SceneManagerMessage : public SceneManager
         void AddMenuNode(MenuNode* node);
     protected:
         TextNode* m_text;
+        sf::RectangleShape* m_background;
+        Node* m_backgroundNode;
         MenuNode* m_menu;
 
         std::function<void()> m_onAccept;

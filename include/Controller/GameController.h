@@ -48,7 +48,8 @@ class GameController
         int GetLastDungeonBeated();
 
         void SaveToFile();
-        void LoadFromFile();
+        bool LoadFromFile();
+        bool LoadAvailable();
     protected:
     private:
         void ToQuitScreen();

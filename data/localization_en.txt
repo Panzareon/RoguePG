@@ -18,6 +18,7 @@ menu.equipment = Equipment
 menu.status = Status
 menu.load = Load
 menu.save = Save
+menu.save.finished = Save finished
 menu.quit = Quit
 
 menu.status.level = Level:

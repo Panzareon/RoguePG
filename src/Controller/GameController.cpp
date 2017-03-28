@@ -361,32 +361,47 @@ int GameController::GetLastDungeonBeated()
 
 void GameController::SaveToFile()
 {
-    std::ofstream f(Configuration::GetInstance()->GetSaveFilePath());
 
     #ifdef DEBUG_FLAG
+    std::ofstream f(Configuration::GetInstance()->GetSaveFilePath());
     cereal::XMLOutputArchive oarchive(f);
     #else
+    std::ofstream f(Configuration::GetInstance()->GetSaveFilePath(), std::ios::binary);
     cereal::PortableBinaryOutputArchive oarchive(f);
     #endif
     oarchive(m_party, m_sceneManager);
 }
 
-void GameController::LoadFromFile()
+bool GameController::LoadFromFile()
 {
-    std::ifstream f(Configuration::GetInstance()->GetSaveFilePath());
 
     #ifdef DEBUG_FLAG
+    std::ifstream f(Configuration::GetInstance()->GetSaveFilePath());
     cereal::XMLInputArchive iarchive(f);
     #else
+    std::ifstream f(Configuration::GetInstance()->GetSaveFilePath(), std::ios::binary);
     cereal::PortableBinaryInputArchive iarchive(f);
     #endif
 
-    DungeonConfiguration conf;
-    m_party = Party();
-    iarchive(m_party, m_sceneManager);
-    InitValues();
+    try
+    {
+        DungeonConfiguration conf;
+        m_party = Party();
+        iarchive(m_party, m_sceneManager);
+        InitValues();
+        return true;
+    }
+    catch(...)
+    {
+        return false;
+    }
 }
 
+bool GameController::LoadAvailable()
+{
+    std::ifstream f(Configuration::GetInstance()->GetSaveFilePath());
+    return f.good();
+}
 
 
 
