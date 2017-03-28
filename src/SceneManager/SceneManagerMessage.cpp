@@ -1,17 +1,26 @@
 #include "SceneManager/SceneManagerMessage.h"
 #include "Controller/GameController.h"
+#include "SceneGraph/DrawableNode.h"
 
 SceneManagerMessage::SceneManagerMessage(std::string toDisplay)
 {
     //ctor
     m_text = new TextNode(toDisplay);
-    m_gui->addChild(m_text);
     sf::FloatRect rect = m_text->getBoundingBox();
     int x = GameController::getInstance()->GetWindowWidth() - rect.width;
     x /= 2;
     int y = GameController::getInstance()->GetWindowHeight() - rect.height;
     y /= 2;
-    m_text->moveNode(x,y);
+
+    m_background = new sf::RectangleShape(sf::Vector2f(rect.width, rect.height));
+    m_background->setFillColor(sf::Color::Black);
+
+    m_backgroundNode = new DrawableNode(m_background);
+    m_backgroundNode->moveNode(x,y);
+
+    m_gui->addChild(m_backgroundNode);
+    m_backgroundNode->addChild(m_text);
+
     m_finished = false;
     m_menu = nullptr;
 }
