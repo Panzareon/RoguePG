@@ -37,6 +37,11 @@ namespace PassiveEffectFunctions
     {
         target->Heal(hp);
     }
+    void DamageOverTime(Entity* user, Entity* target, PassiveEffect* passiveEffect, int dmg, BattleEnums::AttackType type)
+    {
+        Attack att(dmg, false, type);
+        user->AttackEntity(target, &att);
+    }
 }
 
 namespace EffectFunctions
@@ -129,6 +134,18 @@ namespace EffectFunctions
             targets->at(i)->AddPassiveEffect(eff);
         }
     }
+
+    //Strength: two values, fist: duration in turns, second: damage
+    void DamageOverTime(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect, BattleEnums::AttackType type)
+    {
+        for(unsigned int i = 0; i < targets->size(); i++)
+        {
+            PassiveEffect* eff = new PassiveEffect(true, (int)strength->at(0), effect);
+            eff->AddOnTurnEffect(new std::function<void(Entity*, PassiveEffect*)>(
+                std::bind(&PassiveEffectFunctions::DamageOverTime,user,std::placeholders::_1,std::placeholders::_2,strength->at(1), type)));
+            targets->at(i)->AddPassiveEffect(eff);
+        }
+    }
 }
 
 namespace PassiveSkillEffectFunctions
@@ -215,6 +232,34 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(1.0f, 100.0f);
     calc->SetMultiplier(1.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
+    m_effects.push_back(newEffect);
+
+    //Add Burn effect
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(std::bind(&EffectFunctions::DamageOverTime,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeFire));
+    newEffect = new EffectFactory(func, 11);
+    calc = newEffect->GetStrengthCalculation();
+    //Number of turns: from 2 to 10 with step of 1
+    calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
+    //Damage of burn effect
+    calc->AddStrengthValue(1.0f, 10.0f);
+    calc->SetMultiplier(1.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
+    newEffect->AddAttackType(BattleEnums::AttackTypeFire);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
+    m_effects.push_back(newEffect);
+
+    //Add Poison effect
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(std::bind(&EffectFunctions::DamageOverTime,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeEarth));
+    newEffect = new EffectFactory(func, 12);
+    calc = newEffect->GetStrengthCalculation();
+    //Number of turns: from 2 to 10 with step of 1
+    calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
+    //Damage of burn effect
+    calc->AddStrengthValue(1.0f, 10.0f);
+    calc->SetMultiplier(1.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypeWater);
+    newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
     m_effects.push_back(newEffect);
 

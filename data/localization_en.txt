@@ -101,6 +101,11 @@ effect.4.desc = Deals %0 base earth damage.
 effect.5 = Physical Damage
 effect.5.desc = Deals %0 base physical damage.
 
+effect.11 = Burn
+effect.11.desc = Deals %1 fire damage for %0 turns.
+effect.12 = Poison
+effect.12.desc = Deals %1 poison damage for %0 turns.
+
 effect.101 = Strength Buff
 effect.101.desc = Increases strength by %1% for %0 turns.
 effect.102 = Defense Buff
