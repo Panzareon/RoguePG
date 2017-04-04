@@ -63,6 +63,8 @@ class SceneManagerMoveable : public SceneManager
         TileMap* m_tileMapAboveHero;
         TileMap* m_tileMapAboveWall;
         TileMap* m_tileMapWallDecoration;
+        TileMap* m_tileMapBelowGround;
+        TileMap* m_tileMapBelowGroundDecoration;
 
         float m_minimapScale;
         Node* m_minimapNode;

@@ -6,7 +6,7 @@
 class FillItem
 {
     public:
-        enum ItemSize{Single, AboveHero, AndOneAbove, AtWallSingle, AtWallDouble};
+        enum ItemSize{Single, AboveHero, AndOneAbove, AtWallSingle, AtWallDouble, BelowWallDouble};
         enum PlacingRestriction{Default, None, AtWall};
         enum Type{Blocking, Walkable, Wall};
 

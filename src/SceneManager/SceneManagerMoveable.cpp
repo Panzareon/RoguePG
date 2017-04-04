@@ -41,6 +41,8 @@ void SceneManagerMoveable::Init()
     m_tileMapAboveHero = new TileMap();
     m_tileMapAboveWall = new TileMap();
     m_tileMapWallDecoration = new TileMap();
+    m_tileMapBelowGround = new TileMap();
+    m_tileMapBelowGroundDecoration = new TileMap();
 
 
 
@@ -49,6 +51,8 @@ void SceneManagerMoveable::Init()
     m_tileMapAboveHero->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
     m_tileMapAboveWall->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
     m_tileMapWallDecoration->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
+    m_tileMapBelowGround->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
+    m_tileMapBelowGroundDecoration->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
 
 
     //Build Scene Graph
@@ -63,6 +67,8 @@ void SceneManagerMoveable::Init()
     m_aboveHero = new Node();
     m_mainNode->addChild(m_aboveHero);
 
+    m_belowHero->addChild(new DrawableNode(m_tileMapBelowGround));
+    m_belowHero->addChild(new DrawableNode(m_tileMapBelowGroundDecoration));
     m_belowHero->addChild(new DrawableNode(m_tileMap));
 
     #ifdef DEBUG_FLAG

@@ -17,7 +17,7 @@ class SceneManagerDungeon: public SceneManagerMoveable
     public:
         enum GenerationType {Cave, Dungeon};
         SceneManagerDungeon();
-        SceneManagerDungeon(int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config, MapFill* mapFill, GenerationType type);
+        SceneManagerDungeon(int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config, MapFill* mapFill, GenerationType type, bool wallAbove);
         virtual ~SceneManagerDungeon();
         void Generate(int tileWidth, int tileHeight, GenerationType type, bool loadSaved = false);
         void SpawnEnemy();
@@ -33,6 +33,10 @@ class SceneManagerDungeon: public SceneManagerMoveable
         void save(Archive & archive, std::uint32_t const version) const
         {
             archive(cereal::base_class<SceneManagerMoveable>( this ), m_seed, m_mapFill, m_width, m_height, m_type, m_lvlId, *m_dungeonConfig);
+            if(version >= 1)
+            {
+                archive(m_wallAbove);
+            }
         }
 
 
@@ -41,6 +45,14 @@ class SceneManagerDungeon: public SceneManagerMoveable
         {
             DungeonConfiguration conf;
             archive(cereal::base_class<SceneManagerMoveable>( this ), m_seed, m_mapFill, m_width, m_height, m_type, m_lvlId, conf);
+            if(version >= 1)
+            {
+                archive(m_wallAbove);
+            }
+            else
+            {
+                m_wallAbove = true;
+            }
             m_dungeonConfig = new DungeonConfiguration(conf);
             GameController::getInstance()->SetDungeonConfiguration(m_dungeonConfig);
             m_generator.Init(&m_map, m_seed);
@@ -64,6 +76,7 @@ class SceneManagerDungeon: public SceneManagerMoveable
 
         int m_width;
         int m_height;
+        bool m_wallAbove;
         GenerationType m_type;
 
 

@@ -167,6 +167,32 @@ void MapFill::FillLayerWallAbove(int checkTile, int LayerId, int TileId, int wal
         }
     }
 }
+void MapFill::FillLayerWallBelow(int checkTile, int LayerId, int TileId, int wallHeight, int yDelta)
+{
+    for(int i = 0; i < m_width; i++)
+    {
+        for(int j = 0; j < m_height; j++)
+        {
+            if(m_map->GetTileType(i,j) != checkTile && m_map->GetTileType(i,j+1) == checkTile)
+            {
+                int left = 0;
+                int right = 0;
+                if(m_map->GetTileType(i-1,j) == checkTile || m_map->GetTileType(i-1,j+1) != checkTile)
+                    left = 1;
+                if(m_map->GetTileType(i+1,j) == checkTile || m_map->GetTileType(i+1,j+1) != checkTile)
+                    right = 1;
+
+                int id = TileId;
+                for(int k = wallHeight + yDelta - 1; k >= yDelta; k--)
+                {
+                    m_map->SetTileId(i, j+k,id + left, id + right, id + left, id + right, LayerId);
+                    id = TileId + 2;
+                }
+
+            }
+        }
+    }
+}
 
 
 bool MapFill::CanBlockBeFilled(int x, int y)

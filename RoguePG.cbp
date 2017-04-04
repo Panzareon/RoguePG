@@ -20,6 +20,7 @@
 					<Add directory="include/SceneManager" />
 					<Add directory="include/Battle" />
 					<Add directory="include/Controller" />
+					<Add directory="include/MapGeneration" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -35,6 +36,7 @@
 					<Add directory="include/SceneManager" />
 					<Add directory="include/Battle" />
 					<Add directory="include/Controller" />
+					<Add directory="include/MapGeneration" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -105,6 +107,7 @@
 		<Unit filename="include/MapGeneration/MapFill.h" />
 		<Unit filename="include/MapGeneration/MapFillDungeon.h" />
 		<Unit filename="include/MapGeneration/MapFillDungeon2.h" />
+		<Unit filename="include/MapGeneration/MapFillIceDungeon.h" />
 		<Unit filename="include/MapGeneration/MapFillVillage.h" />
 		<Unit filename="include/MapGeneration/MapGeneratorDungeon.h" />
 		<Unit filename="include/MapGeneration/MapGeneratorUtil.h" />
@@ -271,6 +274,7 @@
 		<Unit filename="src/MapGeneration/MapFill.cpp" />
 		<Unit filename="src/MapGeneration/MapFillDungeon.cpp" />
 		<Unit filename="src/MapGeneration/MapFillDungeon2.cpp" />
+		<Unit filename="src/MapGeneration/MapFillIceDungeon.cpp" />
 		<Unit filename="src/MapGeneration/MapFillVillage.cpp" />
 		<Unit filename="src/MapGeneration/MapGeneratorDungeon.cpp" />
 		<Unit filename="src/MapGeneration/MapGeneratorUtil.cpp" />

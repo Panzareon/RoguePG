@@ -52,6 +52,12 @@ bool FillItem::CanInsertAt(Map* map, int x, int y, int LayerId, int LayerAboveHe
             if(map->GetTileId(x,y,LayerWallDecoration) != 0 || map->GetTileId(x,y-1,LayerWallDecoration) != 0)
                 return false;
             return true;
+        case BelowWallDouble:
+            if(map->GetTileType(x,y-1) == m_placeAtTile)
+                return false;
+            if(map->GetTileId(x,y,LayerWallDecoration) != 0 || map->GetTileId(x,y+1,LayerWallDecoration) != 0)
+                return false;
+            return true;
     }
     int nrWalls = 0;
     for(int i = x - 1; i <= x + 1; i++)
@@ -98,6 +104,12 @@ void FillItem::Insert(Map* map, int x, int y, int layerId, int layerAboveHero, i
             map->SetTileId(x,y,m_itemId,layerId);
             map->SetTileToType(x,y, m_insertType);
             map->SetTileId(x,y-1, m_itemId - TileMap::GetTileMapWith(), LayerWallDecoration);
+
+        break;
+        case BelowWallDouble:
+            map->SetTileId(x,y,m_itemId - TileMap::GetTileMapWith(),LayerWallDecoration);
+            map->SetTileToType(x,y, m_insertType);
+            map->SetTileId(x,y+1, m_itemId, LayerWallDecoration);
 
 
     }

@@ -20,7 +20,7 @@ SceneManagerDungeon::SceneManagerDungeon()
 
 }
 
-SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config, MapFill* mapFill, GenerationType type): SceneManagerMoveable(tileWidth, tileHeight), m_generator(&m_map, seed)
+SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config, MapFill* mapFill, GenerationType type, bool wallAbove): SceneManagerMoveable(tileWidth, tileHeight), m_generator(&m_map, seed)
 {
     //ctor
 
@@ -40,6 +40,7 @@ SceneManagerDungeon::~SceneManagerDungeon()
 
 void SceneManagerDungeon::Generate(int tileWidth, int tileHeight, GenerationType type, bool loadSaved)
 {
+    int nrLayers = 5;
     m_minimapColor.resize(MapFillDungeon::TILE_TYPE_END);
     m_minimapColor[MapFillDungeon::Wall] = sf::Color::White;
     m_minimapColor[MapFillDungeon::Space] = sf::Color::Black;
@@ -53,11 +54,11 @@ void SceneManagerDungeon::Generate(int tileWidth, int tileHeight, GenerationType
 
     #ifdef DEBUG_FLAG
 
-    m_map.init(6);
+    m_map.init(nrLayers + 1);
 
     #else
 
-    m_map.init(5);
+    m_map.init(nrLayers);
 
     #endif // DEBUG_FLAG
 
@@ -82,10 +83,18 @@ void SceneManagerDungeon::Generate(int tileWidth, int tileHeight, GenerationType
 
     //Fill Base Layer with walkable Tile
     m_mapFill->FillLayer(MapFill::Ground, 0);
-    //Fill Wall
-    m_mapFill->FillLayer(MapFill::Wall, 0,3);
-    //Fill Wall Topping
-    m_mapFill->FillLayer(MapFill::WallTopping, 3);
+    if(m_wallAbove)
+    {
+        //Fill Wall
+        m_mapFill->FillLayer(MapFill::Wall, 0,3);
+        //Fill Wall Topping
+        m_mapFill->FillLayer(MapFill::WallTopping, 3);
+    }
+    else
+    {
+        //Fill Wall
+        m_mapFill->FillLayer(MapFill::WallBelow, 3);
+    }
 
 
     #ifdef DEBUG_FLAG
@@ -96,7 +105,7 @@ void SceneManagerDungeon::Generate(int tileWidth, int tileHeight, GenerationType
             m_map.SetTileId(x,y,m_map.GetRoomNr(x,y), 5);
     }
 
-    m_map.writeToTileMap(*m_tileMapRoomNumber,5);
+    m_map.writeToTileMap(*m_tileMapRoomNumber,nrLayers);
 
     #endif // DEBUG_FLAG
 
@@ -139,9 +148,17 @@ void SceneManagerDungeon::Generate(int tileWidth, int tileHeight, GenerationType
     m_map.writeToTileMap(*m_tileMap,0);
     m_map.writeToTileMap(*m_tileMapItems,1);
     m_map.writeToTileMap(*m_tileMapAboveHero,2);
-    sf::Color halfTransparent(255,255,255,Configuration::GetInstance()->GetWallTransparency() * 255);
-    m_map.writeToTileMap(*m_tileMapAboveWall,3, halfTransparent);
-    m_map.writeToTileMap(*m_tileMapWallDecoration,4);
+    if(m_wallAbove)
+    {
+        sf::Color halfTransparent(255,255,255,Configuration::GetInstance()->GetWallTransparency() * 255);
+        m_map.writeToTileMap(*m_tileMapAboveWall,3, halfTransparent);
+        m_map.writeToTileMap(*m_tileMapWallDecoration,4);
+    }
+    else
+    {
+        m_map.writeToTileMap(*m_tileMapBelowGround,3);
+        m_map.writeToTileMap(*m_tileMapBelowGroundDecoration,4);
+    }
 
     if(!loadSaved)
     {

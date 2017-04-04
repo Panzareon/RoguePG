@@ -3,6 +3,7 @@
 #include "Controller/GameController.h"
 #include "Controller/MusicController.h"
 #include "MapGeneration/MapFillDungeon.h"
+#include "MapGeneration/MapFillIceDungeon.h"
 #include "MapGeneration/MapFillDungeon2.h"
 
 DungeonConfiguration::DungeonConfiguration()
@@ -68,17 +69,20 @@ SceneManager* DungeonConfiguration::GetLevel(int id)
 {
     //create next Level
     SceneManagerDungeon* sceneManager;
+    bool wallAbove;
     if(m_dungeonId == 1)
     {
-        MapFillDungeon* mf = new MapFillDungeon();
-        mf->InitItemChances();
-        sceneManager = new SceneManagerDungeon(40,30, m_seed + id, id, this, mf, SceneManagerDungeon::Cave);
+        wallAbove = false;
+        MapFillDungeon* mf = new MapFillIceDungeon();
+        mf->InitItemChances(wallAbove);
+        sceneManager = new SceneManagerDungeon(40,30, m_seed + id, id, this, mf, SceneManagerDungeon::Cave, wallAbove);
     }
     else
     {
+        wallAbove = true;
         MapFillDungeon* mf = new MapFillDungeon2();
-        mf->InitItemChances();
-        sceneManager = new SceneManagerDungeon(100,70, m_seed + id, id, this, mf, SceneManagerDungeon::Dungeon);
+        mf->InitItemChances(wallAbove);
+        sceneManager = new SceneManagerDungeon(100,70, m_seed + id, id, this, mf, SceneManagerDungeon::Dungeon, wallAbove);
     }
     return sceneManager;
 }

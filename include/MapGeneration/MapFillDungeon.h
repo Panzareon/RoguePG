@@ -15,7 +15,7 @@ class MapFillDungeon : public MapFill
         virtual ~MapFillDungeon();
 
         virtual void FillLayer(ToFillLayer type, int LayerId, int LayerAboveHeroId = -1, int LayerWallDecoration = -1);
-        virtual void InitItemChances();
+        virtual void InitItemChances(bool wallAbove);
 
         template<class Archive>
         void serialize(Archive & archive, std::uint32_t const version)
@@ -23,6 +23,7 @@ class MapFillDungeon : public MapFill
             archive(cereal::base_class<MapFill>( this ));
         }
     protected:
+        virtual void InitBaseItemChances(bool wallAbove);
         virtual void FillBaseLayer(int LayerId);
     private:
 };

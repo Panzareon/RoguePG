@@ -10,7 +10,7 @@
 class MapFill
 {
     public:
-        enum ToFillLayer{Ground, Wall, WallTopping, AdditionalItems};
+        enum ToFillLayer{Ground, Wall, WallTopping, AdditionalItems, WallBelow};
         MapFill();
         virtual ~MapFill();
 
@@ -46,6 +46,7 @@ class MapFill
         //yDelta changes the y position of the wall to be displayed
         void FillLayerWallByTiles(int checkTile, int LayerId, int LayerAboveHeroId, int TileId, int wallHeight, int yDelta = 1);
         void FillLayerWallAbove(int checkTile, int LayerId, int TileId, int wallHeight);
+        void FillLayerWallBelow(int checkTile, int LayerId, int TileId, int wallHeight, int yDelta = 1);
         //index of m_chanceForTile
         void FillWithItems(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, int index, int NrItems);
     private:

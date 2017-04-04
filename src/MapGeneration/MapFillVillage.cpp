@@ -66,10 +66,14 @@ void MapFillVillage::FillLayer(ToFillLayer type, int LayerId, int LayerAboveHero
         //Fill Tiles above Wall
         FillLayerWallByTiles(Wall, LayerId, LayerId, 264,2,4);
     }
-    else
+    else if(type == MapFill::AdditionalItems)
     {
         //Nr of items to Place: Width of Map times Height of Map / 50
         FillWithItems(LayerId, LayerAboveHeroId,LayerWallDecoration , TileRandomItem, m_width * m_height / 20);
+    }
+    else if(type == MapFill::WallBelow)
+    {
+        FillLayerWallBelow(Wall, LayerId,268 ,2);
     }
 }
 void MapFillVillage::FillBaseLayer(int LayerId)

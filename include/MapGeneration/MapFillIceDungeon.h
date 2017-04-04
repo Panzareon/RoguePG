@@ -1,15 +1,15 @@
-#ifndef MAPFILLDUNGEON2_H
-#define MAPFILLDUNGEON2_H
+#ifndef MAPFILLICEDUNGEON_H
+#define MAPFILLICEDUNGEON_H
 
 #include "MapFillDungeon.h"
 
 #include <cereal/types/base_class.hpp>
 
-class MapFillDungeon2 : public MapFillDungeon
+class MapFillIceDungeon : public MapFillDungeon
 {
     public:
-        MapFillDungeon2();
-        virtual ~MapFillDungeon2();
+        MapFillIceDungeon();
+        virtual ~MapFillIceDungeon();
 
         virtual void FillLayer(ToFillLayer type, int LayerId, int LayerAboveHeroId = -1, int LayerWallDecoration = -1);
         virtual void InitItemChances(bool wallAbove);
@@ -21,8 +21,9 @@ class MapFillDungeon2 : public MapFillDungeon
         }
     protected:
         virtual void FillBaseLayer(int LayerId);
+        virtual void InitBaseItemChances(bool wallAbove);
 
     private:
 };
 
-#endif // MAPFILLDUNGEON2_H
+#endif // MAPFILLICEDUNGEON_H

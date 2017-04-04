@@ -10,7 +10,7 @@ MapFillDungeon2::~MapFillDungeon2()
     //dtor
 }
 
-void MapFillDungeon2::InitItemChances()
+void MapFillDungeon2::InitItemChances(bool wallAbove)
 {
     //Stairs back up
     m_chanceForTile[TileStairsUp].push_back(FillItem(896 , 1, Space, Stairs, FillItem::Walkable));
@@ -25,17 +25,6 @@ void MapFillDungeon2::InitItemChances()
     m_chanceForTile[TileRandomItem].push_back(FillItem(577,50, Space, BlockingItem));
     //Tall Rock
     m_chanceForTile[TileRandomItem].push_back(FillItem(641,50, Space, BlockingItem,FillItem::Blocking,FillItem::AndOneAbove));
-    //Small Crack
-    m_chanceForTile[TileRandomItem].push_back(FillItem(546,30, Wall, Wall,FillItem::Wall,FillItem::AtWallDouble));
-    //Medium Crack
-    m_chanceForTile[TileRandomItem].push_back(FillItem(547,20, Wall, Wall,FillItem::Wall,FillItem::AtWallDouble));
-    //Wide Crack
-    m_chanceForTile[TileRandomItem].push_back(FillItem(548,5, Wall, Wall,FillItem::Wall,FillItem::AtWallDouble));
-    //Brown Plant
-    m_chanceForTile[TileRandomItem].push_back(FillItem(549,10, Wall, Wall,FillItem::Wall,FillItem::AtWallDouble));
-    //Green Plants
-    m_chanceForTile[TileRandomItem].push_back(FillItem(550,5, Wall, Wall,FillItem::Wall,FillItem::AtWallDouble));
-    m_chanceForTile[TileRandomItem].push_back(FillItem(551,5, Wall, Wall,FillItem::Wall,FillItem::AtWallDouble));
     //Cracked Barrel
     m_chanceForTile[TileRandomItem].push_back(FillItem(578,50, Space, BlockingItem,FillItem::Blocking,FillItem::Single, FillItem::AtWall));
     //Cracked Pot
@@ -44,6 +33,7 @@ void MapFillDungeon2::InitItemChances()
     //Chest
     m_chanceForTile[TileChest].push_back(FillItem(928,1, Space, BlockingItem,FillItem::Blocking,FillItem::Single, FillItem::AtWall));
 
+    InitBaseItemChances(wallAbove);
 }
 
 
@@ -63,10 +53,14 @@ void MapFillDungeon2::FillLayer(ToFillLayer type, int LayerId, int LayerAboveHer
         //Fill Tiles above Wall
         FillLayerWallAbove(Wall, LayerId, 293,2);
     }
-    else
+    else if(type == MapFill::AdditionalItems)
     {
         //Nr of items to Place: Width of Map times Height of Map / 50
         FillWithItems(LayerId, LayerAboveHeroId,LayerWallDecoration , MapFillDungeon::TileRandomItem, m_width * m_height / 20);
+    }
+    else if(type == MapFill::WallBelow)
+    {
+        FillLayerWallBelow(Wall, LayerId,268 ,2);
     }
 }
 
