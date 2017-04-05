@@ -12,7 +12,9 @@ class EnemyFactory
             EnemyListDeadWizard,
             EnemyListStoneGolem,
             EnemyListWindEye,
-            EnemyListWaterSlime
+            EnemyListWaterSlime,
+            EnemyListIceGolem,
+            EnemyListIceSpirit
 
         };
         EnemyFactory();

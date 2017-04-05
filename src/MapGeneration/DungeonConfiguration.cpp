@@ -37,7 +37,7 @@ void DungeonConfiguration::Init()
         m_bosses[EnemyFactory::EnemyListDeadWizard] = 3.0f;
         m_bosses[EnemyFactory::EnemyListStoneGolem] = 10.0f;
     }
-    else
+    else if(m_dungeonId % 2 == 0)
     {
         m_enemies[EnemyFactory::EnemyListBat] = 3.0f;
         m_enemies[EnemyFactory::EnemyListWaterSlime] = 5.0f;
@@ -45,6 +45,15 @@ void DungeonConfiguration::Init()
         m_enemies[EnemyFactory::EnemyListStoneGolem] = 7.0f;
 
         m_bosses[EnemyFactory::EnemyListDeadWizard] = 10.0f;
+    }
+    else
+    {
+        m_enemies[EnemyFactory::EnemyListWaterSlime] = 5.0f;
+        m_enemies[EnemyFactory::EnemyListStoneGolem] = 7.0f;
+        m_enemies[EnemyFactory::EnemyListIceSpiritm] = 15.0f;
+
+        m_bosses[EnemyFactory::EnemyListDeadWizard] = 3.0f;
+        m_bosses[EnemyFactory::EnemyListIceGolem] = 10.0f;
     }
 
     m_enemiesSumChance = 0.0f;
@@ -72,10 +81,25 @@ SceneManager* DungeonConfiguration::GetLevel(int id)
     bool wallAbove;
     if(m_dungeonId == 1)
     {
-        wallAbove = false;
-        MapFillDungeon* mf = new MapFillIceDungeon();
+        wallAbove = true;
+        MapFillDungeon* mf = new MapFillDungeon();
         mf->InitItemChances(wallAbove);
         sceneManager = new SceneManagerDungeon(40,30, m_seed + id, id, this, mf, SceneManagerDungeon::Cave, wallAbove);
+    }
+    else if(m_dungeonId % 2 == 0)
+    {
+        wallAbove = true;
+        MapFillDungeon* mf;
+        if(m_dungeonId % 4 == 0)
+        {
+            mf = new MapFillDungeon();
+        }
+        else
+        {
+            mf = new MapFillDungeon2();
+        }
+        mf->InitItemChances(wallAbove);
+        sceneManager = new SceneManagerDungeon(100,70, m_seed + id, id, this, mf, SceneManagerDungeon::Dungeon, wallAbove);
     }
     else
     {

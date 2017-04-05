@@ -106,6 +106,46 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         ret->AddSkill(sk);
         break;
     }
+    case EnemyListIceGolem:
+    {
+
+        //Exp to give after Battle
+        ret = new Entity(20);
+        ret->SetName(localization->GetLocalization("enemy.ice_golem"));
+        ret->InitAllAttributes(30 + lvl*3,35 + lvl*3,10 + lvl,7 + lvl,12 + lvl,20 + lvl*2,7 + lvl);
+        ret->SetBattleSprite(TextureList::IceGolemBattleSprite);
+        ret->SetResistance(BattleEnums::AttackTypePhysical, 1.5f);
+        ret->SetResistance(BattleEnums::AttackTypeWater, 1.5f);
+        ret->SetResistance(BattleEnums::AttackTypeFire, 0.5f);
+        ret->SetResistance(BattleEnums::AttackTypeAir, 1.3f);
+        BattleEnums::Target target = BattleEnums::TargetEnemyTeam;
+        Skill* sk = new Skill(target);
+        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(3)->GetEffectWithValue(4 + lvl,target),true);
+        ret->AddSkill(sk);
+        break;
+    }
+    case EnemyListIceSpirit:
+    {
+
+        //Exp to give after Battle
+        ret = new Entity(10);
+        ret->SetName(localization->GetLocalization("enemy.ice_spirit"));
+        ret->InitAllAttributes(10 + lvl*2,25 + lvl*2,7 + lvl,9 + lvl,8 + lvl,16 + lvl*2,8 + lvl);
+        ret->SetBattleSprite(TextureList::IceSpiritBattleSprite);
+        ret->SetResistance(BattleEnums::AttackTypePhysical, 1.5f);
+        ret->SetResistance(BattleEnums::AttackTypeWater, 1.5f);
+        ret->SetResistance(BattleEnums::AttackTypeFire, 0.5f);
+        ret->SetResistance(BattleEnums::AttackTypeAir, 1.3f);
+        BattleEnums::Target target = BattleEnums::TargetEnemyTeamEntity;
+        Skill* sk = new Skill(target);
+        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(3)->GetEffectWithValue(4 + lvl,target),true);
+        ret->AddSkill(sk);
+        BattleEnums::Target target = BattleEnums::TargetEnemyTeamEntity;
+        sk = new Skill(target);
+        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(10005)->GetEffectWithValue(4 + lvl,target),true);
+        ret->AddSkill(sk);
+        break;
+    }
     }
 
     if(ret == nullptr)

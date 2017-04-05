@@ -172,3 +172,5 @@ enemy.stone_golem = Stone Golem
 enemy.dead_wizard = Dead Wizard
 enemy.wind_eye = Wind Eye
 enemy.water_slime = Water Slime
+enemy.ice_golem = Ice Golem
+enemy.ice_spirit = Ice Spirit

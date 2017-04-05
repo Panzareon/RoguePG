@@ -61,6 +61,14 @@ Texture* TextureList::getTexture(TextureFiles file)
         case WaterSlimeBattleSprite:
             filename = "water-slime.png";
             break;
+        case IceGolemBattleSprite:
+            filename = "ice-golem.png";
+            break;
+        case IceSpiritBattleSprite:
+            filename = "ice-spirit.png";
+            break;
+
+
         case MageBattleSprite:
             filename = "mage.png";
             break;
