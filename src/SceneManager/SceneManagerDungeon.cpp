@@ -20,10 +20,10 @@ SceneManagerDungeon::SceneManagerDungeon()
 
 }
 
-SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config, MapFill* mapFill, GenerationType type, bool wallAbove): SceneManagerMoveable(tileWidth, tileHeight), m_generator(&m_map, seed)
+SceneManagerDungeon::SceneManagerDungeon(int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config, MapFill* mapFill, Enums::GenerationType type, bool wallAbove): SceneManagerMoveable(tileWidth, tileHeight), m_generator(&m_map, seed)
 {
     //ctor
-
+    m_wallAbove = wallAbove;
     mapFill->SetMap(&m_map);
     m_seed = seed;
     m_dungeonConfig = config;
@@ -38,7 +38,7 @@ SceneManagerDungeon::~SceneManagerDungeon()
     //dtor
 }
 
-void SceneManagerDungeon::Generate(int tileWidth, int tileHeight, GenerationType type, bool loadSaved)
+void SceneManagerDungeon::Generate(int tileWidth, int tileHeight, Enums::GenerationType type, bool loadSaved)
 {
     int nrLayers = 5;
     m_minimapColor.resize(MapFillDungeon::TILE_TYPE_END);
@@ -68,13 +68,13 @@ void SceneManagerDungeon::Generate(int tileWidth, int tileHeight, GenerationType
 
     switch(type)
     {
-    case Cave:
+    case Enums::Cave:
         if(tileHeight > 200 || tileWidth > 200)
             m_generator.FasterCellularAutomata(0.45f);
         else
             m_generator.CellularAutomata(0.45f);
         break;
-    case Dungeon:
+    case Enums::Dungeon:
         m_generator.ConnectedRooms(10,8, tileHeight * tileWidth / 160);
     }
 

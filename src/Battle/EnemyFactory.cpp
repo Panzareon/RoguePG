@@ -140,7 +140,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         Skill* sk = new Skill(target);
         sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(3)->GetEffectWithValue(4 + lvl,target),true);
         ret->AddSkill(sk);
-        BattleEnums::Target target = BattleEnums::TargetEnemyTeamEntity;
+        target = BattleEnums::TargetEnemyTeamEntity;
         sk = new Skill(target);
         sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(10005)->GetEffectWithValue(4 + lvl,target),true);
         ret->AddSkill(sk);

@@ -31,29 +31,48 @@ void DungeonConfiguration::Init()
     //Init all Enemies
     if(m_dungeonId == 1)
     {
+        m_generationType = Enums::Cave;
+        m_dungeonType = 0;
+        m_mapFillNr = 0;
+
         m_enemies[EnemyFactory::EnemyListBat] = 10.0f;
         m_enemies[EnemyFactory::EnemyListWaterSlime] = 3.0f;
 
         m_bosses[EnemyFactory::EnemyListDeadWizard] = 3.0f;
         m_bosses[EnemyFactory::EnemyListStoneGolem] = 10.0f;
     }
-    else if(m_dungeonId % 2 == 0)
-    {
-        m_enemies[EnemyFactory::EnemyListBat] = 3.0f;
-        m_enemies[EnemyFactory::EnemyListWaterSlime] = 5.0f;
-        m_enemies[EnemyFactory::EnemyListWindEye] = 10.0f;
-        m_enemies[EnemyFactory::EnemyListStoneGolem] = 7.0f;
-
-        m_bosses[EnemyFactory::EnemyListDeadWizard] = 10.0f;
-    }
     else
     {
-        m_enemies[EnemyFactory::EnemyListWaterSlime] = 5.0f;
-        m_enemies[EnemyFactory::EnemyListStoneGolem] = 7.0f;
-        m_enemies[EnemyFactory::EnemyListIceSpiritm] = 15.0f;
+        m_dungeonType = rand() % 2;
+        if(m_dungeonType == 0)
+        {
+            if(rand() % 2 == 0)
+            {
+                m_generationType = Enums::Cave;
+            }
+            else
+            {
+                m_generationType = Enums::Dungeon;
+            }
+            m_mapFillNr = rand() % 2;
+            m_enemies[EnemyFactory::EnemyListBat] = 3.0f;
+            m_enemies[EnemyFactory::EnemyListWaterSlime] = 5.0f;
+            m_enemies[EnemyFactory::EnemyListWindEye] = 10.0f;
+            m_enemies[EnemyFactory::EnemyListStoneGolem] = 7.0f;
 
-        m_bosses[EnemyFactory::EnemyListDeadWizard] = 3.0f;
-        m_bosses[EnemyFactory::EnemyListIceGolem] = 10.0f;
+            m_bosses[EnemyFactory::EnemyListDeadWizard] = 10.0f;
+        }
+        else
+        {
+            m_generationType = Enums::Cave;
+            m_mapFillNr = 0;
+            m_enemies[EnemyFactory::EnemyListWaterSlime] = 5.0f;
+            m_enemies[EnemyFactory::EnemyListStoneGolem] = 7.0f;
+            m_enemies[EnemyFactory::EnemyListIceSpirit] = 15.0f;
+
+            m_bosses[EnemyFactory::EnemyListDeadWizard] = 3.0f;
+            m_bosses[EnemyFactory::EnemyListIceGolem] = 10.0f;
+        }
     }
 
     m_enemiesSumChance = 0.0f;
@@ -79,36 +98,40 @@ SceneManager* DungeonConfiguration::GetLevel(int id)
     //create next Level
     SceneManagerDungeon* sceneManager;
     bool wallAbove;
+    MapFillDungeon* mf;
+    int width, height;
+
     if(m_dungeonId == 1)
     {
         wallAbove = true;
-        MapFillDungeon* mf = new MapFillDungeon();
-        mf->InitItemChances(wallAbove);
-        sceneManager = new SceneManagerDungeon(40,30, m_seed + id, id, this, mf, SceneManagerDungeon::Cave, wallAbove);
-    }
-    else if(m_dungeonId % 2 == 0)
-    {
-        wallAbove = true;
-        MapFillDungeon* mf;
-        if(m_dungeonId % 4 == 0)
-        {
-            mf = new MapFillDungeon();
-        }
-        else
-        {
-            mf = new MapFillDungeon2();
-        }
-        mf->InitItemChances(wallAbove);
-        sceneManager = new SceneManagerDungeon(100,70, m_seed + id, id, this, mf, SceneManagerDungeon::Dungeon, wallAbove);
+        width = 40;
+        height = 30;
+        mf = new MapFillDungeon();
     }
     else
     {
-        wallAbove = true;
-        MapFillDungeon* mf = new MapFillDungeon2();
-        mf->InitItemChances(wallAbove);
-        sceneManager = new SceneManagerDungeon(100,70, m_seed + id, id, this, mf, SceneManagerDungeon::Dungeon, wallAbove);
+        width = 100;
+        height = 70;
+        if(m_dungeonType == 0)
+        {
+            wallAbove = true;
+            if(m_mapFillNr == 0)
+            {
+                mf = new MapFillDungeon();
+            }
+            else
+            {
+                mf = new MapFillDungeon2();
+            }
+        }
+        else
+        {
+            wallAbove = false;
+            mf = new MapFillIceDungeon();
+        }
     }
-    return sceneManager;
+    mf->InitItemChances(wallAbove);
+    return new SceneManagerDungeon(width,height, m_seed + id, id, this, mf, m_generationType, wallAbove);;
 }
 
 int DungeonConfiguration::GetDungeonId()

@@ -15,11 +15,10 @@ class MapEventHero;
 class SceneManagerDungeon: public SceneManagerMoveable
 {
     public:
-        enum GenerationType {Cave, Dungeon};
         SceneManagerDungeon();
-        SceneManagerDungeon(int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config, MapFill* mapFill, GenerationType type, bool wallAbove);
+        SceneManagerDungeon(int tileWidth, int tileHeight, unsigned int seed, int lvlId, DungeonConfiguration* config, MapFill* mapFill, Enums::GenerationType type, bool wallAbove);
         virtual ~SceneManagerDungeon();
-        void Generate(int tileWidth, int tileHeight, GenerationType type, bool loadSaved = false);
+        void Generate(int tileWidth, int tileHeight, Enums::GenerationType type, bool loadSaved = false);
         void SpawnEnemy();
         void SpawnEnemy(int x, int y, float movementSpeed, float followSpeed, int followRange, Enums::EnemyTypes);
 
@@ -77,7 +76,7 @@ class SceneManagerDungeon: public SceneManagerMoveable
         int m_width;
         int m_height;
         bool m_wallAbove;
-        GenerationType m_type;
+        Enums::GenerationType m_type;
 
 
 

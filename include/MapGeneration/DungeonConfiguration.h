@@ -35,6 +35,10 @@ class DungeonConfiguration
             Init();
         }
     protected:
+        int m_dungeonType;
+        int m_mapFillNr;
+        Enums::GenerationType m_generationType;
+
         int m_nrLevels;
         int m_dungeonId;
         unsigned int m_seed;
