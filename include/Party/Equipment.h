@@ -25,7 +25,7 @@ class Equipment : public IPassiveEffect, public Item
 
         virtual void OnEffectStart();
         virtual float GetResistance(float resistanceValue, BattleEnums::AttackType type);
-        virtual void AttackEntity(Attack* att, Entity* target, Entity* attacker);
+        virtual void AttackEntity(Attack* att, Entity* attacker);
 
         virtual ~Equipment();
         virtual bool StaysAfterBattle();

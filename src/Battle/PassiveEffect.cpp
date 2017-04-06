@@ -81,11 +81,11 @@ void PassiveEffect::AddAttributeEffect(std::function<float(float, BattleEnums::A
 {
     m_attributeFunction.push_back(attributeFunction);
 }
-void PassiveEffect::AttackEntity(Attack* att, Entity* target, Entity* attacker)
+void PassiveEffect::AttackEntity(Attack* att, Entity* attacker)
 {
     //Change Attack Damage or add Attack Type
     for(int i = 0; i < m_attack.size(); i++)
-        (*m_attack[i])(att, target, attacker);
+        (*m_attack[i])(att, attacker);
 }
 
 void PassiveEffect::GetAttacked(Attack* att, Entity* target, Entity* attacker)
@@ -94,7 +94,7 @@ void PassiveEffect::GetAttacked(Attack* att, Entity* target, Entity* attacker)
         (*m_onAttacked[i])(att, target, attacker);
 }
 
-void PassiveEffect::AddAttack(std::function<void(Attack*, Entity*, Entity*)>* attack)
+void PassiveEffect::AddAttack(std::function<void(Attack*, Entity*)>* attack)
 {
     m_attack.push_back(attack);
 }

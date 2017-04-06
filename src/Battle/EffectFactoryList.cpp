@@ -39,8 +39,12 @@ namespace PassiveEffectFunctions
     }
     void DamageOverTime(Entity* user, Entity* target, PassiveEffect* passiveEffect, int dmg, BattleEnums::AttackType type)
     {
-        Attack att(dmg, false, type);
+        Attack att(dmg, false, target, type);
         user->AttackEntity(target, &att);
+    }
+    void Taunt(Attack* att, Entity* user, Entity* taunt)
+    {
+        att->m_target = taunt;
     }
 }
 
@@ -51,7 +55,7 @@ namespace EffectFunctions
     {
         for(unsigned int i = 0; i < targets->size(); i++)
         {
-            Attack att(strength->at(0) + user->GetAttribute(BattleEnums::AttributeInt), false, type);
+            Attack att(strength->at(0) + user->GetAttribute(BattleEnums::AttributeInt), false, targets->at(i), type);
             user->AttackEntity(targets->at(i), &att);
         }
     }
@@ -61,7 +65,7 @@ namespace EffectFunctions
     {
         for(unsigned int i = 0; i < targets->size(); i++)
         {
-            Attack att(strength->at(0) + user->GetAttribute(BattleEnums::AttributeStrength), true, type);
+            Attack att(strength->at(0) + user->GetAttribute(BattleEnums::AttributeStrength), true, targets->at(i), type);
             user->AttackEntity(targets->at(i), &att);
         }
     }
@@ -143,6 +147,17 @@ namespace EffectFunctions
             PassiveEffect* eff = new PassiveEffect(true, (int)strength->at(0), effect);
             eff->AddOnTurnEffect(new std::function<void(Entity*, PassiveEffect*)>(
                 std::bind(&PassiveEffectFunctions::DamageOverTime,user,std::placeholders::_1,std::placeholders::_2,strength->at(1), type)));
+            targets->at(i)->AddPassiveEffect(eff);
+        }
+    }
+
+    void Taunt(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect)
+    {
+        for(unsigned int i = 0; i < targets->size(); i++)
+        {
+            PassiveEffect* eff = new PassiveEffect(true, (int)strength->at(0), effect);
+            eff->AddAttack(new std::function<void(Attack*, Entity*)>(
+                std::bind(&PassiveEffectFunctions::Taunt,std::placeholders::_1,std::placeholders::_2,user)));
             targets->at(i)->AddPassiveEffect(eff);
         }
     }
@@ -591,6 +606,19 @@ EffectFactoryList::EffectFactoryList()
     newEffect->AddAttackType(BattleEnums::AttackTypeFire);
     newEffect->AddEffectType(BattleEnums::EffectTypeDebuff);
     newEffect->AddEffectType(BattleEnums::EffectTypeDebuffDefense);
+    m_effects.push_back(newEffect);
+
+    //Taunt enemy
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(std::bind(&EffectFunctions::Taunt,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4));
+    newEffect = new EffectFactory(func, 10101);
+    calc = newEffect->GetStrengthCalculation();
+    //Number of turns: from 2 to 10 with step of 1
+    calc->AddStrengthValue(1.0f, 10.0f, 1.0f);
+    calc->SetMultiplier(5.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
+    newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDebuff);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDebuffOffense);
     m_effects.push_back(newEffect);
 
 

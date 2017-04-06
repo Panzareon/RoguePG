@@ -72,7 +72,7 @@ float Equipment::GetResistance(float resistanceValue, BattleEnums::AttackType ty
     return resistanceValue *= m_typeResistance[type];
 }
 
-void Equipment::AttackEntity(Attack* att, Entity* target, Entity* attacker)
+void Equipment::AttackEntity(Attack* att, Entity* attacker)
 {
     att->m_type.insert(m_attackTypes.begin(), m_attackTypes.end());
 }

@@ -4,16 +4,19 @@
 #include "Controller/Enums.h"
 #include <set>
 
+class Entity;
+
 class Attack
 {
     public:
-        Attack(int attack, bool physical);
-        Attack(int attack, bool physical, BattleEnums::AttackType type);
+        Attack(int attack, bool physical, Entity* target);
+        Attack(int attack, bool physical, Entity* target, BattleEnums::AttackType type);
         virtual ~Attack();
 
         int m_dmg;
         std::set<BattleEnums::AttackType> m_type;
         bool m_physical;
+        Entity* m_target;
 
     protected:
 

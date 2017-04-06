@@ -66,7 +66,7 @@ void Entity::AttackEntity(Entity* target)
     {
         attack *= GetAttribute(BattleEnums::AttributeInt);
     }
-    Attack att(attack, isPhysical);
+    Attack att(attack, isPhysical, target);
     //TODO: Get Attack Type from weapon
     att.m_type.insert(BattleEnums::AttackTypePhysical);
     AttackEntity(target, &att);
@@ -76,9 +76,9 @@ void Entity::AttackEntity(Entity* target, Attack* attack)
 {
     for(auto iter = m_passiveEffects.begin(); iter != m_passiveEffects.end(); iter++)
     {
-        iter->second->AttackEntity(attack, target, this);
+        iter->second->AttackEntity(attack, this);
     }
-    target->GetHit(attack, this);
+    attack->m_target->GetHit(attack, this);
 }
 
 void Entity::GetHit(Attack* attack, Entity* attacker)
