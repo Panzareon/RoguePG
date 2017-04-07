@@ -153,14 +153,7 @@ Entity* DungeonConfiguration::GetDungeonEnemy(int lvl)
         rand -= it->second;
         if(rand <= 0.0f)
         {
-            if(m_dungeonId == 1)
-            {
-                return EnemyFactory::GetEntity(it->first, lvl);
-            }
-            else
-            {
-                return EnemyFactory::GetEntity(it->first, lvl + 5);
-            }
+            return EnemyFactory::GetEntity(it->first, lvl + 5 * (m_dungeonId - 1));
         }
     }
 }
@@ -174,14 +167,7 @@ Entity* DungeonConfiguration::GetDungeonBoss(int lvl)
         rand -= it->second;
         if(rand <= 0.0f)
         {
-            if(m_dungeonId == 1)
-            {
-                return EnemyFactory::GetEntity(it->first, lvl);
-            }
-            else
-            {
-                return EnemyFactory::GetEntity(it->first, lvl + 5);
-            }
+            return EnemyFactory::GetEntity(it->first,  lvl + 5 * (m_dungeonId - 1));
         }
     }
 }
