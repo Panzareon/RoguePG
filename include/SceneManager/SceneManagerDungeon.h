@@ -85,4 +85,6 @@ class SceneManagerDungeon: public SceneManagerMoveable
     private:
 };
 
+CEREAL_CLASS_VERSION(SceneManagerMoveable, 1);
+
 #endif // SCENEMANAGERDUNGEON_H
