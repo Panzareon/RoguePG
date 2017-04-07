@@ -27,7 +27,9 @@ namespace MenuFunctions
     }
     void Load()
     {
-        GameController::getInstance()->LoadFromFile();
+        GameController* controller = GameController::getInstance();
+        if(controller->LoadAvailable())
+            controller->LoadFromFile();
     }
 }
 
@@ -52,7 +54,7 @@ SceneManagerMainMenu::SceneManagerMainMenu()
     Localization* local = Localization::GetInstance();
     m_mainMenu->AddOption(local->GetLocalization("menu.startDungeon"),std::function<void()>(std::bind(&MenuFunctions::StartDungeon,this)),true);
     m_mainMenu->AddOption(local->GetLocalization("menu.option"),std::function<void()>(&MenuFunctions::Options),true);
-    m_mainMenu->AddOption(local->GetLocalization("menu.load"),std::function<void()>(&MenuFunctions::Load),controller->LoadAvailable());
+    m_mainMenu->AddOption(local->GetLocalization("menu.load"),std::function<void()>(&MenuFunctions::Load),true);
     m_mainMenu->AddOption(local->GetLocalization("menu.quit"),std::function<void()>(std::bind(&MenuFunctions::Quit,this)),true);
     background->addChild(m_mainMenu);
 
