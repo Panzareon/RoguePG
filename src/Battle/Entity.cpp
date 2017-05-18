@@ -155,8 +155,25 @@ void Entity::RestoreMana(int mp)
 }
 
 
+int Entity::GetNeededMana(int baseMp)
+{
+    float fMp = baseMp;
+    for(auto iter = m_passiveEffects.begin(); iter != m_passiveEffects.end(); iter++)
+    {
+        fMp = iter->second->GetNeededMP(fMp);
+    }
+    return fMp;
+}
+
+bool Entity::CanCastSkill(Skill* skill)
+{
+    return GetNeededMana(skill->GetManaUse()) <= m_mp;
+}
+
+
 bool Entity::UseMp(int mp)
 {
+    mp = GetNeededMana(mp);
     if(m_mp < mp)
         return false;
     m_mp -= mp;

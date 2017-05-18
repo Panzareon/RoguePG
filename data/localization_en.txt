@@ -60,6 +60,7 @@ character_class.barbarian = Barbarian
 character_class.paladin = Palading
 character_class.thief = Thief
 character_class.cleric = Cleric
+character_class.wizard = Wizard
 
 //Item-Names
 item.1 = Sword
@@ -168,6 +169,8 @@ effect.100101 = Movement Boost
 effect.100101.desc = Increases movement speed by %0%.
 effect.100102 = Show Hp
 effect.100102.desc = Shows Hp bars of enemies.
+effect.100103 = Reduce MP cost
+effect.100103.desc = Reduce cost of all skills by %0%.
 
 //Enemies
 enemy.bat = Bat

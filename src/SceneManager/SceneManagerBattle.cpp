@@ -72,8 +72,8 @@ namespace BattleFunctions
                 {
                     SetSkillDescription(sm, skillList->at(i).get());
                 }
-                skillMenu->AddOptionWithItem(localization->GetLocalization(skillList->at(i)->GetName()),std::function<void()>(std::bind(&UseSkill, sm, attacking, skillList->at(i).get())), skillList->at(i).get(), attacking->GetMp() >= skillList->at(i)->GetManaUse());
-                skillMenu->AddValueToOption(menuId, std::to_string((int)skillList->at(i)->GetManaUse()));
+                skillMenu->AddOptionWithItem(localization->GetLocalization(skillList->at(i)->GetName()),std::function<void()>(std::bind(&UseSkill, sm, attacking, skillList->at(i).get())), skillList->at(i).get(), attacking->CanCastSkill(skillList->at(i).get()));
+                skillMenu->AddValueToOption(menuId, std::to_string((int)attacking->GetNeededMana(skillList->at(i)->GetManaUse())));
                 menuId ++;
             }
         }

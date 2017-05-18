@@ -84,6 +84,9 @@ Texture* TextureList::getTexture(TextureFiles file)
         case ClericBattleSprite:
             filename = "cleric.png";
             break;
+        case WizardBattleSprite:
+            filename = "wizard.png";
+            break;
         case DefaultBattleSprite:
             filename = "rogue.png";
             break;

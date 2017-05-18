@@ -46,6 +46,10 @@ namespace PassiveEffectFunctions
     {
         att->m_target = taunt;
     }
+    float SubtractMultiplier(float baseValue, float multiplier)
+    {
+        return baseValue * (1 - multiplier);
+    }
 }
 
 namespace EffectFunctions
@@ -186,6 +190,12 @@ namespace PassiveSkillEffectFunctions
     void ShowHp(std::vector<float>* strength, PassiveEffect* target)
     {
         target->SetShowEnemyHealth(true);
+    }
+    //Strength mp cost multiplier
+    void MpCostMultiplier(std::vector<float>* strength, PassiveEffect* target)
+    {
+        target->AddGetNeededMp(new std::function<float(float)>(
+                std::bind(&PassiveEffectFunctions::SubtractMultiplier,std::placeholders::_1,strength->at(0))));
     }
 }
 EffectFactoryList* EffectFactoryList::m_instance = 0;
@@ -669,6 +679,17 @@ EffectFactoryList::EffectFactoryList()
     calc->SetMultiplier(12.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
+    newEffect->AddEffectType(BattleEnums::EffectTypePassive);
+    m_effects.push_back(newEffect);
+
+    //Reduce MP cost
+    passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(std::bind(&PassiveSkillEffectFunctions::MpCostMultiplier,std::placeholders::_1,std::placeholders::_2));
+    newEffect = new EffectFactoryPassive(passiveFunc, 100103);
+    calc = newEffect->GetStrengthCalculation();
+    calc->AddStrengthValue(0.01f, 0.75f);
+    calc->SetMultiplier(100.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypeAir);
+    newEffect->AddAttackType(BattleEnums::AttackTypeWater);
     newEffect->AddEffectType(BattleEnums::EffectTypePassive);
     m_effects.push_back(newEffect);
 }

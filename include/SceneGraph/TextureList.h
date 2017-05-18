@@ -17,7 +17,7 @@ class TextureList
             BatBattleSprite, DeadWizardBattleSprite, StoneGolemBattleSprite, WindEyeBattleSprite, WaterSlimeBattleSprite,
             IceGolemBattleSprite, IceSpiritBattleSprite,
 
-            MageBattleSprite, BarbarianBattleSprite, PaladinBattleSprite, ThiefBattleSprite, ClericBattleSprite,
+            MageBattleSprite, BarbarianBattleSprite, PaladinBattleSprite, ThiefBattleSprite, ClericBattleSprite, WizardBattleSprite,
             DefaultBattleSprite,
 
             TargetCursor, TimeArrow,

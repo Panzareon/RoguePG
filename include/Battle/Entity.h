@@ -36,6 +36,8 @@ class Entity
         void Heal(int hp);
         void RestoreMana(int mp);
         bool UseMp(int mp);
+        int GetNeededMana(int baseMana);
+        bool CanCastSkill(Skill* skill);
 
 
         bool IsAttackPhysical();

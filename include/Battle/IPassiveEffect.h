@@ -4,6 +4,9 @@
 #include "Controller/Enums.h"
 #include <string>
 #include "Controller/NamedItem.h"
+#include <functional>
+#include <vector>
+
 class Attack;
 class Entity;
 
@@ -22,6 +25,7 @@ class IPassiveEffect: public virtual NamedItem
         virtual void OnBattleFinished(Entity* target);
         virtual bool ShowEnemyHealth(bool base);
         virtual float Movementspeed(float base);
+        virtual float GetNeededMP(float base);
 
         virtual bool IsStillActive() = 0;
         virtual bool StaysAfterBattle() = 0;
@@ -31,7 +35,11 @@ class IPassiveEffect: public virtual NamedItem
         virtual bool IsEquipment();
 
         virtual bool DeleteEffect();
+
+
+        void AddGetNeededMp(std::function<float(float)>* getMp);
     protected:
+        std::vector<std::function<float(float)>*> m_getNeededMp;
     private:
 };
 

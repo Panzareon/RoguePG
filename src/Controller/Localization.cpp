@@ -5,7 +5,7 @@
 std::string format(std::string& str, std::vector<float>* values)
 {
     std::stringstream out;
-    out.precision(2);
+    out.precision(3);
     size_t pos;
     while (pos != str.npos)
     {

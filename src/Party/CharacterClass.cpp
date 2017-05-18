@@ -3,6 +3,7 @@
 #include "Battle/EffectFactoryList.h"
 #include <random>
 #include "Party/PartyMember.h"
+#include "Battle/PassiveSkill.h"
 
 std::vector<CharacterClass*>* CharacterClass::m_classes = nullptr;
 
@@ -196,6 +197,43 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         m_classes->at(CharacterClassCleric) = newClass;
 
 
+        newClass = new CharacterClass(CharacterClassWizard, 1.0f, TextureList::WizardBattleSprite);
+
+        newClass->SetBaseAttribute(BattleEnums::AttributeMaxHp, 15);
+        newClass->SetBaseAttribute(BattleEnums::AttributeMaxMp, 0);
+        newClass->SetBaseAttribute(BattleEnums::AttributeStrength, 5);
+        newClass->SetBaseAttribute(BattleEnums::AttributeInt, 10);
+        newClass->SetBaseAttribute(BattleEnums::AttributeDefense, 8);
+        newClass->SetBaseAttribute(BattleEnums::AttributeMagicDefense, 10);
+        newClass->SetBaseAttribute(BattleEnums::AttributeSpeed, 10);
+
+        //Set increased and decreased Attribute per Level values
+        newClass->SetAttributePerLevel(BattleEnums::AttributeMaxMp, 0.0f);
+        newClass->SetAttributePerLevel(BattleEnums::AttributeStrength, 0.7f);
+        newClass->SetAttributePerLevel(BattleEnums::AttributeInt, 1.0f);
+
+        skillGenerator = newClass->GetSkillGenerator();
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.5f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetSelf, 0.3f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.09f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.1f);
+
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.05f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.25f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.25f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.25f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.25f);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.4f, true);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.4f, true);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.2f, true);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.8f, false);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.1f, false);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.1f, false);
+
+        m_classes->at(CharacterClassWizard) = newClass;
+
+
 
         //finished Initializing Character Classes
     }
@@ -224,6 +262,20 @@ PartyMember* CharacterClass::GetNewPartyMember()
         ret->InitAttribute((BattleEnums::Attribute)i, m_baseAttributes[(BattleEnums::Attribute)i]);
     }
     ret->SetBattleSprite(m_battleSprite);
+
+    //Add special Character cases here
+    if(m_classType == CharacterClassWizard)
+    {
+        //Add Passive Skill to not use MP
+        PassiveSkill* sk = new PassiveSkill();
+        std::vector<float>* strength = new std::vector<float>();
+        strength->push_back(1.0f);
+        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(100103)->GetEffectWithStrength(strength, BattleEnums::TargetPassive),true);
+        ret->AddSkill(sk);
+    }
+
+
+
     ret->GetStartingSkills(1);
     return ret;
 }
@@ -273,6 +325,8 @@ std::string CharacterClass::GetName()
         return "character_class.thief";
     case CharacterClassCleric:
         return "character_class.cleric";
+    case CharacterClassWizard:
+        return "character_class.wizard";
     }
     return "character_class.unknown";
 }
