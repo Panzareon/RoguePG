@@ -27,6 +27,8 @@ class CharacterClass
         std::string GetName();
         CharacterClassEnum GetClassType();
 
+        TextureList::TextureFiles GetClassSprite();
+
     protected:
         static std::vector<CharacterClass*>* m_classes;
 

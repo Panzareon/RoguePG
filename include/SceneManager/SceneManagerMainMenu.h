@@ -11,6 +11,7 @@ class SceneManagerMainMenu : public SceneManager
         virtual ~SceneManagerMainMenu();
 
         virtual void StartDungeon();
+        virtual void ChooseHero();
         virtual void Quit();
 
         virtual void Tick();
@@ -32,6 +33,7 @@ class SceneManagerMainMenu : public SceneManager
         }
     protected:
 
+        bool m_startDungeon;
 
 
     private:

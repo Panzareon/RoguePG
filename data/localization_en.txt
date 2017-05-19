@@ -21,6 +21,8 @@ menu.save = Save
 menu.save.finished = Save finished
 menu.quit = Quit
 
+menu.chooseHero = Choose your hero:
+
 menu.status.level = Level:
 
 menu.yes = Yes

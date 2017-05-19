@@ -385,3 +385,8 @@ CharacterClass::CharacterClassEnum CharacterClass::GetClassType()
 {
     return m_classType;
 }
+
+TextureList::TextureFiles CharacterClass::GetClassSprite()
+{
+    return m_battleSprite;
+}

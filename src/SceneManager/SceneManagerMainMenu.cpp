@@ -7,6 +7,7 @@
 #include "Party/CharacterClass.h"
 #include "Party/ItemFactory.h"
 #include "SceneManager/SceneManagerVillage.h"
+#include "SceneManager/SceneManagerChooseHero.h"
 
 #include <iostream>
 
@@ -14,7 +15,7 @@ namespace MenuFunctions
 {
     void StartDungeon(SceneManagerMainMenu* sm)
     {
-        sm->StartDungeon();
+        sm->ChooseHero();
     }
     void Quit(SceneManagerMainMenu* sm)
     {
@@ -37,6 +38,7 @@ SceneManagerMainMenu::SceneManagerMainMenu()
 {
     //ctor
     int padding = 8;
+    m_startDungeon = false;
 
     //Set Background
     sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::InGameMenu));
@@ -73,16 +75,24 @@ SceneManagerMainMenu::~SceneManagerMainMenu()
     //dtor
 }
 
-void SceneManagerMainMenu::StartDungeon()
+void SceneManagerMainMenu::ChooseHero()
 {
     GameController* controller = GameController::getInstance();
     controller->InitValues();
     controller->setParty(Party());
+
+    m_startDungeon = true;
+    controller->LoadSceneManager(new SceneManagerChooseHero());
+}
+
+void SceneManagerMainMenu::StartDungeon()
+{
+    GameController* controller = GameController::getInstance();
     Party* party = controller->getParty();
     //create new party with 2 member
     int partyInitialSize = 2;
     PartyMember* p;
-    for(int i = 0; i < partyInitialSize; i++)
+    for(int i = 1; i < partyInitialSize; i++)
     {
         p = CharacterClass::GetRandomCharacterClass()->GetNewPartyMember();
         p->SetTeamId(0);
@@ -114,6 +124,11 @@ void SceneManagerMainMenu::Quit()
 
 void SceneManagerMainMenu::Tick()
 {
+    if(m_startDungeon)
+    {
+        m_startDungeon = false;
+        StartDungeon();
+    }
     m_mainMenu->CheckKeyboardInput();
 }
 
