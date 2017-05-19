@@ -133,6 +133,7 @@
 		<Unit filename="include/SceneManager/AttributeNodesDisplay.h" />
 		<Unit filename="include/SceneManager/SceneManager.h" />
 		<Unit filename="include/SceneManager/SceneManagerBattle.h" />
+		<Unit filename="include/SceneManager/SceneManagerChooseHero.h" />
 		<Unit filename="include/SceneManager/SceneManagerDungeon.h" />
 		<Unit filename="include/SceneManager/SceneManagerEquipment.h" />
 		<Unit filename="include/SceneManager/SceneManagerGameMenu.h" />
@@ -300,6 +301,7 @@
 		<Unit filename="src/SceneManager/AttributeNodesDisplay.cpp" />
 		<Unit filename="src/SceneManager/SceneManager.cpp" />
 		<Unit filename="src/SceneManager/SceneManagerBattle.cpp" />
+		<Unit filename="src/SceneManager/SceneManagerChooseHero.cpp" />
 		<Unit filename="src/SceneManager/SceneManagerDungeon.cpp" />
 		<Unit filename="src/SceneManager/SceneManagerEquipment.cpp" />
 		<Unit filename="src/SceneManager/SceneManagerGameMenu.cpp" />
