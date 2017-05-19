@@ -113,6 +113,8 @@ class Entity
 
         EntityNode* m_node;
 
+        bool m_useHpInsteadOfMp;
+
     private:
 };
 

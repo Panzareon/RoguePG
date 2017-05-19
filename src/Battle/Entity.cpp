@@ -35,6 +35,8 @@ Entity::Entity(int exp)
     m_name = "Entity";
 
     m_giveExp = exp;
+
+    m_useHpInsteadOfMp = false;
 }
 
 Entity::~Entity()
@@ -167,16 +169,32 @@ int Entity::GetNeededMana(int baseMp)
 
 bool Entity::CanCastSkill(Skill* skill)
 {
-    return GetNeededMana(skill->GetManaUse()) <= m_mp;
+    if(m_useHpInsteadOfMp)
+    {
+        return GetNeededMana(skill->GetManaUse()) < m_hp;
+    }
+    else
+    {
+        return GetNeededMana(skill->GetManaUse()) <= m_mp;
+    }
 }
 
 
 bool Entity::UseMp(int mp)
 {
     mp = GetNeededMana(mp);
-    if(m_mp < mp)
-        return false;
-    m_mp -= mp;
+    if(m_useHpInsteadOfMp)
+    {
+        if(m_hp <= mp)
+            return false;
+        m_hp -= mp;
+    }
+    else
+    {
+        if(m_mp < mp)
+            return false;
+        m_mp -= mp;
+    }
     return true;
 }
 

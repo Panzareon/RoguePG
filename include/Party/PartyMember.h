@@ -40,6 +40,10 @@ class PartyMember : public Entity
         {
             CharacterClass::CharacterClassEnum characterClass = m_chrClass->GetClassType();
             archive(m_name, m_hp, m_mp,m_lvl, m_exp, characterClass, m_attributes, m_resistances, m_skills, m_equipment, m_teamId, m_battleSpriteTexture);
+            if(version >= 1)
+            {
+                archive(m_useHpInsteadOfMp);
+            }
         }
 
         template<class Archive>
@@ -49,6 +53,10 @@ class PartyMember : public Entity
             std::vector<std::shared_ptr<Skill>> m_skills;
             std::map<Equipment::EquipmentPosition, std::shared_ptr<Equipment>> m_equipment;
             archive(m_name, m_hp, m_mp,m_lvl, m_exp, characterClass, m_attributes, m_resistances, m_skills, m_equipment, m_teamId, m_battleSpriteTexture);
+            if(version >= 1)
+            {
+                archive(m_useHpInsteadOfMp);
+            }
             SetCharacterClass(CharacterClass::GetCharacterClass(characterClass));
             SetBattleSprite(m_battleSpriteTexture);
             for(int i = 0; i < m_skills.size(); i++)
@@ -79,5 +87,7 @@ class PartyMember : public Entity
         CharacterClass* m_chrClass;
     private:
 };
+
+CEREAL_CLASS_VERSION(PartyMember, 1);
 
 #endif // PARTYMEMBER_H
