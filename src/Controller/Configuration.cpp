@@ -21,62 +21,28 @@ Configuration::Configuration()
     //keyconfig
     m_keys.resize(KEYS_END);
     m_defaultKeys.resize(KEYS_END);
-    try
+
+    m_defaultKeys.at(MoveDown) = sf::Keyboard::Down;
+    m_defaultKeys.at(MoveUp) = sf::Keyboard::Up;
+    m_defaultKeys.at(MoveRight) = sf::Keyboard::Right;
+    m_defaultKeys.at(MoveLeft) = sf::Keyboard::Left;
+    m_defaultKeys.at(Accept) = sf::Keyboard::Return;
+    m_defaultKeys.at(Cancel) = sf::Keyboard::Escape;
+    m_defaultKeys.at(Minimap) = sf::Keyboard::M;
+    m_defaultKeys.at(Action) = sf::Keyboard::E;
+
+    for(int i = 0; i < KEYS_END; i++)
     {
-        m_keys.at(MoveUp) = (sf::Keyboard::Key) std::stoi(GetString(KeyToString(MoveUp)));
+        try
+        {
+            m_keys.at((Keys)i) = (sf::Keyboard::Key) std::stoi(GetString(KeyToString((Keys)i)));
+        }
+        catch(...)
+        {
+            m_keys.at((Keys)i) = m_defaultKeys[(Keys)i];
+        }
     }
-    catch(...)
-    {
-        m_keys.at(MoveUp) = sf::Keyboard::Up;
-    }
-    try
-    {
-        m_keys.at(MoveDown) = (sf::Keyboard::Key) std::stoi(GetString(KeyToString(MoveDown)));
-    }
-    catch(...)
-    {
-        m_keys.at(MoveDown) = sf::Keyboard::Down;
-    }
-    try
-    {
-        m_keys.at(MoveRight) = (sf::Keyboard::Key) std::stoi(GetString(KeyToString(MoveRight)));
-    }
-    catch(...)
-    {
-        m_keys.at(MoveRight) = sf::Keyboard::Right;
-    }
-    try
-    {
-        m_keys.at(MoveLeft) = (sf::Keyboard::Key) std::stoi(GetString(KeyToString(MoveLeft)));
-    }
-    catch(...)
-    {
-        m_keys.at(MoveLeft) = sf::Keyboard::Left;
-    }
-    try
-    {
-        m_keys.at(Accept) = (sf::Keyboard::Key) std::stoi(GetString(KeyToString(Accept)));
-    }
-    catch(...)
-    {
-        m_keys.at(Accept) = sf::Keyboard::Return;
-    }
-    try
-    {
-        m_keys.at(Cancel) = (sf::Keyboard::Key) std::stoi(GetString(KeyToString(Cancel)));
-    }
-    catch(...)
-    {
-        m_keys.at(Cancel) = sf::Keyboard::Escape;
-    }
-    try
-    {
-        m_keys.at(Minimap) = (sf::Keyboard::Key) std::stoi(GetString(KeyToString(Minimap)));
-    }
-    catch(...)
-    {
-        m_keys.at(Minimap) = sf::Keyboard::M;
-    }
+
     try
     {
         m_wallTransparency = std::stof(GetString("wall_transparency")) / 100.0f;
@@ -88,14 +54,6 @@ Configuration::Configuration()
         m_wallTransparency = 0.8f;
     }
 
-
-    m_defaultKeys.at(MoveDown) = sf::Keyboard::Down;
-    m_defaultKeys.at(MoveUp) = sf::Keyboard::Up;
-    m_defaultKeys.at(MoveRight) = sf::Keyboard::Right;
-    m_defaultKeys.at(MoveLeft) = sf::Keyboard::Left;
-    m_defaultKeys.at(Accept) = sf::Keyboard::Return;
-    m_defaultKeys.at(Cancel) = sf::Keyboard::Escape;
-    m_defaultKeys.at(Minimap) = sf::Keyboard::M;
 
     m_maxPartySize = 3;
 }
@@ -183,6 +141,8 @@ std::string Configuration::KeyToString(Keys key)
         return "cancel";
     case Minimap:
         return "minimap";
+    case Action:
+        return "action";
     }
 }
 

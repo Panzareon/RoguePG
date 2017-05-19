@@ -7,7 +7,7 @@
 class Configuration : FileConfig
 {
     public:
-        enum Keys{MoveUp, MoveDown, MoveRight,MoveLeft,Accept,Cancel,Minimap, KEYS_END};
+        enum Keys{MoveUp, MoveDown, MoveRight,MoveLeft,Accept,Cancel,Minimap,Action, KEYS_END};
         virtual ~Configuration();
         static Configuration* GetInstance();
         sf::Font* GetFont();

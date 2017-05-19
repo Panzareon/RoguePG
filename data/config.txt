@@ -6,6 +6,7 @@ move_left = 0
 accept = 57
 cancel = 66
 minimap = 12
+action = 4
 
 //other settings
 //Wall Transparency in Percent, between 0 and 100
