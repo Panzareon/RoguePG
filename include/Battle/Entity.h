@@ -83,6 +83,8 @@ class Entity
         virtual std::string GetName();
         void SetName(std::string name);
 
+        void SetUseHpInsteadOfMp(bool newValue);
+
         //Sets the Node showing this Entity on Screen
         void SetNode(EntityNode* node);
         EntityNode* GetNode();

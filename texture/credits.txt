@@ -11,6 +11,8 @@ barbarian.png
 paladin.png
 thief.png
 cleric.png
+wizard.png
+vampire.png
 wind-eye.png
 water-slime.png
 Attribute sprites in status-menu.png

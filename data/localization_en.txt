@@ -61,6 +61,7 @@ character_class.paladin = Palading
 character_class.thief = Thief
 character_class.cleric = Cleric
 character_class.wizard = Wizard
+character_class.vampire = Vampire
 
 //Item-Names
 item.1 = Sword

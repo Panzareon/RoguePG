@@ -452,6 +452,11 @@ void Entity::SetName(std::string name)
     m_name = name;
 }
 
+void Entity::SetUseHpInsteadOfMp(bool newValue)
+{
+    m_useHpInsteadOfMp = newValue;
+}
+
 int Entity::GetTeamId()
 {
     return m_teamId;

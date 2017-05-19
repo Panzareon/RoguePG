@@ -219,11 +219,11 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.09f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.1f);
 
-        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.05f);
-        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.25f);
-        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.25f);
-        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.25f);
-        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.25f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.04f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.24f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.24f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.24f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.24f);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.4f, true);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.4f, true);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.2f, true);
@@ -232,6 +232,43 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.1f, false);
 
         m_classes->at(CharacterClassWizard) = newClass;
+
+        newClass = new CharacterClass(CharacterClassVampire, 0.3f, TextureList::VampireBattleSprite);
+
+        newClass->SetBaseAttribute(BattleEnums::AttributeMaxHp, 20);
+        newClass->SetBaseAttribute(BattleEnums::AttributeMaxMp, 0);
+        newClass->SetBaseAttribute(BattleEnums::AttributeStrength, 5);
+        newClass->SetBaseAttribute(BattleEnums::AttributeInt, 10);
+        newClass->SetBaseAttribute(BattleEnums::AttributeDefense, 8);
+        newClass->SetBaseAttribute(BattleEnums::AttributeMagicDefense, 12);
+        newClass->SetBaseAttribute(BattleEnums::AttributeSpeed, 10);
+
+        //Set increased and decreased Attribute per Level values
+        newClass->SetAttributePerLevel(BattleEnums::AttributeMaxHp, 1.2f);
+        newClass->SetAttributePerLevel(BattleEnums::AttributeMaxMp, 0.0f);
+        newClass->SetAttributePerLevel(BattleEnums::AttributeStrength, 0.7f);
+        newClass->SetAttributePerLevel(BattleEnums::AttributeInt, 1.2f);
+
+        skillGenerator = newClass->GetSkillGenerator();
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.5f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetSelf, 0.3f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.09f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.1f);
+
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.1f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.225f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.225f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.225f);
+        skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.225f);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.2f, true);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.2f, true);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.6f, true);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.8f, false);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.1f, false);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.1f, false);
+
+        m_classes->at(CharacterClassVampire) = newClass;
 
 
 
@@ -272,6 +309,17 @@ PartyMember* CharacterClass::GetNewPartyMember()
         strength->push_back(1.0f);
         sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(100103)->GetEffectWithStrength(strength, BattleEnums::TargetPassive),true);
         ret->AddSkill(sk);
+    }
+    else if(m_classType == CharacterClassVampire)
+    {
+        //Add Passive Skill that skills cost less
+        PassiveSkill* sk = new PassiveSkill();
+        std::vector<float>* strength = new std::vector<float>();
+        strength->push_back(0.5f);
+        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(100103)->GetEffectWithStrength(strength, BattleEnums::TargetPassive),true);
+        ret->AddSkill(sk);
+
+        ret->SetUseHpInsteadOfMp(true);
     }
 
 
@@ -327,6 +375,8 @@ std::string CharacterClass::GetName()
         return "character_class.cleric";
     case CharacterClassWizard:
         return "character_class.wizard";
+    case CharacterClassVampire:
+        return "character_class.vampire";
     }
     return "character_class.unknown";
 }
