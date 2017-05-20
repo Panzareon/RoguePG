@@ -144,6 +144,75 @@ int DungeonConfiguration::GetNrLevels()
     return m_nrLevels;
 }
 
+int DungeonConfiguration::GetNrEnemies()
+{
+    if(m_dungeonId == 1)
+        return 1;
+    else
+        return 2;
+}
+
+//Returns Number of enemies to spawn with Boss
+int DungeonConfiguration::GetNrBossAdds()
+{
+    if(m_dungeonId == 1)
+        return 0;
+    else
+        return 2;
+}
+
+void DungeonConfiguration::ClearedDungeon()
+{
+    GameController* controller = GameController::getInstance();
+    PersistentProgress* progress = controller->GetPersistentProgress();
+    int nrCleared = progress->GetNrDungeonsCleared();
+    if(m_dungeonId == 1)
+    {
+        if(nrCleared < m_dungeonId)
+        {
+            progress->AddStartMoney(100);
+        }
+        controller->getParty()->AddRandomMember();
+    }
+    else
+    {
+        float chance = 0.1f;
+        if(nrCleared < m_dungeonId)
+        {
+            chance = 1.0f;
+        }
+        float random = (float)rand() / RAND_MAX;
+        if(chance > random)
+        {
+            random = (float)rand() / RAND_MAX;
+            if(random < 0.2f)
+            {
+                progress->AddStartMoney(20);
+            }
+            else if(random < 0.22f)
+            {
+                progress->AddStartMember(1);
+            }
+            else if(random < 0.4f)
+            {
+                progress->AddShopNrItems(1);
+            }
+            else if(random < 0.6f)
+            {
+                progress->AddShopLevel(1);
+            }
+            else if(random < 0.8f)
+            {
+                controller->getParty()->AddRandomMember();
+            }
+            else
+            {
+                controller->getParty()->AddMoney(100);
+            }
+        }
+    }
+}
+
 Entity* DungeonConfiguration::GetDungeonEnemy(int lvl)
 {
     float rand = (std::rand()/((float) RAND_MAX)) * m_enemiesSumChance;

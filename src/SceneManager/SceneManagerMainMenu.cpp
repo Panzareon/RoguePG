@@ -94,12 +94,9 @@ void SceneManagerMainMenu::StartDungeon()
     party->AddMoney(progress->GetStartMoney());
     //create new party with x member
     int partyInitialSize = progress->GetStartMember();
-    PartyMember* p;
     for(int i = 1; i < partyInitialSize; i++)
     {
-        p = CharacterClass::GetRandomCharacterClass()->GetNewPartyMember();
-        p->SetTeamId(0);
-        party->AddPartyMember(p);
+        party->AddRandomMember();
     }
 
     std::vector<std::shared_ptr<PartyMember> > * partyMember = party->GetActivePartyMembers();

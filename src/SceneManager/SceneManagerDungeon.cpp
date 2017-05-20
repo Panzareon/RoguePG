@@ -337,7 +337,7 @@ void SceneManagerDungeon::SpawnEnemy(MapEventEnemy* event, Enums::EnemyTypes typ
     switch(type)
     {
     case Enums::EnemyDefault:
-        for(int i = 0; i < 2; i++)
+        for(int i = 0; i < m_dungeonConfig->GetNrEnemies(); i++)
         {
             e = m_dungeonConfig->GetDungeonEnemy(m_lvlId);
             e->SetTeamId(1);
@@ -345,18 +345,27 @@ void SceneManagerDungeon::SpawnEnemy(MapEventEnemy* event, Enums::EnemyTypes typ
         }
         break;
     case Enums::EnemyBoss:
-        e = m_dungeonConfig->GetDungeonEnemy(m_lvlId);
-        e->SetTeamId(1);
-        enemies->push_back(e);
-        e = m_dungeonConfig->GetDungeonBoss(m_lvlId);
-        e->SetTeamId(1);
-        enemies->push_back(e);
-        e = m_dungeonConfig->GetDungeonEnemy(m_lvlId);
-        e->SetTeamId(1);
-        enemies->push_back(e);
+        {
+            int nrAdds = 0;
+            for(; nrAdds < m_dungeonConfig->GetNrBossAdds() / 2; nrAdds++)
+            {
+                e = m_dungeonConfig->GetDungeonEnemy(m_lvlId);
+                e->SetTeamId(1);
+                enemies->push_back(e);
+            }
+            e = m_dungeonConfig->GetDungeonBoss(m_lvlId);
+            e->SetTeamId(1);
+            enemies->push_back(e);
+            for(; nrAdds < m_dungeonConfig->GetNrBossAdds(); nrAdds++)
+            {
+                e = m_dungeonConfig->GetDungeonEnemy(m_lvlId);
+                e->SetTeamId(1);
+                enemies->push_back(e);
+            }
+        }
         break;
     case Enums::EnemyChest:
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < m_dungeonConfig->GetNrEnemies() + 1; i++)
         {
             e = m_dungeonConfig->GetDungeonEnemy(m_lvlId + 2);
             e->SetTeamId(1);

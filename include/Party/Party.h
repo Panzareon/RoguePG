@@ -21,6 +21,7 @@ class Party
         bool UpdateActiveParty();
 
         void AddPartyMember(PartyMember* member);
+        void AddRandomMember();
 
         int GetMoney() const;
         void AddMoney(int money);

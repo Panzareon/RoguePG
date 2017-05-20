@@ -13,6 +13,9 @@ class DungeonConfiguration
         void Init();
         SceneManager* GetLevel(int id);
         int GetNrLevels();
+        int GetNrEnemies();
+        int GetNrBossAdds();
+        void ClearedDungeon();
 
         Entity* GetDungeonEnemy(int lvl);
         Entity* GetDungeonBoss(int lvl);

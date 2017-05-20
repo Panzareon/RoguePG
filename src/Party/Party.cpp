@@ -45,6 +45,14 @@ void Party::AddPartyMember(PartyMember* member)
     }
 }
 
+void Party::AddRandomMember()
+{
+    PartyMember* p;
+    p = CharacterClass::GetRandomCharacterClass()->GetNewPartyMember();
+    p->SetTeamId(0);
+    AddPartyMember(p);
+}
+
 bool Party::UpdateActiveParty()
 {
     bool retval = false;

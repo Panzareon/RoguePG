@@ -222,10 +222,12 @@ void GameController::GotoNextLevel()
     else
     {
         //finish the dungeon
+        m_dungeonConfiguration->ClearedDungeon();
         SceneManagerMessage* message = new SceneManagerMessage(Localization::GetInstance()->GetLocalization("dungeon.finished"));
         message->OnAccept(std::function<void()>(ControllerFunctions::QuitToVillage));
         LoadSceneManager(message);
         m_lastDungeon = m_dungeonConfiguration->GetDungeonId();
+        m_progress.ClearedDungeon(m_lastDungeon);
     }
 }
 
