@@ -88,6 +88,7 @@
 		<Unit filename="include/Controller/MusicController.h" />
 		<Unit filename="include/Controller/NameGenerator.h" />
 		<Unit filename="include/Controller/NamedItem.h" />
+		<Unit filename="include/Controller/PersistentProgress.h" />
 		<Unit filename="include/Controller/ShaderList.h" />
 		<Unit filename="include/Controller/SoundController.h" />
 		<Unit filename="include/Exception/GenericException.h" />
@@ -256,6 +257,7 @@
 		<Unit filename="src/Controller/MusicController.cpp" />
 		<Unit filename="src/Controller/NameGenerator.cpp" />
 		<Unit filename="src/Controller/NamedItem.cpp" />
+		<Unit filename="src/Controller/PersistentProgress.cpp" />
 		<Unit filename="src/Controller/ShaderList.cpp" />
 		<Unit filename="src/Controller/SoundController.cpp" />
 		<Unit filename="src/Exception/GenericException.cpp" />

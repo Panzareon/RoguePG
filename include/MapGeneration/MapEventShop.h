@@ -48,12 +48,13 @@ class MapEventShop : public MapEventTile
         }
 
     protected:
+        void SetAvailableItems();
         void ShowShop();
         void ShowInn();
 
         MenuNode* m_node;
 
-
+        std::map<int, std::multimap<float, std::pair<int,int> > > m_availableItemIds;
         std::multimap<int, Item*> m_sellItems;
 
         int m_innPrice;

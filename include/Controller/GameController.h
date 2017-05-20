@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 #include "Controller/Configuration.h"
 #include "MapGeneration/DungeonConfiguration.h"
+#include "PersistentProgress.h"
 
 class GameController
 {
@@ -36,6 +37,8 @@ class GameController
 
         float GetTickTimeSeconds();
 
+        PersistentProgress* GetPersistentProgress();
+
         //If once == false check if it is still pressed
         bool IsKeyPressed(Configuration::Keys key, bool once = true);
         bool IsWindowFocused();
@@ -50,10 +53,12 @@ class GameController
         void SaveToFile();
         bool LoadFromFile();
         bool LoadAvailable();
+        void SaveProgress();
     protected:
     private:
         void ToQuitScreen();
         void GameOver();
+        void LoadProgress();
         int m_lastDungeon;
         bool m_quit;
         SceneManager::SceneManagerType m_quitTo;
@@ -65,6 +70,8 @@ class GameController
         int m_levelId;
         sf::Time m_frameTime;
         sf::Clock m_clock;
+
+        PersistentProgress m_progress;
 
         bool m_windowFocused;
 

@@ -169,6 +169,11 @@ std::string Configuration::GetSaveFilePath()
     return "saves/save.data";
 }
 
+std::string Configuration::GetProgressFilePath()
+{
+    return "saves/progress.data";
+}
+
 void Configuration::SetMusicVolume(float volume)
 {
     UpdateKey("music_volume", std::to_string(volume), true);

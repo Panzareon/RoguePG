@@ -39,6 +39,7 @@ class Configuration : FileConfig
         float GetWallTransparency();
 
         std::string GetSaveFilePath();
+        std::string GetProgressFilePath();
 
     protected:
         Configuration();

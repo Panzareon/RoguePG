@@ -89,8 +89,11 @@ void SceneManagerMainMenu::StartDungeon()
 {
     GameController* controller = GameController::getInstance();
     Party* party = controller->getParty();
-    //create new party with 2 member
-    int partyInitialSize = 2;
+
+    PersistentProgress* progress = controller->GetPersistentProgress();
+    party->AddMoney(progress->GetStartMoney());
+    //create new party with x member
+    int partyInitialSize = progress->GetStartMember();
     PartyMember* p;
     for(int i = 1; i < partyInitialSize; i++)
     {

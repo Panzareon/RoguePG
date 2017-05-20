@@ -67,6 +67,7 @@ GameController* GameController::m_instance = 0;
 GameController::GameController() : m_randomGenerator(time(NULL))
 {
     //ctor
+    LoadProgress();
     m_renderTarget = 0;
     m_lastDungeon = 0;
     m_keysPressed.resize(Configuration::GetInstance()->GetNumberKeys());
@@ -281,6 +282,11 @@ float GameController::GetTickTimeSeconds()
     return m_frameTime.asSeconds();
 }
 
+PersistentProgress* GameController::GetPersistentProgress()
+{
+    return &m_progress;
+}
+
 bool GameController::IsKeyPressed(Configuration::Keys key, bool once)
 {
     //Only check Keys if Window is focused
@@ -403,6 +409,33 @@ bool GameController::LoadAvailable()
     return f.good();
 }
 
+void GameController::SaveProgress()
+{
+    #ifdef DEBUG_FLAG
+    std::ofstream f(Configuration::GetInstance()->GetProgressFilePath());
+    cereal::XMLOutputArchive oarchive(f);
+    #else
+    std::ofstream f(Configuration::GetInstance()->GetProgressFilePath(), std::ios::binary);
+    cereal::PortableBinaryOutputArchive oarchive(f);
+    #endif
+    oarchive(m_progress);
+}
+
+void GameController::LoadProgress()
+{
+    #ifdef DEBUG_FLAG
+    std::ifstream f(Configuration::GetInstance()->GetProgressFilePath());
+    if(!f.good())
+        return;
+    cereal::XMLInputArchive iarchive(f);
+    #else
+    std::ifstream f(Configuration::GetInstance()->GetProgressFilePath(), std::ios::binary);
+    if(!f.good())
+        return;
+    cereal::PortableBinaryInputArchive iarchive(f);
+    #endif
+    iarchive(m_progress);
+}
 
 
 

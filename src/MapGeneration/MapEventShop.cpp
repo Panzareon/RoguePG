@@ -32,7 +32,15 @@ MapEventShop::MapEventShop(int x, int y, ShopTypes type) : MapEventTile(true, x,
     //ctor
     m_type = type;
     m_innPrice = 10;
-    Restock();
+    SetAvailableItems();
+    if(m_type != Inn)
+    {
+        int nrItems = GameController::getInstance()->GetPersistentProgress()->GetShopNrItems();
+        for(int i = 0; i < nrItems; i++)
+        {
+            Restock();
+        }
+    }
 }
 
 MapEventShop::~MapEventShop()
@@ -42,19 +50,55 @@ MapEventShop::~MapEventShop()
 
 void MapEventShop::Restock()
 {
+    int shopLvl = GameController::getInstance()->GetPersistentProgress()->GetShopLevel();
+    float chance = 0.0f;
+    for(int i = 1; i <= shopLvl; i++)
+    {
+        auto it = m_availableItemIds.find(i);
+        if(it != m_availableItemIds.end())
+        {
+            for(auto itInner = it->second.begin(); itInner != it->second.end(); itInner++)
+            {
+                chance += itInner->first;
+            }
+        }
+    }
+    float random = rand() / (float)RAND_MAX;
+    random *= chance;
+    for(int i = 1; i <= shopLvl; i++)
+    {
+        auto it = m_availableItemIds.find(i);
+        if(it != m_availableItemIds.end())
+        {
+            for(auto itInner = it->second.begin(); itInner != it->second.end(); itInner++)
+            {
+                random -= itInner->first;
+                if(random <= 0.0f)
+                {
+                    m_sellItems.insert(std::pair<int, Item*>(itInner->second.first, ItemFactory::GetInstance()->GetEquipment(Equipment::MainHand, itInner->second.second)));
+                    return;
+                }
+            }
+        }
+    }
+
+}
+
+void MapEventShop::SetAvailableItems()
+{
     switch(m_type)
     {
     case SwordShop:
-        m_sellItems.insert(std::pair<int, Item*>(100, ItemFactory::GetInstance()->GetEquipment(Equipment::MainHand, 101)));
+        m_availableItemIds[1].insert(std::pair<float, std::pair<int, int> >(1.0f, std::pair<int, int>(100, 101)));
         break;
     case ShieldShop:
-        m_sellItems.insert(std::pair<int, Item*>(100, ItemFactory::GetInstance()->GetEquipment(Equipment::MainHand, 102)));
+        m_availableItemIds[1].insert(std::pair<float, std::pair<int, int> >(1.0f, std::pair<int, int>(100, 102)));
         break;
     case StaffShop:
-        m_sellItems.insert(std::pair<int, Item*>(100, ItemFactory::GetInstance()->GetEquipment(Equipment::MainHand, 103)));
+        m_availableItemIds[1].insert(std::pair<float, std::pair<int, int> >(1.0f, std::pair<int, int>(100, 103)));
         break;
     case SpellShop:
-        m_sellItems.insert(std::pair<int, Item*>(100, ItemFactory::GetInstance()->GetEquipment(Equipment::MainHand, 104)));
+        m_availableItemIds[1].insert(std::pair<float, std::pair<int, int> >(1.0f, std::pair<int, int>(100, 104)));
         break;
     }
 }
