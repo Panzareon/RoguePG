@@ -89,16 +89,20 @@ void MapEventShop::SetAvailableItems()
     switch(m_type)
     {
     case SwordShop:
-        m_availableItemIds[1].insert(std::pair<float, std::pair<int, int> >(1.0f, std::pair<int, int>(100, 101)));
+        m_availableItemIds[1].insert(std::pair<float, std::pair<int, int> >(1.0f, std::pair<int, int>(30, 1)));
+        m_availableItemIds[2].insert(std::pair<float, std::pair<int, int> >(2.0f, std::pair<int, int>(100, 101)));
         break;
     case ShieldShop:
-        m_availableItemIds[1].insert(std::pair<float, std::pair<int, int> >(1.0f, std::pair<int, int>(100, 102)));
+        m_availableItemIds[1].insert(std::pair<float, std::pair<int, int> >(1.0f, std::pair<int, int>(30, 2)));
+        m_availableItemIds[2].insert(std::pair<float, std::pair<int, int> >(2.0f, std::pair<int, int>(100, 102)));
         break;
     case StaffShop:
-        m_availableItemIds[1].insert(std::pair<float, std::pair<int, int> >(1.0f, std::pair<int, int>(100, 103)));
+        m_availableItemIds[1].insert(std::pair<float, std::pair<int, int> >(1.0f, std::pair<int, int>(30, 3)));
+        m_availableItemIds[2].insert(std::pair<float, std::pair<int, int> >(2.0f, std::pair<int, int>(100, 103)));
         break;
     case SpellShop:
-        m_availableItemIds[1].insert(std::pair<float, std::pair<int, int> >(1.0f, std::pair<int, int>(100, 104)));
+        m_availableItemIds[1].insert(std::pair<float, std::pair<int, int> >(1.0f, std::pair<int, int>(30, 4)));
+        m_availableItemIds[2].insert(std::pair<float, std::pair<int, int> >(2.0f, std::pair<int, int>(100, 104)));
         break;
     }
 }
