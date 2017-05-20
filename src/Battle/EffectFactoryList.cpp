@@ -267,7 +267,7 @@ EffectFactoryList::EffectFactoryList()
     //Number of turns: from 2 to 10 with step of 1
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Damage of burn effect
-    calc->AddStrengthValue(1.0f, 10.0f);
+    calc->AddStrengthValue(1.0f, 10.0f, 1.0f);
     calc->SetMultiplier(1.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
     newEffect->AddAttackType(BattleEnums::AttackTypeFire);
@@ -281,7 +281,7 @@ EffectFactoryList::EffectFactoryList()
     //Number of turns: from 2 to 10 with step of 1
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Damage of burn effect
-    calc->AddStrengthValue(1.0f, 10.0f);
+    calc->AddStrengthValue(1.0f, 10.0f, 1.0f);
     calc->SetMultiplier(1.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeWater);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
