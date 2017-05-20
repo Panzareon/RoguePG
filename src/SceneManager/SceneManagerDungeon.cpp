@@ -140,8 +140,8 @@ void SceneManagerDungeon::Generate(int tileWidth, int tileHeight, Enums::Generat
         m_events.push_back(std::unique_ptr<MapEvent>(new MapEventStairs(false, m_map.m_startX, m_map.m_startY)));
         m_events.push_back(std::unique_ptr<MapEvent>(new MapEventStairs(true, m_map.m_endX, m_map.m_endY)));
 
-        //Place additional heroes with a chance of 50%
-        if(rand() % 2 == 0)
+        //Place additional heroes with a chance of 2%
+        if(rand() % 50 == 0)
             PlaceHero();
     }
 
