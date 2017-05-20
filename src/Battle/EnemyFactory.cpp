@@ -93,7 +93,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         //Exp to give after Battle
         ret = new Entity(10);
         ret->SetName(localization->GetLocalization("enemy.water_slime"));
-        ret->InitAllAttributes(13 + lvl*2,9 + lvl,3 + lvl/3,7 + lvl,12 + lvl,3 + lvl/3,7 + lvl);
+        ret->InitAllAttributes(7 + lvl*3,9 + lvl,3 + lvl/3,3 + lvl*2,6 + lvl*2,3 + lvl/3,7 + lvl);
         ret->SetBattleSprite(TextureList::WaterSlimeBattleSprite);
         ret->SetResistance(BattleEnums::AttackTypePhysical, 1.5f);
         ret->SetResistance(BattleEnums::AttackTypeEarth, 1.3f);
