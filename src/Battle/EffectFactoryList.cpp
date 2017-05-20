@@ -33,11 +33,11 @@ namespace PassiveEffectFunctions
             return baseValue;
         return baseValue - strength;
     }
-    void Heal(Entity* target, PassiveEffect* passiveEffect, int hp)
+    void Heal(Entity* target, IPassiveEffect* passiveEffect, int hp)
     {
         target->Heal(hp);
     }
-    void DamageOverTime(Entity* user, Entity* target, PassiveEffect* passiveEffect, int dmg, BattleEnums::AttackType type)
+    void DamageOverTime(Entity* user, Entity* target, IPassiveEffect* passiveEffect, int dmg, BattleEnums::AttackType type)
     {
         Attack att(dmg, false, target, type);
         user->AttackEntity(target, &att);
@@ -49,6 +49,13 @@ namespace PassiveEffectFunctions
     float SubtractMultiplier(float baseValue, float multiplier)
     {
         return baseValue * (1 - multiplier);
+    }
+    void AddAttackType(Attack* att, Entity* attacker, BattleEnums::AttackType type, bool physical)
+    {
+        if(physical == att->m_physical)
+        {
+            att->m_type.insert(type);
+        }
     }
 }
 
@@ -89,7 +96,7 @@ namespace EffectFunctions
         for(unsigned int i = 0; i < targets->size(); i++)
         {
             PassiveEffect* eff = new PassiveEffect(true, (int)strength->at(0), effect);
-            eff->AddOnTurnEffect(new std::function<void(Entity*, PassiveEffect*)>(
+            eff->AddOnTurnEffect(new std::function<void(Entity*, IPassiveEffect*)>(
                 std::bind(&PassiveEffectFunctions::Heal,std::placeholders::_1,std::placeholders::_2,strength->at(1))));
             targets->at(i)->AddPassiveEffect(eff);
         }
@@ -149,7 +156,7 @@ namespace EffectFunctions
         for(unsigned int i = 0; i < targets->size(); i++)
         {
             PassiveEffect* eff = new PassiveEffect(true, (int)strength->at(0), effect);
-            eff->AddOnTurnEffect(new std::function<void(Entity*, PassiveEffect*)>(
+            eff->AddOnTurnEffect(new std::function<void(Entity*, IPassiveEffect*)>(
                 std::bind(&PassiveEffectFunctions::DamageOverTime,user,std::placeholders::_1,std::placeholders::_2,strength->at(1), type)));
             targets->at(i)->AddPassiveEffect(eff);
         }
@@ -178,7 +185,7 @@ namespace PassiveSkillEffectFunctions
     //Strength: one value hp to heal
     void HealAfterTurn(std::vector<float>* strength, PassiveEffect* target)
     {
-        target->AddOnTurnEffect(new std::function<void(Entity*, PassiveEffect*)>(
+        target->AddOnTurnEffect(new std::function<void(Entity*, IPassiveEffect*)>(
                 std::bind(&PassiveEffectFunctions::Heal,std::placeholders::_1,std::placeholders::_2,strength->at(0))));
     }
     //Strength: %movement speed

@@ -15,14 +15,10 @@ PassiveEffect::PassiveEffect(bool buff, int duration, NamedItem* causingEffect, 
 PassiveEffect::~PassiveEffect()
 {
     //dtor
-    for(int i = 0; i < m_onTurn.size(); i++)
-        delete m_onTurn[i];
     for(int i = 0; i < m_resistanceFunction.size(); i++)
         delete m_resistanceFunction[i];
     for(int i = 0; i < m_attributeFunction.size(); i++)
         delete m_attributeFunction[i];
-    for(int i = 0; i < m_attack.size(); i++)
-        delete m_attack[i];
     for(int i = 0; i < m_onAttacked.size(); i++)
         delete m_onAttacked[i];
     for(int i = 0; i < m_getExp.size(); i++)
@@ -31,19 +27,13 @@ PassiveEffect::~PassiveEffect()
         delete m_onBattleFinished[i];
 }
 
-void PassiveEffect::AddOnTurnEffect(std::function<void(Entity*, PassiveEffect*)>* onTurn)
-{
-    m_onTurn.push_back(onTurn);
-}
-
 void PassiveEffect::OnTurn(Entity* target)
 {
     if(m_duration > 0)
     {
         m_duration--;
     }
-    for(int i = 0; i < m_onTurn.size(); i++)
-        (*m_onTurn[i])(target, this);
+    IPassiveEffect::OnTurn(target);
 }
 
 float PassiveEffect::GetResistance(float resistanceValue, BattleEnums::AttackType type)
@@ -81,22 +71,11 @@ void PassiveEffect::AddAttributeEffect(std::function<float(float, BattleEnums::A
 {
     m_attributeFunction.push_back(attributeFunction);
 }
-void PassiveEffect::AttackEntity(Attack* att, Entity* attacker)
-{
-    //Change Attack Damage or add Attack Type
-    for(int i = 0; i < m_attack.size(); i++)
-        (*m_attack[i])(att, attacker);
-}
 
 void PassiveEffect::GetAttacked(Attack* att, Entity* target, Entity* attacker)
 {
     for(int i = 0; i < m_onAttacked.size(); i++)
         (*m_onAttacked[i])(att, target, attacker);
-}
-
-void PassiveEffect::AddAttack(std::function<void(Attack*, Entity*)>* attack)
-{
-    m_attack.push_back(attack);
 }
 
 void PassiveEffect::AddOnAttacked(std::function<void(Attack*, Entity*, Entity*)>* onAttacked)

@@ -2,6 +2,12 @@
 #include "Exception/InvalidArgumentException.h"
 #include "Controller/MathHelper.h"
 
+namespace PassiveEffectFunctions
+{
+    void AddAttackType(Attack* att, Entity* attacker, BattleEnums::AttackType type, bool physical);
+    void Heal(Entity* target, IPassiveEffect* passiveEffect, int hp);
+}
+
 ItemFactory* ItemFactory::m_instance = nullptr;
 
 ItemFactory::ItemFactory()
@@ -298,6 +304,122 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
 
         retval->SetSkillStrength(20);
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(4,2,true));
+        break;
+
+    case 1001:
+        retval->SetAttributeBuff(BattleEnums::AttributeStrength, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(5,2,true));
+
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.8f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
+        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.09f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.01f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.09f);
+
+        gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.4f);
+        gen->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.5f);
+        gen->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.05f);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.5f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.2f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.3f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.5f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.25f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.25f, false);
+
+        retval->SetSkillStrength(30);
+        retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
+
+        retval->SetTypeResistance(BattleEnums::AttackTypeFire, 1.3f);
+        retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
+                std::bind(&PassiveEffectFunctions::AddAttackType,std::placeholders::_1,std::placeholders::_2,BattleEnums::AttackTypeFire, true)));
+        break;
+
+    case 1101:
+        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
+
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.4f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.1f);
+        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.4f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.05f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.05f);
+
+        gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.4f);
+        gen->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.5f);
+        gen->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.05f);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.1f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.5f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.4f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.35f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.35f, false);
+
+        retval->SetSkillStrength(30);
+        retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
+
+        retval->SetTypeResistance(BattleEnums::AttackTypeFire, 2.0f);
+        break;
+
+    case 1201:
+        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(10,5,true));
+
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.09f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.3f);
+        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.1f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.5f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.01f);
+
+        gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.35f);
+        gen->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.25f);
+        gen->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.3f);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.1f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.1f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.8f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.35f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.35f, false);
+
+        retval->SetSkillStrength(30);
+        retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
+
+        //Heals 2 hp every turn
+        retval->AddOnTurnEffect(new std::function<void(Entity*, IPassiveEffect*)>(
+                std::bind(&PassiveEffectFunctions::Heal,std::placeholders::_1,std::placeholders::_2,2)));
+        break;
+
+    case 1301:
+        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMaxMp, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeInt, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(5,2,true));
+
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.6f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
+        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.09f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.01f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.29f);
+
+        gen->AddSkillAttackType(BattleEnums::AttackTypeFire, 1.0f);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.7f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.3f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.7f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.15f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.15f, false);
+
+        retval->SetSkillStrength(30);
+        retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
+        retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
+                std::bind(&PassiveEffectFunctions::AddAttackType,std::placeholders::_1,std::placeholders::_2,BattleEnums::AttackTypeFire, false)));
         break;
 
 

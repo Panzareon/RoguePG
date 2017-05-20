@@ -16,10 +16,11 @@ class IPassiveEffect: public virtual NamedItem
         IPassiveEffect();
         virtual ~IPassiveEffect();
         virtual void OnEffectStart();
-        virtual void OnTurn(Entity* target) = 0;
+        //For Effects that trigger every turn
+        virtual void OnTurn(Entity* target);
         virtual float GetResistance(float resistanceValue, BattleEnums::AttackType type) = 0;
         virtual float GetAttribute(float attributeValue, BattleEnums::Attribute attribute) = 0;
-        virtual void AttackEntity(Attack* att, Entity* attacker) = 0;
+        virtual void AttackEntity(Attack* att, Entity* attacker);
         virtual void GetAttacked(Attack* att, Entity* target, Entity* attacker) = 0;
         virtual float GetExp(float exp) = 0;
         virtual void OnBattleFinished(Entity* target);
@@ -37,9 +38,13 @@ class IPassiveEffect: public virtual NamedItem
         virtual bool DeleteEffect();
 
 
+        void AddOnTurnEffect(std::function<void(Entity*,IPassiveEffect*)>* onTurn);
+        void AddAttack(std::function<void(Attack*, Entity*)>* attack);
         void AddGetNeededMp(std::function<float(float)>* getMp);
     protected:
+        std::vector<std::function<void(Attack*, Entity*)>*> m_attack;
         std::vector<std::function<float(float)>*> m_getNeededMp;
+        std::vector<std::function<void(Entity*,IPassiveEffect*)>*> m_onTurn;
     private:
 };
 

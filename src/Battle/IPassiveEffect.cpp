@@ -8,6 +8,12 @@ IPassiveEffect::IPassiveEffect()
 IPassiveEffect::~IPassiveEffect()
 {
     //dtor
+    for(int i = 0; i < m_onTurn.size(); i++)
+        delete m_onTurn[i];
+    for(int i = 0; i < m_attack.size(); i++)
+        delete m_attack[i];
+    for(int i = 0; i < m_getNeededMp.size(); i++)
+        delete m_getNeededMp[i];
 }
 
 bool IPassiveEffect::IsEquipment()
@@ -40,6 +46,18 @@ bool IPassiveEffect::DeleteEffect()
     return true;
 }
 
+void IPassiveEffect::OnTurn(Entity* target)
+{
+    for(int i = 0; i < m_onTurn.size(); i++)
+        (*m_onTurn[i])(target, this);
+}
+
+void IPassiveEffect::AttackEntity(Attack* att, Entity* attacker)
+{
+    //Change Attack Damage or add Attack Type
+    for(int i = 0; i < m_attack.size(); i++)
+        (*m_attack[i])(att, attacker);
+}
 
 float IPassiveEffect::GetNeededMP(float base)
 {
@@ -48,7 +66,17 @@ float IPassiveEffect::GetNeededMP(float base)
         base = (*m_getNeededMp[i])(base);
 }
 
+void IPassiveEffect::AddOnTurnEffect(std::function<void(Entity*, IPassiveEffect*)>* onTurn)
+{
+    m_onTurn.push_back(onTurn);
+}
+
 void IPassiveEffect::AddGetNeededMp(std::function<float(float)>* getMp)
 {
     m_getNeededMp.push_back(getMp);
+}
+
+void IPassiveEffect::AddAttack(std::function<void(Attack*, Entity*)>* attack)
+{
+    m_attack.push_back(attack);
 }

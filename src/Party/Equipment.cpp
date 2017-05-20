@@ -75,6 +75,7 @@ float Equipment::GetResistance(float resistanceValue, BattleEnums::AttackType ty
 void Equipment::AttackEntity(Attack* att, Entity* attacker)
 {
     att->m_type.insert(m_attackTypes.begin(), m_attackTypes.end());
+    IPassiveEffect::AttackEntity(att, attacker);
 }
 
 float Equipment::GetAttribute(float attributeValue, BattleEnums::Attribute attribute)

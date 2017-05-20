@@ -79,10 +79,18 @@ item.101 = Broadsword
 item.101.desc = A broad sword
 item.102 = Hard Shield
 item.102.desc = A stronger shield
-item.103 = Healing Staff
+item.103 = Strong Staff
 item.103.desc = A stronger healing staff
 item.104 = Magicians Book
 item.104.desc = A magicians spell book
+item.1001 = Firesword
+item.1001.desc = A sword infused with fire
+item.1101 = Fire Shield
+item.1101.desc = A shield infused with fire
+item.1201 = Healing Staff
+item.1201.desc = A staff which heals the user
+item.1301 = Fire Tome
+item.1301.desc = A spell book for fire spells
 
 //Effect Base Description
 effect.target.0 = Targets one hero.

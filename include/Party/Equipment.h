@@ -64,6 +64,7 @@ class Equipment : public IPassiveEffect, public Item
         virtual std::string GetName();
         virtual std::string GetLocalizedDescription();
 
+
         //Methods from IPassiveEffect with NOOP
         virtual void OnTurn(Entity* target);
         virtual void GetAttacked(Attack*, Entity*, Entity*);
