@@ -26,6 +26,7 @@ class GameController
         void GotoNextLevel();
         void GotoPreviousLevel();
         void SetDungeonConfiguration(DungeonConfiguration* config);
+        DungeonConfiguration* GetDungeonConfiguration();
 
         void GameOverCheck();
         void QuitTo(SceneManager::SceneManagerType toType);

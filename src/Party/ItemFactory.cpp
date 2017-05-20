@@ -22,6 +22,11 @@ ItemFactory::ItemFactory()
     m_equipmentIds[Equipment::MainHand][BaseItem].push_back(102);
     m_equipmentIds[Equipment::MainHand][BaseItem].push_back(103);
     m_equipmentIds[Equipment::MainHand][BaseItem].push_back(104);
+
+    m_equipmentIds[Equipment::MainHand][SpecialItem].push_back(1001);
+    m_equipmentIds[Equipment::MainHand][SpecialItem].push_back(1101);
+    m_equipmentIds[Equipment::MainHand][SpecialItem].push_back(1201);
+    m_equipmentIds[Equipment::MainHand][SpecialItem].push_back(1301);
     //TODO: init all ItemIds
 }
 

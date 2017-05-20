@@ -12,7 +12,7 @@ class ItemFactory
         virtual ~ItemFactory();
         static ItemFactory* GetInstance();
 
-        enum ItemRarity{StartingItem, BaseItem};
+        enum ItemRarity{StartingItem, BaseItem, SpecialItem};
 
         Item* GetRandomItem(Item::ItemType type, ItemRarity rarity);
         Item* GetRandomEquipment(ItemRarity rarity);

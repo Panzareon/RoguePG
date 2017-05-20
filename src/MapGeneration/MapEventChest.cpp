@@ -31,8 +31,13 @@ void MapEventChest::Activate()
         if(rand() % 3 == 0)
         {
             //Get Item
-            Item* item = ItemFactory::GetInstance()->GetRandomEquipment(Equipment::MainHand, ItemFactory::BaseItem);
             GameController* controller = GameController::getInstance();
+            ItemFactory::ItemRarity rarity = ItemFactory::SpecialItem;
+            if(controller->GetDungeonConfiguration()->GetDungeonId() <= 2)
+            {
+                rarity = ItemFactory::BaseItem;
+            }
+            Item* item = ItemFactory::GetInstance()->GetRandomEquipment(Equipment::MainHand, rarity);
             controller->getParty()->AddItem(item);
             //Receive message
             std::string toDisplay;

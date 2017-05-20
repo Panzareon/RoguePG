@@ -258,6 +258,11 @@ void GameController::SetDungeonConfiguration(DungeonConfiguration* config)
     m_levelId = 0;
 }
 
+DungeonConfiguration* GameController::GetDungeonConfiguration()
+{
+    return m_dungeonConfiguration;
+}
+
 
 void GameController::SetRenderTarget(sf::RenderTarget* target)
 {
