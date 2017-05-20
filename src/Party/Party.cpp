@@ -36,6 +36,12 @@ std::shared_ptr<PartyMember> Party::GetSharedPointerOf(PartyMember* member)
 
 void Party::AddPartyMember(PartyMember* member)
 {
+    //Add exp that all Party members have the same lvl
+    if(m_partyMembers.size() > 0)
+    {
+        member->AddExp((*m_partyMembers.begin())->GetExp());
+    }
+
     std::shared_ptr<PartyMember> mem(member);
     m_partyMembers.push_back(mem);
     Configuration* conf = Configuration::GetInstance();
