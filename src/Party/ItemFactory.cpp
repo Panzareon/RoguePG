@@ -6,6 +6,7 @@ namespace PassiveEffectFunctions
 {
     void AddAttackType(Attack* att, Entity* attacker, BattleEnums::AttackType type, bool physical);
     void Heal(Entity* target, IPassiveEffect* passiveEffect, int hp);
+    void MultiplyDmg(Attack* att, Entity* attacker, float multiply, bool physical);
 }
 
 ItemFactory* ItemFactory::m_instance = nullptr;
@@ -115,6 +116,9 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
 
         retval->SetSkillStrength(10);
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(3,1,true));
+
+        retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
+                std::bind(&PassiveEffectFunctions::MultiplyDmg,std::placeholders::_1,std::placeholders::_2,1.5f, true)));
         break;
 
     case 2:
@@ -199,6 +203,9 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
 
         retval->SetSkillStrength(10);
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(3,1,true));
+
+        retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
+                std::bind(&PassiveEffectFunctions::MultiplyDmg,std::placeholders::_1,std::placeholders::_2,1.5f, false)));
         break;
 
     case 101:
@@ -227,6 +234,9 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
 
         retval->SetSkillStrength(20);
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(4,2,true));
+
+        retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
+                std::bind(&PassiveEffectFunctions::MultiplyDmg,std::placeholders::_1,std::placeholders::_2,1.75f, true)));
         break;
 
     case 102:
@@ -309,6 +319,9 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
 
         retval->SetSkillStrength(20);
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(4,2,true));
+
+        retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
+                std::bind(&PassiveEffectFunctions::MultiplyDmg,std::placeholders::_1,std::placeholders::_2,1.75f, false)));
         break;
 
     case 1001:
@@ -340,6 +353,8 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         retval->SetTypeResistance(BattleEnums::AttackTypeFire, 1.3f);
         retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
                 std::bind(&PassiveEffectFunctions::AddAttackType,std::placeholders::_1,std::placeholders::_2,BattleEnums::AttackTypeFire, true)));
+        retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
+                std::bind(&PassiveEffectFunctions::MultiplyDmg,std::placeholders::_1,std::placeholders::_2,2.0f, true)));
         break;
 
     case 1101:
@@ -425,6 +440,8 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
         retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
                 std::bind(&PassiveEffectFunctions::AddAttackType,std::placeholders::_1,std::placeholders::_2,BattleEnums::AttackTypeFire, false)));
+        retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
+                std::bind(&PassiveEffectFunctions::MultiplyDmg,std::placeholders::_1,std::placeholders::_2,2.0f, false)));
         break;
 
 

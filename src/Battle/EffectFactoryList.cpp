@@ -57,6 +57,13 @@ namespace PassiveEffectFunctions
             att->m_type.insert(type);
         }
     }
+    void MultiplyDmg(Attack* att, Entity* attacker, float multiply, bool physical)
+    {
+        if(physical == att->m_physical)
+        {
+            att->m_dmg *= multiply;
+        }
+    }
 }
 
 namespace EffectFunctions
