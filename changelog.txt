@@ -1,3 +1,4 @@
 v0.18:
 Added new next level items: Firesword, Fire Shield, Healing Staff and Fire Tome
 Swords strengthen physical attacks, tomes/spell books strenghten magic attacks
+Nerfed Ice-Golem and Dead Wizard on later Dungeons

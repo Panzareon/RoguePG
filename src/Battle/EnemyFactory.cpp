@@ -41,7 +41,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         //Exp to give after Battle
         ret = new Entity(20 + lvl);
         ret->SetName(localization->GetLocalization("enemy.dead_wizard"));
-        ret->InitAllAttributes(18 + lvl*2,35 + lvl*3,7 + lvl,14 + lvl,11 + lvl,15 + lvl,14 + lvl);
+        ret->InitAllAttributes(18 + lvl*2,35 + lvl*3,7 + lvl/2,14 + lvl,11 + lvl/2,15 + lvl,14 + lvl/2);
         ret->SetBattleSprite(TextureList::DeadWizardBattleSprite);
         ret->SetResistance(BattleEnums::AttackTypeFire, 0.7f);
         BattleEnums::Target target = BattleEnums::TargetEnemyTeamEntity;
@@ -112,7 +112,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         //Exp to give after Battle
         ret = new Entity(20 + lvl);
         ret->SetName(localization->GetLocalization("enemy.ice_golem"));
-        ret->InitAllAttributes(30 + lvl*3,35 + lvl*3,10 + lvl,7 + lvl,12 + lvl,20 + lvl*2,7 + lvl);
+        ret->InitAllAttributes(30 + lvl*3,35 + lvl*3,10 + lvl,7 + lvl/2,12 + lvl,20 + lvl*2,7 + lvl/2);
         ret->SetBattleSprite(TextureList::IceGolemBattleSprite);
         ret->SetResistance(BattleEnums::AttackTypePhysical, 1.5f);
         ret->SetResistance(BattleEnums::AttackTypeWater, 1.5f);
