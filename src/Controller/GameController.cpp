@@ -29,6 +29,8 @@ CEREAL_REGISTER_TYPE(MapFillVillage);
 CEREAL_REGISTER_TYPE(MapFillDungeon);
 #include "MapGeneration/MapFillDungeon2.h"
 CEREAL_REGISTER_TYPE(MapFillDungeon2);
+#include "MapGeneration/MapFillIceDungeon.h"
+CEREAL_REGISTER_TYPE(MapFillIceDungeon);
 
 #include "MapGeneration/MapEventTile.h"
 CEREAL_REGISTER_TYPE(MapEventTile);
