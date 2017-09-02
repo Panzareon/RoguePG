@@ -98,6 +98,9 @@ void Node::setPosition(float x, float y)
     //Set translation values of Transform
     sf::Vector2f atmPos = m_transform.transformPoint(0.0f, 0.0f);
     m_transform.translate(x - atmPos.x, y - atmPos.y);
+    m_moveToX = x;
+    m_moveToY = y;
+    m_moveTime = 0.0f;
 }
 
 void Node::setPosition(float x, float y, float time)

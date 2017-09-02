@@ -396,6 +396,7 @@ void SceneManagerBattle::TurnIsFinished()
     m_mainMenu->setVisibility(false);
     m_next->FinishedTurn();
     m_nextFinished = true;
+    m_dontInterpolate = m_next;
 }
 
 void SceneManagerBattle::CalculateNext()
@@ -457,14 +458,25 @@ void SceneManagerBattle::PassTime(float Time)
     std::vector<std::shared_ptr<PartyMember> > * activeParty = m_party->GetActivePartyMembers();
     for(unsigned int i = 0; i < activeParty->size(); i++)
     {
+        float interpolationTime = 0.1f;
+        if(activeParty->at(i).get() == m_dontInterpolate)
+        {
+            interpolationTime = 0.0f;
+        }
         activeParty->at(i)->PassTime(Time);
-        m_partyMemberTime[i]->setPosition(0.0f, m_timeHeight - m_timeHeight * activeParty->at(i)->GetTimeToNextAttack() * 10.0f, 0.1f);
+        m_partyMemberTime[i]->setPosition(0.0f, m_timeHeight - m_timeHeight * activeParty->at(i)->GetTimeToNextAttack() * 10.0f, interpolationTime);
     }
     for(unsigned int i = 0; i < m_enemies.size(); i++)
     {
+        float interpolationTime = 0.1f;
+        if(m_enemies.at(i) == m_dontInterpolate)
+        {
+            interpolationTime = 0.0f;
+        }
         m_enemies.at(i)->PassTime(Time);
-        m_enemyTime[i]->setPosition(0.0f, m_timeHeight - m_timeHeight * m_enemies.at(i)->GetTimeToNextAttack() * 10.0f, 0.1f);
+        m_enemyTime[i]->setPosition(0.0f, m_timeHeight - m_timeHeight * m_enemies.at(i)->GetTimeToNextAttack() * 10.0f, interpolationTime);
     }
+    m_dontInterpolate = nullptr;
 }
 bool SceneManagerBattle::IsFinished()
 {

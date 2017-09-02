@@ -62,6 +62,7 @@ class SceneManagerBattle : public SceneManager
         Node* m_timeDisplay;
         std::vector<TextNode*> m_partyMemberTime;
         std::vector<TextNode*> m_enemyTime;
+        Entity* m_dontInterpolate;
 
         std::vector<std::vector<EntityNode*> > m_entityNodes;
 

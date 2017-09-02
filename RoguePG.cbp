@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="RougePG" />
+		<Option title="RoguePG" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -57,12 +57,6 @@
 		</Linker>
 		<Unit filename="include/AI/AIBase.h" />
 		<Unit filename="include/AI/AIRandom.h" />
-		<Unit filename="include/BattleAnimation/Animation.h" />
-		<Unit filename="include/BattleAnimation/AnimationFactory.h" />
-		<Unit filename="include/BattleAnimation/AnimationPart.h" />
-		<Unit filename="include/BattleAnimation/AnimationPartSprite.h" />
-		<Unit filename="include/BattleAnimation/AnimationPartText.h" />
-		<Unit filename="include/BattleAnimation/AnimationPartWithNode.h" />
 		<Unit filename="include/Battle/Attack.h" />
 		<Unit filename="include/Battle/Effect.h" />
 		<Unit filename="include/Battle/EffectBase.h" />
@@ -79,6 +73,12 @@
 		<Unit filename="include/Battle/Skill.h" />
 		<Unit filename="include/Battle/SkillGenerator.h" />
 		<Unit filename="include/Battle/StrengthCalculation.h" />
+		<Unit filename="include/BattleAnimation/Animation.h" />
+		<Unit filename="include/BattleAnimation/AnimationFactory.h" />
+		<Unit filename="include/BattleAnimation/AnimationPart.h" />
+		<Unit filename="include/BattleAnimation/AnimationPartSprite.h" />
+		<Unit filename="include/BattleAnimation/AnimationPartText.h" />
+		<Unit filename="include/BattleAnimation/AnimationPartWithNode.h" />
 		<Unit filename="include/Controller/Configuration.h" />
 		<Unit filename="include/Controller/Enums.h" />
 		<Unit filename="include/Controller/FileConfig.h" />
@@ -227,12 +227,6 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="src/AI/AIBase.cpp" />
 		<Unit filename="src/AI/AIRandom.cpp" />
-		<Unit filename="src/BattleAnimation/Animation.cpp" />
-		<Unit filename="src/BattleAnimation/AnimationFactory.cpp" />
-		<Unit filename="src/BattleAnimation/AnimationPart.cpp" />
-		<Unit filename="src/BattleAnimation/AnimationPartSprite.cpp" />
-		<Unit filename="src/BattleAnimation/AnimationPartText.cpp" />
-		<Unit filename="src/BattleAnimation/AnimationPartWithNode.cpp" />
 		<Unit filename="src/Battle/Attack.cpp" />
 		<Unit filename="src/Battle/Effect.cpp" />
 		<Unit filename="src/Battle/EffectBase.cpp" />
@@ -249,6 +243,12 @@
 		<Unit filename="src/Battle/Skill.cpp" />
 		<Unit filename="src/Battle/SkillGenerator.cpp" />
 		<Unit filename="src/Battle/StrengthCalculation.cpp" />
+		<Unit filename="src/BattleAnimation/Animation.cpp" />
+		<Unit filename="src/BattleAnimation/AnimationFactory.cpp" />
+		<Unit filename="src/BattleAnimation/AnimationPart.cpp" />
+		<Unit filename="src/BattleAnimation/AnimationPartSprite.cpp" />
+		<Unit filename="src/BattleAnimation/AnimationPartText.cpp" />
+		<Unit filename="src/BattleAnimation/AnimationPartWithNode.cpp" />
 		<Unit filename="src/Controller/Configuration.cpp" />
 		<Unit filename="src/Controller/FileConfig.cpp" />
 		<Unit filename="src/Controller/GameController.cpp" />
