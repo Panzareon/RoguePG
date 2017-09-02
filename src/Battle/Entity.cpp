@@ -325,7 +325,15 @@ void Entity::StartTurn()
 
 void Entity::FinishedTurn()
 {
-    m_toNextAttack += 1.0f;
+    if(m_lastAttackWasEffective)
+    {
+        //reduce Time if last Attack was effective
+        m_toNextAttack += 0.75f;
+    }
+    else
+    {
+        m_toNextAttack += 1.0f;
+    }
     auto iter = m_passiveEffects.begin();
     while(iter != m_passiveEffects.end())
     {
@@ -342,15 +350,7 @@ void Entity::FinishedTurn()
 
 float Entity::GetTimeToNextAttack()
 {
-    if(m_lastAttackWasEffective)
-    {
-        //reduce Time if last Attack was effective
-        return m_toNextAttack / GetAttribute(BattleEnums::AttributeSpeed) * 0.75;
-    }
-    else
-    {
-        return m_toNextAttack / GetAttribute(BattleEnums::AttributeSpeed);
-    }
+    return m_toNextAttack / GetAttribute(BattleEnums::AttributeSpeed);
 }
 Entity::ControllType Entity::GetControllType()
 {
