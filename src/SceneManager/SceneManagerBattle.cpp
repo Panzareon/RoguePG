@@ -427,13 +427,20 @@ void SceneManagerBattle::CalculateNext()
             smallestNext = newTime;
         }
     }
-    m_next = next;
-    PassTime(smallestNext);
-    m_next->StartTurn();
-    if(m_next->GetControllType() == Entity::ControllUser)
+    if(next != nullptr)
     {
-        //Show menu
-        ShowMenuForNext();
+        m_next = next;
+        PassTime(smallestNext);
+        m_next->StartTurn();
+        if(m_next->GetControllType() == Entity::ControllUser)
+        {
+            //Show menu
+            ShowMenuForNext();
+        }
+    }
+    else
+    {
+        std::cout << "All Entities are dead" << std::endl;
     }
 }
 
@@ -497,22 +504,11 @@ bool SceneManagerBattle::IsFinished()
 {
     if(m_animationList.size() > 0)
         return false;
+
+    //Check if all Partymembers are dead first
     bool finished = true;
-    for(unsigned int i = 0; i < m_enemies.size(); i++)
-    {
-        if(!m_enemies[i]->IsDead())
-        {
-            finished = false;
-        }
-    }
-    if(finished)
-    {
-        Finished();
-        return true;
-    }
     if(m_party->UpdateActiveParty() && m_party->GetActivePartyMembers()->size() > 0)
         UpdatePlayerSprites();
-    finished = true;
     for(unsigned int i = 0; i < m_party->GetActivePartyMembers()->size(); i++)
     {
         if(!m_party->GetActivePartyMembers()->at(i)->IsDead())
@@ -524,6 +520,21 @@ bool SceneManagerBattle::IsFinished()
     {
         std::cout << "Game Over!" << std::endl;
         GameController::getInstance()->GameOverCheck();
+        return true;
+    }
+
+    //Then check if all Enemies are dead
+    finished = true;
+    for(unsigned int i = 0; i < m_enemies.size(); i++)
+    {
+        if(!m_enemies[i]->IsDead())
+        {
+            finished = false;
+        }
+    }
+    if(finished)
+    {
+        Finished();
     }
     return finished;
 }
