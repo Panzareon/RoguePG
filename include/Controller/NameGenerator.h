@@ -22,6 +22,7 @@ class NameGenerator : FileConfig
         std::map<unsigned char, std::map<unsigned char, float> > m_second;
         std::map<unsigned char, std::map<unsigned char, std::map<unsigned char, float> > > m_third;
 
+        bool m_invalidName;
 
         NameGenerator();
         static NameGenerator* m_instance;

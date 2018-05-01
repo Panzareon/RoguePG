@@ -47,15 +47,17 @@ Skill* SkillGenerator::GetNewSkill(float strength)
         float manaUse = 0.0f;
         effectType = BattleEnums::EffectTypePassive;
 
+        int nrOfTries = 0;
         do
         {
+            nrOfTries++;
             attackType = GetRandomAttackType();
 
 
             newSkill->AddEffect(EffectFactoryList::GetInstance()->getRandom(attackType, effectType)->GetEffectWithValue(strength - manaUse, target), true);
             manaUse = newSkill->GetManaBase();
         }
-        while(manaUse < strength * 0.9);
+        while(manaUse < strength * 0.9 && nrOfTries < 1000);
         return newSkill;
 
     }
@@ -64,8 +66,10 @@ Skill* SkillGenerator::GetNewSkill(float strength)
         Skill* newSkill = new Skill(target);
         float manaUse = 0.0f;
 
+        int nrOfTries = 0;
         do
         {
+            nrOfTries++;
             attackType = GetRandomAttackType();
             effectType = GetRandomEffectType(positive);
 
@@ -73,7 +77,7 @@ Skill* SkillGenerator::GetNewSkill(float strength)
             newSkill->AddEffect(EffectFactoryList::GetInstance()->getRandom(attackType, effectType)->GetEffectWithValue(strength - manaUse, target), true);
             manaUse = newSkill->GetManaBase();
         }
-        while(manaUse < strength * 0.9);
+        while(manaUse < strength * 0.9 && nrOfTries < 1000);
         return newSkill;
     }
 }

@@ -24,6 +24,7 @@ SceneManagerVillage::~SceneManagerVillage()
 
 void SceneManagerVillage::Generate(bool loadSaved)
 {
+    std::cout << "Starting Generation of village" << std::endl;
     m_generator.Init(&m_map, m_seed, (MapFillVillage*)m_mapFill.get());
     m_map.init(5);
     m_mapFill->SetMap(&m_map);
@@ -86,6 +87,7 @@ void SceneManagerVillage::Generate(bool loadSaved)
     m_map.writeToTileMap(*m_tileMapAboveHero,2);
     m_map.writeToTileMap(*m_tileMapAboveWall,3);
     m_map.writeToTileMap(*m_tileMapWallDecoration,4);
+    std::cout << "Finished Generation of village" << std::endl;
 }
 
 void SceneManagerVillage::AddShops(bool loadSaved)

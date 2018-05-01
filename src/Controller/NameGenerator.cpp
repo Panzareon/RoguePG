@@ -42,12 +42,25 @@ NameGenerator::~NameGenerator()
 
 std::string NameGenerator::GetName(int minLength, int maxLength)
 {
+    int nrOfTries = 0;
     std::string ret;
+    m_invalidName = false;
     for(int i = 0; i < maxLength; i++)
     {
         if(!AddLetterToString(ret, i >= minLength))
         {
-            return ret;
+            if(m_invalidName && nrOfTries < 1000)
+            {
+                //Retry generating Name
+                ret = "";
+                i = 0;
+                nrOfTries++;
+                m_invalidName = false;
+            }
+            else
+            {
+                return ret;
+            }
         }
     }
     return ret;
@@ -86,6 +99,11 @@ bool NameGenerator::AddLetterToString(std::string & s, bool canEnd)
         {
             float chance = ((float)rand()) / RAND_MAX;
             unsigned char f = s.at(0);
+            if(m_second[f].size() == 0)
+            {
+                m_invalidName = true;
+                return false;
+            }
             for(auto it = m_second[f].begin(); it != m_second[f].end(); it++)
             {
                 chance -= it->second;
@@ -102,6 +120,16 @@ bool NameGenerator::AddLetterToString(std::string & s, bool canEnd)
             float chance = ((float)rand()) / RAND_MAX;
             unsigned char f = s.at(s.size() - 2);
             unsigned char second = s.at(s.size() - 1);
+            if(m_third[f].size() == 0)
+            {
+                m_invalidName = true;
+                return false;
+            }
+            else if(m_third[f][second].size() == 0)
+            {
+                m_invalidName = true;
+                return false;
+            }
             for(auto it = m_third[f][second].begin(); it != m_third[f][second].end(); it++)
             {
                 chance -= it->second;
