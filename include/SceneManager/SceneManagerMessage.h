@@ -10,7 +10,7 @@
 class SceneManagerMessage : public SceneManager
 {
     public:
-        SceneManagerMessage(std::string toDisplay);
+        SceneManagerMessage(std::string toDisplay, float minDisplayTime = 0.5f);
         virtual ~SceneManagerMessage();
 
         virtual void Tick();
@@ -29,6 +29,9 @@ class SceneManagerMessage : public SceneManager
         sf::RectangleShape* m_background;
         Node* m_backgroundNode;
         MenuNode* m_menu;
+
+        float m_displayedTime;
+        float m_minDisplayTime;
 
         std::function<void()> m_onAccept;
 

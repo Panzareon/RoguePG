@@ -2,7 +2,7 @@
 #include "Controller/GameController.h"
 #include "SceneGraph/DrawableNode.h"
 
-SceneManagerMessage::SceneManagerMessage(std::string toDisplay)
+SceneManagerMessage::SceneManagerMessage(std::string toDisplay, float minDisplayTime)
 {
     //ctor
     m_text = new TextNode(toDisplay);
@@ -24,6 +24,8 @@ SceneManagerMessage::SceneManagerMessage(std::string toDisplay)
     m_gui->addChild(m_backgroundNode);
     m_backgroundNode->addChild(m_text);
 
+    m_minDisplayTime = minDisplayTime;
+    m_displayedTime = 0.0f;
     m_finished = false;
     m_menu = nullptr;
 }
@@ -55,6 +57,13 @@ void SceneManagerMessage::Tick()
         return;
     }
     GameController* controller = GameController::getInstance();
+    m_displayedTime += controller->GetTickTimeSeconds();
+
+    //Show the Message at least for the given Time
+    if(m_displayedTime < m_minDisplayTime)
+    {
+        return;
+    }
     //Check menu Key
     if(controller->IsKeyPressed(Configuration::Cancel) || controller->IsKeyPressed(Configuration::Accept))
     {
