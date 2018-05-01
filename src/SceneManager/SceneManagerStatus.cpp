@@ -224,10 +224,14 @@ void SceneManagerStatus::ShowForEntity(PartyMember* partyMember)
 
     m_skills->ResetOptions();
     std::vector<std::shared_ptr<Skill>>* skills = partyMember->GetSkillList();
+    int skillNr = 0;
     for(int i = 0; i < skills->size(); i++)
     {
-        m_skills->AddDisabledOption(localization->GetLocalization(skills->at(i)->GetName()), std::function<void()>(std::bind(&MenuFunctions::SetDescription,this, skills->at(i)->GetLocalizedDescription())));
-        m_skills->AddValueToOption(i, std::to_string(skills->at(i)->GetManaUse()));
+        if(skills->at(i)->GetDefaultTarget() != BattleEnums::TargetPassive)
+        {
+            m_skills->AddDisabledOption(localization->GetLocalization(skills->at(i)->GetName()), std::function<void()>(std::bind(&MenuFunctions::SetDescription,this, skills->at(i)->GetLocalizedDescription())));
+            m_skills->AddValueToOption(skillNr++, std::to_string(skills->at(i)->GetManaUse()));
+        }
     }
 
     m_passiveEffects->ResetOptions();
