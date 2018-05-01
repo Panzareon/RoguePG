@@ -1,4 +1,11 @@
 v0.18:
 Added new next level items: Firesword, Fire Shield, Healing Staff and Fire Tome
-Swords strengthen physical attacks, tomes/spell books strenghten magic attacks
+Swords strengthen physical attacks, tomes/spell books strenghten magic attacks while equiped
 Nerfed Ice-Golem and Dead Wizard on later Dungeons
+Some Skills target random Enemies or Heros
+Hard Shield can have Passive Skills
+Added passive Skill that reveals the complete map
+Added Message after Battle if a hero learned a Skill or leveled up
+
+Fixed Crash on starting the Game
+Fixed other small bugs
