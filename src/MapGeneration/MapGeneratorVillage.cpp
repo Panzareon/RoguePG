@@ -83,6 +83,8 @@ bool MapGeneratorVillage::IsRoomFree(int x, int y, int width, int height)
                 return false;
             if(i == m_map->m_startX && j == m_map->m_startY)
                 return false;
+            if(i == m_map->m_endX && j == m_map->m_endY)
+                return false;
         }
     }
     return true;
