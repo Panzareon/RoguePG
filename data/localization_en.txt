@@ -101,6 +101,8 @@ effect.target.4 = Targets the casting hero.
 effect.target.5 = Does not target anything.
 effect.target.6 = Targets all heroes and enemies.
 effect.target.7 = Passive skill.
+effect.target.8 = Targets one random hero.
+effect.target.9 = Targets one random enemy.
 
 //Effects
 effect.1 = Fire Damage

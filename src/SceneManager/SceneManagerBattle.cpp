@@ -544,12 +544,12 @@ bool SceneManagerBattle::IsEntityTargeted(Entity* entity)
     if(m_targetType == BattleEnums::TargetAll)
         return true;
     //Only Player controlled Entities are targeting someone
-    if(m_targetType == BattleEnums::TargetOwnTeam)
+    if(m_targetType == BattleEnums::TargetOwnTeam || m_targetType == BattleEnums::TargetOwnTeamRandomEntity)
     {
         std::vector<std::shared_ptr<PartyMember> > * party = m_party->GetActivePartyMembers();
         return std::find_if(party->begin(), party->end(), [entity](std::shared_ptr<PartyMember> const & i){return i.get() == entity;} ) != party->end();
     }
-    if(m_targetType == BattleEnums::TargetEnemyTeam)
+    if(m_targetType == BattleEnums::TargetEnemyTeam || m_targetType == BattleEnums::TargetEnemyTeamRandomEntity)
     {
         return std::find(m_enemies.begin(), m_enemies.end(), entity) != m_enemies.end();
     }

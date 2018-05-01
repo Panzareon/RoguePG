@@ -65,7 +65,7 @@ void Skill::Use(Entity* user, BattleEnums::Target targetType, Entity* target)
                     targets.push_back(p->at(i).get());
             }
         }
-        else if(targetType == BattleEnums::TargetEnemyTeam)
+        else if(targetType == BattleEnums::TargetEnemyTeam || targetType == BattleEnums::TargetEnemyTeamRandomEntity)
         {
             //add all with different Team Id
             for(int i = 0; i < e->size(); i++)
@@ -79,7 +79,7 @@ void Skill::Use(Entity* user, BattleEnums::Target targetType, Entity* target)
                     targets.push_back(p->at(i).get());
             }
         }
-        else if(targetType == BattleEnums::TargetOwnTeam)
+        else if(targetType == BattleEnums::TargetOwnTeam || targetType == BattleEnums::TargetOwnTeamRandomEntity)
         {
             //add all with same Team Id
             for(int i = 0; i < e->size(); i++)
@@ -91,6 +91,28 @@ void Skill::Use(Entity* user, BattleEnums::Target targetType, Entity* target)
             {
                 if(p->at(i)->GetTeamId() == teamId && !p->at(i)->IsDead())
                     targets.push_back(p->at(i).get());
+            }
+        }
+
+        if(targetType == BattleEnums::TargetEnemyTeamRandomEntity || targetType == BattleEnums::TargetOwnTeamRandomEntity)
+        {
+            //Remove all but one random target from the targets vector
+            if(targets.size() > 1)
+            {
+                //The Id of the random Target to be chosen
+                int targetId = rand() % targets.size();
+
+                if(targetId > 0)
+                {
+                    //Remove all before the chosen target
+                    targets.erase(targets.begin(), targets.begin() + targetId);
+                }
+
+                if(targets.size() > 1)
+                {
+                    //Remove all after the chosen target
+                    targets.erase(targets.begin() + 1, targets.end());
+                }
             }
         }
     }

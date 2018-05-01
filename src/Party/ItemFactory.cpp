@@ -96,10 +96,12 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(3,0,true));
         retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(3,0,true));
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.8f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.7f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.1f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
         gen->AddSkillTarget(BattleEnums::TargetSelf, 0.09f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.01f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.005f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.005f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.09f);
 
         gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.8f);
@@ -126,10 +128,12 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(6,3,true));
         retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(6,3,true));
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.2f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.18f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.02f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.1f);
         gen->AddSkillTarget(BattleEnums::TargetSelf, 0.3f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.05f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.025f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.025f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.05f);
         gen->AddSkillTarget(BattleEnums::TargetPassive, 0.3f);
 
@@ -156,10 +160,12 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(6,3,true));
         retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(6,3,true));
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.09f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.08f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.01f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.3f);
         gen->AddSkillTarget(BattleEnums::TargetSelf, 0.1f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.5f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.45f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.05f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.01f);
 
         gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.05f);
@@ -184,10 +190,12 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         retval->SetAttributeBuff(BattleEnums::AttributeInt, mathHelper->GetRandomInt(6,3,true));
         retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(3,0,true));
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.6f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.55f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.05f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
         gen->AddSkillTarget(BattleEnums::TargetSelf, 0.09f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.01f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.005f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.005f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.29f);
 
         gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.04f);
@@ -214,10 +222,12 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(5,2,true));
         retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(5,2,true));
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.8f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.7f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.1f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
         gen->AddSkillTarget(BattleEnums::TargetSelf, 0.09f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.01f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.005f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.005f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.09f);
 
         gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.8f);
@@ -244,10 +254,12 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(10,5,true));
         retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.4f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.35f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.05f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.1f);
         gen->AddSkillTarget(BattleEnums::TargetSelf, 0.4f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.05f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.025f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.025f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.05f);
 
         gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.8f);
@@ -272,10 +284,12 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
         retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(10,5,true));
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.09f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.08f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.01f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.3f);
         gen->AddSkillTarget(BattleEnums::TargetSelf, 0.1f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.5f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.48f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.02f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.01f);
 
         gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.05f);
@@ -300,10 +314,12 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         retval->SetAttributeBuff(BattleEnums::AttributeInt, mathHelper->GetRandomInt(10,5,true));
         retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(5,2,true));
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.6f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.55f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.05f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
         gen->AddSkillTarget(BattleEnums::TargetSelf, 0.09f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.01f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.005f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.005f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.29f);
 
         gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.04f);
@@ -330,10 +346,12 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(5,2,true));
         retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(5,2,true));
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.8f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.7f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.1f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
         gen->AddSkillTarget(BattleEnums::TargetSelf, 0.09f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.01f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.005f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.005f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.09f);
 
         gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.4f);
@@ -362,10 +380,12 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(10,5,true));
         retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.4f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.35f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.05f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.1f);
         gen->AddSkillTarget(BattleEnums::TargetSelf, 0.4f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.05f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.025f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.025f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.05f);
 
         gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.4f);
@@ -391,10 +411,12 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
         retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(10,5,true));
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.09f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.08f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.01f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.3f);
         gen->AddSkillTarget(BattleEnums::TargetSelf, 0.1f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.5f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.48f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.02f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.01f);
 
         gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.05f);
@@ -423,10 +445,12 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         retval->SetAttributeBuff(BattleEnums::AttributeInt, mathHelper->GetRandomInt(10,5,true));
         retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(5,2,true));
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.6f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.55f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.05f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
         gen->AddSkillTarget(BattleEnums::TargetSelf, 0.09f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.01f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.005f);
+        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.005f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.29f);
 
         gen->AddSkillAttackType(BattleEnums::AttackTypeFire, 1.0f);

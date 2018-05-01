@@ -39,7 +39,7 @@ Skill* SkillGenerator::GetNewSkill(float strength)
 
     target = GetRandomTarget();
     bool positive = false;
-    if(target == BattleEnums::TargetOwnTeam || target == BattleEnums::TargetOwnTeamEntity || target == BattleEnums::TargetSelf)
+    if(target == BattleEnums::TargetOwnTeam || target == BattleEnums::TargetOwnTeamEntity || target == BattleEnums::TargetSelf ||  target == BattleEnums::TargetOwnTeamRandomEntity)
         positive = true;
     if(target == BattleEnums::TargetPassive)
     {
@@ -80,6 +80,31 @@ Skill* SkillGenerator::GetNewSkill(float strength)
 
 BattleEnums::Target SkillGenerator::GetRandomTarget()
 {
+    #ifdef CHECK_GENERATORS
+    //Checks if there are errors defining the Skill generator values
+
+    float value = 0.0f;
+    auto itCheck = m_skillTarget.begin();
+    for(; itCheck != m_skillTarget.end(); itCheck++)
+    {
+        auto it2 = itCheck;
+        it2++;
+        for(; it2 != m_skillTarget.end(); it2++)
+        {
+            if(itCheck->second == it2->second)
+            {
+                std::cout << "Target double defined: " << itCheck->second << std::endl;
+            }
+        }
+        value += itCheck->first;
+    }
+    if(value != 1.0f)
+    {
+        std::cout << "Target has not combined chance of 1 but of: " << value << std::endl;
+    }
+
+    #endif // CHECK_GENERATORS
+
     float random = rand() / (float)RAND_MAX;
     auto it = m_skillTarget.begin();
     for(; it != m_skillTarget.end(); it++)
@@ -96,6 +121,32 @@ BattleEnums::Target SkillGenerator::GetRandomTarget()
 
 BattleEnums::AttackType SkillGenerator::GetRandomAttackType()
 {
+    #ifdef CHECK_GENERATORS
+    //Checks if there are errors defining the Skill generator values
+
+    float value = 0.0f;
+    auto itCheck = m_skillAttackType.begin();
+    for(; itCheck != m_skillAttackType.end(); itCheck++)
+    {
+        auto it2 = itCheck;
+        it2++;
+        for(; it2 != m_skillAttackType.end(); it2++)
+        {
+            if(itCheck->second == it2->second)
+            {
+                std::cout << "AttackType double defined: " << itCheck->second << std::endl;
+            }
+        }
+        value += itCheck->first;
+    }
+    if(value != 1.0f)
+    {
+        std::cout << "AttackType has not combined chance of 1 but of: " << value << std::endl;
+    }
+
+    #endif // CHECK_GENERATORS
+
+
     float random = rand() / (float)RAND_MAX;
     auto it = m_skillAttackType.begin();
     for(; it != m_skillAttackType.end(); it++)
@@ -112,6 +163,50 @@ BattleEnums::AttackType SkillGenerator::GetRandomAttackType()
 
 BattleEnums::EffectType SkillGenerator::GetRandomEffectType(bool positive)
 {
+    #ifdef CHECK_GENERATORS
+    //Checks if there are errors defining the Skill generator values
+
+    float value = 0.0f;
+    auto itCheck = m_skillPositiveEffectType.begin();
+    for(; itCheck != m_skillPositiveEffectType.end(); itCheck++)
+    {
+        auto it2 = itCheck;
+        it2++;
+        for(; it2 != m_skillPositiveEffectType.end(); it2++)
+        {
+            if(itCheck->second == it2->second)
+            {
+                std::cout << "PositiveEffectType double defined: " << itCheck->second << std::endl;
+            }
+        }
+        value += itCheck->first;
+    }
+    if(value != 1.0f)
+    {
+        std::cout << "PositiveEffectType has not combined chance of 1 but of: " << value << std::endl;
+    }
+
+    value = 0.0f;
+    itCheck = m_skillNegativeEffectType.begin();
+    for(; itCheck != m_skillNegativeEffectType.end(); itCheck++)
+    {
+        auto it2 = itCheck;
+        it2++;
+        for(; it2 != m_skillNegativeEffectType.end(); it2++)
+        {
+            if(itCheck->second == it2->second)
+            {
+                std::cout << "NegativeEffectType double defined: " << itCheck->second << std::endl;
+            }
+        }
+        value += itCheck->first;
+    }
+    if(value != 1.0f)
+    {
+        std::cout << "NegativeEffectType has not combined chance of 1 but of: " << value << std::endl;
+    }
+    #endif // CHECK_GENERATORS
+
     float random = rand() / (float)RAND_MAX;
     std::multimap<float, BattleEnums::EffectType>::iterator it, endIt;
     if(positive)

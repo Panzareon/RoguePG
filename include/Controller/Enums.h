@@ -3,7 +3,7 @@
 
 namespace BattleEnums
 {
-    enum Target{TargetOwnTeamEntity, TargetEnemyTeamEntity, TargetOwnTeam, TargetEnemyTeam, TargetSelf, TargetNone, TargetAll, TargetPassive, TARGET_END};
+    enum Target{TargetOwnTeamEntity, TargetEnemyTeamEntity, TargetOwnTeam, TargetEnemyTeam, TargetSelf, TargetNone, TargetAll, TargetPassive, TargetOwnTeamRandomEntity, TargetEnemyTeamRandomEntity, TARGET_END};
     enum AttackType{AttackTypePhysical, AttackTypeFire, AttackTypeWater, AttackTypeEarth, AttackTypeAir, ATTACK_TYPE_END};
     enum EffectType{EffectTypeDamage, EffectTypeHeal, EffectTypeDebuff, EffectTypeBuff, EffectTypeBuffDefense, EffectTypeBuffOffense, EffectTypeBuffMagic, EffectTypeDebuffDefense, EffectTypeDebuffOffense, EffectTypeDebuffMagic, EffectTypePassive, EFFECT_TYPE_END};
     enum Attribute{AttributeMaxHp, AttributeMaxMp, AttributeStrength, AttributeInt, AttributeDefense, AttributeMagicDefense, AttributeSpeed, ATTRIBUTE_END};

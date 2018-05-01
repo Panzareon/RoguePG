@@ -50,10 +50,12 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         newClass->SetAttributePerLevel(BattleEnums::AttributeInt, 1.3f);
 
         skillGenerator = newClass->GetSkillGenerator();
-        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.8f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.7f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.1f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.05f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetSelf, 0.05f);
-        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.05f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.025f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.025f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.05f);
         skillGenerator->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.04f);
         skillGenerator->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.24f);
@@ -104,10 +106,12 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         newClass->SetAttributePerLevel(BattleEnums::AttributeSpeed, 0.7f);
 
         skillGenerator = newClass->GetSkillGenerator();
-        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.09f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.08f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.01f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.3f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetSelf, 0.1f);
-        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.5f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.45f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.05f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.01f);
 
         skillGenerator->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.05f);
@@ -139,10 +143,12 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         newClass->SetAttributePerLevel(BattleEnums::AttributeSpeed, 1.5f);
 
         skillGenerator = newClass->GetSkillGenerator();
-        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.8f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.65f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.15f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetSelf, 0.09f);
-        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.01f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.005f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.005f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.09f);
 
         skillGenerator->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.8f);
@@ -176,10 +182,12 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         newClass->SetAttributePerLevel(BattleEnums::AttributeInt, 1.3f);
 
         skillGenerator = newClass->GetSkillGenerator();
-        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.09f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.08f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.01f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.3f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetSelf, 0.1f);
-        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.5f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.45f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.05f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.01f);
 
         skillGenerator->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.05f);
@@ -213,10 +221,12 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         newClass->SetAttributePerLevel(BattleEnums::AttributeInt, 1.0f);
 
         skillGenerator = newClass->GetSkillGenerator();
-        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.5f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.4f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.1f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetSelf, 0.3f);
-        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.09f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.08f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.01f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.1f);
 
         skillGenerator->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.04f);
@@ -250,10 +260,12 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         newClass->SetAttributePerLevel(BattleEnums::AttributeInt, 1.2f);
 
         skillGenerator = newClass->GetSkillGenerator();
-        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.5f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.4f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.1f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetSelf, 0.3f);
-        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.09f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.08f);
+        skillGenerator->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.01f);
         skillGenerator->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.1f);
 
         skillGenerator->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.1f);

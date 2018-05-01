@@ -27,6 +27,7 @@ class StrengthCalculation
 
         static float TeamTargetMali;
         static float SelfTargetBoni;
+        static float RandomTargetBoni;
         static float AllTargetMali;
 };
 
