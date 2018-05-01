@@ -32,6 +32,7 @@ class PartyMember : public Entity
         void ResetAfterEquipping();
 
         bool ShowEnemyHealth();
+        bool ShowCompleteMap();
         float MovementSpeed(float base);
 
 

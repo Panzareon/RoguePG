@@ -191,6 +191,8 @@ effect.100102 = Show Hp
 effect.100102.desc = Shows Hp bars of enemies.
 effect.100103 = Reduce MP cost
 effect.100103.desc = Reduce cost of all skills by %0%.
+effect.100104 = Show Map
+effect.100104.desc = Reveals the complete Minimap.
 
 //Enemies
 enemy.bat = Bat

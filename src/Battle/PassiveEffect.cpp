@@ -129,6 +129,11 @@ bool PassiveEffect::ShowEnemyHealth(bool base)
     return base || m_showEnemyHealth;
 }
 
+bool PassiveEffect::ShowCompleteMap(bool base)
+{
+    return base || m_showCompleteMap;
+}
+
 float PassiveEffect::Movementspeed(float base)
 {
     return base * m_movementspeedMultiplier;
@@ -142,4 +147,9 @@ void PassiveEffect::SetMovementSpeedMultiplier(float mult)
 void PassiveEffect::SetShowEnemyHealth(bool show)
 {
     m_showEnemyHealth = show;
+}
+
+void PassiveEffect::SetShowCompleteMap(bool show)
+{
+    m_showCompleteMap = show;
 }

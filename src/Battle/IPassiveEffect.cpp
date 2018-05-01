@@ -36,6 +36,11 @@ bool IPassiveEffect::ShowEnemyHealth(bool base)
     return base;
 }
 
+bool IPassiveEffect::ShowCompleteMap(bool base)
+{
+    return base;
+}
+
 float IPassiveEffect::Movementspeed(float base)
 {
     return base;

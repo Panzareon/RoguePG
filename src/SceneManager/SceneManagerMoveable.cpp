@@ -10,12 +10,14 @@
 SceneManagerMoveable::SceneManagerMoveable()
 {
     m_newHeroPos = false;
+    m_completedMap = false;
 }
 
 SceneManagerMoveable::SceneManagerMoveable(int tileWidth, int tileHeight): m_map(tileWidth, tileHeight)
 {
     //ctor
     m_newHeroPos = false;
+    m_completedMap = false;
     Init();
 }
 
@@ -281,19 +283,47 @@ void SceneManagerMoveable::UpdateMinimap()
     sf::FloatRect heroBB = m_hero->getGlobalBoundingBox();
     heroX = (heroBB.left + heroBB.width/2.0f) / TileMap::GetTileWidth();
     heroY = (heroBB.top + heroBB.height/2.0f) / TileMap::GetTileWidth();
-    for(int x = heroX - m_minimapViewRange; x <= heroX + m_minimapViewRange; x++)
+
+    if(m_minimapNode->IsVisible())
     {
-        for(int y = heroY - m_minimapViewRange; y <= heroY + m_minimapViewRange; y++)
+        m_minimapPlayer->setPosition(heroX * m_minimapScale, heroY * m_minimapScale);
+    }
+
+    if(m_completedMap)
+    {
+        return;
+    }
+
+    bool showCompleteMap = GameController::getInstance()->getParty()->ShowCompleteMap();
+
+    if(showCompleteMap)
+    {
+        //Add everything to the map
+        for(int x = 0; x < m_map.GetWidth(); x++)
         {
-            if(x >= 0 && y >= 0 && x < m_map.GetWidth() && y < m_map.GetHeight())
+            for(int y = 0; y < m_map.GetHeight(); y++)
             {
                 m_minimap.setPixel(x,y,m_minimapColor[m_map.GetTileType(x,y)]);
+            }
+        }
+        m_completedMap = true;
+    }
+    else
+    {
+        //Add Points around the Player to the map
+        for(int x = heroX - m_minimapViewRange; x <= heroX + m_minimapViewRange; x++)
+        {
+            for(int y = heroY - m_minimapViewRange; y <= heroY + m_minimapViewRange; y++)
+            {
+                if(x >= 0 && y >= 0 && x < m_map.GetWidth() && y < m_map.GetHeight())
+                {
+                    m_minimap.setPixel(x,y,m_minimapColor[m_map.GetTileType(x,y)]);
+                }
             }
         }
     }
     if(m_minimapNode->IsVisible())
     {
         m_minimapTexture.loadFromImage(m_minimap);
-        m_minimapPlayer->setPosition(heroX * m_minimapScale, heroY * m_minimapScale);
     }
 }

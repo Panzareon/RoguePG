@@ -33,6 +33,7 @@ class Party
         std::vector<std::pair<int,std::shared_ptr<Item>>>* GetItems();
 
         bool ShowEnemyHealth();
+        bool ShowCompleteMap();
         float GetMovementSpeed(float base);
 
 

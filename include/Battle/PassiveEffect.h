@@ -23,6 +23,7 @@ class PassiveEffect: public IPassiveEffect
         virtual float GetExp(float exp);
         virtual void OnBattleFinished(Entity* target);
         virtual bool ShowEnemyHealth(bool base);
+        virtual bool ShowCompleteMap(bool base);
         virtual float Movementspeed(float base);
 
 
@@ -37,6 +38,7 @@ class PassiveEffect: public IPassiveEffect
         void AddOnBattleFinished(std::function<void(Entity*)>* onBattleFinished);
         void SetMovementSpeedMultiplier(float mult);
         void SetShowEnemyHealth(bool show);
+        void SetShowCompleteMap(bool show);
 
         virtual std::string GetName();
         virtual std::string GetLocalizedDescription();
@@ -56,6 +58,7 @@ class PassiveEffect: public IPassiveEffect
 
         float m_movementspeedMultiplier;
         bool m_showEnemyHealth;
+        bool m_showCompleteMap;
     private:
 };
 

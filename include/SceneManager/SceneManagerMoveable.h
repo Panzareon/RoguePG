@@ -45,6 +45,7 @@ class SceneManagerMoveable : public SceneManager
     protected:
         void UpdateMinimap();
         void UpdateCamPosition();
+        bool m_completedMap;
         Map m_map;
         AnimatedNode* m_hero;
         bool m_newHeroPos;

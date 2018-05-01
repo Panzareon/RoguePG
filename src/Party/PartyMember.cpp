@@ -218,6 +218,16 @@ bool PartyMember::ShowEnemyHealth()
     return ret;
 }
 
+bool PartyMember::ShowCompleteMap()
+{
+    bool ret = false;
+    for(auto iter = m_passiveEffects.begin(); iter != m_passiveEffects.end(); iter++)
+    {
+        ret = iter->second->ShowCompleteMap(ret);
+    }
+    return ret;
+}
+
 float PartyMember::MovementSpeed(float base)
 {
     for(auto iter = m_passiveEffects.begin(); iter != m_passiveEffects.end(); iter++)

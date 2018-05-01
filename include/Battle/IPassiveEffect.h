@@ -25,6 +25,7 @@ class IPassiveEffect: public virtual NamedItem
         virtual float GetExp(float exp) = 0;
         virtual void OnBattleFinished(Entity* target);
         virtual bool ShowEnemyHealth(bool base);
+        virtual bool ShowCompleteMap(bool base);
         virtual float Movementspeed(float base);
         virtual float GetNeededMP(float base);
 

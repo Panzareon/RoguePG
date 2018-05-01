@@ -191,6 +191,16 @@ bool Party::ShowEnemyHealth()
     return false;
 }
 
+bool Party::ShowCompleteMap()
+{
+    for(int i = 0; i < m_partyMembers.size(); i++)
+    {
+        if(m_partyMembers[i]->ShowCompleteMap())
+            return true;
+    }
+    return false;
+}
+
 float Party::GetMovementSpeed(float base)
 {
     for(int i = 0; i < m_activePartyMembers.size(); i++)
