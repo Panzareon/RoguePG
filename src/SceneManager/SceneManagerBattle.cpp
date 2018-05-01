@@ -444,7 +444,22 @@ void SceneManagerBattle::ShowMenuForNext()
     //add new Battle options
     Localization* local = Localization::GetInstance();
     m_mainMenu->AddOption(local->GetLocalization("battle_menu.attack"), std::function<void()>(std::bind(&BattleFunctions::Attack, this, m_next)), std::function<void()>(std::bind(&BattleFunctions::SetDescription, this, local->GetLocalization("battle_menu.attack.desc"))));
-    m_mainMenu->AddOption(local->GetLocalization("battle_menu.skill"), std::function<void()>(std::bind(&BattleFunctions::SkillList, this, m_next)), std::function<void()>(std::bind(&BattleFunctions::SetDescription, this, local->GetLocalization("battle_menu.skill.desc"))), m_next->GetSkillList()->size() > 0);
+
+    //Check if the hero knows a not passive skill
+    bool showSkills = false;
+    if(m_next->GetSkillList()->size() > 0)
+    {
+        auto it = m_next->GetSkillList()->begin();
+        for(;it != m_next->GetSkillList()->end(); it++)
+        {
+            if((*it)->GetDefaultTarget() != BattleEnums::TargetPassive)
+            {
+                showSkills = true;
+                break;
+            }
+        }
+    }
+    m_mainMenu->AddOption(local->GetLocalization("battle_menu.skill"), std::function<void()>(std::bind(&BattleFunctions::SkillList, this, m_next)), std::function<void()>(std::bind(&BattleFunctions::SetDescription, this, local->GetLocalization("battle_menu.skill.desc"))), showSkills);
     m_mainMenu->AddOption(local->GetLocalization("menu.equipment"),std::function<void()>(&MenuFunctions::OpenEquipment),true);
     m_mainMenu->AddOption(local->GetLocalization("menu.status"),std::function<void()>(&MenuFunctions::OpenStatus),true);
     SetDescription(local->GetLocalization("battle_menu.attack.desc"));
