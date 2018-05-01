@@ -5,6 +5,7 @@
 #include "MapGeneration/MapFillDungeon.h"
 #include "MapGeneration/MapFillIceDungeon.h"
 #include "MapGeneration/MapFillDungeon2.h"
+#include "Localization.h"
 
 DungeonConfiguration::DungeonConfiguration()
 {
@@ -161,8 +162,10 @@ int DungeonConfiguration::GetNrBossAdds()
         return 2;
 }
 
-void DungeonConfiguration::ClearedDungeon()
+std::string DungeonConfiguration::ClearedDungeon()
 {
+    std::string rewards = "";
+    Localization* localization = Localization::GetInstance();
     GameController* controller = GameController::getInstance();
     PersistentProgress* progress = controller->GetPersistentProgress();
     int nrCleared = progress->GetNrDungeonsCleared();
@@ -170,9 +173,16 @@ void DungeonConfiguration::ClearedDungeon()
     {
         if(nrCleared < m_dungeonId)
         {
-            progress->AddStartMoney(100);
+            int money = 100;
+            progress->AddStartMoney(money);
+            std::vector<std::string> moneyValue;
+            moneyValue.push_back(std::to_string(money));
+            rewards += "\n";
+            rewards += localization->GetLocalizationWithStrings("dungeon.finished.start_money", &moneyValue);
         }
         controller->getParty()->AddRandomMember();
+        rewards += "\n";
+        rewards += localization->GetLocalization("dungeon.finished.member");
     }
     else
     {
@@ -187,30 +197,49 @@ void DungeonConfiguration::ClearedDungeon()
             random = (float)rand() / RAND_MAX;
             if(random < 0.2f)
             {
-                progress->AddStartMoney(20);
+                int money = 20;
+                progress->AddStartMoney(money);
+                std::vector<std::string> moneyValue;
+                moneyValue.push_back(std::to_string(money));
+                rewards += "\n";
+                rewards += localization->GetLocalizationWithStrings("dungeon.finished.start_money", &moneyValue);
             }
             else if(random < 0.22f)
             {
                 progress->AddStartMember(1);
+                rewards += "\n";
+                rewards += localization->GetLocalization("dungeon.finished.start_member");
             }
             else if(random < 0.4f)
             {
                 progress->AddShopNrItems(1);
+                rewards += "\n";
+                rewards += localization->GetLocalization("dungeon.finished.shop_number");
             }
             else if(random < 0.6f)
             {
                 progress->AddShopLevel(1);
+                rewards += "\n";
+                rewards += localization->GetLocalization("dungeon.finished.shop_level");
             }
             else if(random < 0.8f)
             {
                 controller->getParty()->AddRandomMember();
+                rewards += "\n";
+                rewards += localization->GetLocalization("dungeon.finished.member");
             }
             else
             {
-                controller->getParty()->AddMoney(100);
+                int money = 100;
+                controller->getParty()->AddMoney(money);
+                std::vector<std::string> moneyValue;
+                moneyValue.push_back(std::to_string(money));
+                rewards += "\n";
+                rewards += localization->GetLocalizationWithStrings("dungeon.finished.money", &moneyValue);
             }
         }
     }
+    return rewards;
 }
 
 Entity* DungeonConfiguration::GetDungeonEnemy(int lvl)

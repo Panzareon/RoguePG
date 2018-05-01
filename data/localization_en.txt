@@ -54,6 +54,12 @@ menu.shop.buy.nothing = Nothing to buy is left here.
 menu.shop.inn = Stay in this inn for %0 gold?
 
 dungeon.finished = You finished this dungeon!
+dungeon.finished.start_money = You start new rounds with %0 more gold!
+dungeon.finished.start_member = You start new rounds with one more Hero!
+dungeon.finished.shop_number = New rounds will have more Items in Shops to buy!
+dungeon.finished.shop_level = New rounds will have better Items in Shops to buy!
+dungeon.finished.member = An ally joins your party!
+dungeon.finished.money = You receive %0 gold!
 
 chest.receive_item = You got a %0!
 chest.receive_gold = You got %0 gold!

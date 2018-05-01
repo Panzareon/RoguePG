@@ -15,7 +15,8 @@ class DungeonConfiguration
         int GetNrLevels();
         int GetNrEnemies();
         int GetNrBossAdds();
-        void ClearedDungeon();
+        //Returns string of the received rewards
+        std::string ClearedDungeon();
 
         Entity* GetDungeonEnemy(int lvl);
         Entity* GetDungeonBoss(int lvl);
