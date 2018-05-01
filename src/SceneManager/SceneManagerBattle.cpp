@@ -129,6 +129,8 @@ SceneManagerBattle::SceneManagerBattle()
     m_lastHeroTargeted = nullptr;
     m_restoreHpPercent = 0.25f;
     m_restoreMpPercent = 0.25f;
+    m_expGiven = false;
+    m_finished = false;
 
     //Setting Startpositions for teams
     //TODO: for more than 2 teams?
@@ -373,6 +375,7 @@ void SceneManagerBattle::Tick()
         if(m_animationList.size() == 0)
             CalculateNext();
     }
+    CheckBattleEnd();
 }
 void SceneManagerBattle::AddEnemy(Entity* enemy)
 {
@@ -500,10 +503,19 @@ void SceneManagerBattle::PassTime(float Time)
     }
     m_dontInterpolate = nullptr;
 }
+
 bool SceneManagerBattle::IsFinished()
 {
+    return m_finished;
+}
+
+void SceneManagerBattle::CheckBattleEnd()
+{
     if(m_animationList.size() > 0)
-        return false;
+    {
+        m_finished = false;
+        return;
+    }
 
     //Check if all Partymembers are dead first
     bool finished = true;
@@ -520,7 +532,8 @@ bool SceneManagerBattle::IsFinished()
     {
         std::cout << "Game Over!" << std::endl;
         GameController::getInstance()->GameOverCheck();
-        return true;
+        m_finished = true;
+        return;
     }
 
     //Then check if all Enemies are dead
@@ -536,11 +549,16 @@ bool SceneManagerBattle::IsFinished()
     {
         Finished();
     }
-    return finished;
+    m_finished = finished;
 }
 
 void SceneManagerBattle::Finished()
 {
+    if(m_expGiven)
+    {
+        return;
+    }
+    m_expGiven = true;
     //Calculate Exp from dead enemies
     int exp = 0;
     for(unsigned int i = 0; i < m_enemies.size(); i++)

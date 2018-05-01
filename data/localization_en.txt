@@ -72,6 +72,9 @@ character_class.cleric = Cleric
 character_class.wizard = Wizard
 character_class.vampire = Vampire
 
+character.level_up = %0 leveled up!
+character.learn_skill = %0 learned %1!
+
 //Item-Names
 item.1 = Sword
 item.1.desc = A generic sword

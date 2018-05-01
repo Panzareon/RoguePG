@@ -37,6 +37,9 @@ class SceneManagerBattle : public SceneManager
 
         virtual SceneManagerType GetType();
     protected:
+        void CheckBattleEnd();
+        bool m_finished;
+
         void CalculateNext();
         void ShowMenuForNext();
 
@@ -73,6 +76,8 @@ class SceneManagerBattle : public SceneManager
 
         std::vector<sf::Vector2f> m_posPerTeam;
         std::vector<sf::Vector2f> m_posChangePerTeam;
+
+        bool m_expGiven;
     private:
 };
 

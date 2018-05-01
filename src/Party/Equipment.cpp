@@ -3,6 +3,8 @@
 #include "Party/PartyMember.h"
 #include "Battle/Skill.h"
 #include "Controller/Localization.h"
+#include "SceneManagerMessage.h"
+#include "GameController.h"
 
 #include <iostream>
 
@@ -179,6 +181,12 @@ void Equipment::LevelUp(std::shared_ptr<PartyMember> target)
     if(it != m_skillsToLearn.end())
     {
         target->AddSkill(it->second);
+
+        std::vector<std::string> stringValues;
+        stringValues.push_back(target->GetName());
+        stringValues.push_back(it->second->GetName());
+        SceneManagerMessage* sm = new SceneManagerMessage(Localization::GetInstance()->GetLocalizationWithStrings("character.learn_skill", &stringValues));
+        GameController::getInstance()->LoadSceneManager(sm);
     }
 }
 

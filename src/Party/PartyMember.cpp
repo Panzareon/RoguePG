@@ -4,6 +4,8 @@
 #include "Party/Equipment.h"
 #include "Controller/NameGenerator.h"
 #include <iostream>
+#include "SceneManagerMessage.h"
+#include "Localization.h"
 
 PartyMember::PartyMember()
 {
@@ -130,6 +132,11 @@ void PartyMember::LevelUp()
             m_attributes[(BattleEnums::Attribute)i] += add;
         }
     }
+
+    std::vector<std::string> stringValues;
+    stringValues.push_back(GetName());
+    SceneManagerMessage* sm = new SceneManagerMessage(Localization::GetInstance()->GetLocalizationWithStrings("character.level_up", &stringValues));
+    GameController::getInstance()->LoadSceneManager(sm);
 }
 
 
