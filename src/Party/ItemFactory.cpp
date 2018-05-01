@@ -254,13 +254,14 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(10,5,true));
         retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.35f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.2f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.05f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.1f);
-        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.4f);
+        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.3f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.025f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.025f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.05f);
+        gen->AddSkillTarget(BattleEnums::TargetPassive, 0.25f);
 
         gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.8f);
         gen->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.05f);
@@ -380,13 +381,14 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(10,5,true));
         retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.35f);
+        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.25f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.05f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.1f);
-        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.4f);
+        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.3f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.025f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.025f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.05f);
+        gen->AddSkillTarget(BattleEnums::TargetPassive, 0.2f);
 
         gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.4f);
         gen->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.5f);
