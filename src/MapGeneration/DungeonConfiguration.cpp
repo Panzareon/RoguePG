@@ -168,11 +168,30 @@ std::string DungeonConfiguration::ClearedDungeon()
     Localization* localization = Localization::GetInstance();
     GameController* controller = GameController::getInstance();
     PersistentProgress* progress = controller->GetPersistentProgress();
+
     int nrCleared = progress->GetNrDungeonsCleared();
     if(m_dungeonId == 1)
     {
+        for(int i = 0; i < CharacterClass::CHARACTER_CLASS_END; i++)
+        {
+            CharacterClass::CharacterClassEnum asEnum = (CharacterClass::CharacterClassEnum)i;
+            if(!progress->IsClassUnlocked(asEnum))
+            {
+                progress->UnlockClass(asEnum);
+                CharacterClass* charClass = CharacterClass::GetCharacterClass(asEnum);
+                std::string className = localization->GetLocalization(charClass->GetName());
+
+                std::vector<std::string> values;
+                values.push_back(className);
+                rewards += "\n";
+                rewards += localization->GetLocalizationWithStrings("dungeon.finished.unlocked_class", &values);
+                break;
+            }
+        }
+
         if(nrCleared < m_dungeonId)
         {
+
             int money = 100;
             progress->AddStartMoney(money);
             std::vector<std::string> moneyValue;
@@ -183,6 +202,8 @@ std::string DungeonConfiguration::ClearedDungeon()
         controller->getParty()->AddRandomMember();
         rewards += "\n";
         rewards += localization->GetLocalization("dungeon.finished.member");
+
+
     }
     else
     {

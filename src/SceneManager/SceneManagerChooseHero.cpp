@@ -8,6 +8,7 @@
 
 SceneManagerChooseHero::SceneManagerChooseHero()
 {
+    GameController* controller = GameController::getInstance();
     //ctor
     m_finished = false;
 
@@ -18,14 +19,27 @@ SceneManagerChooseHero::SceneManagerChooseHero()
     m_gui->addChild(selectHero);
     selectHero->moveNode(40.0f, 0.0f);
 
+    PersistentProgress* progress = controller->GetPersistentProgress();
+
     int xPos = 50;
     int yPos = selectHero->getBoundingBox().height + 50.0f;
     for(int i = 0; i < CharacterClass::CHARACTER_CLASS_END; i++)
     {
-        CharacterClass* charClass = CharacterClass::GetCharacterClass((CharacterClass::CharacterClassEnum)i);
+        CharacterClass::CharacterClassEnum classEnum = (CharacterClass::CharacterClassEnum)i;
+        bool available = progress->IsClassUnlocked(classEnum);
+        m_classAvailable[classEnum] = available;
+
+        CharacterClass* charClass = CharacterClass::GetCharacterClass(classEnum);
 
         sf::Sprite* classSprite = new sf::Sprite();
-        classSprite->setTexture(*TextureList::getTexture(charClass->GetClassSprite()));
+        if(available)
+        {
+            classSprite->setTexture(*TextureList::getTexture(charClass->GetClassSprite()));
+        }
+        else
+        {
+            classSprite->setTexture(*TextureList::getTexture(TextureList::LockedCharacter));
+        }
         DrawableNode* sprite = new DrawableNode(classSprite);
         sprite->setBoundingBox(classSprite->getLocalBounds());
         m_classNodes.push_back(sprite);
@@ -68,7 +82,14 @@ SceneManagerChooseHero::~SceneManagerChooseHero()
 void SceneManagerChooseHero::ShowForCharacterClass()
 {
     CharacterClass* charClass = CharacterClass::GetCharacterClass((CharacterClass::CharacterClassEnum)m_selected);
-    m_textNode->SetText(Localization::GetInstance()->GetLocalization(charClass->GetName()));
+    if(m_classAvailable[(CharacterClass::CharacterClassEnum)m_selected])
+    {
+        m_textNode->SetText(Localization::GetInstance()->GetLocalization(charClass->GetName()));
+    }
+    else
+    {
+        m_textNode->SetText(Localization::GetInstance()->GetLocalization("character_class.locked"));
+    }
     m_description->SetText(Localization::GetInstance()->GetLocalization(charClass->GetName() + ".desc"));
 
     sf::FloatRect selectedNode = m_classNodes[m_selected]->getGlobalBoundingBox();
@@ -82,7 +103,7 @@ void SceneManagerChooseHero::ShowForCharacterClass()
 void SceneManagerChooseHero::Tick()
 {
     GameController* controller = GameController::getInstance();
-    if(controller->IsKeyPressed(Configuration::Accept))
+    if(controller->IsKeyPressed(Configuration::Accept) && m_classAvailable[(CharacterClass::CharacterClassEnum)m_selected])
     {
         StartDungeon();
     }

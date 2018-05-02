@@ -60,10 +60,12 @@ dungeon.finished.shop_number = New rounds will have more Items in Shops to buy!
 dungeon.finished.shop_level = New rounds will have better Items in Shops to buy!
 dungeon.finished.member = An ally joins your party!
 dungeon.finished.money = You receive %0 gold!
+dungeon.finished.unlocked_class = You can now play as a %0!
 
 chest.receive_item = You got a %0!
 chest.receive_gold = You got %0 gold!
 
+character_class.locked = Locked
 character_class.mage = Mage
 character_class.mage.desc = A class with high mp but low strength and defense.
 character_class.barbarian = Barbarian

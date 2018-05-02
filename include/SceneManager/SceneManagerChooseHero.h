@@ -3,6 +3,7 @@
 
 #include "SceneManager.h"
 #include "SceneGraph/TextNode.h"
+#include "Party/CharacterClass.h"
 
 class SceneManagerChooseHero : public SceneManager
 {
@@ -26,6 +27,7 @@ class SceneManagerChooseHero : public SceneManager
         void ShowForCharacterClass();
 
         std::vector<Node*> m_classNodes;
+        std::map<CharacterClass::CharacterClassEnum, bool> m_classAvailable;
         TextNode* m_textNode;
         TextNode* m_description;
         Node* m_cursor;

@@ -94,6 +94,10 @@ Texture* TextureList::getTexture(TextureFiles file)
             filename = "rogue.png";
             break;
 
+        case LockedCharacter:
+            filename = "lock.png";
+            break;
+
         case TargetCursor:
             filename = "target.png";
             break;

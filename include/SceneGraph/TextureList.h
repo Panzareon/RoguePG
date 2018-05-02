@@ -20,6 +20,8 @@ class TextureList
             MageBattleSprite, BarbarianBattleSprite, PaladinBattleSprite, ThiefBattleSprite, ClericBattleSprite, WizardBattleSprite, VampireBattleSprite,
             DefaultBattleSprite,
 
+            LockedCharacter,
+
             TargetCursor, TimeArrow,
 
             FireballAnimation,

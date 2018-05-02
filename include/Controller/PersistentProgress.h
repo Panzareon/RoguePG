@@ -2,6 +2,8 @@
 #define PERSISTENTPROGRESS_H
 
 #include <cstdint>
+#include <set>
+#include "Party/CharacterClass.h"
 
 class PersistentProgress
 {
@@ -14,6 +16,7 @@ class PersistentProgress
         int GetShopLevel();
         int GetShopNrItems();
         int GetNrDungeonsCleared();
+        bool IsClassUnlocked(CharacterClass::CharacterClassEnum characterClass);
         void SetStartMoney(int value);
         void AddStartMoney(int value);
         void SetStartMember(int value);
@@ -23,11 +26,16 @@ class PersistentProgress
         void SetShopNrItems(int value);
         void AddShopNrItems(int value);
         void ClearedDungeon(int id);
+        void UnlockClass(CharacterClass::CharacterClassEnum characterClass);
 
         template<class Archive>
         void save(Archive & archive, std::uint32_t const version) const
         {
             archive(m_startMoney, m_startMember, m_shopLevel, m_shopNrItems, m_nrDungeonsCleared);
+            if(version >= 1)
+            {
+                archive(m_unlockedClasses);
+            }
         }
 
 
@@ -35,6 +43,10 @@ class PersistentProgress
         void load(Archive & archive, std::uint32_t const version)
         {
             archive(m_startMoney, m_startMember, m_shopLevel, m_shopNrItems, m_nrDungeonsCleared);
+            if(version >= 1)
+            {
+                archive(m_unlockedClasses);
+            }
         }
 
     protected:
@@ -45,8 +57,10 @@ class PersistentProgress
         int m_shopLevel;
         int m_shopNrItems;
         int m_nrDungeonsCleared;
+        std::set<CharacterClass::CharacterClassEnum> m_unlockedClasses;
 
     private:
 };
 
+CEREAL_CLASS_VERSION(PersistentProgress, 1);
 #endif // PERSISTENTPROGRESS_H

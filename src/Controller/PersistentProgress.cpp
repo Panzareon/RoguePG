@@ -9,6 +9,7 @@ PersistentProgress::PersistentProgress()
     m_shopLevel = 1;
     m_shopNrItems = 1;
     m_nrDungeonsCleared = 0;
+    m_unlockedClasses.insert(CharacterClass::CharacterClassPaladin);
 }
 
 PersistentProgress::~PersistentProgress()
@@ -39,6 +40,11 @@ int PersistentProgress::GetShopNrItems()
 int PersistentProgress::GetNrDungeonsCleared()
 {
     return m_nrDungeonsCleared;
+}
+
+bool PersistentProgress::IsClassUnlocked(CharacterClass::CharacterClassEnum characterClass)
+{
+    return m_unlockedClasses.find(characterClass) != m_unlockedClasses.end();
 }
 
 void PersistentProgress::SetStartMoney(int value)
@@ -92,6 +98,12 @@ void PersistentProgress::ClearedDungeon(int id)
         m_nrDungeonsCleared = id;
         SaveChanges();
     }
+}
+
+void PersistentProgress::UnlockClass(CharacterClass::CharacterClassEnum characterClass)
+{
+    m_unlockedClasses.insert(characterClass);
+    SaveChanges();
 }
 
 void PersistentProgress::SaveChanges()
