@@ -136,7 +136,7 @@ void PartyMember::LevelUp()
     std::vector<std::string> stringValues;
     stringValues.push_back(GetName());
     SceneManagerMessage* sm = new SceneManagerMessage(Localization::GetInstance()->GetLocalizationWithStrings("character.level_up", &stringValues));
-    GameController::getInstance()->LoadSceneManager(sm);
+    GameController::getInstance()->LoadSceneManagerBefore(sm);
 }
 
 

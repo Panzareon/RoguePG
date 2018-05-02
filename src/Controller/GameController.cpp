@@ -139,6 +139,33 @@ void GameController::LoadSceneManager(std::shared_ptr<SceneManager> sm)
     m_sceneManager.push_back(sm);
 }
 
+void GameController::LoadSceneManagerBefore(SceneManager* newSm, SceneManager* sm)
+{
+    LoadSceneManagerBefore(std::shared_ptr<SceneManager>(newSm), sm);
+}
+
+void GameController::LoadSceneManagerBefore(std::shared_ptr<SceneManager> newSm, SceneManager* sm)
+{
+    int i = 0;
+    if(sm == nullptr)
+    {
+        i = m_sceneManager.size() - 1;
+    }
+    else
+    {
+        for(; i < m_sceneManager.size(); i++)
+        {
+            if(m_sceneManager[i].get() == sm)
+            {
+                break;
+            }
+        }
+    }
+
+
+    m_sceneManager.insert(m_sceneManager.begin() + i, newSm);
+}
+
 void GameController::Tick()
 {
     m_frameTime = m_clock.getElapsedTime();

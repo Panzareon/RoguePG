@@ -158,7 +158,7 @@ void SceneManagerChooseHero::StartDungeon()
 
     }
 
-    controller->LoadSceneManager(new SceneManagerVillage(30,20,time(NULL),new MapFillVillage()));
+    controller->LoadSceneManagerBefore(std::shared_ptr<SceneManager>(new SceneManagerVillage(30,20,time(NULL),new MapFillVillage())), this);
 }
 
 void SceneManagerChooseHero::ChooseNext()

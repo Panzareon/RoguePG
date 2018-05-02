@@ -186,7 +186,7 @@ void Equipment::LevelUp(std::shared_ptr<PartyMember> target)
         stringValues.push_back(target->GetName());
         stringValues.push_back(it->second->GetName());
         SceneManagerMessage* sm = new SceneManagerMessage(Localization::GetInstance()->GetLocalizationWithStrings("character.learn_skill", &stringValues));
-        GameController::getInstance()->LoadSceneManager(sm);
+        GameController::getInstance()->LoadSceneManagerBefore(sm);
     }
 }
 

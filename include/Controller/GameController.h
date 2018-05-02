@@ -22,6 +22,10 @@ class GameController
         void CloseActiveSceneManger();
         void LoadSceneManager(SceneManager*);
         void LoadSceneManager(std::shared_ptr<SceneManager>);
+        //Loads a new Scenemanager before the given, to be displayed when the given Scenemanager is finished
+        //If SceneManager is not found, the new Scenemanager is added to the end
+        void LoadSceneManagerBefore(SceneManager*, SceneManager* sm = nullptr);
+        void LoadSceneManagerBefore(std::shared_ptr<SceneManager>, SceneManager* sm = nullptr);
         void StartBattle(std::vector<Entity*>* enemies);
         void GotoNextLevel();
         void GotoPreviousLevel();
