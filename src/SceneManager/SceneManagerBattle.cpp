@@ -506,16 +506,16 @@ void SceneManagerBattle::PassTime(float Time)
 
 bool SceneManagerBattle::IsFinished()
 {
+    if(m_animationList.size() > 0)
+    {
+        //Wait until all Animations are played
+        return false;
+    }
     return m_finished;
 }
 
 void SceneManagerBattle::CheckBattleEnd()
 {
-    if(m_animationList.size() > 0)
-    {
-        m_finished = false;
-        return;
-    }
 
     //Check if all Partymembers are dead first
     bool finished = true;

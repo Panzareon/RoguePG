@@ -161,6 +161,11 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
 
 Animation* AnimationFactory::GetTextAnimation(Entity* target, std::string text, sf::Color color)
 {
+    if(target->GetNode() == nullptr)
+    {
+        //If there is no Node, animation can not be displayed
+        return nullptr;
+    }
     sf::FloatRect startPos = target->GetNode()->getGlobalBoundingBox();
     sf::Transform startTransform;
     startTransform.translate(startPos.left, startPos.top);
@@ -171,7 +176,7 @@ Animation* AnimationFactory::GetTextAnimation(Entity* target, std::string text, 
     startTransform.translate((startPos.width - bounds.width) / 2, (startPos.height - bounds.height) / 2);
     part->SetTiming(0.0f, 0.2f);
     part->SetStartTransform(startTransform);
-    part->SetTranslation(-2.0f, - 10.0f);
+    part->SetTranslation(-3.0f, - 10.0f);
     part->SetScaling(1.5f);
     ret->AddStep(part);
     return ret;

@@ -114,7 +114,14 @@ bool SceneManager::IsFinished()
 
 void SceneManager::AddAnimation(Animation* anim)
 {
-    m_animationList.push_back(anim);
+    if(anim != nullptr)
+    {
+         m_animationList.push_back(anim);
+    }
+    else
+    {
+        std::cout << "Tried playing invalid Animation" << std::endl;
+    }
 }
 
 Node* SceneManager::GetAnimationNode()
