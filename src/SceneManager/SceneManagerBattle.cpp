@@ -111,6 +111,7 @@ SceneManagerBattle::SceneManagerBattle()
     m_description->moveNode(20.0f, GameController::getInstance()->GetWindowHeight() - 64.0f);
     m_description->SetColor(sf::Color::Black);
     m_description->SetFontSize(20);
+    m_description->SetMaxLength(GameController::getInstance()->GetWindowWidth() - 40.0f);
     m_mainNode->addChild(m_description);
     m_mainMenu->SetPadding(5,0);
 
