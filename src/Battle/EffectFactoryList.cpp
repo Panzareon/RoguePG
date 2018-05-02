@@ -683,8 +683,8 @@ EffectFactoryList::EffectFactoryList()
     newEffect = new EffectFactoryPassive(passiveFunc, 100101);
     calc = newEffect->GetStrengthCalculation();
     //Everything from 1 to 50 % more speed
-    calc->AddStrengthValue(1.0f, 50.0f);
-    calc->SetMultiplier(1.0f);
+    calc->AddStrengthValue(0.01f, 0.5f);
+    calc->SetMultiplier(100.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeFire);
     newEffect->AddAttackType(BattleEnums::AttackTypeWater);
     newEffect->AddAttackType(BattleEnums::AttackTypeAir);
