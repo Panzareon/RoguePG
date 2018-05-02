@@ -17,11 +17,13 @@ StrengthCalculation::~StrengthCalculation()
     //dtor
 }
 
-void StrengthCalculation::AddStrengthValue(float minValue, float maxValue, float step)
+void StrengthCalculation::AddStrengthValue(float minValue, float maxValue, float step, float multiplier, CombiningType type)
 {
     m_minValue.push_back(minValue);
     m_maxValue.push_back(maxValue);
     m_step.push_back(step);
+    m_multiply.push_back(multiplier);
+    m_combiningType.push_back(type);
 }
 
 void StrengthCalculation::SetMultiplier(float multiplyWith)
@@ -31,11 +33,30 @@ void StrengthCalculation::SetMultiplier(float multiplyWith)
 
 float StrengthCalculation::GetValue(std::vector<float>* strength, BattleEnums::Target target)
 {
-    float value = m_multiplyWith;
+    bool firstValue = true;
+    float value = 1.0f;
     for(unsigned int i = 0; i < m_minValue.size(); i++)
     {
-        value *= strength->at(i);
+        if(firstValue)
+        {
+            value = strength->at(i) * m_multiply[i];
+            firstValue = false;
+        }
+        else
+        {
+            switch(m_combiningType[i])
+            {
+                case MULTIPLY:
+                    value *= strength->at(i) * m_multiply[i];
+                    break;
+                case ADD:
+                    value += strength->at(i) * m_multiply[i];
+                    break;
+            }
+        }
     }
+
+    value *= m_multiplyWith;
 
     if(target == BattleEnums::TargetEnemyTeam || target == BattleEnums::TargetOwnTeam)
     {
@@ -76,13 +97,34 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
         value *= RandomTargetBoni;
     }
 
-    float minV = m_multiplyWith;
-    float maxV = m_multiplyWith;
+    value /= m_multiplyWith;
 
+
+    bool firstValue = true;
+    float minV = 1.0f;
+    float maxV = 1.0f;
     for(unsigned int i = 0; i < m_minValue.size(); i++)
     {
-        minV *= m_minValue[i];
-        maxV *= m_maxValue[i];
+        if(firstValue)
+        {
+            minV = m_minValue[i] * m_multiply[i];
+            maxV = m_maxValue[i] * m_multiply[i];
+            firstValue = false;
+        }
+        else
+        {
+            switch(m_combiningType[i])
+            {
+                case MULTIPLY:
+                        minV *= m_minValue[i] * m_multiply[i];
+                        maxV *= m_maxValue[i] * m_multiply[i];
+                    break;
+                case ADD:
+                        minV += m_minValue[i] * m_multiply[i];
+                        maxV += m_maxValue[i] * m_multiply[i];
+                    break;
+            }
+        }
     }
 
     //if getting nr to actually get the value is impossible return closed to it
@@ -103,7 +145,7 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
     do
     {
         finished = true;
-        calculatedValue = m_multiplyWith;
+        calculatedValue = 1;
         for(int i = 0; i < lastValueId; i++)
         {
             if(m_step[i] == 0.0f)
@@ -113,9 +155,35 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
                 int steps = (m_maxValue[i] - m_minValue[i]) / m_step[i] + 1;
                 retVal[i] = m_minValue[i] + m_step[i] * (std::rand() % steps);
             }
-            calculatedValue *= retVal[i];
+
+            if(i == 0)
+            {
+                calculatedValue = retVal[i] * m_multiply[i];
+            }
+            else
+            {
+                switch(m_combiningType[i])
+                {
+                    case MULTIPLY:
+                        calculatedValue *= retVal[i] * m_multiply[i];
+                        break;
+                    case ADD:
+                        calculatedValue += retVal[i] * m_multiply[i];
+                        break;
+                }
+            }
         }
-        retVal[lastValueId] = (value / calculatedValue);
+
+        switch(m_combiningType[lastValueId])
+        {
+            case MULTIPLY:
+                retVal[lastValueId] = (value / calculatedValue) / m_multiply[lastValueId];
+                break;
+            case ADD:
+                retVal[lastValueId] = (value - calculatedValue) / m_multiply[lastValueId];
+                break;
+        }
+
         if(retVal[lastValueId] < m_minValue[lastValueId] || retVal[lastValueId] > m_maxValue[lastValueId])
         {
             finished = false;

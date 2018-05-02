@@ -7,11 +7,12 @@
 class StrengthCalculation
 {
     public:
+        enum CombiningType{MULTIPLY, ADD};
         StrengthCalculation();
         virtual ~StrengthCalculation();
 
         void SetMultiplier(float multiplyWith);
-        void AddStrengthValue(float minValue, float maxValue, float step = 0.0f);
+        void AddStrengthValue(float minValue, float maxValue, float step = 0.0f, float multiplier = 1.0f, CombiningType type = MULTIPLY);
 
         std::vector<float>* GetStrengthVector(float value, BattleEnums::Target target);
 
@@ -24,6 +25,8 @@ class StrengthCalculation
         std::vector<float> m_minValue;
         std::vector<float> m_maxValue;
         std::vector<float> m_step;
+        std::vector<float> m_multiply;
+        std::vector<CombiningType> m_combiningType;
 
         static float TeamTargetMali;
         static float SelfTargetBoni;
