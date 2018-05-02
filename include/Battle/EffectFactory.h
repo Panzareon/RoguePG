@@ -9,7 +9,7 @@
 class EffectFactory : public EffectFactoryBase
 {
     public:
-        EffectFactory(std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect)>* func, int id);
+        EffectFactory(std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect)>* func, int id, float chance = 1.0f);
         virtual ~EffectFactory();
 
         //Returns new Instance of Effect with a strength defined by the value given, needs to be deleted

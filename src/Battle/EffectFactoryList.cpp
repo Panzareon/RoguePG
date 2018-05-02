@@ -736,13 +736,13 @@ EffectFactoryList::~EffectFactoryList()
 
 EffectFactoryBase* EffectFactoryList::getRandom(BattleEnums::AttackType attackType, BattleEnums::EffectType effectType)
 {
-    int nr = 0;
+    float maxChance = 0.0f;
     for(unsigned int i = 0; i < m_effects.size(); i++)
     {
         if(m_effects[i]->DoesContainAttackType(attackType) && m_effects[i]->DoesContainEffectType(effectType))
-            nr++;
+            maxChance += m_effects[i]->GetChance();
     }
-    if(nr == 0)
+    if(maxChance == 0)
     {
         std::string msg = "No Effect with the AttackType:";
         msg.append(std::to_string(attackType));
@@ -751,14 +751,14 @@ EffectFactoryBase* EffectFactoryList::getRandom(BattleEnums::AttackType attackTy
         msg.append(" avaliable!");
         throw InvalidArgumentException(msg);
     }
-    int j = rand() % nr;
+    float chance = (rand() / ((float)RAND_MAX)) * maxChance;
     for(unsigned int i = 0; i < m_effects.size(); i++)
     {
         if(m_effects[i]->DoesContainAttackType(attackType) && m_effects[i]->DoesContainEffectType(effectType))
         {
-            if(j == 0)
+            chance -= m_effects[i]->GetChance();
+            if(chance <= 0.0f)
                 return m_effects[i];
-            j--;
         }
     }
     throw InvalidArgumentException("EffectFactory not found");
@@ -766,13 +766,13 @@ EffectFactoryBase* EffectFactoryList::getRandom(BattleEnums::AttackType attackTy
 
 EffectFactoryBase* EffectFactoryList::getRandom(BattleEnums::AttackType attackType, BattleEnums::EffectType effectType, bool needTarget)
 {
-    int nr = 0;
+    float maxChance = 0.0f;
     for(unsigned int i = 0; i < m_effects.size(); i++)
     {
         if(m_effects[i]->DoesContainAttackType(attackType) && m_effects[i]->DoesContainEffectType(effectType) && m_effects[i]->DoesNeedTarget() == needTarget)
-            nr++;
+            maxChance += m_effects[i]->GetChance();
     }
-    if(nr == 0)
+    if(maxChance == 0.0f)
     {
         std::string msg = "No Effect with the AttackType:";
         msg.append(std::to_string(attackType));
@@ -783,13 +783,15 @@ EffectFactoryBase* EffectFactoryList::getRandom(BattleEnums::AttackType attackTy
         msg.append(" avaliable!");
         throw InvalidArgumentException(msg);
     }
-    int j = rand() % nr;
+    float chance = (rand() / ((float)RAND_MAX)) * maxChance;
     for(unsigned int i = 0; i < m_effects.size(); i++)
     {
         if(m_effects[i]->DoesContainAttackType(attackType) && m_effects[i]->DoesContainEffectType(effectType) && m_effects[i]->DoesNeedTarget() == needTarget)
-            if(j == 0)
+        {
+            chance -= m_effects[i]->GetChance();
+            if(chance <= 0.0f)
                 return m_effects[i];
-            j--;
+        }
     }
     throw InvalidArgumentException("EffectFactory not found");
 }

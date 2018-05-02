@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-EffectFactory::EffectFactory(std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect)>* func, int id) : EffectFactoryBase(id)
+EffectFactory::EffectFactory(std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect)>* func, int id, float chance) : EffectFactoryBase(id, chance)
 {
     m_effectFunction = func;
     m_needsTarget = true;

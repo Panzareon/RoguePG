@@ -8,7 +8,7 @@
 class EffectFactoryPassive : public EffectFactoryBase
 {
     public:
-        EffectFactoryPassive(std::function<void(std::vector<float>* strength, PassiveEffect* addTo)>* func, int id);
+        EffectFactoryPassive(std::function<void(std::vector<float>* strength, PassiveEffect* addTo)>* func, int id, float chance = 1.0f);
         virtual ~EffectFactoryPassive();
 
         //Returns new Instance of Effect with a strength defined by the value given, needs to be deleted

@@ -10,7 +10,7 @@
 class EffectFactoryBase
 {
     public:
-        EffectFactoryBase(int id);
+        EffectFactoryBase(int id, float chance = 1.0f);
         virtual ~EffectFactoryBase();
 
         //Returns new Instance of Effect with a strength defined by the value given, needs to be deleted
@@ -25,6 +25,7 @@ class EffectFactoryBase
         bool DoesContainEffectType(BattleEnums::EffectType type);
 
         int GetId();
+        float GetChance();
 
         StrengthCalculation* GetStrengthCalculation();
 
@@ -38,6 +39,7 @@ class EffectFactoryBase
         StrengthCalculation m_strengthCalculation;
 
         int m_id;
+        float m_chance;
 
     private:
 };

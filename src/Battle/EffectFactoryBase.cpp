@@ -1,9 +1,10 @@
 #include "EffectFactoryBase.h"
 
-EffectFactoryBase::EffectFactoryBase(int id)
+EffectFactoryBase::EffectFactoryBase(int id, float chance)
 {
     //ctor
     m_id = id;
+    m_chance = chance;
 }
 
 EffectFactoryBase::~EffectFactoryBase()
@@ -50,5 +51,10 @@ StrengthCalculation* EffectFactoryBase::GetStrengthCalculation()
 int EffectFactoryBase::GetId()
 {
     return m_id;
+}
+
+float EffectFactoryBase::GetChance()
+{
+    return m_chance;
 }
 
