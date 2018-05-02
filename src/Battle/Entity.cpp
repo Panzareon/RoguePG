@@ -138,11 +138,21 @@ void Entity::Heal(int hp)
 {
     if(!IsDead())
     {
+        int healAmount = hp;
         m_hp += hp;
         int maxHp = GetAttribute(BattleEnums::AttributeMaxHp);
         if(m_hp > maxHp)
         {
+            healAmount -= m_hp - maxHp;
             m_hp = maxHp;
+        }
+        if(healAmount > 0)
+        {
+            Animation * newAnim = AnimationFactory::GetTextAnimation(this, std::to_string(healAmount), sf::Color::Green);
+            if(newAnim != nullptr)
+            {
+                GameController::getInstance()->GetActiveSceneManager()->AddAnimation(newAnim);
+            }
         }
     }
 }
