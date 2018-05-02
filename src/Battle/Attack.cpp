@@ -7,6 +7,7 @@ Attack::Attack(int attack, bool physical, Entity* target)
     m_dmg = attack;
     m_physical = physical;
     m_target = target;
+    m_finalDmg = 0;
 }
 
 Attack::Attack(int attack, bool physical, Entity* target, BattleEnums::AttackType type)
@@ -16,6 +17,7 @@ Attack::Attack(int attack, bool physical, Entity* target, BattleEnums::AttackTyp
     m_type.insert(type);
     m_physical = physical;
     m_target = target;
+    m_finalDmg = 0;
 }
 
 Attack::~Attack()

@@ -18,6 +18,8 @@ class Attack
         bool m_physical;
         Entity* m_target;
 
+        int m_finalDmg;
+
     protected:
 
     private:

@@ -130,6 +130,17 @@ effect.11.desc = Deals %1 fire damage for %0 turns.
 effect.12 = Poison
 effect.12.desc = Deals %1 poison damage for %0 turns.
 
+effect.51 = Fire Drain
+effect.51.desc = Deals %0 base fire damage and restores %1% hp of the damage dealt.
+effect.52 = Air Drain
+effect.52.desc = Deals %0 base air damage and restores %1% hp of the damage dealt.
+effect.53 = Water Drain
+effect.53.desc = Deals %0 base water damage and restores %1% hp of the damage dealt.
+effect.54 = Earth Drain
+effect.54.desc = Deals %0 base earth damage and restores %1% hp of the damage dealt.
+effect.55 = Physical Drain
+effect.55.desc = Deals %0 base physical damage and restores %1% hp of the damage dealt.
+
 effect.101 = Strength Buff
 effect.101.desc = Increases strength by %1% for %0 turns.
 effect.102 = Defense Buff

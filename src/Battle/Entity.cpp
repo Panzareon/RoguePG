@@ -37,6 +37,7 @@ Entity::Entity(int exp)
     m_giveExp = exp;
 
     m_useHpInsteadOfMp = false;
+    m_node = nullptr;
 }
 
 Entity::~Entity()
@@ -126,6 +127,8 @@ void Entity::GetHit(Attack* attack, Entity* attacker)
     GameController::getInstance()->GetActiveSceneManager()->AddAnimation(newAnim);
 
     m_hp -= finalDmg;
+    attack->m_finalDmg += finalDmg;
+
     //TODO: play get hit animation
     if(m_hp <= 0)
     {

@@ -88,6 +88,36 @@ namespace EffectFunctions
         }
     }
 
+    //Strength: two values, first strength of dmg, second percent of heal from dmg
+    void DrainMagicDmg(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect, BattleEnums::AttackType type)
+    {
+        int dmgAmmount = 0;
+        for(unsigned int i = 0; i < targets->size(); i++)
+        {
+            Attack att(strength->at(0) + user->GetAttribute(BattleEnums::AttributeInt), false, targets->at(i), type);
+            user->AttackEntity(targets->at(i), &att);
+            dmgAmmount += att.m_finalDmg;
+        }
+
+        int heal = std::ceil(dmgAmmount * strength->at(1));
+        user->Heal(heal);
+    }
+
+    //Strength: two values, first strength of dmg, second percent of heal from dmg
+    void DrainPhysicalDmg(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect, BattleEnums::AttackType type)
+    {
+        int dmgAmmount = 0;
+        for(unsigned int i = 0; i < targets->size(); i++)
+        {
+            Attack att(strength->at(0) + user->GetAttribute(BattleEnums::AttributeStrength), true, targets->at(i), type);
+            user->AttackEntity(targets->at(i), &att);
+            dmgAmmount += att.m_finalDmg;
+        }
+
+        int heal = std::ceil(dmgAmmount * strength->at(1));
+        user->Heal(heal);
+    }
+
     //Strength: one value with strength of heal
     void Heal(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect)
     {
@@ -304,6 +334,71 @@ EffectFactoryList::EffectFactoryList()
     calc->SetMultiplier(1.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeWater);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
+    m_effects.push_back(newEffect);
+
+    //Add Fire Damage with leach
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(std::bind(&EffectFunctions::DrainMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeFire));
+    newEffect = new EffectFactory(func, 51, 0.3f);
+    calc = newEffect->GetStrengthCalculation();
+    //Base Damage
+    calc->AddStrengthValue(3.0f, 100.0f);
+    //Everything from 5% to 300% of Damage dealt heal
+    calc->AddStrengthValue(0.05f, 3.0f, 0.0f, 10.0f, StrengthCalculation::ADD);
+    calc->SetMultiplier(1.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypeFire);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
+    m_effects.push_back(newEffect);;
+
+    //Add Air Damage with leach
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(std::bind(&EffectFunctions::DrainMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeAir));
+    newEffect = new EffectFactory(func, 52, 0.3f);
+    calc = newEffect->GetStrengthCalculation();
+    //Base Damage
+    calc->AddStrengthValue(3.0f, 100.0f);
+    //Everything from 5% to 300% of Damage dealt heal
+    calc->AddStrengthValue(0.05f, 3.0f, 0.0f, 10.0f, StrengthCalculation::ADD);
+    calc->SetMultiplier(1.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypeAir);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
+    m_effects.push_back(newEffect);;
+
+    //Add Water Damage with leach
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(std::bind(&EffectFunctions::DrainMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeWater));
+    newEffect = new EffectFactory(func, 53, 0.3f);
+    calc = newEffect->GetStrengthCalculation();
+    //Base Damage
+    calc->AddStrengthValue(3.0f, 100.0f);
+    //Everything from 5% to 300% of Damage dealt heal
+    calc->AddStrengthValue(0.05f, 3.0f, 0.0f, 10.0f, StrengthCalculation::ADD);
+    calc->SetMultiplier(1.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypeWater);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
+    m_effects.push_back(newEffect);
+
+    //Add Earth Damage with leach
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(std::bind(&EffectFunctions::DrainMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeEarth));
+    newEffect = new EffectFactory(func, 54, 0.3f);
+    calc = newEffect->GetStrengthCalculation();
+    //Base Damage
+    calc->AddStrengthValue(3.0f, 100.0f);
+    //Everything from 5% to 300% of Damage dealt heal
+    calc->AddStrengthValue(0.05f, 3.0f, 0.0f, 10.0f, StrengthCalculation::ADD);
+    calc->SetMultiplier(1.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
+    m_effects.push_back(newEffect);
+
+    //Add Physical Damage with leach
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(std::bind(&EffectFunctions::DrainPhysicalDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypePhysical));
+    newEffect = new EffectFactory(func, 55, 0.3f);
+    calc = newEffect->GetStrengthCalculation();
+    //Base Damage
+    calc->AddStrengthValue(3.0f, 100.0f);
+    //Everything from 5% to 300% of Damage dealt heal
+    calc->AddStrengthValue(0.05f, 3.0f, 0.0f, 10.0f, StrengthCalculation::ADD);
+    calc->SetMultiplier(1.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
     newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
     m_effects.push_back(newEffect);
 
