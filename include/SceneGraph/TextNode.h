@@ -14,10 +14,14 @@ class TextNode : public Node
         void SetFontSize(int fontSize);
         void SetText(std::string text);
         void SetColor(sf::Color c);
+        void SetMaxLength(int length);
 
         virtual sf::FloatRect getBoundingBox();
     protected:
+        void UpdateString();
+
         sf::Text m_text;
+        int m_maxLength;
 
     private:
 };

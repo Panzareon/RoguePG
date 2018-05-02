@@ -7,7 +7,10 @@ SceneManagerMessage::SceneManagerMessage(std::string toDisplay, float minDisplay
     //ctor
     m_text = new TextNode(toDisplay);
     sf::FloatRect rect = m_text->getBoundingBox();
-    int x = GameController::getInstance()->GetWindowWidth() - rect.width;
+    int width = GameController::getInstance()->GetWindowWidth();
+    m_text->SetMaxLength(width - 20);
+
+    int x = width - rect.width;
     x /= 2;
     int y = GameController::getInstance()->GetWindowHeight() - rect.height;
     y /= 2;

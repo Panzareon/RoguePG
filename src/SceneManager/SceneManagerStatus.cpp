@@ -137,6 +137,7 @@ SceneManagerStatus::SceneManagerStatus()
     background->addChild(m_description);
     m_description->moveNode(5, 316);
     m_description->SetFontSize(15);
+    m_description->SetMaxLength(630);
 
 
     ShowForEntity(member);

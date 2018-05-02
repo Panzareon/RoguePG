@@ -167,6 +167,7 @@ void SceneManagerEquipment::SelectMember(PartyMember* member)
         m_gui->addChild(m_equipmentDescription);
         m_equipmentDescription->moveNode(5, 356);
         m_equipmentDescription->SetFontSize(15);
+        m_equipmentDescription->SetMaxLength(630);
     }
 
     //Get stats of member now
