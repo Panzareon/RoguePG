@@ -100,7 +100,7 @@ SceneManagerStatus::SceneManagerStatus()
     m_skills->CancelAvailable(true);
 
     //Set Menu looks
-    m_skills->SetMaxShownOptions(17);
+    m_skills->SetMaxShownOptions(12);
     m_skills->SetPadding(2,0);
     m_skills->SetBackgroundColor(sf::Color::Transparent);
     m_skills->SetForegroundColorDisabled(sf::Color::Black);
@@ -119,7 +119,7 @@ SceneManagerStatus::SceneManagerStatus()
     m_passiveEffects->CancelAvailable(true);
 
     //Set Menu looks
-    m_passiveEffects->SetMaxShownOptions(17);
+    m_passiveEffects->SetMaxShownOptions(12);
     m_passiveEffects->SetPadding(2,0);
     m_passiveEffects->SetBackgroundColor(sf::Color::Transparent);
     m_passiveEffects->SetForegroundColorDisabled(sf::Color::Black);
