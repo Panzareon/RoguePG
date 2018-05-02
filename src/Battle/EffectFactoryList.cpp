@@ -667,7 +667,7 @@ EffectFactoryList::EffectFactoryList()
 
     //Heal on turn
     passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(std::bind(&PassiveSkillEffectFunctions::HealAfterTurn,std::placeholders::_1,std::placeholders::_2));
-    newEffect = new EffectFactoryPassive(passiveFunc, 100002);
+    newEffect = new EffectFactoryPassive(passiveFunc, 100002, 0.4);
     calc = newEffect->GetStrengthCalculation();
     //Everything from 1 to 300 hp heal
     calc->AddStrengthValue(1.0f, 300.0f, 1.0f);
@@ -703,7 +703,7 @@ EffectFactoryList::EffectFactoryList()
 
     //Reduce MP cost
     passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(std::bind(&PassiveSkillEffectFunctions::MpCostMultiplier,std::placeholders::_1,std::placeholders::_2));
-    newEffect = new EffectFactoryPassive(passiveFunc, 100103);
+    newEffect = new EffectFactoryPassive(passiveFunc, 100103, 0.6f);
     calc = newEffect->GetStrengthCalculation();
     calc->AddStrengthValue(0.01f, 0.75f);
     calc->SetMultiplier(100.0f);
