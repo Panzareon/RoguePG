@@ -10,7 +10,6 @@ class SceneManagerMainMenu : public SceneManager
         SceneManagerMainMenu();
         virtual ~SceneManagerMainMenu();
 
-        virtual void StartDungeon();
         virtual void ChooseHero();
         virtual void Quit();
 
@@ -32,8 +31,6 @@ class SceneManagerMainMenu : public SceneManager
             archive(cereal::base_class<SceneManager>( this ));
         }
     protected:
-
-        bool m_startDungeon;
 
 
     private:

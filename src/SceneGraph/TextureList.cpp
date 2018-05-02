@@ -141,6 +141,9 @@ Texture* TextureList::getTexture(TextureFiles file)
         case StatusMenu:
             filename = "status-menu.png";
             break;
+        case DescriptionBox:
+            filename = "description-box.png";
+            break;
 
         case MinimapHero:
             filename = "hero-minimap.png";

@@ -3,6 +3,8 @@
 #include "Party/CharacterClass.h"
 #include "Controller/Localization.h"
 #include "Controller/GameController.h"
+#include "Party/ItemFactory.h"
+#include "SceneManager/SceneManagerVillage.h"
 
 SceneManagerChooseHero::SceneManagerChooseHero()
 {
@@ -12,13 +14,49 @@ SceneManagerChooseHero::SceneManagerChooseHero()
     m_selected = 0;
     m_textNode = new TextNode("");
     m_gui->addChild(m_textNode);
-    m_textNode->moveNode(0.0f, 60.0f);
     TextNode* selectHero = new TextNode(Localization::GetInstance()->GetLocalization("menu.chooseHero"));
     m_gui->addChild(selectHero);
-    m_classSprite = new sf::Sprite();
-    DrawableNode* sprite = new DrawableNode(m_classSprite);
-    sprite->moveNode(0.0f, selectHero->getBoundingBox().height + 5.0f);
-    m_gui->addChild(sprite);
+    selectHero->moveNode(40.0f, 0.0f);
+
+    int xPos = 50;
+    int yPos = selectHero->getBoundingBox().height + 50.0f;
+    for(int i = 0; i < CharacterClass::CHARACTER_CLASS_END; i++)
+    {
+        CharacterClass* charClass = CharacterClass::GetCharacterClass((CharacterClass::CharacterClassEnum)i);
+
+        sf::Sprite* classSprite = new sf::Sprite();
+        classSprite->setTexture(*TextureList::getTexture(charClass->GetClassSprite()));
+        DrawableNode* sprite = new DrawableNode(classSprite);
+        sprite->setBoundingBox(classSprite->getLocalBounds());
+        m_classNodes.push_back(sprite);
+        sprite->moveNode(xPos, yPos);
+        xPos += classSprite->getLocalBounds().width + 30.0f;
+        m_gui->addChild(sprite);
+    }
+
+    sf::Sprite* targetSprite = new sf::Sprite(*TextureList::getTexture(TextureList::TargetCursor));
+    m_cursor = new DrawableNode(targetSprite);
+    m_cursor->setBoundingBox(targetSprite->getLocalBounds());
+    m_gui->addChild(m_cursor);
+
+
+    sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::DescriptionBox));
+    Node* background = new DrawableNode(backgroundSprite);
+    int x = GameController::getInstance()->GetWindowWidth() - backgroundSprite->getLocalBounds().width;
+    x /= 2;
+    int y = GameController::getInstance()->GetWindowHeight() - backgroundSprite->getLocalBounds().height;
+    background->moveNode(x,y);
+    m_gui->addChild(background);
+
+
+
+    m_description = new TextNode();
+    m_description->SetColor(sf::Color::Black);
+    background->addChild(m_description);
+    m_description->moveNode(5, 5);
+    m_description->SetFontSize(15);
+    m_description->SetMaxLength(630);
+
     ShowForCharacterClass();
 }
 
@@ -30,8 +68,15 @@ SceneManagerChooseHero::~SceneManagerChooseHero()
 void SceneManagerChooseHero::ShowForCharacterClass()
 {
     CharacterClass* charClass = CharacterClass::GetCharacterClass((CharacterClass::CharacterClassEnum)m_selected);
-    m_classSprite->setTexture(*TextureList::getTexture(charClass->GetClassSprite()));
     m_textNode->SetText(Localization::GetInstance()->GetLocalization(charClass->GetName()));
+    m_description->SetText(Localization::GetInstance()->GetLocalization(charClass->GetName() + ".desc"));
+
+    sf::FloatRect selectedNode = m_classNodes[m_selected]->getGlobalBoundingBox();
+    int xMid = selectedNode.left + selectedNode.width/2;
+    sf::FloatRect cursorBounds = m_cursor->getBoundingBox();
+    m_cursor->setPosition(xMid - cursorBounds.width / 2, selectedNode.top - cursorBounds.height);
+    sf::FloatRect textBounds = m_textNode->getBoundingBox();
+    m_textNode->setPosition(xMid - textBounds.width / 2, selectedNode.top + 40);
 }
 
 void SceneManagerChooseHero::Tick()
@@ -39,20 +84,60 @@ void SceneManagerChooseHero::Tick()
     GameController* controller = GameController::getInstance();
     if(controller->IsKeyPressed(Configuration::Accept))
     {
-        PartyMember* p;
-        p = CharacterClass::GetCharacterClass((CharacterClass::CharacterClassEnum)m_selected)->GetNewPartyMember();
-        p->SetTeamId(0);
-        controller->getParty()->AddPartyMember(p);
-        m_finished = true;
+        StartDungeon();
     }
-    else if(controller->IsKeyPressed(Configuration::MoveDown) || controller->IsKeyPressed(Configuration::MoveRight))
+    else if(controller->IsKeyPressed(Configuration::MoveRight))
     {
         ChooseNext();
     }
-    else if(controller->IsKeyPressed(Configuration::MoveUp) || controller->IsKeyPressed(Configuration::MoveLeft))
+    else if(controller->IsKeyPressed(Configuration::MoveLeft))
     {
         ChoosePrev();
     }
+    else if(controller->IsKeyPressed(Configuration::Cancel))
+    {
+        m_finished = true;
+    }
+}
+
+void SceneManagerChooseHero::StartDungeon()
+{
+    GameController* controller = GameController::getInstance();
+    Party* party = controller->getParty();
+
+    PartyMember* p;
+    p = CharacterClass::GetCharacterClass((CharacterClass::CharacterClassEnum)m_selected)->GetNewPartyMember();
+    p->SetTeamId(0);
+    party->AddPartyMember(p);
+    m_finished = true;
+
+
+
+    PersistentProgress* progress = controller->GetPersistentProgress();
+    party->AddMoney(progress->GetStartMoney());
+    //create new party with x member
+    int partyInitialSize = progress->GetStartMember();
+    for(int i = 1; i < partyInitialSize; i++)
+    {
+        party->AddRandomMember();
+    }
+
+    std::vector<std::shared_ptr<PartyMember> > * partyMember = party->GetActivePartyMembers();
+    ItemFactory* itemFactory = ItemFactory::GetInstance();
+    for(int i = 0; i < 3; i++)
+    {
+        Equipment* equipment = (Equipment*)itemFactory->GetRandomEquipment(Equipment::MainHand, ItemFactory::StartingItem);
+        std::shared_ptr<Item> item = party->AddItem(equipment);
+        if(partyMember->size() > i)
+        {
+            std::shared_ptr<PartyMember> member = partyMember->at(i);
+            member->SetEquipment(Equipment::MainHand, std::static_pointer_cast<Equipment>(item));
+            member->Heal(member->GetAttribute(BattleEnums::AttributeMaxHp));
+        }
+
+    }
+
+    controller->LoadSceneManager(new SceneManagerVillage(30,20,time(NULL),new MapFillVillage()));
 }
 
 void SceneManagerChooseHero::ChooseNext()

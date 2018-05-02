@@ -22,10 +22,14 @@ class SceneManagerChooseHero : public SceneManager
         virtual bool PausesSceneManagerBelow();
 
     protected:
+        void StartDungeon();
         void ShowForCharacterClass();
 
-        sf::Sprite* m_classSprite;
+        std::vector<Node*> m_classNodes;
         TextNode* m_textNode;
+        TextNode* m_description;
+        Node* m_cursor;
+
         int m_selected;
 
         bool m_finished;

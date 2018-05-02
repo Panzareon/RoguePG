@@ -11,7 +11,7 @@ class PartyMember;
 class CharacterClass
 {
     public:
-        enum CharacterClassEnum{CharacterClassMage, CharacterClassBarbarian, CharacterClassPaladin, CharacterClassThief, CharacterClassCleric, CharacterClassWizard, CharacterClassVampire, CHARACTER_CLASS_END};
+        enum CharacterClassEnum{CharacterClassPaladin, CharacterClassMage, CharacterClassCleric, CharacterClassBarbarian, CharacterClassThief, CharacterClassVampire, CharacterClassWizard, CHARACTER_CLASS_END};
         CharacterClass(CharacterClassEnum chrClass, float skillChance, TextureList::TextureFiles battleSprite);
         virtual ~CharacterClass();
         static CharacterClass* GetCharacterClass(CharacterClassEnum chrClass);

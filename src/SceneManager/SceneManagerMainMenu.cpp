@@ -4,9 +4,6 @@
 #include "Controller/GameController.h"
 #include "SceneGraph/DrawableNode.h"
 #include "Controller/Localization.h"
-#include "Party/CharacterClass.h"
-#include "Party/ItemFactory.h"
-#include "SceneManager/SceneManagerVillage.h"
 #include "SceneManager/SceneManagerChooseHero.h"
 
 #include <iostream>
@@ -38,7 +35,6 @@ SceneManagerMainMenu::SceneManagerMainMenu()
 {
     //ctor
     int padding = 8;
-    m_startDungeon = false;
 
     //Set Background
     sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::InGameMenu));
@@ -81,40 +77,7 @@ void SceneManagerMainMenu::ChooseHero()
     controller->InitValues();
     controller->setParty(Party());
 
-    m_startDungeon = true;
     controller->LoadSceneManager(new SceneManagerChooseHero());
-}
-
-void SceneManagerMainMenu::StartDungeon()
-{
-    GameController* controller = GameController::getInstance();
-    Party* party = controller->getParty();
-
-    PersistentProgress* progress = controller->GetPersistentProgress();
-    party->AddMoney(progress->GetStartMoney());
-    //create new party with x member
-    int partyInitialSize = progress->GetStartMember();
-    for(int i = 1; i < partyInitialSize; i++)
-    {
-        party->AddRandomMember();
-    }
-
-    std::vector<std::shared_ptr<PartyMember> > * partyMember = party->GetActivePartyMembers();
-    ItemFactory* itemFactory = ItemFactory::GetInstance();
-    for(int i = 0; i < 3; i++)
-    {
-        Equipment* equipment = (Equipment*)itemFactory->GetRandomEquipment(Equipment::MainHand, ItemFactory::StartingItem);
-        std::shared_ptr<Item> item = party->AddItem(equipment);
-        if(partyMember->size() > i)
-        {
-            std::shared_ptr<PartyMember> member = partyMember->at(i);
-            member->SetEquipment(Equipment::MainHand, std::static_pointer_cast<Equipment>(item));
-            member->Heal(member->GetAttribute(BattleEnums::AttributeMaxHp));
-        }
-
-    }
-
-    controller->LoadSceneManager(new SceneManagerVillage(30,20,time(NULL),new MapFillVillage()));
 }
 
 void SceneManagerMainMenu::Quit()
@@ -124,11 +87,6 @@ void SceneManagerMainMenu::Quit()
 
 void SceneManagerMainMenu::Tick()
 {
-    if(m_startDungeon)
-    {
-        m_startDungeon = false;
-        StartDungeon();
-    }
     m_mainMenu->CheckKeyboardInput();
 }
 

@@ -65,12 +65,20 @@ chest.receive_item = You got a %0!
 chest.receive_gold = You got %0 gold!
 
 character_class.mage = Mage
+character_class.mage.desc = A class with high mp but low strength and defense.
 character_class.barbarian = Barbarian
-character_class.paladin = Palading
+character_class.barbarian.desc = A class with high hp but no good magic user.
+character_class.paladin = Paladin
+character_class.paladin.desc = A balanced class with low speed.
 character_class.thief = Thief
+character_class.thief.desc = A very fast class with high strength.
 character_class.cleric = Cleric
+character_class.cleric.desc = A class specialized in healing.
 character_class.wizard = Wizard
+character_class.wizard.desc = A class with no mana and low strength, all skills have no mana cost.
 character_class.vampire = Vampire
+character_class.vampire.desc = A class with no mana and low strength, all skills cost hp instead of mana.
+
 
 character.level_up = %0 leveled up!
 character.learn_skill = %0 learned %1!

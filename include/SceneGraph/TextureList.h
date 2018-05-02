@@ -36,6 +36,7 @@ class TextureList
             EquipmentMenu,
             EquipmentSelected,
             StatusMenu,
+            DescriptionBox,
 
             MinimapHero
         };
