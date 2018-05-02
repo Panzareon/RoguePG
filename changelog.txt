@@ -11,6 +11,7 @@ Amount of hp healed are now displayed
 Reduced later dungeons to 3 Levels each
 Amount of gold is displayed in the menu
 
+Fixed crash on saving or finishing the first dungeon
 Fixed Bugs
 
 
