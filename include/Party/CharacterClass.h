@@ -15,6 +15,7 @@ class CharacterClass
         CharacterClass(CharacterClassEnum chrClass, float skillChance, TextureList::TextureFiles battleSprite);
         virtual ~CharacterClass();
         static CharacterClass* GetCharacterClass(CharacterClassEnum chrClass);
+        //Only returns unlocked Characters
         static CharacterClass* GetRandomCharacterClass();
 
         PartyMember* GetNewPartyMember();

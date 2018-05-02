@@ -3,6 +3,7 @@
 #include "Battle/EffectFactoryList.h"
 #include <random>
 #include "Party/PartyMember.h"
+#include "GameController.h"
 #include "Battle/PassiveSkill.h"
 
 std::vector<CharacterClass*>* CharacterClass::m_classes = nullptr;
@@ -300,7 +301,19 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
 
 CharacterClass* CharacterClass::GetRandomCharacterClass()
 {
-    return GetCharacterClass((CharacterClassEnum)(rand() % CHARACTER_CLASS_END));
+    PersistentProgress* progress = GameController::getInstance()->GetPersistentProgress();
+    CharacterClassEnum retVal;
+    int nrOfTries = 0;
+    while(nrOfTries < 1000)
+    {
+        nrOfTries++;
+        retVal = (CharacterClassEnum)(rand() % CHARACTER_CLASS_END);
+        if(progress->IsClassUnlocked(retVal))
+        {
+            break;
+        }
+    }
+    return GetCharacterClass(retVal);
 }
 
 PartyMember* CharacterClass::GetNewPartyMember()
