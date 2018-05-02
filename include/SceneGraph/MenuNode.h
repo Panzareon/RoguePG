@@ -5,6 +5,7 @@
 #include "Texture.h"
 #include <vector>
 #include <functional>
+#include "SceneGraph/MenuNodeOption.h"
 
 class MenuNode : public Node
 {
@@ -20,6 +21,8 @@ class MenuNode : public Node
         virtual void AddValueToOption(int optionNr, std::string value);
         virtual void AddNodeToOption(int optionNr, Node* node);
         virtual void CallOnCancel(std::function<void()> func);
+        //Function is called after Sorting, first value is the sorted item, second value is the new position
+        void EnableSorting(std::function<void(int,int)> onSort);
         void CancelAvailable(bool cancel);
         //Does Right Button do something (Default disabled)
         virtual void NextAvailable(bool next);
@@ -58,6 +61,7 @@ class MenuNode : public Node
         void Use();
         virtual void onDraw(sf::RenderTarget& target, const sf::Transform& transform) const;
         virtual void UpdateBackground();
+        virtual void SortOption();
 
         sf::RectangleShape m_background;
 
@@ -78,17 +82,17 @@ class MenuNode : public Node
         unsigned int m_scrollPosition;
         unsigned int m_maxShownNumber;
 
-        std::vector<std::string> m_optionName;
-        std::vector<std::string> m_optionValue;
-        std::vector<Node*> m_optionNode;
-        std::vector<bool> m_optionAvailable;
-        std::vector<std::function<void()>> m_optionFunction;
-        std::vector<std::function<void()>> m_selectFunction;
+        std::vector<MenuNodeOption*> m_options;
+        std::function<void(int, int)> m_sortFunction;
         std::function<void()> m_cancelFunction;
         bool m_cancelAvailable;
         std::function<void()> m_nextFunction;
         bool m_nextAvailable;
         bool m_previousAvailable;
+
+        bool m_sortingAvailable;
+        bool m_isMovingOption;
+        int m_startingPosition;
 
         bool m_visibleWithSubmenu;
 

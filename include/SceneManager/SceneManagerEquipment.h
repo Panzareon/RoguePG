@@ -25,6 +25,7 @@ class SceneManagerEquipment : AttributeNodesDisplay, public SceneManager
         virtual void Equip(std::shared_ptr<Equipment> equipment);
         virtual void SelectEquipmentSkills(bool selected);
         virtual void SelectSkill(Skill* skill);
+        virtual void MoveItemPosition(int from, int to);
 
 
         //returns true if Scene Manager below should be displayed first
@@ -47,6 +48,7 @@ class SceneManagerEquipment : AttributeNodesDisplay, public SceneManager
         sf::RectangleShape* m_equipmentSkillLearning;
         Node* m_equipmentSkillLearningNode;
         bool m_equipmentSkillsSelected;
+        Equipment::EquipmentPosition m_pos;
 
         bool m_finished;
 

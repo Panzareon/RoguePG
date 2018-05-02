@@ -15,6 +15,8 @@ MenuNode::MenuNode(int width)
     m_nextAvailable = false;
     m_previousAvailable = false;
     m_showSelected = true;
+    m_sortingAvailable = false;
+    m_isMovingOption = false;
     m_backgroundColor = sf::Color::Black;
     m_foregroundColor = sf::Color::White;
     m_outlineColor = sf::Color::White;
@@ -34,9 +36,9 @@ void MenuNode::UpdateBackground()
 {
     //First Background
     m_height = m_maxShownNumber;
-    if(m_maxShownNumber > m_optionName.size())
+    if(m_maxShownNumber > m_options.size())
     {
-        m_height = m_optionName.size();
+        m_height = m_options.size();
     }
     //TODO: save Shape as class member?
     m_background.setSize(sf::Vector2f(m_width, m_height* m_optionHeight));
@@ -49,62 +51,55 @@ void MenuNode::UpdateBackground()
 MenuNode::~MenuNode()
 {
     //dtor
-    for(int i = 0; i < m_optionNode.size(); i++)
+    for(int i = 0; i < m_options.size(); i++)
     {
-        if(m_optionNode[i] != nullptr)
-            delete m_optionNode[i];
+        delete m_options[i];
     }
 }
 
 void MenuNode::AddOption(std::string name, std::function<void()> func, bool available)
 {
-    m_optionName.push_back(name);
-    m_optionAvailable.push_back(available);
-    m_optionFunction.push_back(func);
+    MenuNodeOption* option = new MenuNodeOption(name, available);
+    option->SetFunction(func);
+    m_options.push_back(option);
     UpdateBackground();
 }
 
 void MenuNode::AddDisabledOption(std::string name)
 {
-    m_optionName.push_back(name);
-    m_optionAvailable.push_back(false);
-    m_optionFunction.push_back(std::function<void()>());
+    MenuNodeOption* option = new MenuNodeOption(name, false);
+    m_options.push_back(option);
     UpdateBackground();
 }
 
 void MenuNode::AddDisabledOption(std::string name, std::function<void()> onSelect)
 {
-    m_selectFunction.resize(m_optionName.size());
-    m_selectFunction.push_back(onSelect);
-    m_optionName.push_back(name);
-    m_optionAvailable.push_back(false);
-    m_optionFunction.push_back(std::function<void()>());
+    MenuNodeOption* option = new MenuNodeOption(name, false);
+    option->SetSelectFunction(onSelect);
+    m_options.push_back(option);
     UpdateBackground();
 }
 
 void MenuNode::AddOption(std::string name, std::function<void()>func, std::function<void()>onSelect, bool available)
 {
-    m_selectFunction.resize(m_optionName.size());
-    m_selectFunction.push_back(onSelect);
-    m_optionName.push_back(name);
-    m_optionAvailable.push_back(available);
-    m_optionFunction.push_back(func);
+    MenuNodeOption* option = new MenuNodeOption(name, available);
+    option->SetFunction(func);
+    option->SetSelectFunction(onSelect);
+    m_options.push_back(option);
     UpdateBackground();
 
 }
 
 void MenuNode::AddValueToOption(int optionNr, std::string value)
 {
-    if(m_optionValue.size() <= optionNr)
-        m_optionValue.resize(optionNr + 1);
-    m_optionValue[optionNr] = value;
+    if(m_options.size() > optionNr)
+        m_options[optionNr]->SetValue(value);
 }
 
 void MenuNode::AddNodeToOption(int optionNr, Node* node)
 {
-    if(m_optionNode.size() <= optionNr)
-        m_optionNode.resize(optionNr + 1, nullptr);
-    m_optionNode[optionNr] = node;
+    if(m_options.size() > optionNr)
+        m_options[optionNr]->SetNode(node);
 }
 
 void MenuNode::CallOnCancel(std::function<void()>func)
@@ -115,6 +110,12 @@ void MenuNode::CallOnCancel(std::function<void()>func)
 void MenuNode::CancelAvailable(bool cancel)
 {
     m_cancelAvailable = cancel;
+}
+
+void MenuNode::EnableSorting(std::function<void(int, int)>onSort)
+{
+    m_sortFunction = onSort;
+    m_sortingAvailable = true;
 }
 
 void MenuNode::NextAvailable(bool next)
@@ -135,15 +136,16 @@ void MenuNode::CallOnNext(std::function<void()>func)
 void MenuNode::ResetOptions()
 {
     m_selected = 0;
-    m_optionName.clear();
-    m_optionFunction.clear();
+    for(int i = 0; i < m_options.size(); i++)
+    {
+        delete m_options[i];
+    }
+    m_options.clear();
     for(unsigned int i = 0; i < m_children.size(); i++)
     {
         delete m_children[i];
     }
     m_children.clear();
-    m_selectFunction.clear();
-    m_optionAvailable.clear();
     UpdateBackground();
 }
 void MenuNode::MoveUp()
@@ -152,21 +154,21 @@ void MenuNode::MoveUp()
         m_selected--;
     if(m_selected < m_scrollPosition)
         m_scrollPosition--;
-    if(m_selectFunction.size() > m_selected && m_selectFunction[m_selected] != nullptr)
+    if(!m_isMovingOption)
     {
-        m_selectFunction[m_selected]();
+        m_options[m_selected]->CallSelectFunction();
     }
 }
 
 void MenuNode::MoveDown()
 {
-    if(m_selected < m_optionName.size() - 1)
+    if(m_selected < m_options.size() - 1)
         m_selected ++;
     if(m_selected - m_scrollPosition >= m_maxShownNumber)
         m_scrollPosition++;
-    if(m_selectFunction.size() > m_selected && m_selectFunction[m_selected] != nullptr)
+    if(!m_isMovingOption)
     {
-        m_selectFunction[m_selected]();
+        m_options[m_selected]->CallSelectFunction();
     }
 }
 
@@ -184,9 +186,7 @@ void MenuNode::MoveRight()
 
 void MenuNode::Use()
 {
-    if(m_optionFunction.size() > m_selected)
-        if(m_optionAvailable[m_selected])
-            m_optionFunction[m_selected]();
+    m_options[m_selected]->CallFunction();
 }
 void MenuNode::onDraw(sf::RenderTarget& target, const sf::Transform& transformBase) const
 {
@@ -205,17 +205,32 @@ void MenuNode::onDraw(sf::RenderTarget& target, const sf::Transform& transformBa
     {
         //if Selected is visible
         transform.translate(0.0f, pos * m_optionHeight);
-        if(m_selectedDrawable != nullptr)
+        if(m_isMovingOption)
         {
-            target.draw(*m_selectedDrawable, transform);
+            if(m_selected > m_startingPosition)
+            {
+                //Show below the item if a option below the moving option is selected
+                transform.translate(0.0f, m_optionHeight);
+            }
+            //Draw a line where the Option would land
+            sf::RectangleShape selected(sf::Vector2f(m_width, 4.0f));
+            selected.setFillColor(sf::Color(255, 141, 20));
+            target.draw(selected, transform);
         }
         else
         {
-            sf::RectangleShape selected(sf::Vector2f(m_width, m_optionHeight));
-            selected.setFillColor(m_selectedColor);
-            target.draw(selected, transform);
-        }
+            if(m_selectedDrawable != nullptr)
+            {
+                target.draw(*m_selectedDrawable, transform);
+            }
+            else
+            {
+                sf::RectangleShape selected(sf::Vector2f(m_width, m_optionHeight));
+                selected.setFillColor(m_selectedColor);
+                target.draw(selected, transform);
+            }
 
+        }
     }
     sf::Font* font = Configuration::GetInstance()->GetFont();
     //all visible options
@@ -224,24 +239,26 @@ void MenuNode::onDraw(sf::RenderTarget& target, const sf::Transform& transformBa
         //draw text for m_scrollPosition + i at position i
         transform = transformBase;
         transform.translate(m_paddingX, i*m_optionHeight + m_paddingY);
-        sf::Text text(m_optionName[m_scrollPosition+i], *font);
+
+        MenuNodeOption* option = m_options[m_scrollPosition+i];
+        sf::Text text(option->GetName(), *font);
         text.setCharacterSize(m_fontSize);
-        if(m_optionAvailable[m_scrollPosition+i])
+        if(option->IsAvailable())
             text.setColor(m_foregroundColor);
         else
             text.setColor(m_foregroundColorDisabled);
 
         target.draw(text, transform);
 
-        if(m_optionNode.size() > m_scrollPosition+i && m_optionNode[m_scrollPosition+i] != nullptr)
+        if(option->GetNode() != nullptr)
         {
-            m_optionNode[m_scrollPosition+i]->draw(target, transform);
+            option->GetNode()->draw(target, transform);
         }
-        if(m_optionValue.size() > m_scrollPosition+i && m_optionValue[m_scrollPosition+i] != "")
+        if(option->GetValue() != "")
         {
-            sf::Text value(m_optionValue[m_scrollPosition+i], *font);
+            sf::Text value(option->GetValue(), *font);
             value.setCharacterSize(m_fontSize);
-            if(m_optionAvailable[m_scrollPosition+i])
+            if(option->IsAvailable())
                 value.setColor(m_foregroundColor);
             else
                 value.setColor(m_foregroundColorDisabled);
@@ -278,22 +295,37 @@ void MenuNode::CheckKeyboardInput()
     {
         GameController* controller = GameController::getInstance();
 
-        if(controller->IsKeyPressed(Configuration::Accept))
+        if(m_isMovingOption)
         {
-            Use();
-        }
-        else if(m_cancelAvailable && (controller->IsKeyPressed(Configuration::Cancel) || (m_previousAvailable && controller->IsKeyPressed(Configuration::MoveLeft))))
-        {
-            //Cancel Menu / check if menu can be canceled
-            m_visible = false;
-            if(m_cancelFunction)
+            if(controller->IsKeyPressed(Configuration::Accept))
             {
-                m_cancelFunction();
+                SortOption();
+                m_isMovingOption = false;
+            }
+            else if(controller->IsKeyPressed(Configuration::Cancel))
+            {
+                m_isMovingOption = false;
             }
         }
-        else if(m_nextAvailable && controller->IsKeyPressed(Configuration::MoveRight))
+        else
         {
-            MoveRight();
+            if(controller->IsKeyPressed(Configuration::Accept))
+            {
+                Use();
+            }
+            else if(m_cancelAvailable && (controller->IsKeyPressed(Configuration::Cancel) || (m_previousAvailable && controller->IsKeyPressed(Configuration::MoveLeft))))
+            {
+                //Cancel Menu / check if menu can be canceled
+                m_visible = false;
+                if(m_cancelFunction)
+                {
+                    m_cancelFunction();
+                }
+            }
+            else if(m_nextAvailable && controller->IsKeyPressed(Configuration::MoveRight))
+            {
+                MoveRight();
+            }
         }
 
         if(controller->IsKeyPressed(Configuration::MoveDown))
@@ -303,6 +335,20 @@ void MenuNode::CheckKeyboardInput()
         else if(controller->IsKeyPressed(Configuration::MoveUp))
         {
             MoveUp();
+        }
+
+        //Move the selected Option
+        if(m_sortingAvailable && controller->IsKeyPressed(Configuration::Action))
+        {
+            if(m_isMovingOption)
+            {
+                SortOption();
+            }
+            else
+            {
+                m_startingPosition = m_selected;
+            }
+            m_isMovingOption = !m_isMovingOption;
         }
     }
 }
@@ -314,7 +360,7 @@ int MenuNode::GetScrollPosition()
 
 int MenuNode::GetNrOptions()
 {
-    return m_optionName.size();
+    return m_options.size();
 }
 
 void MenuNode::ShowSelected(bool show)
@@ -322,10 +368,7 @@ void MenuNode::ShowSelected(bool show)
     m_showSelected = show;
     if(show)
     {
-        if(m_selectFunction.size() > m_selected && m_selectFunction[m_selected] != nullptr)
-        {
-            m_selectFunction[m_selected]();
-        }
+        m_options[m_selected]->CallSelectFunction();
     }
 }
 
@@ -397,3 +440,16 @@ void MenuNode::SetVisibleWithSubmenu(bool visible)
     m_visibleWithSubmenu = visible;
 }
 
+void MenuNode::SortOption()
+{
+    if(m_selected != m_startingPosition)
+    {
+        MenuNodeOption* temp = m_options[m_startingPosition];
+        m_options.erase(m_options.begin() + m_startingPosition);
+        m_options.insert(m_options.begin() + m_selected,temp);
+        if(m_sortFunction != nullptr)
+        {
+            m_sortFunction(m_startingPosition, m_selected);
+        }
+    }
+}

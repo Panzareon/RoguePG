@@ -41,7 +41,12 @@ template<class T> void MenuNodeItems<T>::MoveUp()
     if(m_selected > 0)
     {
         m_selected--;
-        m_onSelect(m_optionItems[m_selected]);
+
+        if(!m_isMovingOption)
+        {
+            m_onSelect(m_optionItems[m_selected]);
+            m_options[m_selected]->CallSelectFunction();
+        }
     }
     if(m_selected < m_scrollPosition)
         m_scrollPosition--;
@@ -49,10 +54,15 @@ template<class T> void MenuNodeItems<T>::MoveUp()
 
 template<class T> void MenuNodeItems<T>::MoveDown()
 {
-    if((int)m_selected < ((int)m_optionName.size()) - 1)
+    if((int)m_selected < ((int)m_options.size()) - 1)
     {
         m_selected ++;
-        m_onSelect(m_optionItems[m_selected]);
+
+        if(!m_isMovingOption)
+        {
+            m_onSelect(m_optionItems[m_selected]);
+            m_options[m_selected]->CallSelectFunction();
+        }
     }
     if(m_selected - m_scrollPosition >= m_maxShownNumber)
         m_scrollPosition++;
@@ -62,7 +72,7 @@ template<class T> void MenuNodeItems<T>::MoveDown()
 template<class T> void MenuNodeItems<T>::MoveRight()
 {
     //Check if this should do anything
-    if(m_nextAvailable)
+    if(m_nextAvailable && !m_isMovingOption)
     {
         if(m_nextFunction == nullptr)
         {
@@ -79,3 +89,13 @@ template<class T> void MenuNodeItems<T>::CallOnNext(std::function<void(T)>func)
 {
     m_nextFunction = func;
 }
+
+template<class T> void MenuNodeItems<T>::SortOption()
+{
+    if(m_selected != m_startingPosition)
+    {
+        std::swap(m_optionItems[m_selected], m_optionItems[m_startingPosition]);
+    }
+    MenuNode::SortOption();
+}
+

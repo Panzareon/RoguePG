@@ -34,6 +34,7 @@ class SceneManagerBattle : public SceneManager
         void AddSpriteForEntity(Entity* entity, bool hpBar);
 
         void SetDescription(std::string str);
+        void MoveSkillPosition(int from, int to);
 
         virtual SceneManagerType GetType();
     protected:

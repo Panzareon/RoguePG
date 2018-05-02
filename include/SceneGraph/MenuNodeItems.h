@@ -22,6 +22,7 @@ template<class T> class MenuNodeItems : public MenuNode
         virtual void AddDisabledOption(std::string name);
 
     protected:
+        virtual void SortOption();
         std::vector<T> m_optionItems;
 
         std::function<void(T)> m_onSelect;

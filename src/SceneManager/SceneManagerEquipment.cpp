@@ -37,6 +37,11 @@ namespace MenuFunctions
     {
         sm->SelectSkill(skill);
     }
+
+    void MoveEquipment(SceneManagerEquipment* sm, int id, int newPosition)
+    {
+        sm->MoveItemPosition(id, newPosition);
+    }
 }
 
 SceneManagerEquipment::SceneManagerEquipment()
@@ -139,6 +144,7 @@ void SceneManagerEquipment::SelectMember(PartyMember* member)
     m_equipmentItems->CancelAvailable(true);
     m_equipmentItems->NextAvailable(true);
     m_equipmentItems->CallOnNext(std::function<void(std::shared_ptr<Equipment>)>(std::bind(&MenuFunctions::SelectEquipmentSkills,this,std::placeholders::_1)));
+    m_equipmentItems->EnableSorting(std::function<void(int,int)>(std::bind(&MenuFunctions::MoveEquipment,this, std::placeholders::_1,std::placeholders::_2)));
     m_equipmentItems->PreviousAvailable(true);
     //Set Menu looks
     m_equipmentItems->SetMaxShownOptions(9);
@@ -150,9 +156,9 @@ void SceneManagerEquipment::SelectMember(PartyMember* member)
     m_equipmentItems->SetFontSize(30);
     m_equipmentItems->SetSpacing(5);
     //For now only Weapons
-    Equipment::EquipmentPosition pos = Equipment::MainHand;
+    m_pos = Equipment::MainHand;
     std::shared_ptr<Equipment> equip;
-    m_equipmentItems->CallOnCancel(std::function<void()>(std::bind(&MenuFunctions::Equip,this,member->GetEquipment(pos))));
+    m_equipmentItems->CallOnCancel(std::function<void()>(std::bind(&MenuFunctions::Equip,this,member->GetEquipment(m_pos))));
     Localization* loc = Localization::GetInstance();
 
     //Node for Equipment Description
@@ -184,7 +190,7 @@ void SceneManagerEquipment::SelectMember(PartyMember* member)
         if((*item).second->GetItemType() == Item::ItemTypeEquipment)
         {
             equip = std::static_pointer_cast<Equipment>((*item).second);
-            if(equip->GetEquipmentPosition() == pos)
+            if(equip->GetEquipmentPosition() == m_pos)
             {
                 //Add Item to Menu
                 m_equipmentItems->AddOptionWithItem(loc->GetLocalization(equip->GetName()), std::function<void()>(std::bind(&MenuFunctions::Equip,this,equip)), equip, true);
@@ -261,6 +267,39 @@ void SceneManagerEquipment::SelectEquipmentSkills(bool selected)
 void SceneManagerEquipment::SelectSkill(Skill* skill)
 {
     m_equipmentDescription->SetText(skill->GetLocalizedDescription());
+}
+
+void SceneManagerEquipment::MoveItemPosition(int from, int to)
+{
+    std::vector<std::pair<int,std::shared_ptr<Item>>>::iterator fromIt;
+    std::vector<std::pair<int,std::shared_ptr<Item>>>::iterator toIt;
+    int equipmentId = 0;
+    std::shared_ptr<Equipment> equip;
+    Party* party = GameController::getInstance()->getParty();
+    for(auto item = party->GetItems()->begin(); item != party->GetItems()->end(); item++)
+    {
+        //Check if this Item can be Equipped
+        if((*item).second->GetItemType() == Item::ItemTypeEquipment)
+        {
+            equip = std::static_pointer_cast<Equipment>((*item).second);
+            if(equip->GetEquipmentPosition() == m_pos)
+            {
+                if(equipmentId == from)
+                {
+                    fromIt = item;
+                }
+                if(equipmentId == to)
+                {
+                    toIt = item;
+                }
+                equipmentId++;
+            }
+        }
+    }
+
+    std::pair<int,std::shared_ptr<Item>> temp = *fromIt;
+    party->GetItems()->erase(fromIt);
+    party->GetItems()->insert(toIt, temp);
 }
 
 void SceneManagerEquipment::UpdateMemberStats(bool selectedOnly)

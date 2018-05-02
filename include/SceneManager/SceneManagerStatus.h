@@ -17,6 +17,8 @@ class SceneManagerStatus : AttributeNodesDisplay, public SceneManager
         void DeselectSkills();
         void SelectSkills();
         void DeselectPassiveEffects();
+        void MoveSkillPosition(int from, int to);
+
         virtual void Tick();
         virtual bool IsFinished();
 

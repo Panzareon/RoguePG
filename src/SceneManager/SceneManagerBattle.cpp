@@ -52,10 +52,17 @@ namespace BattleFunctions
             sm->UseOnTarget(func, target, attacking);
         }
     }
+
+    void MoveSkill(SceneManagerBattle* sm, int id, int newPosition)
+    {
+        sm->MoveSkillPosition(id, newPosition);
+    }
+
     void SkillList(SceneManagerBattle* sm, Entity* attacking)
     {
         //TODO: different width?
         MenuNodeItems<Skill*>* skillMenu = new MenuNodeItems<Skill*>(GameController::getInstance()->GetWindowWidth(), std::function<void(Skill*)>(std::bind(&SetSkillDescription, sm, std::placeholders::_1)));
+        skillMenu->EnableSorting(std::function<void(int,int)>(std::bind(&MoveSkill,sm, std::placeholders::_1,std::placeholders::_2)));
         skillMenu->CancelAvailable(true);
         skillMenu->SetPadding(5,0);
 
@@ -673,4 +680,31 @@ void SceneManagerBattle::SetDescription(std::string str)
 SceneManager::SceneManagerType SceneManagerBattle::GetType()
 {
     return TypeBattle;
+}
+
+void SceneManagerBattle::MoveSkillPosition(int from, int to)
+{
+    std::vector<std::shared_ptr<Skill>>* skills = m_next->GetSkillList();
+    int skillNr = 0;
+    int fromId, toId;
+    for(int i = 0; i < skills->size(); i++)
+    {
+        if(skills->at(i)->GetSkillType() == Skill::Usable)
+        {
+            if(from == skillNr)
+            {
+                fromId = i;
+            }
+            if(to == skillNr)
+            {
+                toId = i;
+            }
+
+            skillNr++;
+        }
+    }
+
+    std::shared_ptr<Skill> temp = skills->at(fromId);
+    skills->erase(skills->begin()+ fromId);
+    skills->insert(skills->begin() + toId, temp);
 }

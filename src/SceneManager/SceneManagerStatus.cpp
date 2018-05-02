@@ -19,6 +19,11 @@ namespace MenuFunctions
     {
         sm->SetDescription(str);
     }
+
+    void MoveSkill(SceneManagerStatus* sm, int id, int newPosition)
+    {
+        sm->MoveSkillPosition(id, newPosition);
+    }
 }
 
 SceneManagerStatus::SceneManagerStatus()
@@ -97,6 +102,7 @@ SceneManagerStatus::SceneManagerStatus()
     m_skills->moveNode(325.0f, 5.0f);
     m_skills->PreviousAvailable(true);
     m_skills->CallOnCancel(std::function<void()>(std::bind(&MenuFunctions::DeselectSkills,this)));
+    m_skills->EnableSorting(std::function<void(int,int)>(std::bind(&MenuFunctions::MoveSkill,this, std::placeholders::_1,std::placeholders::_2)));
     m_skills->CancelAvailable(true);
 
     //Set Menu looks
@@ -275,6 +281,33 @@ void SceneManagerStatus::DeselectPassiveEffects()
 void SceneManagerStatus::SetDescription(std::string str)
 {
     m_description->SetText(str);
+}
+
+void SceneManagerStatus::MoveSkillPosition(int from, int to)
+{
+    std::vector<std::shared_ptr<Skill>>* skills = m_partyMember->at(m_selectedMember)->GetSkillList();
+    int skillNr = 0;
+    int fromId, toId;
+    for(int i = 0; i < skills->size(); i++)
+    {
+        if(skills->at(i)->GetDefaultTarget() != BattleEnums::TargetPassive)
+        {
+            if(from == skillNr)
+            {
+                fromId = i;
+            }
+            if(to == skillNr)
+            {
+                toId = i;
+            }
+
+            skillNr++;
+        }
+    }
+
+    std::shared_ptr<Skill> temp = skills->at(fromId);
+    skills->erase(skills->begin()+ fromId);
+    skills->insert(skills->begin() + toId, temp);
 }
 
 SceneManager::SceneManagerType SceneManagerStatus::GetType()
