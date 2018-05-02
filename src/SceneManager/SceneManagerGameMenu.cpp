@@ -53,9 +53,31 @@ SceneManagerGameMenu::SceneManagerGameMenu()
     background->moveNode(x,y);
     m_gui->addChild(background);
 
+    //Add Money amount
+    Localization* local = Localization::GetInstance();
+
+    std::vector<std::string> moneyValue;
+    moneyValue.push_back(std::to_string(GameController::getInstance()->getParty()->GetMoney()));
+    TextNode* money = new TextNode(local->GetLocalizationWithStrings("menu.money", &moneyValue));
+    money->SetFontSize(25);
+    money->SetColor(sf::Color::Black);
+
+    sf::FloatRect rect = money->getBoundingBox();
+
+    sf::RectangleShape* moneyBackground = new sf::RectangleShape(sf::Vector2f(rect.width + 6.0f, rect.height + 10.0f));
+    moneyBackground->setFillColor(sf::Color::White);
+    moneyBackground->setOutlineColor(sf::Color::Black);
+    moneyBackground->setOutlineThickness(2.0f);
+
+    Node* moneyBackgroundNode = new DrawableNode(moneyBackground);
+    moneyBackgroundNode->moveNode(20.0f, y + 5.0f);
+
+    money->moveNode(2.0f, 0.0f);
+    m_gui->addChild(moneyBackgroundNode);
+    moneyBackgroundNode->addChild(money);
+
     //Set Menu function
     m_mainMenu = new MenuNode(background->getBoundingBox().width - 2* padding);
-    Localization* local = Localization::GetInstance();
     m_mainMenu->SetMaxShownOptions(5);
     m_mainMenu->AddOption(local->GetLocalization("menu.equipment"),std::function<void()>(&MenuFunctions::OpenEquipment),true);
     m_mainMenu->AddOption(local->GetLocalization("menu.status"),std::function<void()>(&MenuFunctions::OpenStatus),true);
