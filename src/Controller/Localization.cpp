@@ -17,8 +17,9 @@ std::string format(std::string& str, std::vector<float>* values)
         else
         {
             out << str.substr(0,pos);
+            str.erase(0, pos);
             //only check for one digit numbers
-            char next = str.at(pos + 1);
+            char next = str.at(1);
             if(next >= '0' && next <= '9')
             {
                 //check what number should be displayed here
@@ -26,22 +27,23 @@ std::string format(std::string& str, std::vector<float>* values)
                 if(values->size() > next)
                 {
                     //Check if it should be formated as percent ("%0%" with value 0.5 to "50%")
-                    if(str.at(pos + 2) == '%')
+                    if(str.at(2) == '%')
                     {
                         out << values->at(next) * 100.0f << "%";
+                        str.erase(0, 3);
                     }
-                    else if(str.at(pos + 2) == '/')
+                    else if(str.at(2) == '/')
                     {
                         out << (1.0f / values->at(next)) * 100.0f << "%";
-                        str.erase(0, 1);
+                        str.erase(0, 3);
                     }
                     else
                     {
                         out << values->at(next);
+                        str.erase(0, 2);
                     }
                 }
             }
-            str.erase(0, pos + 2);
         }
     }
     return out.str();
