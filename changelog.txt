@@ -1,3 +1,19 @@
+
+
+
+v0.19
+Updated the Choose Hereo Menu
+By default only one character class is unlocked, unlock more by finishing the first Dungeon on a run
+You can change the order of active skills and equipment by pressing the Action Key (Defaults to E) in the given Menu
+Added Skills that drain Hp from the enemy
+Made some Skills more rare than other
+Amount of hp healed are now displayed
+Reduced later dungeons to 3 Levels each
+Amount of gold is displayed in the menu
+
+Fixed Bugs
+
+
 v0.18:
 Added new next level items: Firesword, Fire Shield, Healing Staff and Fire Tome
 Swords strengthen physical attacks, tomes/spell books strenghten magic attacks while equiped
