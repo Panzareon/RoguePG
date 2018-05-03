@@ -76,6 +76,8 @@ float IPassiveEffect::GetNeededMP(float base)
     //this is called to set the needed Mp for a skill
     for(int i = 0; i < m_getNeededMp.size(); i++)
         base = (*m_getNeededMp[i])(base);
+
+    return base;
 }
 
 void IPassiveEffect::AddOnTurnEffect(std::function<void(Entity*, IPassiveEffect*)>* onTurn)
