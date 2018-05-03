@@ -6,6 +6,8 @@
 #include "Battle/EffectFactory.h"
 #include "Battle/EffectFactoryPassive.h"
 #include <random>
+#include "GameController.h"
+#include "SceneManagerStatus.h"
 
 namespace PassiveEffectFunctions
 {
@@ -260,6 +262,25 @@ namespace EffectFunctions
             eff->AddOnLooseHp(new std::function<int(Attack*, Entity*, Entity*, int)>(
                 std::bind(&PassiveEffectFunctions::ReduceDamage,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, reduceTo)));
             targets->at(i)->AddPassiveEffect(eff);
+        }
+    }
+
+
+    void AnalyzeEnemy(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect)
+    {
+        for(unsigned int i = 0; i < targets->size(); i++)
+        {
+            targets->at(i)->Analyze();
+        }
+        if(targets->size() > 0 )
+        {
+            SceneManager* sm = GameController::getInstance()->GetActiveSceneManager();
+            SceneManagerBattle* battle = dynamic_cast<SceneManagerBattle*>(sm);
+            if(battle != nullptr)
+            {
+                SceneManagerStatus* status = new SceneManagerStatus(battle, targets->at(0));
+                GameController::getInstance()->LoadSceneManager(status);
+            }
         }
     }
 }
@@ -824,6 +845,18 @@ EffectFactoryList::EffectFactoryList()
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddEffectType(BattleEnums::EffectTypeDebuff);
     newEffect->AddEffectType(BattleEnums::EffectTypeDebuffOffense);
+    m_effects.push_back(newEffect);
+
+
+    //Analyze enemy
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(&EffectFunctions::AnalyzeEnemy);
+    newEffect = new EffectFactory(func, 10201);
+    calc = newEffect->GetStrengthCalculation();
+    calc->SetMultiplier(20.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
+    newEffect->AddAttackType(BattleEnums::AttackTypeWater);
+    newEffect->AddAttackType(BattleEnums::AttackTypeAir);
+    newEffect->AddEffectType(BattleEnums::EffectTypeDebuff);
     m_effects.push_back(newEffect);
 
 

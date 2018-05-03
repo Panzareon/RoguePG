@@ -215,6 +215,9 @@ effect.10055.desc = Decreases resistance against fire attacks by %1% for %0 turn
 effect.10101 = Taunt
 effect.10101.desc = The targeted enemy can only attack you for %0 turns.
 
+effect.10201 = Analyze
+effect.10201.desc = Analyze the enemy and show their stats
+
 
 effect.100001 = Heal After Battle
 effect.100001.desc = Heals for %0 hp after a battle.

@@ -61,6 +61,8 @@ class Entity
         void AddPassiveEffect(std::shared_ptr<IPassiveEffect> eff);
         void RemovePassiveEffect(IPassiveEffect* eff);
 
+        void Analyze();
+        bool IsAnalyzed();
         int GetExpToGive();
 
         std::vector<std::shared_ptr<Skill>>* GetSkillList();
@@ -96,6 +98,7 @@ class Entity
         std::map<BattleEnums::Attribute, int> m_attributes;
         std::map<BattleEnums::AttackType, float> m_resistances;
         int m_giveExp;
+        bool m_isAnalyzed;
 
         std::string m_name;
 

@@ -11,7 +11,7 @@ class SceneManagerBattle;
 class SceneManagerStatus : AttributeNodesDisplay, public SceneManager
 {
     public:
-        SceneManagerStatus(SceneManagerBattle* battle = nullptr);
+        SceneManagerStatus(SceneManagerBattle* battle = nullptr, Entity* startOnEntity = nullptr);
         virtual ~SceneManagerStatus();
         void ShowForEntity(Entity* entity);
         void ShowForPartyMember(PartyMember* partyMember);

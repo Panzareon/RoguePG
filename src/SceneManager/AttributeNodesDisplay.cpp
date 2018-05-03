@@ -41,7 +41,14 @@ void AttributeNodesDisplay::UpdateAttributeNode(Entity* entity, int id)
 {
     for(int j = 0; j < BattleEnums::ATTRIBUTE_END; j++)
     {
-        int attributeValue = entity->GetAttribute((BattleEnums::Attribute)j);
-        m_attributeNodes[id][(BattleEnums::Attribute)j]->SetText(std::to_string(attributeValue));
+        if(entity != nullptr)
+        {
+            int attributeValue = entity->GetAttribute((BattleEnums::Attribute)j);
+            m_attributeNodes[id][(BattleEnums::Attribute)j]->SetText(std::to_string(attributeValue));
+        }
+        else
+        {
+            m_attributeNodes[id][(BattleEnums::Attribute)j]->SetText("???");
+        }
     }
 }

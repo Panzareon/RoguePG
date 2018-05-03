@@ -35,6 +35,7 @@ void PartyMember::SetCharacterClass(CharacterClass* chrClass)
 
 void PartyMember::Init()
 {
+    Analyze();
     m_controllTypeAtm = Entity::ControllUser;
     m_exp = 0;
     m_lvl = 1;

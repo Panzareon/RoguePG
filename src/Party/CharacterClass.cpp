@@ -124,8 +124,7 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.2f, true);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.6f, true);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
-        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.35f, false);
-        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.35f, false);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
 
         m_classes->at(CharacterClassPaladin) = newClass;
 
@@ -161,8 +160,7 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.2f, true);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.3f, true);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.5f, false);
-        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.25f, false);
-        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.25f, false);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.5f, false);
 
         m_classes->at(CharacterClassThief) = newClass;
 
@@ -200,8 +198,7 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.1f, true);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.8f, true);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
-        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.35f, false);
-        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.35f, false);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
 
         m_classes->at(CharacterClassCleric) = newClass;
 
@@ -239,8 +236,7 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.4f, true);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.2f, true);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.8f, false);
-        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.1f, false);
-        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.1f, false);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.2f, false);
 
         m_classes->at(CharacterClassWizard) = newClass;
 
@@ -278,8 +274,7 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.2f, true);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.6f, true);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.8f, false);
-        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.1f, false);
-        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.1f, false);
+        skillGenerator->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.2f, false);
 
         m_classes->at(CharacterClassVampire) = newClass;
 

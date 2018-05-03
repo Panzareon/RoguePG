@@ -35,6 +35,7 @@ Entity::Entity(int exp)
     m_name = "Entity";
 
     m_giveExp = exp;
+    m_isAnalyzed = false;
 
     m_useHpInsteadOfMp = false;
     m_node = nullptr;
@@ -497,6 +498,15 @@ EntityNode* Entity::GetNode()
     return m_node;
 }
 
+void Entity::Analyze()
+{
+    m_isAnalyzed = true;
+}
+
+bool Entity::IsAnalyzed()
+{
+    return m_isAnalyzed;
+}
 
 int Entity::GetExpToGive()
 {

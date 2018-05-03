@@ -113,8 +113,7 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.2f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.3f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.5f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.25f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.25f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.5f, false);
 
         retval->SetSkillStrength(10);
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(3,1,true));
@@ -147,8 +146,7 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.5f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.4f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.35f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.35f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
 
         retval->SetSkillStrength(10);
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(3,1,true));
@@ -177,8 +175,7 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.1f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.8f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.35f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.35f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
 
         retval->SetSkillStrength(10);
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(3,1,true));
@@ -206,8 +203,7 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.7f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.3f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.7f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.15f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.15f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.3f, false);
 
         retval->SetSkillStrength(10);
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(3,1,true));
@@ -239,8 +235,7 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.2f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.3f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.5f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.25f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.25f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.5f, false);
 
         retval->SetSkillStrength(20);
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(4,2,true));
@@ -272,8 +267,7 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.5f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.4f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.35f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.35f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
 
         retval->SetSkillStrength(20);
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(4,2,true));
@@ -302,8 +296,7 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.1f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.8f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.35f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.35f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
 
         retval->SetSkillStrength(20);
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(4,2,true));
@@ -331,8 +324,7 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.7f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.3f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.7f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.15f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.15f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.3f, false);
 
         retval->SetSkillStrength(20);
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(4,2,true));
@@ -363,8 +355,7 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.2f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.3f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.5f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.25f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.25f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.5f, false);
 
         retval->SetSkillStrength(30);
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
@@ -398,8 +389,7 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.5f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.4f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.35f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.35f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
 
         retval->SetSkillStrength(30);
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
@@ -430,8 +420,7 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.1f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.8f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.35f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.35f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
 
         retval->SetSkillStrength(30);
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
@@ -459,8 +448,7 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.7f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.3f, true);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.7f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffOffense, 0.15f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuffDefense, 0.15f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.3f, false);
 
         retval->SetSkillStrength(30);
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));

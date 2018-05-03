@@ -27,7 +27,7 @@ namespace MenuFunctions
     }
 }
 
-SceneManagerStatus::SceneManagerStatus(SceneManagerBattle* battle)
+SceneManagerStatus::SceneManagerStatus(SceneManagerBattle* battle, Entity* startOnEntity)
 {
     m_battle = battle;
     //ctor
@@ -39,9 +39,51 @@ SceneManagerStatus::SceneManagerStatus(SceneManagerBattle* battle)
 
     GameController* controller = GameController::getInstance();
     Party* party = controller->getParty();
-    m_partyMember = party->GetAllPartyMembers();
-    PartyMember* member = m_partyMember->at(0).get();
+
+    //Show during battle only active Party member (and enemies)
+    if(battle != nullptr)
+    {
+        m_partyMember = party->GetActivePartyMembers();
+    }
+    else
+    {
+        m_partyMember = party->GetAllPartyMembers();
+    }
+    PartyMember* partyMember = m_partyMember->at(0).get();
+    Entity* member = partyMember;
     m_selectedMember = 0;
+    if(startOnEntity != nullptr)
+    {
+        member = startOnEntity;
+        bool ok = false;
+        for(int i = 0; i < m_partyMember->size(); i++)
+        {
+            if(m_partyMember->at(i).get() == member)
+            {
+                ok = true;
+                partyMember = (PartyMember*)member;
+                break;
+            }
+            m_selectedMember++;
+        }
+        if(!ok && battle != nullptr)
+        {
+            for(int i = 0; i < battle->GetEnemies()->size(); i++)
+            {
+                if(battle->GetEnemies()->at(i) == member)
+                {
+                    ok = true;
+                    partyMember = nullptr;
+                    break;
+                }
+                m_selectedMember++;
+            }
+        }
+        if(!ok)
+        {
+            m_selectedMember = 0;
+        }
+    }
 
     sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::StatusMenu));
     Node* background = new DrawableNode(backgroundSprite);
@@ -147,8 +189,14 @@ SceneManagerStatus::SceneManagerStatus(SceneManagerBattle* battle)
     m_description->SetFontSize(15);
     m_description->SetMaxLength(630);
 
-
-    ShowForEntity(member);
+    if(partyMember != nullptr)
+    {
+        ShowForPartyMember(partyMember);
+    }
+    else
+    {
+        ShowForEntity(member);
+    }
 }
 
 SceneManagerStatus::~SceneManagerStatus()
@@ -280,35 +328,45 @@ void SceneManagerStatus::ShowForEntity(Entity* entity)
 
     Localization* localization = Localization::GetInstance();
     m_name->SetText(entity->GetName());
-    UpdateAttributeNode(entity, 0);
-    m_manaAndHealth->SetEntity(entity);
-    m_battleSprite->SetSprite(entity->GetBattleSprite(), entity->GetNumberSprites());
 
     //Remove previous values
     m_level->SetText("");
     m_exp->setSize(sf::Vector2f(0.0f, m_expHeight - 2.0f));
     m_class->SetText("");
-
+    m_passiveEffects->ResetOptions();
     m_skills->ResetOptions();
-    std::vector<std::shared_ptr<Skill>>* skills = entity->GetSkillList();
-    int skillNr = 0;
-    for(int i = 0; i < skills->size(); i++)
+    m_battleSprite->SetSprite(entity->GetBattleSprite(), entity->GetNumberSprites());
+
+    if(entity->IsAnalyzed())
     {
-        if(skills->at(i)->GetDefaultTarget() != BattleEnums::TargetPassive)
+        m_manaAndHealth->SetEntity(entity);
+        UpdateAttributeNode(entity, 0);
+
+
+        std::vector<std::shared_ptr<Skill>>* skills = entity->GetSkillList();
+        int skillNr = 0;
+        for(int i = 0; i < skills->size(); i++)
         {
-            m_skills->AddDisabledOption(localization->GetLocalization(skills->at(i)->GetName()), std::function<void()>(std::bind(&MenuFunctions::SetDescription,this, skills->at(i)->GetLocalizedDescription())));
-            m_skills->AddValueToOption(skillNr++, std::to_string(skills->at(i)->GetManaUse()));
+            if(skills->at(i)->GetDefaultTarget() != BattleEnums::TargetPassive)
+            {
+                m_skills->AddDisabledOption(localization->GetLocalization(skills->at(i)->GetName()), std::function<void()>(std::bind(&MenuFunctions::SetDescription,this, skills->at(i)->GetLocalizedDescription())));
+                m_skills->AddValueToOption(skillNr++, std::to_string(skills->at(i)->GetManaUse()));
+            }
+        }
+
+        std::multimap<int, std::shared_ptr<IPassiveEffect>>* passiveEffects = entity->GetPassiveEffects();
+        for(auto it = passiveEffects->begin(); it != passiveEffects->end();it++)
+        {
+            if(!it->second->IsEquipment())
+            {
+                m_passiveEffects->AddDisabledOption(localization->GetLocalization(it->second->GetName()), std::function<void()>(std::bind(&MenuFunctions::SetDescription,this, it->second->GetLocalizedDescription())));
+            }
         }
     }
-
-    m_passiveEffects->ResetOptions();
-    std::multimap<int, std::shared_ptr<IPassiveEffect>>* passiveEffects = entity->GetPassiveEffects();
-    for(auto it = passiveEffects->begin(); it != passiveEffects->end();it++)
+    else
     {
-        if(!it->second->IsEquipment())
-        {
-            m_passiveEffects->AddDisabledOption(localization->GetLocalization(it->second->GetName()), std::function<void()>(std::bind(&MenuFunctions::SetDescription,this, it->second->GetLocalizedDescription())));
-        }
+        m_manaAndHealth->SetEntity(nullptr);
+        UpdateAttributeNode(nullptr, 0);
     }
 }
 
