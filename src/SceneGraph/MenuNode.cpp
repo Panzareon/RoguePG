@@ -192,7 +192,10 @@ void MenuNode::MoveRight()
 
 void MenuNode::Use()
 {
-    m_options[m_selected]->CallFunction();
+    if(m_options[m_selected]->IsAvailable())
+    {
+        m_options[m_selected]->CallFunction();
+    }
 }
 void MenuNode::onDraw(sf::RenderTarget& target, const sf::Transform& transformBase) const
 {
