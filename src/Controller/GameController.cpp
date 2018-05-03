@@ -353,13 +353,15 @@ bool GameController::IsKeyPressed(Configuration::Keys key, bool once)
 void GameController::GameOverCheck()
 {
     m_gameOver = true;
-    for(unsigned int i = 0; i < m_party.GetActivePartyMembers()->size(); i++)
+    for(unsigned int i = 0; i < m_party.GetAllPartyMembers()->size(); i++)
     {
-        if(!m_party.GetActivePartyMembers()->at(i)->IsDead())
+        if(!m_party.GetAllPartyMembers()->at(i)->IsDead())
         {
             m_gameOver = false;
         }
     }
+    //Remove save file
+    RemoveSaveFile();
 }
 
 void GameController::GameOver()
@@ -443,6 +445,11 @@ bool GameController::LoadAvailable()
 {
     std::ifstream f(Configuration::GetInstance()->GetSaveFilePath());
     return f.good();
+}
+
+void GameController::RemoveSaveFile()
+{
+    std::remove(Configuration::GetInstance()->GetSaveFilePath().c_str());
 }
 
 void GameController::SaveProgress()

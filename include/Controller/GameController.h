@@ -58,6 +58,7 @@ class GameController
         void SaveToFile();
         bool LoadFromFile();
         bool LoadAvailable();
+        void RemoveSaveFile();
         void SaveProgress();
     protected:
     private:

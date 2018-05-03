@@ -31,7 +31,7 @@ class SceneManagerMainMenu : public SceneManager
             archive(cereal::base_class<SceneManager>( this ));
         }
     protected:
-
+        bool m_checkLoad;
 
     private:
 };

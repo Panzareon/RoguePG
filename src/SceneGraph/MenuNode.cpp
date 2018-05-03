@@ -102,6 +102,12 @@ void MenuNode::AddNodeToOption(int optionNr, Node* node)
         m_options[optionNr]->SetNode(node);
 }
 
+void MenuNode::SetAvailableForOption(int optionNr, bool available)
+{
+    if(m_options.size() > optionNr)
+        m_options[optionNr]->SetAvailable(available);
+}
+
 void MenuNode::CallOnCancel(std::function<void()>func)
 {
     m_cancelFunction = func;

@@ -33,6 +33,7 @@ namespace MenuFunctions
 
 SceneManagerMainMenu::SceneManagerMainMenu()
 {
+    m_checkLoad = true;
     //ctor
     int padding = 8;
 
@@ -50,9 +51,9 @@ SceneManagerMainMenu::SceneManagerMainMenu()
     //Set Menu function
     m_mainMenu = new MenuNode(background->getBoundingBox().width - 2* padding);
     Localization* local = Localization::GetInstance();
+    m_mainMenu->AddOption(local->GetLocalization("menu.continue"),std::function<void()>(&MenuFunctions::Load),controller->LoadAvailable());
     m_mainMenu->AddOption(local->GetLocalization("menu.startDungeon"),std::function<void()>(std::bind(&MenuFunctions::StartDungeon,this)),true);
     m_mainMenu->AddOption(local->GetLocalization("menu.option"),std::function<void()>(&MenuFunctions::Options),true);
-    m_mainMenu->AddOption(local->GetLocalization("menu.load"),std::function<void()>(&MenuFunctions::Load),true);
     m_mainMenu->AddOption(local->GetLocalization("menu.quit"),std::function<void()>(std::bind(&MenuFunctions::Quit,this)),true);
     background->addChild(m_mainMenu);
 
@@ -73,6 +74,7 @@ SceneManagerMainMenu::~SceneManagerMainMenu()
 
 void SceneManagerMainMenu::ChooseHero()
 {
+    m_checkLoad = true;
     GameController* controller = GameController::getInstance();
     controller->InitValues();
     controller->setParty(Party());
@@ -87,6 +89,12 @@ void SceneManagerMainMenu::Quit()
 
 void SceneManagerMainMenu::Tick()
 {
+    if(m_checkLoad)
+    {
+        m_checkLoad = false;
+        GameController* controller = GameController::getInstance();
+        m_mainMenu->SetAvailableForOption(0, controller->LoadAvailable());
+    }
     m_mainMenu->CheckKeyboardInput();
 }
 

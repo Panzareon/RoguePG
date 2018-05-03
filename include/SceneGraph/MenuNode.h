@@ -20,6 +20,7 @@ class MenuNode : public Node
         //Add Value at the right on this Option
         virtual void AddValueToOption(int optionNr, std::string value);
         virtual void AddNodeToOption(int optionNr, Node* node);
+        virtual void SetAvailableForOption(int option, bool available);
         virtual void CallOnCancel(std::function<void()> func);
         //Function is called after Sorting, first value is the sorted item, second value is the new position
         void EnableSorting(std::function<void(int,int)> onSort);

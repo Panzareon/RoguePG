@@ -21,16 +21,18 @@ namespace MenuFunctions
         SceneManagerStatus* sm = new SceneManagerStatus();
         GameController::getInstance()->LoadSceneManager(sm);
     }
-    void Save()
-    {
-        GameController::getInstance()->SaveToFile();
-        SceneManagerMessage* sm = new SceneManagerMessage(Localization::GetInstance()->GetLocalization("menu.save.finished"));
-        GameController::getInstance()->LoadSceneManager(sm);
-    }
 
     void Quit(SceneManagerGameMenu* sm)
     {
         sm->Quit();
+    }
+
+    void Save(SceneManagerGameMenu* smgm)
+    {
+        GameController::getInstance()->SaveToFile();
+        SceneManagerMessage* sm = new SceneManagerMessage(Localization::GetInstance()->GetLocalization("menu.save.finished"));
+        sm->OnAccept(std::function<void()>(std::bind(&MenuFunctions::Quit,smgm)));
+        GameController::getInstance()->LoadSceneManager(sm);
     }
 
     void Options();
@@ -82,8 +84,7 @@ SceneManagerGameMenu::SceneManagerGameMenu()
     m_mainMenu->AddOption(local->GetLocalization("menu.equipment"),std::function<void()>(&MenuFunctions::OpenEquipment),true);
     m_mainMenu->AddOption(local->GetLocalization("menu.status"),std::function<void()>(&MenuFunctions::OpenStatus),true);
     m_mainMenu->AddOption(local->GetLocalization("menu.option"),std::function<void()>(&MenuFunctions::Options),true);
-    m_mainMenu->AddOption(local->GetLocalization("menu.save"),std::function<void()>(&MenuFunctions::Save),true);
-    m_mainMenu->AddOption(local->GetLocalization("menu.quit"),std::function<void()>(std::bind(&MenuFunctions::Quit,this)),true);
+    m_mainMenu->AddOption(local->GetLocalization("menu.save"),std::function<void()>(std::bind(&MenuFunctions::Save,this)),true);
     background->addChild(m_mainMenu);
 
     //Set Menu looks
