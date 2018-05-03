@@ -64,6 +64,13 @@ void IPassiveEffect::AttackEntity(Attack* att, Entity* attacker)
         (*m_attack[i])(att, attacker);
 }
 
+int IPassiveEffect::LooseHp(Attack* att, Entity* target, Entity* attacker, int baseAmount)
+{
+    //NOOP
+    return baseAmount;
+}
+
+
 float IPassiveEffect::GetNeededMP(float base)
 {
     //this is called to set the needed Mp for a skill

@@ -28,6 +28,8 @@ PassiveEffect::~PassiveEffect()
         delete m_getExp[i];
     for(int i = 0; i < m_onBattleFinished.size(); i++)
         delete m_onBattleFinished[i];
+    for(int i = 0; i < m_onLooseHp.size(); i++)
+        delete m_onLooseHp[i];
 
     if(m_additionalDescriptionValues != nullptr)
     {
@@ -91,6 +93,18 @@ void PassiveEffect::AddOnAttacked(std::function<void(Attack*, Entity*, Entity*)>
     m_onAttacked.push_back(onAttacked);
 }
 
+int PassiveEffect::LooseHp(Attack* att, Entity* target, Entity* attacker, int baseAmount)
+{
+    for(int i = 0; i < m_onLooseHp.size(); i++)
+        baseAmount = (*m_onLooseHp[i])(att, target, attacker,baseAmount);
+    return baseAmount;
+}
+
+void PassiveEffect::AddOnLooseHp(std::function<int(Attack*, Entity*, Entity*, int)>* onLooseHp)
+{
+    m_onLooseHp.push_back(onLooseHp);
+}
+
 void PassiveEffect::AddGetExp(std::function<float(float)>* getExp)
 {
     m_getExp.push_back(getExp);
@@ -115,6 +129,11 @@ bool PassiveEffect::IsStillActive()
 bool PassiveEffect::StaysAfterBattle()
 {
     return m_staysAfterBattle;
+}
+
+bool PassiveEffect::SetDuration(int duration)
+{
+    m_duration = duration;
 }
 
 int PassiveEffect::GetActivationPriority()

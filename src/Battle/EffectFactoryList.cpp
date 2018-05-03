@@ -64,6 +64,21 @@ namespace PassiveEffectFunctions
             att->m_dmg *= multiply;
         }
     }
+    int PreventDamage(Attack* att, Entity* target, Entity* attacker, int baseAmount, std::vector<float>* preventAmount, PassiveEffect* effect)
+    {
+        if(preventAmount->at(0) > baseAmount)
+        {
+            preventAmount->at(0) -= baseAmount;
+            return 0;
+        }
+        else
+        {
+            //No longer prevents damage
+            preventAmount->at(0) = 0;
+            effect->SetDuration(0);
+            return baseAmount - preventAmount->at(0);
+        }
+    }
 }
 
 namespace EffectFunctions
@@ -206,6 +221,21 @@ namespace EffectFunctions
             PassiveEffect* eff = new PassiveEffect(true, (int)strength->at(0), effect);
             eff->AddAttack(new std::function<void(Attack*, Entity*)>(
                 std::bind(&PassiveEffectFunctions::Taunt,std::placeholders::_1,std::placeholders::_2,user)));
+            targets->at(i)->AddPassiveEffect(eff);
+        }
+    }
+
+    //strength is one value, the amount of damage negated
+    void PreventDamage(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect)
+    {
+        for(unsigned int i = 0; i < targets->size(); i++)
+        {
+            PassiveEffect* eff = new PassiveEffect(true, -1, effect);
+            std::vector<float>* values = new std::vector<float>();
+            values->push_back(strength->at(0));
+            eff->AddOnLooseHp(new std::function<int(Attack*, Entity*, Entity*, int)>(
+                std::bind(&PassiveEffectFunctions::PreventDamage,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4,values,eff)));
+            eff->AddDescription("effect.1101.additional_desc", values);
             targets->at(i)->AddPassiveEffect(eff);
         }
     }
@@ -578,6 +608,21 @@ EffectFactoryList::EffectFactoryList()
     newEffect->AddAttackType(BattleEnums::AttackTypeWater);
     newEffect->AddAttackType(BattleEnums::AttackTypeAir);
     newEffect->AddEffectType(BattleEnums::EffectTypeHeal);
+    m_effects.push_back(newEffect);
+
+
+    //Shield Damage
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(&EffectFunctions::PreventDamage);
+    newEffect = new EffectFactory(func, 1101, 0.6f);
+    calc = newEffect->GetStrengthCalculation();
+    //Amount of hp shielded
+    calc->AddStrengthValue(1.0f, 300.0f, 1.0f);
+    calc->SetMultiplier(3.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
+    newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
+    newEffect->AddEffectType(BattleEnums::EffectTypeHeal);
+    newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
+    newEffect->AddEffectType(BattleEnums::EffectTypeBuffDefense);
     m_effects.push_back(newEffect);
 
 

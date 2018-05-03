@@ -20,6 +20,7 @@ class PassiveEffect: public IPassiveEffect
         virtual float GetResistance(float resistanceValue, BattleEnums::AttackType type);
         virtual float GetAttribute(float attributeValue, BattleEnums::Attribute attribute);
         virtual void GetAttacked(Attack* att, Entity* target, Entity* attacker);
+        virtual int LooseHp(Attack* att, Entity* target, Entity* attacker, int baseAmount);
         virtual float GetExp(float exp);
         virtual void OnBattleFinished(Entity* target);
         virtual bool ShowEnemyHealth(bool base);
@@ -29,10 +30,12 @@ class PassiveEffect: public IPassiveEffect
 
         virtual bool IsStillActive();
         virtual bool StaysAfterBattle();
+        virtual bool SetDuration(int duration);
 
         virtual int GetActivationPriority();
         void AddAttributeEffect(std::function<float(float,BattleEnums::Attribute)>* attributeFunction);
         void AddOnAttacked(std::function<void(Attack*, Entity*, Entity*)>* onAttacked);
+        void AddOnLooseHp(std::function<int(Attack*, Entity*, Entity*, int)>* onLooseHp);
         void AddGetExp(std::function<float(float)>* getExp);
         void AddGetResistance(std::function<float(float,BattleEnums::AttackType)>* getResistance);
         void AddOnBattleFinished(std::function<void(Entity*)>* onBattleFinished);
@@ -55,6 +58,7 @@ class PassiveEffect: public IPassiveEffect
         std::vector<std::function<float(float,BattleEnums::AttackType)>*> m_resistanceFunction;
         std::vector<std::function<float(float,BattleEnums::Attribute)>*> m_attributeFunction;
         std::vector<std::function<void(Attack*, Entity*, Entity*)>*> m_onAttacked;
+        std::vector<std::function<int(Attack*, Entity*, Entity*, int)>*> m_onLooseHp;
         std::vector<std::function<float(float)>*> m_getExp;
         std::vector<std::function<void(Entity*)>*> m_onBattleFinished;
 

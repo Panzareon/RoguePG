@@ -22,6 +22,7 @@ class IPassiveEffect: public virtual NamedItem
         virtual float GetAttribute(float attributeValue, BattleEnums::Attribute attribute) = 0;
         virtual void AttackEntity(Attack* att, Entity* attacker);
         virtual void GetAttacked(Attack* att, Entity* target, Entity* attacker) = 0;
+        virtual int LooseHp(Attack* att, Entity* target, Entity* attacker, int baseAmount);
         virtual float GetExp(float exp) = 0;
         virtual void OnBattleFinished(Entity* target);
         virtual bool ShowEnemyHealth(bool base);

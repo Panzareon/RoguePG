@@ -123,6 +123,13 @@ void Entity::GetHit(Attack* attack, Entity* attacker)
     int finalDmg = dmg;
     if(finalDmg < 1)
         finalDmg = 1;
+
+    for(auto iter = m_passiveEffects.begin(); iter != m_passiveEffects.end(); iter++)
+    {
+        finalDmg = iter->second->LooseHp(attack, this, attacker, finalDmg);
+    }
+
+
     Animation * newAnim = AnimationFactory::GetTextAnimation(this, std::to_string(finalDmg), color);
     GameController::getInstance()->GetActiveSceneManager()->AddAnimation(newAnim);
 

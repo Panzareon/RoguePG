@@ -182,6 +182,10 @@ effect.1001.desc = Heals for %0 hp.
 effect.1002 = Regenerate
 effect.1002.desc = Heals %1 hp for %0 turns.
 
+effect.1101 = Shield Damage
+effect.1101.desc = Prevents the next %0 hp damage the target would take.
+effect.1101.additional_desc = %0 hp shield remains.
+
 effect.10001 = Strength Debuff
 effect.10001.desc = Decreases strength by %1% for %0 turns.
 effect.10002 = Defense Debuff
