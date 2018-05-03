@@ -79,6 +79,17 @@ namespace PassiveEffectFunctions
             return baseAmount - preventAmount->at(0);
         }
     }
+    int ReduceDamage(Attack* att, Entity* target, Entity* attacker, int baseAmount, int reduceTo)
+    {
+        if(baseAmount > reduceTo)
+        {
+            return reduceTo;
+        }
+        else
+        {
+            return baseAmount;
+        }
+    }
 }
 
 namespace EffectFunctions
@@ -236,6 +247,18 @@ namespace EffectFunctions
             eff->AddOnLooseHp(new std::function<int(Attack*, Entity*, Entity*, int)>(
                 std::bind(&PassiveEffectFunctions::PreventDamage,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4,values,eff)));
             eff->AddDescription("effect.1101.additional_desc", values);
+            targets->at(i)->AddPassiveEffect(eff);
+        }
+    }
+
+    //strength is one value, the number of turns
+    void ReduceDamage(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect, int reduceTo)
+    {
+        for(unsigned int i = 0; i < targets->size(); i++)
+        {
+            PassiveEffect* eff = new PassiveEffect(true, (int)strength->at(0), effect);
+            eff->AddOnLooseHp(new std::function<int(Attack*, Entity*, Entity*, int)>(
+                std::bind(&PassiveEffectFunctions::ReduceDamage,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, reduceTo)));
             targets->at(i)->AddPassiveEffect(eff);
         }
     }
@@ -621,6 +644,19 @@ EffectFactoryList::EffectFactoryList()
     newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddEffectType(BattleEnums::EffectTypeHeal);
+    newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
+    newEffect->AddEffectType(BattleEnums::EffectTypeBuffDefense);
+    m_effects.push_back(newEffect);
+
+    //Reduce damage to 1
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(std::bind(&EffectFunctions::ReduceDamage, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, 1));
+    newEffect = new EffectFactory(func, 1102, 0.4f);
+    calc = newEffect->GetStrengthCalculation();
+    //Duration of buff
+    calc->AddStrengthValue(1.0f, 10.0f, 1.0f);
+    calc->SetMultiplier(10.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypeAir);
+    newEffect->AddAttackType(BattleEnums::AttackTypeFire);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuffDefense);
     m_effects.push_back(newEffect);

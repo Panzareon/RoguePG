@@ -186,6 +186,9 @@ effect.1101 = Shield Damage
 effect.1101.desc = Prevents the next %0 hp damage the target would take.
 effect.1101.additional_desc = %0 hp shield remains.
 
+effect.1102 = Reduce Damage
+effect.1102.desc = Reduces all damage taken to 1 hp for %0 turns.
+
 effect.10001 = Strength Debuff
 effect.10001.desc = Decreases strength by %1% for %0 turns.
 effect.10002 = Defense Debuff
