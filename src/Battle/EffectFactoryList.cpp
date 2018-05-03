@@ -607,7 +607,7 @@ EffectFactoryList::EffectFactoryList()
 
 
     //Heal
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(std::bind(&EffectFunctions::Heal,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(&EffectFunctions::Heal);
     newEffect = new EffectFactory(func, 1001);
     calc = newEffect->GetStrengthCalculation();
     //Everything from 1 to 300 hp heal
@@ -619,7 +619,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Regenerate
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(std::bind(&EffectFunctions::Regenerate,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(&EffectFunctions::Regenerate);
     newEffect = new EffectFactory(func, 1002);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -814,7 +814,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Taunt enemy
-    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(std::bind(&EffectFunctions::Taunt,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4));
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(&EffectFunctions::Taunt);
     newEffect = new EffectFactory(func, 10101);
     calc = newEffect->GetStrengthCalculation();
     //Number of turns: from 2 to 10 with step of 1
@@ -830,7 +830,7 @@ EffectFactoryList::EffectFactoryList()
 
 
     //Heal after battle
-    passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(std::bind(&PassiveSkillEffectFunctions::HealAfterBattle,std::placeholders::_1,std::placeholders::_2));
+    passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(&PassiveSkillEffectFunctions::HealAfterBattle);
     newEffect = new EffectFactoryPassive(passiveFunc, 100001);
     calc = newEffect->GetStrengthCalculation();
     //Everything from 1 to 300 hp heal
@@ -842,7 +842,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Heal on turn
-    passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(std::bind(&PassiveSkillEffectFunctions::HealAfterTurn,std::placeholders::_1,std::placeholders::_2));
+    passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(&PassiveSkillEffectFunctions::HealAfterTurn);
     newEffect = new EffectFactoryPassive(passiveFunc, 100002, 0.4);
     calc = newEffect->GetStrengthCalculation();
     //Everything from 1 to 300 hp heal
@@ -855,7 +855,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Movement boost
-    passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(std::bind(&PassiveSkillEffectFunctions::Movementspeed,std::placeholders::_1,std::placeholders::_2));
+    passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(&PassiveSkillEffectFunctions::Movementspeed);
     newEffect = new EffectFactoryPassive(passiveFunc, 100101);
     calc = newEffect->GetStrengthCalculation();
     //Everything from 1 to 50 % more speed
@@ -868,7 +868,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Show hp bar
-    passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(std::bind(&PassiveSkillEffectFunctions::ShowHp,std::placeholders::_1,std::placeholders::_2));
+    passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(&PassiveSkillEffectFunctions::ShowHp);
     newEffect = new EffectFactoryPassive(passiveFunc, 100102);
     calc = newEffect->GetStrengthCalculation();
     calc->SetMultiplier(12.0f);
@@ -878,7 +878,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Reduce MP cost
-    passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(std::bind(&PassiveSkillEffectFunctions::MpCostMultiplier,std::placeholders::_1,std::placeholders::_2));
+    passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(&PassiveSkillEffectFunctions::MpCostMultiplier);
     newEffect = new EffectFactoryPassive(passiveFunc, 100103, 0.6f);
     calc = newEffect->GetStrengthCalculation();
     calc->AddStrengthValue(0.01f, 0.75f);
@@ -889,7 +889,7 @@ EffectFactoryList::EffectFactoryList()
     m_effects.push_back(newEffect);
 
     //Show complete map
-    passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(std::bind(&PassiveSkillEffectFunctions::ShowMap,std::placeholders::_1,std::placeholders::_2));
+    passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(&PassiveSkillEffectFunctions::ShowMap);
     newEffect = new EffectFactoryPassive(passiveFunc, 100104);
     calc = newEffect->GetStrengthCalculation();
     calc->SetMultiplier(12.0f);
