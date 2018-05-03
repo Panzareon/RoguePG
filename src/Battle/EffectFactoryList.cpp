@@ -390,7 +390,7 @@ EffectFactoryList::EffectFactoryList()
     newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
     m_effects.push_back(newEffect);
 
-    //Add Fire Damage with leach
+    //Add Fire Damage with leech
     func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(std::bind(&EffectFunctions::DrainMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeFire));
     newEffect = new EffectFactory(func, 51, 0.3f);
     calc = newEffect->GetStrengthCalculation();
@@ -403,7 +403,7 @@ EffectFactoryList::EffectFactoryList()
     newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
     m_effects.push_back(newEffect);;
 
-    //Add Air Damage with leach
+    //Add Air Damage with leech
     func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(std::bind(&EffectFunctions::DrainMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeAir));
     newEffect = new EffectFactory(func, 52, 0.3f);
     calc = newEffect->GetStrengthCalculation();
@@ -416,7 +416,7 @@ EffectFactoryList::EffectFactoryList()
     newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
     m_effects.push_back(newEffect);;
 
-    //Add Water Damage with leach
+    //Add Water Damage with leech
     func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(std::bind(&EffectFunctions::DrainMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeWater));
     newEffect = new EffectFactory(func, 53, 0.3f);
     calc = newEffect->GetStrengthCalculation();
@@ -429,7 +429,7 @@ EffectFactoryList::EffectFactoryList()
     newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
     m_effects.push_back(newEffect);
 
-    //Add Earth Damage with leach
+    //Add Earth Damage with leech
     func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(std::bind(&EffectFunctions::DrainMagicDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypeEarth));
     newEffect = new EffectFactory(func, 54, 0.3f);
     calc = newEffect->GetStrengthCalculation();
@@ -442,7 +442,7 @@ EffectFactoryList::EffectFactoryList()
     newEffect->AddEffectType(BattleEnums::EffectTypeDamage);
     m_effects.push_back(newEffect);
 
-    //Add Physical Damage with leach
+    //Add Physical Damage with leech
     func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(std::bind(&EffectFunctions::DrainPhysicalDmg,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, BattleEnums::AttackTypePhysical));
     newEffect = new EffectFactory(func, 55, 0.3f);
     calc = newEffect->GetStrengthCalculation();
@@ -463,7 +463,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Everything from 5% to 300% buff
     calc->AddStrengthValue(0.05f, 3.0f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(10.0f);
     //Strength Buff fits Fire and Earth or Physical
     newEffect->AddAttackType(BattleEnums::AttackTypeFire);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
@@ -480,7 +480,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Everything from 5% to 300% buff
     calc->AddStrengthValue(0.05f, 3.0f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(10.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
@@ -495,7 +495,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Everything from 5% to 300% buff
     calc->AddStrengthValue(0.05f, 3.0f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(10.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuffDefense);
@@ -509,7 +509,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Everything from 5% to 300% buff
     calc->AddStrengthValue(0.05f, 3.0f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(10.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeFire);
     newEffect->AddAttackType(BattleEnums::AttackTypeWater);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
@@ -524,7 +524,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Everything from 5% to 300% buff
     calc->AddStrengthValue(0.05f, 3.0f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(10.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
     newEffect->AddAttackType(BattleEnums::AttackTypeAir);
     newEffect->AddAttackType(BattleEnums::AttackTypeWater);
@@ -542,7 +542,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Everything from 5% to 300% buff
     calc->AddStrengthValue(0.05f, 3.0f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(5.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuffDefense);
@@ -556,7 +556,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Everything from 5% to 300% buff
     calc->AddStrengthValue(0.05f, 3.0f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(5.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeWater);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuffDefense);
@@ -570,7 +570,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Everything from 5% to 300% buff
     calc->AddStrengthValue(0.05f, 3.0f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(5.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeAir);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuffDefense);
@@ -584,7 +584,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Everything from 5% to 300% buff
     calc->AddStrengthValue(0.05f, 3.0f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(5.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuffDefense);
@@ -598,7 +598,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Everything from 5% to 300% buff
     calc->AddStrengthValue(0.05f, 3.0f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(5.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeFire);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuffDefense);
@@ -671,7 +671,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Debuff for something between 2 and 66%
     calc->AddStrengthValue(0.02f, 0.66f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(15.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeFire);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
@@ -687,7 +687,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Debuff for something between 2 and 66%
     calc->AddStrengthValue(0.02f, 0.66f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(15.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
     newEffect->AddEffectType(BattleEnums::EffectTypeDebuff);
@@ -702,7 +702,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Debuff for something between 2 and 66%
     calc->AddStrengthValue(0.02f, 0.66f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(15.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddAttackType(BattleEnums::AttackTypeAir);
     newEffect->AddEffectType(BattleEnums::EffectTypeDebuff);
@@ -717,7 +717,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Debuff for something between 2 and 66%
     calc->AddStrengthValue(0.02f, 0.66f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(15.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeFire);
     newEffect->AddAttackType(BattleEnums::AttackTypeWater);
     newEffect->AddEffectType(BattleEnums::EffectTypeDebuff);
@@ -732,7 +732,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Debuff for something between 2 and 66%
     calc->AddStrengthValue(0.02f, 0.66f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(15.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
     newEffect->AddAttackType(BattleEnums::AttackTypeAir);
     newEffect->AddAttackType(BattleEnums::AttackTypeWater);
@@ -751,7 +751,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Everything from 5% to 66% debuff
     calc->AddStrengthValue(0.05f, 3.0f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(7.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
     newEffect->AddEffectType(BattleEnums::EffectTypeDebuff);
     newEffect->AddEffectType(BattleEnums::EffectTypeDebuffDefense);
@@ -765,7 +765,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Everything from 5% to 66% debuff
     calc->AddStrengthValue(0.05f, 3.0f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(7.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeWater);
     newEffect->AddEffectType(BattleEnums::EffectTypeDebuff);
     newEffect->AddEffectType(BattleEnums::EffectTypeDebuffDefense);
@@ -779,7 +779,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Everything from 5% to 66% debuff
     calc->AddStrengthValue(0.05f, 3.0f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(7.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeAir);
     newEffect->AddEffectType(BattleEnums::EffectTypeDebuff);
     newEffect->AddEffectType(BattleEnums::EffectTypeDebuffDefense);
@@ -793,7 +793,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Everything from 5% to 66% debuff
     calc->AddStrengthValue(0.05f, 3.0f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(7.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddEffectType(BattleEnums::EffectTypeDebuff);
     newEffect->AddEffectType(BattleEnums::EffectTypeDebuffDefense);
@@ -807,7 +807,7 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(2.0f, 10.0f, 1.0f);
     //Everything from 5% to 66% debuff
     calc->AddStrengthValue(0.05f, 3.0f);
-    calc->SetMultiplier(25.0f);
+    calc->SetMultiplier(7.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeFire);
     newEffect->AddEffectType(BattleEnums::EffectTypeDebuff);
     newEffect->AddEffectType(BattleEnums::EffectTypeDebuffDefense);
@@ -835,7 +835,7 @@ EffectFactoryList::EffectFactoryList()
     calc = newEffect->GetStrengthCalculation();
     //Everything from 1 to 300 hp heal
     calc->AddStrengthValue(1.0f, 300.0f, 1.0f);
-    calc->SetMultiplier(1.0f);
+    calc->SetMultiplier(3.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddEffectType(BattleEnums::EffectTypePassive);
@@ -871,7 +871,7 @@ EffectFactoryList::EffectFactoryList()
     passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(&PassiveSkillEffectFunctions::ShowHp);
     newEffect = new EffectFactoryPassive(passiveFunc, 100102);
     calc = newEffect->GetStrengthCalculation();
-    calc->SetMultiplier(12.0f);
+    calc->SetMultiplier(20.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddEffectType(BattleEnums::EffectTypePassive);
@@ -892,7 +892,7 @@ EffectFactoryList::EffectFactoryList()
     passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(&PassiveSkillEffectFunctions::ShowMap);
     newEffect = new EffectFactoryPassive(passiveFunc, 100104);
     calc = newEffect->GetStrengthCalculation();
-    calc->SetMultiplier(12.0f);
+    calc->SetMultiplier(20.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypePhysical);
     newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddAttackType(BattleEnums::AttackTypeAir);
