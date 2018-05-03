@@ -69,6 +69,7 @@ class GameController
         bool m_quit;
         SceneManager::SceneManagerType m_quitTo;
         bool m_gameOver;
+        bool m_currentGameWasLoaded;
         Party m_party;
         sf::RenderTarget* m_renderTarget;
         int m_windowWidth;

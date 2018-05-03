@@ -96,6 +96,7 @@ GameController::~GameController()
 void GameController::InitValues()
 {
     m_lastDungeon = 0;
+    m_currentGameWasLoaded = false;
 }
 
 bool GameController::IsWindowFocused()
@@ -361,7 +362,10 @@ void GameController::GameOverCheck()
         }
     }
     //Remove save file
-    RemoveSaveFile();
+    if(m_currentGameWasLoaded)
+    {
+        RemoveSaveFile();
+    }
 }
 
 void GameController::GameOver()
@@ -433,6 +437,7 @@ bool GameController::LoadFromFile()
         m_party = Party();
         iarchive(m_party, m_sceneManager);
         InitValues();
+        m_currentGameWasLoaded = true;
         return true;
     }
     catch(...)
