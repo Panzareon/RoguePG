@@ -484,8 +484,8 @@ void SceneManagerBattle::ShowMenuForNext()
         }
     }
     m_mainMenu->AddOption(local->GetLocalization("battle_menu.skill"), std::function<void()>(std::bind(&BattleFunctions::SkillList, this, m_next)), std::function<void()>(std::bind(&BattleFunctions::SetDescription, this, local->GetLocalization("battle_menu.skill.desc"))), showSkills);
-    m_mainMenu->AddOption(local->GetLocalization("menu.equipment"),std::function<void()>(&MenuFunctions::OpenEquipment),true);
-    m_mainMenu->AddOption(local->GetLocalization("menu.status"),std::function<void()>(std::bind(&BattleFunctions::OpenStatus,this)),true);
+    m_mainMenu->AddOption(local->GetLocalization("menu.equipment"),std::function<void()>(&MenuFunctions::OpenEquipment), std::function<void()>(std::bind(&BattleFunctions::SetDescription, this, local->GetLocalization("battle_menu.equipment.desc"))),true);
+    m_mainMenu->AddOption(local->GetLocalization("menu.status"),std::function<void()>(std::bind(&BattleFunctions::OpenStatus,this)), std::function<void()>(std::bind(&BattleFunctions::SetDescription, this, local->GetLocalization("battle_menu.status.desc"))),true);
     SetDescription(local->GetLocalization("battle_menu.attack.desc"));
     //TODO: add other Battle Options
 

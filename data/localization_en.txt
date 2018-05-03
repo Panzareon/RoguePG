@@ -5,6 +5,9 @@ battle_menu.attack = Attack
 battle_menu.attack.desc = Attack the enemy with your weapon
 battle_menu.skill = Skill
 battle_menu.skill.desc = Use a learnt skill.
+battle_menu.equipment.desc = Show Equipment of heroes
+battle_menu.status.desc = Show Status of heroes and enemies
+
 
 battle_gui.next = Next
 
