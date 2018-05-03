@@ -124,6 +124,11 @@ void MenuNode::EnableSorting(std::function<void(int, int)>onSort)
     m_sortingAvailable = true;
 }
 
+void MenuNode::SetEnableSorting(bool enabled)
+{
+    m_sortingAvailable = enabled;
+}
+
 void MenuNode::NextAvailable(bool next)
 {
     m_nextAvailable = next;

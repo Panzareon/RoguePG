@@ -24,6 +24,7 @@ class MenuNode : public Node
         virtual void CallOnCancel(std::function<void()> func);
         //Function is called after Sorting, first value is the sorted item, second value is the new position
         void EnableSorting(std::function<void(int,int)> onSort);
+        void SetEnableSorting(bool enabled);
         void CancelAvailable(bool cancel);
         //Does Right Button do something (Default disabled)
         virtual void NextAvailable(bool next);

@@ -6,12 +6,15 @@
 #include "AttributeNodesDisplay.h"
 #include "SceneGraph/AnimatedNode.h"
 
+class SceneManagerBattle;
+
 class SceneManagerStatus : AttributeNodesDisplay, public SceneManager
 {
     public:
-        SceneManagerStatus();
+        SceneManagerStatus(SceneManagerBattle* battle = nullptr);
         virtual ~SceneManagerStatus();
-        void ShowForEntity(PartyMember* partyMember);
+        void ShowForEntity(Entity* entity);
+        void ShowForPartyMember(PartyMember* partyMember);
 
         void SetDescription(std::string str);
         void DeselectSkills();
@@ -28,8 +31,16 @@ class SceneManagerStatus : AttributeNodesDisplay, public SceneManager
         virtual bool PausesSceneManagerBelow();
         virtual SceneManagerType GetType();
     protected:
+        void MoveDown();
+        void MoveUp();
+
+
+        SceneManagerBattle* m_battle;
+
+        bool m_canSort;
 
         int m_selectedMember;
+        Entity* m_selectedEntity;
 
         std::vector<std::shared_ptr<PartyMember> >* m_partyMember;
 

@@ -4,6 +4,7 @@
 #include "SceneGraph/DrawableNode.h"
 #include "Controller/Localization.h"
 #include "Party/CharacterClass.h"
+#include "SceneManagerBattle.h"
 
 namespace MenuFunctions
 {
@@ -26,8 +27,9 @@ namespace MenuFunctions
     }
 }
 
-SceneManagerStatus::SceneManagerStatus()
+SceneManagerStatus::SceneManagerStatus(SceneManagerBattle* battle)
 {
+    m_battle = battle;
     //ctor
     m_finished = false;
     m_skillsActive = false;
@@ -187,21 +189,74 @@ void SceneManagerStatus::Tick()
     }
     else if(controller->IsKeyPressed(Configuration::MoveUp))
     {
-        if(m_selectedMember > 0)
-        {
-            m_selectedMember--;
-            ShowForEntity(m_partyMember->at(m_selectedMember).get());
-        }
+        MoveUp();
     }
     else if(controller->IsKeyPressed(Configuration::MoveDown))
+    {
+        MoveDown();
+    }
+}
+
+void SceneManagerStatus::MoveDown()
+{
+    if(m_battle == nullptr)
     {
         if(m_selectedMember < m_partyMember->size() - 1)
         {
             m_selectedMember++;
-            ShowForEntity(m_partyMember->at(m_selectedMember).get());
+            ShowForPartyMember(m_partyMember->at(m_selectedMember).get());
+        }
+    }
+    else
+    {
+        if(m_selectedMember < m_partyMember->size() - 1)
+        {
+            m_selectedMember++;
+            ShowForPartyMember(m_partyMember->at(m_selectedMember).get());
+        }
+        else if(m_selectedMember < m_partyMember->size() + m_battle->GetEnemies()->size() - 1)
+        {
+            m_selectedMember++;
+            ShowForEntity(m_battle->GetEnemies()->at(m_selectedMember - m_partyMember->size()));
+        }
+        else
+        {
+            m_selectedMember = 0;
+            ShowForPartyMember(m_partyMember->at(m_selectedMember).get());
         }
     }
 }
+
+void SceneManagerStatus::MoveUp()
+{
+    if(m_battle == nullptr)
+    {
+        if(m_selectedMember > 0)
+        {
+            m_selectedMember--;
+            ShowForPartyMember(m_partyMember->at(m_selectedMember).get());
+        }
+    }
+    else
+    {
+        if(m_selectedMember == 0)
+        {
+            m_selectedMember = m_partyMember->size() + m_battle->GetEnemies()->size() - 1;
+            ShowForEntity(m_battle->GetEnemies()->at(m_selectedMember - m_partyMember->size()));
+        }
+        else if(m_selectedMember < m_partyMember->size() + 1)
+        {
+            m_selectedMember--;
+            ShowForPartyMember(m_partyMember->at(m_selectedMember).get());
+        }
+        else
+        {
+            m_selectedMember--;
+            ShowForEntity(m_battle->GetEnemies()->at(m_selectedMember - m_partyMember->size()));
+        }
+    }
+}
+
 
 bool SceneManagerStatus::IsFinished()
 {
@@ -218,19 +273,24 @@ bool SceneManagerStatus::PausesSceneManagerBelow()
     return true;
 }
 
-void SceneManagerStatus::ShowForEntity(PartyMember* partyMember)
+void SceneManagerStatus::ShowForEntity(Entity* entity)
 {
+    m_canSort = false;
+    m_skills->SetEnableSorting(m_canSort);
+
     Localization* localization = Localization::GetInstance();
-    m_name->SetText(partyMember->GetName());
-    UpdateAttributeNode(partyMember, 0);
-    m_manaAndHealth->SetEntity(partyMember);
-    m_level->SetText(localization->GetLocalization("menu.status.level") + std::to_string(partyMember->GetLevel()));
-    m_exp->setSize(sf::Vector2f(partyMember->GetExpPercent()* (m_expWidth - 2.0f), m_expHeight - 2.0f));
-    m_battleSprite->SetSprite(partyMember->GetBattleSprite(), partyMember->GetNumberSprites());
-    m_class->SetText(localization->GetLocalization(partyMember->GetClass()->GetName()));
+    m_name->SetText(entity->GetName());
+    UpdateAttributeNode(entity, 0);
+    m_manaAndHealth->SetEntity(entity);
+    m_battleSprite->SetSprite(entity->GetBattleSprite(), entity->GetNumberSprites());
+
+    //Remove previous values
+    m_level->SetText("");
+    m_exp->setSize(sf::Vector2f(0.0f, m_expHeight - 2.0f));
+    m_class->SetText("");
 
     m_skills->ResetOptions();
-    std::vector<std::shared_ptr<Skill>>* skills = partyMember->GetSkillList();
+    std::vector<std::shared_ptr<Skill>>* skills = entity->GetSkillList();
     int skillNr = 0;
     for(int i = 0; i < skills->size(); i++)
     {
@@ -242,7 +302,7 @@ void SceneManagerStatus::ShowForEntity(PartyMember* partyMember)
     }
 
     m_passiveEffects->ResetOptions();
-    std::multimap<int, std::shared_ptr<IPassiveEffect>>* passiveEffects = partyMember->GetPassiveEffects();
+    std::multimap<int, std::shared_ptr<IPassiveEffect>>* passiveEffects = entity->GetPassiveEffects();
     for(auto it = passiveEffects->begin(); it != passiveEffects->end();it++)
     {
         if(!it->second->IsEquipment())
@@ -250,6 +310,18 @@ void SceneManagerStatus::ShowForEntity(PartyMember* partyMember)
             m_passiveEffects->AddDisabledOption(localization->GetLocalization(it->second->GetName()), std::function<void()>(std::bind(&MenuFunctions::SetDescription,this, it->second->GetLocalizedDescription())));
         }
     }
+}
+
+void SceneManagerStatus::ShowForPartyMember(PartyMember* partyMember)
+{
+    ShowForEntity(partyMember);
+
+    Localization* localization = Localization::GetInstance();
+    m_canSort = true;
+    m_skills->SetEnableSorting(m_canSort);
+    m_level->SetText(localization->GetLocalization("menu.status.level") + std::to_string(partyMember->GetLevel()));
+    m_exp->setSize(sf::Vector2f(partyMember->GetExpPercent()* (m_expWidth - 2.0f), m_expHeight - 2.0f));
+    m_class->SetText(localization->GetLocalization(partyMember->GetClass()->GetName()));
 }
 
 void SceneManagerStatus::DeselectSkills()
@@ -285,7 +357,11 @@ void SceneManagerStatus::SetDescription(std::string str)
 
 void SceneManagerStatus::MoveSkillPosition(int from, int to)
 {
-    std::vector<std::shared_ptr<Skill>>* skills = m_partyMember->at(m_selectedMember)->GetSkillList();
+    if(!m_canSort)
+    {
+        return;
+    }
+    std::vector<std::shared_ptr<Skill>>* skills = m_selectedEntity->GetSkillList();
     int skillNr = 0;
     int fromId, toId;
     for(int i = 0; i < skills->size(); i++)
