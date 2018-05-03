@@ -1,5 +1,16 @@
+v0.20
+To ensure perma-death:
+Save and Quit is combined to one option
+on a Game Over during a loaded game, the save is deleted
 
+Passive effect show additional information
+Added Skill that prevents a given amount of damage
+Added Skill that reduces damage taken to 1
+Buff and Debuff skills have more impact
+Added Skill to show enemy stats
 
+Fixed Bug that all Skills would cost 0 Mana
+Bug Fixes
 
 v0.19
 Updated the Choose Hero Menu
