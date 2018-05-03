@@ -147,13 +147,13 @@ void SceneManagerEquipment::SelectMember(PartyMember* member)
     m_equipmentItems->EnableSorting(std::function<void(int,int)>(std::bind(&MenuFunctions::MoveEquipment,this, std::placeholders::_1,std::placeholders::_2)));
     m_equipmentItems->PreviousAvailable(true);
     //Set Menu looks
-    m_equipmentItems->SetMaxShownOptions(9);
+    m_equipmentItems->SetMaxShownOptions(12);
     m_equipmentItems->moveNode(322,1);
     m_equipmentItems->SetBackgroundColor(sf::Color::Transparent);
     m_equipmentItems->SetForegroundColor(sf::Color::Black);
     m_equipmentItems->SetOutlineColor(sf::Color::Transparent);
     m_equipmentItems->SetSelectedColor(sf::Color::Blue);
-    m_equipmentItems->SetFontSize(30);
+    m_equipmentItems->SetFontSize(20);
     m_equipmentItems->SetSpacing(5);
     //For now only Weapons
     m_pos = Equipment::MainHand;
@@ -344,7 +344,7 @@ void SceneManagerEquipment::RemoveEquipmentSkillMenu()
 
 void SceneManagerEquipment::SetEquipmentSkillMenu(std::shared_ptr<Equipment> equipment)
 {
-    int height = 45;
+    int height = 25;
     int width = 150;
     if(m_equipmentSkills != nullptr)
     {
