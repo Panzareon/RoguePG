@@ -1,5 +1,6 @@
 #include "Battle/PassiveEffect.h"
 #include "Battle/EffectBase.h"
+#include "Localization.h"
 
 PassiveEffect::PassiveEffect(bool buff, int duration, NamedItem* causingEffect, bool staysAfterBattle)
 {
@@ -10,6 +11,8 @@ PassiveEffect::PassiveEffect(bool buff, int duration, NamedItem* causingEffect, 
     m_causingEffect = causingEffect;
     m_movementspeedMultiplier = 1.0f;
     m_showEnemyHealth = false;
+    m_additionalDescription = "";
+    m_additionalDescriptionValues = nullptr;
 }
 
 PassiveEffect::~PassiveEffect()
@@ -25,6 +28,11 @@ PassiveEffect::~PassiveEffect()
         delete m_getExp[i];
     for(int i = 0; i < m_onBattleFinished.size(); i++)
         delete m_onBattleFinished[i];
+
+    if(m_additionalDescriptionValues != nullptr)
+    {
+        delete m_additionalDescriptionValues;
+    }
 }
 
 void PassiveEffect::OnTurn(Entity* target)
@@ -121,7 +129,29 @@ std::string PassiveEffect::GetName()
 
 std::string PassiveEffect::GetLocalizedDescription()
 {
-    return m_causingEffect->GetLocalizedDescription();
+    std::string retval = "";
+
+    if(m_duration > 0)
+    {
+        std::vector<float> values;
+        values.push_back(m_duration);
+        retval += Localization::GetInstance()->GetLocalizationWithFloats("effect.duration", &values) + " ";
+    }
+
+    retval += m_causingEffect->GetLocalizedDescription();
+
+    if(m_additionalDescription != "")
+    {
+        retval += " " + Localization::GetInstance()->GetLocalizationWithFloats(m_additionalDescription, m_additionalDescriptionValues);
+    }
+
+    return retval;
+}
+
+void PassiveEffect::AddDescription(std::string descriptionName, std::vector<float>* descriptionValues)
+{
+    m_additionalDescription = descriptionName;
+    m_additionalDescriptionValues = descriptionValues;
 }
 
 bool PassiveEffect::ShowEnemyHealth(bool base)

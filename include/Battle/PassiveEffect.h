@@ -43,6 +43,8 @@ class PassiveEffect: public IPassiveEffect
         virtual std::string GetName();
         virtual std::string GetLocalizedDescription();
 
+        void AddDescription(std::string descriptionName, std::vector<float>* descriptionValues);
+
     protected:
         NamedItem* m_causingEffect;
         bool m_buff;
@@ -59,6 +61,9 @@ class PassiveEffect: public IPassiveEffect
         float m_movementspeedMultiplier;
         bool m_showEnemyHealth;
         bool m_showCompleteMap;
+
+        std::string m_additionalDescription;
+        std::vector<float>* m_additionalDescriptionValues;
     private:
 };
 
