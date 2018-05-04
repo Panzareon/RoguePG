@@ -173,7 +173,7 @@ Animation* AnimationFactory::GetTextAnimation(Entity* target, std::string text, 
     ret = new Animation(0.2f);
     AnimationPartText* part = new AnimationPartText(text, color, 12);
     sf::FloatRect bounds = part->GetText()->getLocalBounds();
-    startTransform.translate((startPos.width - bounds.width) / 2, (startPos.height - bounds.height) / 2);
+    startTransform.translate((startPos.width - bounds.width) / 2, - bounds.height / 2);
     part->SetTiming(0.0f, 0.2f);
     part->SetStartTransform(startTransform);
     part->SetTranslation(-3.0f, - 10.0f);

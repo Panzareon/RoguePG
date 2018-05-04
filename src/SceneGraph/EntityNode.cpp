@@ -12,6 +12,7 @@ EntityNode::EntityNode(SceneManagerBattle* sm, Entity* entity): AnimatedNode(ent
     m_entityHpBar->ShowMpBar(false);
     m_entityHpBar->ShowNumbers(false);
     sf::FloatRect rect = entity->GetBattleSprite()->getLocalBounds();
+    setBoundingBox(rect);
     m_entityHpBar->SetSize(rect.width, 5);
     m_entityHpBar->moveNode(0.0f, rect.height);
     addChild(m_entityHpBar);
