@@ -71,15 +71,17 @@ namespace PassiveEffectFunctions
         if(preventAmount->at(0) > baseAmount)
         {
             preventAmount->at(0) -= baseAmount;
-            return 0;
+            baseAmount = 0;
         }
         else
         {
             //No longer prevents damage
+            baseAmount -= preventAmount->at(0);
             preventAmount->at(0) = 0;
             effect->SetDuration(0);
-            return baseAmount - preventAmount->at(0);
         }
+
+        return baseAmount;
     }
     int ReduceDamage(Attack* att, Entity* target, Entity* attacker, int baseAmount, int reduceTo)
     {
