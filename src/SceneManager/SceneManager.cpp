@@ -74,10 +74,14 @@ void SceneManager::NextTick()
     if(m_gui != nullptr)
         m_gui->Tick(time);
     //Call Ticks on Animation
+    bool finished = false;
     auto iter = m_animationList.begin();
-    while(iter != m_animationList.end())
+    while(iter != m_animationList.end() && !finished)
     {
         (*iter)->PassTime(time);
+
+        finished = (*iter)->StopsOther();
+
         if((*iter)->IsFinished())
         {
             delete (*iter);

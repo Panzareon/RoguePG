@@ -14,10 +14,14 @@ class Animation
         void PassTime(float Time);
         bool IsFinished();
         void AddStep(AnimationPart* part);
+        //Set whether later added animations should stop until this is finished
+        void SetStopsOther(bool stopsOther);
+        bool StopsOther();
     protected:
     private:
         float m_animationTime;
         float m_maxTime;
+        bool m_stopsOther;
         std::vector<AnimationPart*> m_animationParts;
 };
 

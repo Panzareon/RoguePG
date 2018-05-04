@@ -5,6 +5,7 @@ Animation::Animation(float maxTime)
     //ctor
     m_animationTime = 0.0f;
     m_maxTime = maxTime;
+    m_stopsOther = false;
 }
 
 Animation::~Animation()
@@ -39,4 +40,14 @@ bool Animation::IsFinished()
 void Animation::AddStep(AnimationPart* part)
 {
     m_animationParts.push_back(part);
+}
+
+bool Animation::StopsOther()
+{
+    return m_stopsOther;
+}
+
+void Animation::SetStopsOther(bool stopsOther)
+{
+    m_stopsOther = stopsOther;
 }

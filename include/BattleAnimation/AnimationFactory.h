@@ -22,7 +22,7 @@ class AnimationFactory
         static Animation* GetAnimation(AnimationList anim, std::vector<Entity* >* targets);
         static Animation* GetAnimation(AnimationList anim, sf::FloatRect startPos);
 
-        static Animation* GetTextAnimation(Entity* target, std::string text, sf::Color color);
+        static Animation* GetTextAnimation(Entity* target, std::string text, sf::Color color, float xTranslate = 0.0f, float yTranslate = 0.0f);
 
     protected:
 

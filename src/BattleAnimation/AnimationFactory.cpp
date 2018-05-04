@@ -159,7 +159,7 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
 
 }
 
-Animation* AnimationFactory::GetTextAnimation(Entity* target, std::string text, sf::Color color)
+Animation* AnimationFactory::GetTextAnimation(Entity* target, std::string text, sf::Color color, float xTranslate, float yTranslate )
 {
     if(target->GetNode() == nullptr)
     {
@@ -168,7 +168,7 @@ Animation* AnimationFactory::GetTextAnimation(Entity* target, std::string text, 
     }
     sf::FloatRect startPos = target->GetNode()->getGlobalBoundingBox();
     sf::Transform startTransform;
-    startTransform.translate(startPos.left, startPos.top);
+    startTransform.translate(startPos.left + xTranslate, startPos.top + yTranslate);
     Animation* ret;
     ret = new Animation(0.2f);
     AnimationPartText* part = new AnimationPartText(text, color, 12);
