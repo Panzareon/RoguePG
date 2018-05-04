@@ -323,6 +323,7 @@ bool SceneManagerStatus::PausesSceneManagerBelow()
 
 void SceneManagerStatus::ShowForEntity(Entity* entity)
 {
+    m_selectedEntity = entity;
     m_canSort = false;
     m_skills->SetEnableSorting(m_canSort);
 
@@ -439,9 +440,12 @@ void SceneManagerStatus::MoveSkillPosition(int from, int to)
         }
     }
 
-    std::shared_ptr<Skill> temp = skills->at(fromId);
-    skills->erase(skills->begin()+ fromId);
-    skills->insert(skills->begin() + toId, temp);
+    if(skillNr > fromId && skillNr > toId)
+    {
+        std::shared_ptr<Skill> temp = skills->at(fromId);
+        skills->erase(skills->begin()+ fromId);
+        skills->insert(skills->begin() + toId, temp);
+    }
 }
 
 SceneManager::SceneManagerType SceneManagerStatus::GetType()
