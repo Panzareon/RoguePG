@@ -13,6 +13,9 @@ PassiveEffect::PassiveEffect(bool buff, int duration, NamedItem* causingEffect, 
     m_showEnemyHealth = false;
     m_additionalDescription = "";
     m_additionalDescriptionValues = nullptr;
+
+    //Passive Effect have higher Prio (are called later) than equipment by default
+    m_prio = 100;
 }
 
 PassiveEffect::~PassiveEffect()
@@ -139,6 +142,11 @@ bool PassiveEffect::SetDuration(int duration)
 int PassiveEffect::GetActivationPriority()
 {
     return m_prio;
+}
+
+void PassiveEffect::SetActivationPriority(int prio)
+{
+    m_prio = prio;
 }
 
 std::string PassiveEffect::GetName()

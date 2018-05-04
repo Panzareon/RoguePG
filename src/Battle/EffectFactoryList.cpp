@@ -249,6 +249,9 @@ namespace EffectFunctions
             eff->AddOnLooseHp(new std::function<int(Attack*, Entity*, Entity*, int)>(
                 std::bind(&PassiveEffectFunctions::PreventDamage,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4,values,eff)));
             eff->AddDescription("effect.1101.additional_desc", values);
+
+            //Should be called after Reduce Damage effect
+            eff->SetActivationPriority(200);
             targets->at(i)->AddPassiveEffect(eff);
         }
     }
@@ -261,6 +264,9 @@ namespace EffectFunctions
             PassiveEffect* eff = new PassiveEffect(true, (int)strength->at(0), effect);
             eff->AddOnLooseHp(new std::function<int(Attack*, Entity*, Entity*, int)>(
                 std::bind(&PassiveEffectFunctions::ReduceDamage,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, reduceTo)));
+
+            //Should be called before Prevent Damage effect
+            eff->SetActivationPriority(50);
             targets->at(i)->AddPassiveEffect(eff);
         }
     }

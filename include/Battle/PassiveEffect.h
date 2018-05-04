@@ -33,6 +33,7 @@ class PassiveEffect: public IPassiveEffect
         virtual bool SetDuration(int duration);
 
         virtual int GetActivationPriority();
+        void SetActivationPriority(int prio);
         void AddAttributeEffect(std::function<float(float,BattleEnums::Attribute)>* attributeFunction);
         void AddOnAttacked(std::function<void(Attack*, Entity*, Entity*)>* onAttacked);
         void AddOnLooseHp(std::function<int(Attack*, Entity*, Entity*, int)>* onLooseHp);
