@@ -17,6 +17,7 @@ class SceneManagerStatus : AttributeNodesDisplay, public SceneManager
         void ShowForPartyMember(PartyMember* partyMember);
 
         void SetDescription(std::string str);
+        void UpdateResistances(Entity* entity);
         void DeselectSkills();
         void SelectSkills();
         void DeselectPassiveEffects();
@@ -53,6 +54,9 @@ class SceneManagerStatus : AttributeNodesDisplay, public SceneManager
         float m_expWidth;
         float m_expHeight;
         sf::RectangleShape* m_exp;
+        float m_resistanceWidth;
+        float m_resistanceHeight;
+        std::map<BattleEnums::AttackType, sf::RectangleShape*> m_elementalResistances;
         EntityBarsNode* m_manaAndHealth;
         AnimatedNode* m_battleSprite;
 

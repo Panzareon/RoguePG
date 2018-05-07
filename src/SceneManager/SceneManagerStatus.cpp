@@ -36,6 +36,8 @@ SceneManagerStatus::SceneManagerStatus(SceneManagerBattle* battle, Entity* start
     m_passiveEffectsActive = false;
     m_expWidth = 100.0f;
     m_expHeight = 15.0f;
+    m_resistanceWidth = 15.0f;
+    m_resistanceHeight = 38.0f;
 
     GameController* controller = GameController::getInstance();
     Party* party = controller->getParty();
@@ -125,6 +127,22 @@ SceneManagerStatus::SceneManagerStatus(SceneManagerBattle* battle, Entity* start
     Node* expNode = new DrawableNode(m_exp);
     expNode->moveNode(1.0f,1.0f);
     expBackgroundNode->addChild(expNode);
+
+    int resistanceX = 173;
+    int resistanceY = 152;
+    int resistanceXDelta = 28;
+    for(int i = 0; i < BattleEnums::ATTACK_TYPE_END; i++)
+    {
+        BattleEnums::AttackType attackType = (BattleEnums::AttackType)i;
+        sf::RectangleShape* rect = new sf::RectangleShape(sf::Vector2f(m_resistanceWidth, 0));
+
+        m_elementalResistances[attackType] = rect;
+        Node* node = new DrawableNode(rect);
+        node->moveNode(resistanceX, resistanceY);
+        background->addChild(node);
+
+        resistanceX += resistanceXDelta;
+    }
 
 
     m_manaAndHealth = new EntityBarsNode(member);
@@ -342,6 +360,7 @@ void SceneManagerStatus::ShowForEntity(Entity* entity)
     {
         m_manaAndHealth->SetEntity(entity);
         UpdateAttributeNode(entity, 0);
+        UpdateResistances(entity);
 
 
         std::vector<std::shared_ptr<Skill>>* skills = entity->GetSkillList();
@@ -368,6 +387,7 @@ void SceneManagerStatus::ShowForEntity(Entity* entity)
     {
         m_manaAndHealth->SetEntity(nullptr);
         UpdateAttributeNode(nullptr, 0);
+        UpdateResistances(nullptr);
     }
 }
 
@@ -381,6 +401,52 @@ void SceneManagerStatus::ShowForPartyMember(PartyMember* partyMember)
     m_level->SetText(localization->GetLocalization("menu.status.level") + std::to_string(partyMember->GetLevel()));
     m_exp->setSize(sf::Vector2f(partyMember->GetExpPercent()* (m_expWidth - 2.0f), m_expHeight - 2.0f));
     m_class->SetText(localization->GetLocalization(partyMember->GetClass()->GetName()));
+}
+
+void SceneManagerStatus::UpdateResistances(Entity* entity)
+{
+
+    for(int i = 0; i < BattleEnums::ATTACK_TYPE_END; i++)
+    {
+        BattleEnums::AttackType type = (BattleEnums::AttackType)i;
+        if(entity != nullptr)
+        {
+            float resistance = entity->GetResistanceFor(type);
+            resistance -= 1.0f;
+            if(resistance > 0.001f)
+            {
+                float height = resistance * m_resistanceHeight;
+                if(height > m_resistanceHeight)
+                {
+                    height = m_resistanceHeight;
+                }
+                m_elementalResistances[type]->setFillColor(sf::Color::Green);
+                m_elementalResistances[type]->setSize(sf::Vector2f(m_resistanceWidth, height));
+                m_elementalResistances[type]->setOrigin(0.0f, height);
+            }
+            else if(resistance < -0.001f)
+            {
+                float height = resistance * m_resistanceHeight * -1.0f;
+                if(height > m_resistanceHeight)
+                {
+                    height = m_resistanceHeight;
+                }
+                m_elementalResistances[type]->setFillColor(sf::Color::Red);
+                m_elementalResistances[type]->setSize(sf::Vector2f(m_resistanceWidth, height));
+                m_elementalResistances[type]->setOrigin(0.0f, 1.0f);
+            }
+            else
+            {
+                m_elementalResistances[type]->setFillColor(sf::Color::Blue);
+                m_elementalResistances[type]->setSize(sf::Vector2f(m_resistanceWidth, 1.0f));
+                m_elementalResistances[type]->setOrigin(0.0f, 1.0f);
+            }
+        }
+        else
+        {
+            m_elementalResistances[type]->setSize(sf::Vector2f(m_resistanceWidth, 0.0f));
+        }
+    }
 }
 
 void SceneManagerStatus::DeselectSkills()
