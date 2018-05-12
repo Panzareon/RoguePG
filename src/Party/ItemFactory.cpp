@@ -361,8 +361,10 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
 
         retval->SetTypeResistance(BattleEnums::AttackTypeFire, 1.3f);
+        //Physical attacks get additional type fire, if this item is equipped
         retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
                 std::bind(&PassiveEffectFunctions::AddAttackType,std::placeholders::_1,std::placeholders::_2,BattleEnums::AttackTypeFire, true)));
+        //Physical attacks deal double damage
         retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
                 std::bind(&PassiveEffectFunctions::MultiplyDmg,std::placeholders::_1,std::placeholders::_2,2.0f, true)));
         break;
@@ -452,8 +454,10 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
 
         retval->SetSkillStrength(30);
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
+        //Magic attacks have additional Fire type if this item is equipped
         retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
                 std::bind(&PassiveEffectFunctions::AddAttackType,std::placeholders::_1,std::placeholders::_2,BattleEnums::AttackTypeFire, false)));
+        //Magic attacks deal double damage
         retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
                 std::bind(&PassiveEffectFunctions::MultiplyDmg,std::placeholders::_1,std::placeholders::_2,2.0f, false)));
         break;
