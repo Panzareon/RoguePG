@@ -408,6 +408,20 @@ void ItemFactory::LoadEquipment(Equipment::EquipmentPosition pos, int id, Equipm
         gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
 
         equipment->SetSkillStrength(20);
+
+        //Adding effect that reduces damage by 2
+        {
+            int reduceBy = 2;
+            std::vector<float> values;
+            values.push_back(reduceBy);
+            PassiveEffect* eff = new PassiveEffect(true, -1, localization->GetLocalization("effect.1103"), localization->GetLocalizationWithFloats("effect.1103.desc2", &values), true);
+            eff->AddOnLooseHp(new std::function<int(Attack*, Entity*, Entity*, int)>(
+                std::bind(&PassiveEffectFunctions::ReduceDamageBy,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, reduceBy)));
+            //Should be called before other Prevent Damage and reduce damage effects
+            eff->SetActivationPriority(125);
+            eff->StaysAfterBattle();
+            equipment->AddAdditionalEffect(std::shared_ptr<IPassiveEffect>(eff));
+        }
         break;
 
     case 103:
@@ -515,6 +529,20 @@ void ItemFactory::LoadEquipment(Equipment::EquipmentPosition pos, int id, Equipm
         equipment->SetSkillStrength(30);
 
         equipment->SetTypeResistance(BattleEnums::AttackTypeFire, 2.0f);
+
+        //Adding effect that reduces damage by 4
+        {
+            int reduceBy = 4;
+            std::vector<float> values;
+            values.push_back(reduceBy);
+            PassiveEffect* eff = new PassiveEffect(true, -1, localization->GetLocalization("effect.1103"), localization->GetLocalizationWithFloats("effect.1103.desc2", &values), true);
+            eff->AddOnLooseHp(new std::function<int(Attack*, Entity*, Entity*, int)>(
+                std::bind(&PassiveEffectFunctions::ReduceDamageBy,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, reduceBy)));
+            //Should be called before other Prevent Damage and reduce damage effects
+            eff->SetActivationPriority(125);
+            eff->StaysAfterBattle();
+            equipment->AddAdditionalEffect(std::shared_ptr<IPassiveEffect>(eff));
+        }
         break;
 
     case 1201:
