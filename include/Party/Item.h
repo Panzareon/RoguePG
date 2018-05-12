@@ -28,10 +28,15 @@ class Item
         void load(Archive & archive, std::uint32_t const version)
         {
             archive(m_itemId, m_itemType);
+            if(m_itemType != ItemTypeEquipment)
+            {
+                LoadItem();
+            }
         }
     protected:
         int m_itemId;
         ItemType m_itemType;
+        void LoadItem();
 
     private:
 };

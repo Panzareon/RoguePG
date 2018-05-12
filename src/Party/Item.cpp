@@ -1,4 +1,5 @@
 #include "Party/Item.h"
+#include "Party/ItemFactory.h"
 
 Item::Item()
 {
@@ -34,4 +35,9 @@ std::string Item::GetName()
 std::string Item::GetDescription()
 {
     return GetName() + ".desc";
+}
+
+void Item::LoadItem()
+{
+    ItemFactory::GetInstance()->LoadItem(m_itemType, m_itemId, this);
 }

@@ -18,8 +18,14 @@ class ItemFactory
         Item* GetRandomEquipment(ItemRarity rarity);
         Item* GetRandomEquipment(Equipment::EquipmentPosition pos, ItemRarity rarity);
 
+        //Creates an item
         Item* GetItem(Item::ItemType type, int id);
+        //Creates equipment
         Item* GetEquipment(Equipment::EquipmentPosition pos, int id);
+        //Sets values for an item
+        void LoadItem(Item::ItemType type, int id, Item* item);
+        //Sets values for equipment
+        void LoadEquipment(Equipment::EquipmentPosition pos, int id, Equipment* item);
 
     protected:
         static ItemFactory* m_instance;

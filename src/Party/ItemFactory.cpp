@@ -1,12 +1,15 @@
 #include "Party/ItemFactory.h"
 #include "Exception/InvalidArgumentException.h"
 #include "Controller/MathHelper.h"
+#include "Localization.h"
+#include "PassiveEffect.h"
 
 namespace PassiveEffectFunctions
 {
     void AddAttackType(Attack* att, Entity* attacker, BattleEnums::AttackType type, bool physical);
     void Heal(Entity* target, IPassiveEffect* passiveEffect, int hp);
     void MultiplyDmg(Attack* att, Entity* attacker, float multiply, bool physical);
+    int ReduceDamageBy(Attack* att, Entity* target, Entity* attacker, int baseAmount, int reduceBy);
 }
 
 ItemFactory* ItemFactory::m_instance = nullptr;
@@ -69,6 +72,8 @@ Item* ItemFactory::GetRandomEquipment(Equipment::EquipmentPosition pos, ItemRari
 Item* ItemFactory::GetItem(Item::ItemType type, int itemId)
 {
     Item* retval = new Item(itemId, type);
+    LoadItem(type, itemId, retval);
+
     switch(itemId)
     {
         //TODO: Init Item with Id itemId
@@ -76,7 +81,7 @@ Item* ItemFactory::GetItem(Item::ItemType type, int itemId)
     default:
         std::string msg("Invalid ItemId ");
         msg.append(std::to_string(itemId));
-        msg.append(" given.");
+        msg.append(" given in GetItem.");
         throw GenericException(msg);
     }
     return retval;
@@ -84,7 +89,9 @@ Item* ItemFactory::GetItem(Item::ItemType type, int itemId)
 
 Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
 {
+    Localization* localization = Localization::GetInstance();
     Equipment* retval = new Equipment(itemId,pos);
+    LoadEquipment(pos, itemId, retval);
     SkillGenerator* gen = retval->GetSkillGenerator();
 
     MathHelper* mathHelper = MathHelper::GetInstance();
@@ -96,6 +103,146 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(3,0,true));
         retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(3,0,true));
 
+        retval->AddSkillsToLearn(mathHelper->GetRandomInt(3,1,true));
+        break;
+
+    case 2:
+        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(6,3,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(6,3,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(6,3,true));
+
+        retval->AddSkillsToLearn(mathHelper->GetRandomInt(3,1,true));
+        break;
+
+    case 3:
+        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(3,0,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(6,3,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(6,3,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(6,3,true));
+
+        retval->AddSkillsToLearn(mathHelper->GetRandomInt(3,1,true));
+        break;
+
+    case 4:
+        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(3,0,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMaxMp, mathHelper->GetRandomInt(6,3,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeInt, mathHelper->GetRandomInt(6,3,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(3,0,true));
+
+        retval->AddSkillsToLearn(mathHelper->GetRandomInt(3,1,true));
+        break;
+
+    case 101:
+        retval->SetAttributeBuff(BattleEnums::AttributeStrength, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(5,2,true));
+
+        retval->AddSkillsToLearn(mathHelper->GetRandomInt(4,2,true));
+        break;
+
+    case 102:
+        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
+
+        retval->AddSkillsToLearn(mathHelper->GetRandomInt(4,2,true));
+        break;
+
+    case 103:
+        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(10,5,true));
+
+        retval->AddSkillsToLearn(mathHelper->GetRandomInt(4,2,true));
+        break;
+
+    case 104:
+        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMaxMp, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeInt, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(5,2,true));
+
+        retval->AddSkillsToLearn(mathHelper->GetRandomInt(4,2,true));
+        break;
+
+    case 1001:
+        retval->SetAttributeBuff(BattleEnums::AttributeStrength, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(5,2,true));
+
+        retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
+        break;
+
+    case 1101:
+        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
+
+        retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
+        break;
+
+    case 1201:
+        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(10,5,true));
+
+        retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
+        break;
+
+    case 1301:
+        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeMaxMp, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeInt, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(5,2,true));
+
+        retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
+        break;
+
+
+        //TODO: Init Equipment with Id itemId
+    default:
+        std::string msg("Invalid ItemId ");
+        msg.append(std::to_string(itemId));
+        msg.append(" given in GetEquipment.");
+        throw GenericException(msg);
+    }
+    return retval;
+}
+
+void ItemFactory::LoadItem(Item::ItemType type, int id, Item* item)
+{
+    if(item->GetItemType() == Item::ItemTypeEquipment)
+    {
+        Equipment* equipment = (Equipment*)item;
+        LoadEquipment(equipment->GetEquipmentPosition(), id, equipment);
+    }
+    else
+    {
+        switch(id)
+        {
+            //TODO: Init Item with Id itemId
+
+        default:
+            std::string msg("Invalid ItemId ");
+            msg.append(std::to_string(id));
+            msg.append(" given in LoadItem.");
+            throw GenericException(msg);
+        }
+    }
+}
+
+void ItemFactory::LoadEquipment(Equipment::EquipmentPosition pos, int id, Equipment* equipment)
+{
+    Localization* localization = Localization::GetInstance();
+    SkillGenerator* gen = equipment->GetSkillGenerator();
+
+    switch(id)
+    {
+    case 1:
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.7f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.1f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
@@ -115,18 +262,13 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.5f, false);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.5f, false);
 
-        retval->SetSkillStrength(10);
-        retval->AddSkillsToLearn(mathHelper->GetRandomInt(3,1,true));
+        equipment->SetSkillStrength(10);
 
-        retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
+        equipment->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
                 std::bind(&PassiveEffectFunctions::MultiplyDmg,std::placeholders::_1,std::placeholders::_2,1.5f, true)));
         break;
 
     case 2:
-        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(6,3,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(6,3,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(6,3,true));
-
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.18f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.02f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.1f);
@@ -148,15 +290,25 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
 
-        retval->SetSkillStrength(10);
-        retval->AddSkillsToLearn(mathHelper->GetRandomInt(3,1,true));
+        equipment->SetSkillStrength(10);
+
+
+        //Adding effect that reduces damage by 1
+        {
+            int reduceBy = 1;
+            std::vector<float> values;
+            values.push_back(reduceBy);
+            PassiveEffect* eff = new PassiveEffect(true, -1, localization->GetLocalization("effect.1103"), localization->GetLocalizationWithFloats("effect.1103.desc2", &values), true);
+            eff->AddOnLooseHp(new std::function<int(Attack*, Entity*, Entity*, int)>(
+                std::bind(&PassiveEffectFunctions::ReduceDamageBy,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, reduceBy)));
+            //Should be called before other Prevent Damage and reduce damage effects
+            eff->SetActivationPriority(125);
+            eff->StaysAfterBattle();
+            equipment->AddAdditionalEffect(std::shared_ptr<IPassiveEffect>(eff));
+        }
         break;
 
     case 3:
-        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(3,0,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(6,3,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(6,3,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(6,3,true));
 
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.08f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.01f);
@@ -177,15 +329,10 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
 
-        retval->SetSkillStrength(10);
-        retval->AddSkillsToLearn(mathHelper->GetRandomInt(3,1,true));
+        equipment->SetSkillStrength(10);
         break;
 
     case 4:
-        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(3,0,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxMp, mathHelper->GetRandomInt(6,3,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeInt, mathHelper->GetRandomInt(6,3,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(3,0,true));
 
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.55f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.05f);
@@ -205,18 +352,13 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.7f, false);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.3f, false);
 
-        retval->SetSkillStrength(10);
-        retval->AddSkillsToLearn(mathHelper->GetRandomInt(3,1,true));
+        equipment->SetSkillStrength(10);
 
-        retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
+        equipment->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
                 std::bind(&PassiveEffectFunctions::MultiplyDmg,std::placeholders::_1,std::placeholders::_2,1.5f, false)));
         break;
 
     case 101:
-        retval->SetAttributeBuff(BattleEnums::AttributeStrength, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(5,2,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(5,2,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(5,2,true));
 
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.7f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.1f);
@@ -237,17 +379,13 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.5f, false);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.5f, false);
 
-        retval->SetSkillStrength(20);
-        retval->AddSkillsToLearn(mathHelper->GetRandomInt(4,2,true));
+        equipment->SetSkillStrength(20);
 
-        retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
+        equipment->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
                 std::bind(&PassiveEffectFunctions::MultiplyDmg,std::placeholders::_1,std::placeholders::_2,1.75f, true)));
         break;
 
     case 102:
-        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
 
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.2f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.05f);
@@ -269,15 +407,10 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
 
-        retval->SetSkillStrength(20);
-        retval->AddSkillsToLearn(mathHelper->GetRandomInt(4,2,true));
+        equipment->SetSkillStrength(20);
         break;
 
     case 103:
-        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(5,2,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(10,5,true));
 
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.08f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.01f);
@@ -298,15 +431,10 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
 
-        retval->SetSkillStrength(20);
-        retval->AddSkillsToLearn(mathHelper->GetRandomInt(4,2,true));
+        equipment->SetSkillStrength(20);
         break;
 
     case 104:
-        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(5,2,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxMp, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeInt, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(5,2,true));
 
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.55f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.05f);
@@ -326,18 +454,13 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.7f, false);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.3f, false);
 
-        retval->SetSkillStrength(20);
-        retval->AddSkillsToLearn(mathHelper->GetRandomInt(4,2,true));
+        equipment->SetSkillStrength(20);
 
-        retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
+        equipment->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
                 std::bind(&PassiveEffectFunctions::MultiplyDmg,std::placeholders::_1,std::placeholders::_2,1.75f, false)));
         break;
 
     case 1001:
-        retval->SetAttributeBuff(BattleEnums::AttributeStrength, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(5,2,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(5,2,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(5,2,true));
 
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.7f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.1f);
@@ -357,22 +480,18 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.5f, false);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.5f, false);
 
-        retval->SetSkillStrength(30);
-        retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
+        equipment->SetSkillStrength(30);
 
-        retval->SetTypeResistance(BattleEnums::AttackTypeFire, 1.3f);
+        equipment->SetTypeResistance(BattleEnums::AttackTypeFire, 1.3f);
         //Physical attacks get additional type fire, if this item is equipped
-        retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
+        equipment->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
                 std::bind(&PassiveEffectFunctions::AddAttackType,std::placeholders::_1,std::placeholders::_2,BattleEnums::AttackTypeFire, true)));
         //Physical attacks deal double damage
-        retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
+        equipment->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
                 std::bind(&PassiveEffectFunctions::MultiplyDmg,std::placeholders::_1,std::placeholders::_2,2.0f, true)));
         break;
 
     case 1101:
-        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
 
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.25f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.05f);
@@ -393,17 +512,12 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
 
-        retval->SetSkillStrength(30);
-        retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
+        equipment->SetSkillStrength(30);
 
-        retval->SetTypeResistance(BattleEnums::AttackTypeFire, 2.0f);
+        equipment->SetTypeResistance(BattleEnums::AttackTypeFire, 2.0f);
         break;
 
     case 1201:
-        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(5,2,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(10,5,true));
 
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.08f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.01f);
@@ -424,20 +538,14 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
 
-        retval->SetSkillStrength(30);
-        retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
+        equipment->SetSkillStrength(30);
 
         //Heals 2 hp every turn
-        retval->AddOnTurnEffect(new std::function<void(Entity*, IPassiveEffect*)>(
+        equipment->AddOnTurnEffect(new std::function<void(Entity*, IPassiveEffect*)>(
                 std::bind(&PassiveEffectFunctions::Heal,std::placeholders::_1,std::placeholders::_2,2)));
         break;
 
     case 1301:
-        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(5,2,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxMp, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeInt, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(5,2,true));
-
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.55f);
         gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.05f);
         gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
@@ -452,13 +560,12 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.7f, false);
         gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.3f, false);
 
-        retval->SetSkillStrength(30);
-        retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
+        equipment->SetSkillStrength(30);
         //Magic attacks have additional Fire type if this item is equipped
-        retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
+        equipment->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
                 std::bind(&PassiveEffectFunctions::AddAttackType,std::placeholders::_1,std::placeholders::_2,BattleEnums::AttackTypeFire, false)));
         //Magic attacks deal double damage
-        retval->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
+        equipment->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
                 std::bind(&PassiveEffectFunctions::MultiplyDmg,std::placeholders::_1,std::placeholders::_2,2.0f, false)));
         break;
 
@@ -466,9 +573,9 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
         //TODO: Init Equipment with Id itemId
     default:
         std::string msg("Invalid ItemId ");
-        msg.append(std::to_string(itemId));
-        msg.append(" given.");
+        msg.append(std::to_string(id));
+        msg.append(" given in LoadEquipment.");
         throw GenericException(msg);
     }
-    return retval;
 }
+

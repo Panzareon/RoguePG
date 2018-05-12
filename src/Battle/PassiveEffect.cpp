@@ -18,6 +18,24 @@ PassiveEffect::PassiveEffect(bool buff, int duration, NamedItem* causingEffect, 
     m_prio = 100;
 }
 
+PassiveEffect::PassiveEffect(bool buff, int duration, std::string name, std::string description, bool staysAfterBattle)
+{
+    //ctor
+    m_buff = buff;
+    m_duration = duration;
+    m_staysAfterBattle = staysAfterBattle;
+    m_causingEffect = nullptr;
+    m_name = name;
+    m_description = description;
+    m_movementspeedMultiplier = 1.0f;
+    m_showEnemyHealth = false;
+    m_additionalDescription = "";
+    m_additionalDescriptionValues = nullptr;
+
+    //Passive Effect have higher Prio (are called later) than equipment by default
+    m_prio = 100;
+}
+
 PassiveEffect::~PassiveEffect()
 {
     //dtor
@@ -151,7 +169,14 @@ void PassiveEffect::SetActivationPriority(int prio)
 
 std::string PassiveEffect::GetName()
 {
-    return m_causingEffect->GetName();
+    if(m_causingEffect != nullptr)
+    {
+        return m_causingEffect->GetName();
+    }
+    else
+    {
+        return m_name;
+    }
 }
 
 std::string PassiveEffect::GetLocalizedDescription()
@@ -165,7 +190,14 @@ std::string PassiveEffect::GetLocalizedDescription()
         retval += Localization::GetInstance()->GetLocalizationWithFloats("effect.duration", &values) + " ";
     }
 
-    retval += m_causingEffect->GetLocalizedDescription();
+    if(m_causingEffect != nullptr)
+    {
+        retval += m_causingEffect->GetLocalizedDescription();
+    }
+    else
+    {
+        retval += m_description;
+    }
 
     if(m_additionalDescription != "")
     {

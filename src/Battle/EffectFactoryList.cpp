@@ -94,6 +94,17 @@ namespace PassiveEffectFunctions
             return baseAmount;
         }
     }
+    int ReduceDamageBy(Attack* att, Entity* target, Entity* attacker, int baseAmount, int reduceBy)
+    {
+        if(baseAmount > reduceBy)
+        {
+            return baseAmount - reduceBy;
+        }
+        else
+        {
+            return 0;
+        }
+    }
 }
 
 namespace EffectFunctions
@@ -273,6 +284,20 @@ namespace EffectFunctions
         }
     }
 
+    //strength is two values, the first is the number of turns, the second the amount to reduce by
+    void ReduceDamageBy(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect)
+    {
+        for(unsigned int i = 0; i < targets->size(); i++)
+        {
+            PassiveEffect* eff = new PassiveEffect(true, (int)strength->at(0), effect);
+            eff->AddOnLooseHp(new std::function<int(Attack*, Entity*, Entity*, int)>(
+                std::bind(&PassiveEffectFunctions::ReduceDamageBy,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4, (int)strength->at(1))));
+
+            //Should be called before other Prevent Damage and reduce damage effects
+            eff->SetActivationPriority(125);
+            targets->at(i)->AddPassiveEffect(eff);
+        }
+    }
 
     void AnalyzeEnemy(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect)
     {
@@ -685,6 +710,22 @@ EffectFactoryList::EffectFactoryList()
     calc->AddStrengthValue(1.0f, 10.0f, 1.0f);
     calc->SetMultiplier(10.0f);
     newEffect->AddAttackType(BattleEnums::AttackTypeAir);
+    newEffect->AddAttackType(BattleEnums::AttackTypeFire);
+    newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
+    newEffect->AddEffectType(BattleEnums::EffectTypeBuffDefense);
+    m_effects.push_back(newEffect);
+
+
+    //Reduce damage by
+    func = new std::function<void(std::vector<float>* strength, Entity* user, std::vector<Entity*>*targets, NamedItem* effect)>(std::bind(&EffectFunctions::ReduceDamageBy, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
+    newEffect = new EffectFactory(func, 1103, 0.4f);
+    calc = newEffect->GetStrengthCalculation();
+    //Duration of buff
+    calc->AddStrengthValue(1.0f, 10.0f, 1.0f);
+    //Reduction of damage
+    calc->AddStrengthValue(1.0f, 10.0f, 1.0f);
+    calc->SetMultiplier(1.0f);
+    newEffect->AddAttackType(BattleEnums::AttackTypeEarth);
     newEffect->AddAttackType(BattleEnums::AttackTypeFire);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuff);
     newEffect->AddEffectType(BattleEnums::EffectTypeBuffDefense);

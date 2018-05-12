@@ -38,13 +38,32 @@ void Equipment::OnEffectStart()
     //TODO: Add additional Effects of this Equipment to the target
 }
 
+void Equipment::AddAdditionalEffect(std::shared_ptr<IPassiveEffect> effect)
+{
+    m_additionalEffects.push_back(effect);
+}
+
 void Equipment::EquipTo(std::shared_ptr<PartyMember> target)
 {
+    for(int i = 0; i < m_additionalEffects.size(); i++)
+    {
+        target->AddPassiveEffect(m_additionalEffects[i]);
+    }
     m_target = target;
 }
 
 void Equipment::UnEquip()
 {
+    if(IsEquipped())
+    {
+        std::shared_ptr<PartyMember> target = m_target.lock();
+
+        for(int i = 0; i < m_additionalEffects.size(); i++)
+        {
+            target->RemovePassiveEffect(m_additionalEffects[i].get());
+        }
+    }
+
     m_target = std::weak_ptr<PartyMember>();
 }
 

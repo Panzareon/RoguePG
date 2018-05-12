@@ -61,6 +61,8 @@ class Equipment : public IPassiveEffect, public Item
         void SetTypeResistance(BattleEnums::AttackType type, float multiplier);
         void AddAttackType(BattleEnums::AttackType type);
 
+        void AddAdditionalEffect(std::shared_ptr<IPassiveEffect> effect);
+
         virtual std::string GetName();
         virtual std::string GetLocalizedDescription();
 
@@ -84,6 +86,7 @@ class Equipment : public IPassiveEffect, public Item
         {
             archive(cereal::base_class<Item>( this ), m_position, m_attributeBuffs, m_typeResistance, m_attackTypes, m_skillsToLearn,
                     m_level, m_exp);
+            LoadItem();
         }
     protected:
         int NeededExp(int lvl);
@@ -106,6 +109,8 @@ class Equipment : public IPassiveEffect, public Item
         std::weak_ptr<PartyMember> m_target;
 
         virtual void LevelUp(std::shared_ptr<PartyMember> target);
+
+        std::vector<std::shared_ptr<IPassiveEffect>> m_additionalEffects;
     private:
 };
 

@@ -14,6 +14,7 @@ class PassiveEffect: public IPassiveEffect
 {
     public:
         PassiveEffect(bool buff, int duration, NamedItem* causingEffect, bool staysAfterBattle = false);
+        PassiveEffect(bool buff, int duration, std::string name, std::string description, bool staysAfterBattle = false);
         virtual ~PassiveEffect();
 
         virtual void OnTurn(Entity* entity);
@@ -51,6 +52,8 @@ class PassiveEffect: public IPassiveEffect
 
     protected:
         NamedItem* m_causingEffect;
+        std::string m_name;
+        std::string m_description;
         bool m_buff;
         int m_prio;
         //Number of Turns this Effect lasts, -1 means forever

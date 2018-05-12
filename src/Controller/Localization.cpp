@@ -43,6 +43,12 @@ std::string format(std::string& str, std::vector<float>* values)
                         str.erase(0, 2);
                     }
                 }
+                else
+                {
+                    //skip two chars
+                    out << str.substr(0,2);
+                    str.erase(0, 2);
+                }
             }
         }
     }
