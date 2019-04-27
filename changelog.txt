@@ -1,3 +1,16 @@
+v0.21
+Added different layout generation
+Enemies in later Dungeons are weaker
+Status menu shows elemental resistance and weakness of heroes and analyzed enemies
+Shields reduce damage taken
+Added description to equipment about their extra effects
+Added skill that reduces damage taken by a given amount
+
+Fixed interaction between reduce damage and prevent damage effects
+Fixed crash on sorting skills
+Fixed equipment loosing effects after loading
+
+
 v0.20
 To ensure perma-death:
 Save and Quit is combined to one option
