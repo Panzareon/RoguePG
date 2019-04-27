@@ -75,7 +75,9 @@ void SceneManagerDungeon::Generate(int tileWidth, int tileHeight, Enums::Generat
             m_generator.CellularAutomata(0.45f);
         break;
     case Enums::Dungeon:
-        m_generator.ConnectedRooms(10,8, tileHeight * tileWidth / 160);
+        m_generator.ConnectedRoomsRectagle(10,8, tileHeight * tileWidth / 160, 3);
+    case Enums::ConnectedCaves:
+        m_generator.ConnectedRooms(9, 9, tileHeight * tileWidth / 160, 6);
     }
 
     m_generator.NumberRooms();

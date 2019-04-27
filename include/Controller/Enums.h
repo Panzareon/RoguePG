@@ -13,6 +13,6 @@ namespace Enums
 {
     enum Direction {North, East, South, West};
     enum EnemyTypes {EnemyBoss, EnemyChest, EnemyDefault};
-    enum GenerationType {Cave, Dungeon};
+    enum GenerationType {Cave, Dungeon, ConnectedCaves};
 }
 #endif // ENUMS_H_INCLUDED

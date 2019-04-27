@@ -119,21 +119,7 @@ void MapGeneratorDungeon::CellularAutomataStep(int minWallTiles, int orMaxWallTi
     {
         for(int j = 0; j < m_height; j++)
         {
-            nrWall = 0;
-            for(int x = i - 1; x <= i + 1; x ++)
-            {
-                for(int y = j - 1; y <= j + 1; y++)
-                {
-                    if(x < 0 || y < 0 || x >= m_width || y >= m_height)
-                    {
-                        nrWall++;
-                    }
-                    else if(m_map->DoesCollide(x,y))
-                    {
-                        nrWall++;
-                    }
-                }
-            }
+            nrWall = NumberOfAdjacentWalls(i,j);
 
             if((onlyChangeToWall && m_map->DoesCollide(i,j)) || nrWall > minWallTiles || nrWall < orMaxWallTiles)
             {
@@ -180,13 +166,34 @@ void MapGeneratorDungeon::CellularAutomataStep(int minWallTiles, int orMaxWallTi
         }
 }
 
-void MapGeneratorDungeon::ConnectedRooms(int roomSizeX, int roomSizeY, int nrRooms)
+int MapGeneratorDungeon::NumberOfAdjacentWalls(int i, int j)
+{
+    int nrWall = 0;
+    for(int x = i - 1; x <= i + 1; x ++)
+    {
+        for(int y = j - 1; y <= j + 1; y++)
+        {
+            if(x < 0 || y < 0 || x >= m_width || y >= m_height)
+            {
+                nrWall++;
+            }
+            else if(m_map->DoesCollide(x,y))
+            {
+                nrWall++;
+            }
+        }
+    }
+    return nrWall;
+}
+
+
+void MapGeneratorDungeon::ConnectedRoomsRectagle(int roomSizeX, int roomSizeY, int nrRooms, int randomDifference)
 {
     int width, height;
     for(int i = 0; i < nrRooms; i++)
     {
-        width = roomSizeX + rand()%3 - 1;
-        height = roomSizeY + rand()%3 - 1;
+        width = roomSizeX + rand()%randomDifference - randomDifference/2;
+        height = roomSizeY + rand()%randomDifference - randomDifference/2;
         int x,y;
         int nrTries = 0;
         do
@@ -198,12 +205,12 @@ void MapGeneratorDungeon::ConnectedRooms(int roomSizeX, int roomSizeY, int nrRoo
         while (!IsRoomFree(x,y,width, height) && nrTries < 100);
         if(nrTries >= 100)
             break;
-        AddRoom(x,y,width, height);
+        AddRectangleRoom(x,y,width, height);
     }
     ConnectAllRooms(true);
 }
 
-void MapGeneratorDungeon::AddRoom(int x, int y, int width, int height)
+void MapGeneratorDungeon::AddRectangleRoom(int x, int y, int width, int height)
 {
     for(int i = x; i < x + width; i++)
     {
@@ -227,6 +234,83 @@ bool MapGeneratorDungeon::IsRoomFree(int x, int y, int width, int height)
     return true;
 }
 
+void MapGeneratorDungeon::ConnectedRooms(int roomSizeX, int roomSizeY, int nrRooms, int randomDifference)
+{
+    int width, height;
+    for(int i = 0; i < nrRooms; i++)
+    {
+        width = roomSizeX + rand()%randomDifference - randomDifference/2;
+        height = roomSizeY + rand()%randomDifference - randomDifference/2;
+        int x,y;
+        int nrTries = 0;
+        do
+        {
+            x = rand() % (m_width - width);
+            y = rand() % (m_height - height);
+            nrTries++;
+        }
+        while (!IsRoomFree(x,y,width, height) && nrTries < 100);
+        if(nrTries >= 100)
+            break;
+        AddRoom(x,y,width, height);
+    }
+    ConnectAllRooms(true, 10, true);
+}
+
+void MapGeneratorDungeon::AddRoom(int x, int y, int width, int height)
+{
+    AddRectangleRoom(x,y,width,height);
+
+    if (rand() % 10 > 0)
+    {
+        m_map->SetTileToType(x,y,MapFillDungeon::Wall);
+    }
+    if (rand() % 10 > 0)
+    {
+        m_map->SetTileToType(x+width-1,y,MapFillDungeon::Wall);
+    }
+    if (rand() % 10 > 0)
+    {
+        m_map->SetTileToType(x+width-1,y+height-1,MapFillDungeon::Wall);
+    }
+    if (rand() % 10 > 0)
+    {
+        m_map->SetTileToType(x,y+height-1,MapFillDungeon::Wall);
+    }
+    for(int i = x +1; i < x + width - 1; i++)
+    {
+        SetIrregularTile(i,y,true);
+        SetIrregularTile(i,y+height-1,true);
+    }
+    for(int j = y +1; j < y + height - 1; j++)
+    {
+        SetIrregularTile(x,j,false);
+        SetIrregularTile(x+width-1,j,false);
+    }
+    RemoveNotConnectedSpaceFromRoom(x,y,width,height);
+}
+
+void MapGeneratorDungeon::SetIrregularTile(int x, int y, bool horizontal)
+{
+    if (horizontal)
+    {
+        if ((rand()%10 < 5 ||
+             m_map->DoesCollide(x-1,y) && NumberOfAdjacentWalls(x-1,y) == 4) &&
+            (m_map->DoesCollide(x-1,y) || NumberOfAdjacentWalls(x-1,y) != 4))
+        {
+            m_map->SetTileToType(x,y,MapFillDungeon::Wall);
+        }
+    }
+    else
+    {
+        if ((rand()%10 < 5 ||
+             m_map->DoesCollide(x,y-1) && NumberOfAdjacentWalls(x,y-1) == 4) &&
+            (m_map->DoesCollide(x,y-1) || NumberOfAdjacentWalls(x,y-1) != 4))
+        {
+            m_map->SetTileToType(x,y,MapFillDungeon::Wall);
+        }
+    }
+}
 
 void MapGeneratorDungeon::MorphologicalCloseOperator()
 {
@@ -234,9 +318,46 @@ void MapGeneratorDungeon::MorphologicalCloseOperator()
     CellularAutomataStep(1);
 }
 
-
-void MapGeneratorDungeon::ConnectAllRooms(bool straight, int maxRemovedTiles)
+void MapGeneratorDungeon::RemoveNotConnectedSpaceFromRoom(int x, int y, int width, int height, int setToValue)
 {
+    //flags for every Tile: 0 = not checked; 1 = checked; 2 = wall
+    int** checkedTiles = new int*[width];
+    for(int i = 0; i < width; i++)
+    {
+        checkedTiles[i] = new int[height];
+        for(int j = 0; j < height; j++)
+        {
+            if(m_map->DoesCollide(i+x,j+y))
+                checkedTiles[i][j] = 2;
+            else
+                checkedTiles[i][j] = 0;
+        }
+    }
+
+    MapGeneratorUtil util;
+    util.SetSize(width,height);
+    util.SetTilesToChecked(checkedTiles, width/2, height/2);
+
+    for(int i = 0; i < width; i++)
+    {
+        for(int j = 0; j < height; j++)
+        {
+            if(checkedTiles[i,j] == 0)
+            {
+                m_map->SetTileToType(i+x, j+y, setToValue);
+            }
+        }
+    }
+    for(int i = 0; i < width; i++)
+        delete[] checkedTiles[i];
+    delete[] checkedTiles;
+}
+
+
+void MapGeneratorDungeon::ConnectAllRooms(bool straight, int maxRemovedTiles, bool withClosest)
+{
+    std::cout << "Start connecting all" << std::endl;
+    sf::Clock clock;
     //flags for every Tile: 0 = not checked; 1 = checked; 2 = wall
     int** checkedTiles = new int*[m_width];
     for(int i = 0; i < m_width; i++)
@@ -276,11 +397,13 @@ void MapGeneratorDungeon::ConnectAllRooms(bool straight, int maxRemovedTiles)
 
     int remainingTiles;
     int checkNr = 0;
+    int combinedCheckNr = 0;
 
-    std::cout << "Check if all connected" << std::endl;
+    std::cout << "Check if all connected: " << straight << ";" << maxRemovedTiles << ";" << withClosest << std::endl;
     do
     {
         checkNr++;
+        combinedCheckNr++;
         int checkX = std::rand() % m_width;
         int checkY = std::rand() % m_height;
 
@@ -297,7 +420,7 @@ void MapGeneratorDungeon::ConnectAllRooms(bool straight, int maxRemovedTiles)
 
         if(checkedTiles[checkX][checkY] == 0)
         {
-            CheckTiles(checkedTiles, checkX, checkY, straight);
+            CheckTiles(checkedTiles, checkX, checkY, straight, withClosest);
             checkNr = 0;
         }
 
@@ -314,7 +437,7 @@ void MapGeneratorDungeon::ConnectAllRooms(bool straight, int maxRemovedTiles)
             }
         }
     }
-    while(!finished);
+    while(!finished && combinedCheckNr < 10000);
 
     for(int i = 0; i < m_width; i++)
     {
@@ -325,11 +448,13 @@ void MapGeneratorDungeon::ConnectAllRooms(bool straight, int maxRemovedTiles)
         }
     }
 
+    std::cout << "Finished connecting all, took " << clock.getElapsedTime().asSeconds() << "s" << std::endl;
 
     for(int i = 0; i < m_width; i++)
         delete[] checkedTiles[i];
     delete[] checkedTiles;
 }
+
 void MapGeneratorDungeon::RemoveUnconnectedRooms()
 {
 
@@ -422,6 +547,11 @@ void MapGeneratorDungeon::ConnectTwoPoints(unsigned int x1, unsigned int y1, uns
             sf::Vector2u closestFrom1 = m_MGUtil.GetClosestToPoint(checkedTiles,3, x1,y1);
             sf::Vector2u closestFrom2 = m_MGUtil.GetClosestToPoint(checkedTiles,1, closestFrom1.x, closestFrom1.y);
             sf::Vector2u newMidpoint = m_MGUtil.GetClosestToPoint(checkedTiles, 0, closestFrom1.x, closestFrom1.y);
+
+            if (closestFrom1 == sf::Vector2u() || closestFrom2 == sf::Vector2u())
+            {
+                break;
+            }
 
             float distance = sqrtf((closestFrom1.x - closestFrom2.x) * (closestFrom1.x - closestFrom2.x) + (closestFrom1.y - closestFrom2.y) * (closestFrom1.y - closestFrom2.y));
             float distance2 = sqrtf((closestFrom1.x - newMidpoint.x) * (closestFrom1.x - newMidpoint.x) + (closestFrom1.y - newMidpoint.y) * (closestFrom1.y - newMidpoint.y));
@@ -759,15 +889,15 @@ void MapGeneratorDungeon::DigTunnel(int fromX, int fromY, int toX, int toY)
 
         int dX = abs(toX - fromX);
         int dY = abs(toY - fromY);
-        int fehler = dX / 2;
+        int error = dX / 2;
         int y = fromY;
         for(int x = fromX; x <= toX; x++)
         {
             m_map->SetTileToType(x,y,MapFillDungeon::Space);
-            fehler -= dY;
-            if(fehler < 0)
+            error -= dY;
+            if(error < 0)
             {
-                fehler += dX;
+                error += dX;
                 y += yStep;
                 m_map->SetTileToType(x,y,MapFillDungeon::Space);
             }
@@ -791,15 +921,15 @@ void MapGeneratorDungeon::DigTunnel(int fromX, int fromY, int toX, int toY)
 
         int dX = abs(toX - fromX);
         int dY = abs(toY - fromY);
-        int fehler = dY / 2;
+        int error = dY / 2;
         int x = fromX;
         for(int y = fromY; y <= toY; y++)
         {
             m_map->SetTileToType(x,y,MapFillDungeon::Space);
-            fehler -= dX;
-            if(fehler < 0)
+            error -= dX;
+            if(error < 0)
             {
-                fehler += dY;
+                error += dY;
                 x += xStep;
                 m_map->SetTileToType(x,y,MapFillDungeon::Space);
             }
@@ -808,66 +938,99 @@ void MapGeneratorDungeon::DigTunnel(int fromX, int fromY, int toX, int toY)
 }
 
 
-void MapGeneratorDungeon::CheckTiles(int** checkArray, int x, int y, bool straight)
+void MapGeneratorDungeon::CheckTiles(int** checkArray, int x, int y, bool straight, bool withClosest)
 {
-    int direction = std::rand() % 4;
+    if (withClosest)
+    {
+        sf::Vector2u startPoint = sf::Vector2u(x,y);
+        sf::Vector2u endPoint;
+        for(int i = 0; i < 4; i++)
+        {
+            endPoint = m_MGUtil.GetClosestToPoint(checkArray, 0, startPoint.x,startPoint.y);
+            startPoint = m_MGUtil.GetClosestToPoint(checkArray, 1, endPoint.x,endPoint.y);
+            if(endPoint == sf::Vector2u() || startPoint == sf::Vector2u())
+            {
+                return;
+            }
+        }
 
-    int xChange = 0;
-    int yChange = 0;
-    if(direction == 0)
-    {
-        yChange = -1;
-    }
-    else if(direction == 1)
-    {
-        yChange = 1;
-    }
-    else if(direction == 2)
-    {
-        xChange = -1;
+        if (checkArray[startPoint.x][startPoint.y] == 1)
+        {
+            ConnectTwoPoints(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+            for(int i = 0; i < m_width; i++)
+            {
+                for(int j = 0; j < m_height; j++)
+                {
+                    if(m_map->DoesCollide(i,j))
+                        checkArray[i][j] = 2;
+                    else
+                        checkArray[i][j] = 0;
+                }
+            }
+            m_MGUtil.SetTilesToChecked(checkArray,startPoint.x,startPoint.y, 0, 1, true);
+        }
     }
     else
     {
-        xChange = 1;
-    }
+        int direction = std::rand() % 4;
 
-    //go as long as unchecked Space
-    while(x > 0 && y > 0 && x < m_width - 1 && y < m_height - 1 && checkArray[x][y] == 0)
-    {
-        x += xChange;
-        y += yChange;
-    }
-    if(x > 0 && y > 0 && x < m_width - 1 && y < m_height - 1 && checkArray[x][y] != 0)
-    {
-        if(straight)
+        int xChange = 0;
+        int yChange = 0;
+        if(direction == 0)
         {
-            //Go as long as there is a Wall
-            while(x > 0 && y > 0 && x < m_width - 1 && y < m_height - 1 && checkArray[x][y] == 2)
-            {
-                x += xChange;
-                y += yChange;
-            }
-            //if after Wall is checked Space go back to the start and set to space
-            if(x > 0 && y > 0 && x < m_width - 1 && y < m_height - 1 && checkArray[x][y] == 1)
-            {
-                do
-                {
-                    x -= xChange;
-                    y -= yChange;
-                    checkArray[x][y] = 0;
-                    m_map->SetTileToType(x,y,MapFillDungeon::Space);
-                }
-                while(x > 0 && y > 0 && x < m_width - 1 && y < m_height - 1 && checkArray[x - xChange][y - yChange] != 0);
-                m_MGUtil.SetTilesToChecked(checkArray,x,y);
-            }
+            yChange = -1;
+        }
+        else if(direction == 1)
+        {
+            yChange = 1;
+        }
+        else if(direction == 2)
+        {
+            xChange = -1;
         }
         else
         {
-            checkArray[x][y] = 0;
-            m_map->SetTileToType(x,y,MapFillDungeon::Space);
-            if(x > 0 && y > 0 && x < m_width - 1 && y < m_height - 1 )
-                if(checkArray[x-1][y] == 1 || checkArray[x+1][y] == 1 || checkArray[x][y-1] == 1 || checkArray[x][y+1] == 1)
+            xChange = 1;
+        }
+
+        //go as long as unchecked Space
+        while(x > 0 && y > 0 && x < m_width - 1 && y < m_height - 1 && checkArray[x][y] == 0)
+        {
+            x += xChange;
+            y += yChange;
+        }
+        if(x > 0 && y > 0 && x < m_width - 1 && y < m_height - 1 && checkArray[x][y] != 0)
+        {
+            if(straight)
+            {
+                //Go as long as there is a Wall
+                while(x > 0 && y > 0 && x < m_width - 1 && y < m_height - 1 && checkArray[x][y] == 2)
+                {
+                    x += xChange;
+                    y += yChange;
+                }
+                //if after Wall is checked Space go back to the start and set to space
+                if(x > 0 && y > 0 && x < m_width - 1 && y < m_height - 1 && checkArray[x][y] == 1)
+                {
+                    do
+                    {
+                        x -= xChange;
+                        y -= yChange;
+                        checkArray[x][y] = 0;
+                        m_map->SetTileToType(x,y,MapFillDungeon::Space);
+                    }
+                    while(x > 0 && y > 0 && x < m_width - 1 && y < m_height - 1 && checkArray[x - xChange][y - yChange] != 0);
                     m_MGUtil.SetTilesToChecked(checkArray,x,y);
+                }
+            }
+            else
+            {
+                checkArray[x][y] = 0;
+                m_map->SetTileToType(x,y,MapFillDungeon::Space);
+                if(x > 0 && y > 0 && x < m_width - 1 && y < m_height - 1 )
+                    if(checkArray[x-1][y] == 1 || checkArray[x+1][y] == 1 || checkArray[x][y-1] == 1 || checkArray[x][y+1] == 1)
+                        m_MGUtil.SetTilesToChecked(checkArray,x,y);
+            }
         }
     }
 }

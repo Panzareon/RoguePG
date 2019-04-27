@@ -44,16 +44,20 @@ void DungeonConfiguration::Init()
     }
     else
     {
-        m_dungeonType = rand() % 2;
-        if(m_dungeonType == 0)
+        if (rand() % 3 > 0)
         {
-            if(rand() % 2 == 0)
+            m_dungeonType = 0;
+            switch(rand() % 3)
             {
-                m_generationType = Enums::Cave;
-            }
-            else
-            {
-                m_generationType = Enums::Dungeon;
+                case 0:
+                    m_generationType = Enums::Cave;
+                    break;
+                case 1:
+                    m_generationType = Enums::Dungeon;
+                    break;
+                case 2:
+                    m_generationType = Enums::ConnectedCaves;
+                    break;
             }
             m_mapFillNr = rand() % 2;
             m_enemies[EnemyFactory::EnemyListBat] = 3.0f;
@@ -65,7 +69,16 @@ void DungeonConfiguration::Init()
         }
         else
         {
-            m_generationType = Enums::Cave;
+            m_dungeonType = 1;
+            switch(rand() % 2)
+            {
+                case 0:
+                    m_generationType = Enums::Cave;
+                    break;
+                case 1:
+                    m_generationType = Enums::ConnectedCaves;
+                    break;
+            }
             m_mapFillNr = 0;
             m_enemies[EnemyFactory::EnemyListWaterSlime] = 5.0f;
             m_enemies[EnemyFactory::EnemyListStoneGolem] = 7.0f;
@@ -116,6 +129,10 @@ SceneManager* DungeonConfiguration::GetLevel(int id)
         if(m_dungeonType == 0)
         {
             wallAbove = true;
+            if(m_generationType == Enums::ConnectedCaves)
+            {
+                wallAbove = false;
+            }
             if(m_mapFillNr == 0)
             {
                 mf = new MapFillDungeon();

@@ -195,14 +195,14 @@ sf::Vector2u MapGeneratorUtil::GetClosestToPoint(int** tiles, int checkId, int x
             int x1 = x - d + i;
             int y1 = y - i;
 
-            if(y1 > 0 && x1 > 0)
+            if(y1 >= 0 && x1 >= 0)
                 if(tiles[x1][y1] == checkId)
                     return sf::Vector2u(x1, y1);
 
             x1 = x + d - i;
             y1 = y + i;
 
-            if(y1 < m_height && x1 < m_height)
+            if(y1 < m_height && x1 < m_width)
                 if(tiles[x1][y1] == checkId)
                     return sf::Vector2u(x1, y1);
         }
@@ -220,7 +220,7 @@ sf::Vector2u MapGeneratorUtil::GetClosestToPoint(int** tiles, int checkId, int x
             x1 = x + d - i;
             y1 = y - i;
 
-            if(y1 > 0 && x1 < m_height)
+            if(y1 >= 0 && x1 < m_width)
                 if(tiles[x1][y1] == checkId)
                     return sf::Vector2u(x1, y1);
         }
