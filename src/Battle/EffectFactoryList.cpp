@@ -94,6 +94,28 @@ namespace PassiveEffectFunctions
             return baseAmount;
         }
     }
+    int IgnoreDamage(Attack* att, Entity* target, Entity* attacker, int baseAmount, std::vector<float>* preventTimes, PassiveEffect* effect, BattleEnums::AttackType attackType)
+    {
+        if (std::find(att->m_type.begin(), att->m_type.end(), attackType) == att->m_type.end())
+        {
+            return baseAmount;
+        }
+
+        if (preventTimes->at(0) == 1)
+        {
+            //No longer prevents damage
+            baseAmount = 0;
+            preventTimes->at(0) = 0;
+            effect->SetDuration(0);
+        }
+        else if (preventTimes->at(0) > 1)
+        {
+            baseAmount = 0;
+            preventTimes->at(0)--;
+        }
+
+        return baseAmount;
+    }
     int ReduceDamageBy(Attack* att, Entity* target, Entity* attacker, int baseAmount, int reduceBy)
     {
         if(baseAmount > reduceBy)
@@ -314,6 +336,24 @@ namespace EffectFunctions
                 SceneManagerStatus* status = new SceneManagerStatus(battle, targets->at(0));
                 GameController::getInstance()->LoadSceneManager(status);
             }
+        }
+    }
+
+    //strength is one value, number of attacks that are shielded
+    void IgnoreDamage(std::vector<float>* strength, Entity* user, std::vector<Entity*>* targets, NamedItem* effect, BattleEnums::AttackType attackType)
+    {
+        for (unsigned int i = 0; i < targets->size(); i++)
+        {
+            PassiveEffect* eff = new PassiveEffect(true, -1, effect);
+            std::vector<float>* values = new std::vector<float>();
+            values->push_back(strength->at(0));
+            eff->AddOnLooseHp(new std::function<int(Attack*, Entity*, Entity*, int)>(
+                std::bind(&PassiveEffectFunctions::IgnoreDamage, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, values, eff, attackType)));
+            eff->AddDescription("effect.1111.additional_desc", values);
+
+            //Should be called after Prevent Damage effect
+            eff->SetActivationPriority(250);
+            targets->at(i)->AddPassiveEffect(eff);
         }
     }
 }
@@ -731,6 +771,66 @@ EffectFactoryList::EffectFactoryList()
     newEffect->AddEffectType(BattleEnums::EffectType::BuffDefense);
     m_effects.push_back(newEffect);
 
+
+    //Ignore Physical Damage
+    func = new std::function<void(std::vector<float> * strength, Entity * user, std::vector<Entity*> * targets, NamedItem * effect)>(std::bind(&EffectFunctions::IgnoreDamage, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, BattleEnums::AttackType::Physical));
+    newEffect = new EffectFactory(func, 1111, 0.4f);
+    calc = newEffect->GetStrengthCalculation();
+    //Number of times the damage is ignored
+    calc->AddStrengthValue(1.0f, 10.0f, 1.0f);
+    calc->SetMultiplier(3.0f);
+    newEffect->AddAttackType(BattleEnums::AttackType::Physical);
+    newEffect->AddEffectType(BattleEnums::EffectType::Buff);
+    newEffect->AddEffectType(BattleEnums::EffectType::BuffDefense);
+    m_effects.push_back(newEffect);
+
+    //Ignore Water Damage
+    func = new std::function<void(std::vector<float> * strength, Entity * user, std::vector<Entity*> * targets, NamedItem * effect)>(std::bind(&EffectFunctions::IgnoreDamage, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, BattleEnums::AttackType::Water));
+    newEffect = new EffectFactory(func, 1112, 0.4f);
+    calc = newEffect->GetStrengthCalculation();
+    //Number of times the damage is ignored
+    calc->AddStrengthValue(1.0f, 10.0f, 1.0f);
+    calc->SetMultiplier(3.0f);
+    newEffect->AddAttackType(BattleEnums::AttackType::Water);
+    newEffect->AddEffectType(BattleEnums::EffectType::Buff);
+    newEffect->AddEffectType(BattleEnums::EffectType::BuffDefense);
+    m_effects.push_back(newEffect);
+
+    //Ignore Air Damage
+    func = new std::function<void(std::vector<float> * strength, Entity * user, std::vector<Entity*> * targets, NamedItem * effect)>(std::bind(&EffectFunctions::IgnoreDamage, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, BattleEnums::AttackType::Air));
+    newEffect = new EffectFactory(func, 1113, 0.4f);
+    calc = newEffect->GetStrengthCalculation();
+    //Number of times the damage is ignored
+    calc->AddStrengthValue(1.0f, 10.0f, 1.0f);
+    calc->SetMultiplier(3.0f);
+    newEffect->AddAttackType(BattleEnums::AttackType::Air);
+    newEffect->AddEffectType(BattleEnums::EffectType::Buff);
+    newEffect->AddEffectType(BattleEnums::EffectType::BuffDefense);
+    m_effects.push_back(newEffect);
+
+    //Ignore Earth Damage
+    func = new std::function<void(std::vector<float> * strength, Entity * user, std::vector<Entity*> * targets, NamedItem * effect)>(std::bind(&EffectFunctions::IgnoreDamage, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, BattleEnums::AttackType::Earth));
+    newEffect = new EffectFactory(func, 1114, 0.4f);
+    calc = newEffect->GetStrengthCalculation();
+    //Number of times the damage is ignored
+    calc->AddStrengthValue(1.0f, 10.0f, 1.0f);
+    calc->SetMultiplier(3.0f);
+    newEffect->AddAttackType(BattleEnums::AttackType::Earth);
+    newEffect->AddEffectType(BattleEnums::EffectType::Buff);
+    newEffect->AddEffectType(BattleEnums::EffectType::BuffDefense);
+    m_effects.push_back(newEffect);
+
+    //Ignore Fire Damage
+    func = new std::function<void(std::vector<float> * strength, Entity * user, std::vector<Entity*> * targets, NamedItem * effect)>(std::bind(&EffectFunctions::IgnoreDamage, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, BattleEnums::AttackType::Fire));
+    newEffect = new EffectFactory(func, 1115, 0.4f);
+    calc = newEffect->GetStrengthCalculation();
+    //Number of times the damage is ignored
+    calc->AddStrengthValue(1.0f, 10.0f, 1.0f);
+    calc->SetMultiplier(3.0f);
+    newEffect->AddAttackType(BattleEnums::AttackType::Fire);
+    newEffect->AddEffectType(BattleEnums::EffectType::Buff);
+    newEffect->AddEffectType(BattleEnums::EffectType::BuffDefense);
+    m_effects.push_back(newEffect);
 
 
     //Add Strength Debuff

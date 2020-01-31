@@ -196,6 +196,18 @@ effect.1103 = Reduce Damage By
 effect.1103.desc = Reduces all damage taken by %1 hp for %0 turns.
 effect.1103.desc2 = Reduces all damage taken by %0 hp.
 
+effect.1111 = Ignore Physical
+effect.1111.desc = Prevents %0 times the target would take physical damage.
+effect.1111.additional_desc = %0 times remain.
+effect.1112 = Ignore Water
+effect.1112.desc = Prevents %0 times the target would take water damage.
+effect.1113 = Ignore Air
+effect.1113.desc = Prevents %0 times the target would take air damage.
+effect.1114 = Ignore Earth
+effect.1114.desc = Prevents %0 times the target would take earth damage.
+effect.1115 = Ignore Fire
+effect.1115.desc = Prevents %0 times the target would take fire damage.
+
 effect.10001 = Strength Debuff
 effect.10001.desc = Decreases strength by %1% for %0 turns.
 effect.10002 = Defense Debuff
