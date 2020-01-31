@@ -20,7 +20,7 @@ namespace BattleFunctions
     void Attack(SceneManagerBattle* sm, Entity* attacking)
     {
         std::function<void(BattleEnums::Target, Entity*)>* func = new std::function<void(BattleEnums::Target, Entity*)>(std::bind(&AttackOnTarget, sm, std::placeholders::_1, std::placeholders::_2, attacking));
-        sm->UseOnTarget(func, BattleEnums::TargetEnemyTeamEntity, attacking);
+        sm->UseOnTarget(func, BattleEnums::Target::EnemyTeamEntity, attacking);
     }
 
     void UseSkillOnTarget(SceneManagerBattle* sm, BattleEnums::Target targetType, Entity* toAttack, Entity* attacking, Skill* skill)
@@ -42,7 +42,7 @@ namespace BattleFunctions
     void UseSkill(SceneManagerBattle* sm, Entity* attacking, Skill* skill)
     {
         BattleEnums::Target target = skill->GetDefaultTarget();
-        if(target == BattleEnums::TargetNone)
+        if(target == BattleEnums::Target::None)
         {
             skill->Use(attacking, target,nullptr);
             sm->TurnIsFinished();
@@ -74,7 +74,7 @@ namespace BattleFunctions
         int menuId = 0;
         for(unsigned int i = 0; i < skillList->size(); i++)
         {
-            if(skillList->at(i)->GetSkillType() == Skill::Usable)
+            if(skillList->at(i)->GetSkillType() == Skill::SkillType::Usable)
             {
                 if(setDescription)
                 {
@@ -195,7 +195,7 @@ void SceneManagerBattle::UseOnTarget(std::function<void(BattleEnums::Target, Ent
     m_targetType = defaultTarget;
     m_targetEntity = 0;
     m_targetNr = 0;
-    if(m_targetType == BattleEnums::TargetEnemyTeamEntity)
+    if(m_targetType == BattleEnums::Target::EnemyTeamEntity)
     {
         if(m_lastEnemyTargeted != nullptr && !m_lastEnemyTargeted->IsDead())
         {
@@ -218,7 +218,7 @@ void SceneManagerBattle::UseOnTarget(std::function<void(BattleEnums::Target, Ent
             while(m_targetEntity->IsDead() && m_targetNr < m_enemies.size());
         }
     }
-    else if(m_targetType == BattleEnums::TargetOwnTeamEntity)
+    else if(m_targetType == BattleEnums::Target::OwnTeamEntity)
     {
         if(m_lastHeroTargeted != nullptr && !m_lastHeroTargeted->IsDead())
         {
@@ -241,7 +241,7 @@ void SceneManagerBattle::UseOnTarget(std::function<void(BattleEnums::Target, Ent
             while(m_targetEntity->IsDead() && m_targetNr < m_party->GetActivePartyMembers()->size());
         }
     }
-    else if(m_targetType == BattleEnums::TargetSelf)
+    else if(m_targetType == BattleEnums::Target::Self)
     {
         m_targetEntity = attacker;
     }
@@ -257,7 +257,7 @@ void SceneManagerBattle::Tick()
         //Selecting target
         if(controller->IsKeyPressed(Configuration::MoveDown))
         {
-            if(m_targetType == BattleEnums::TargetEnemyTeamEntity)
+            if(m_targetType == BattleEnums::Target::EnemyTeamEntity)
             {
                 int nr = 0;
                 do
@@ -278,7 +278,7 @@ void SceneManagerBattle::Tick()
                     std::cout << "Missing Enemy to target" << std::endl;
                 }
             }
-            else if(m_targetType == BattleEnums::TargetOwnTeamEntity)
+            else if(m_targetType == BattleEnums::Target::OwnTeamEntity)
             {
                 int nr = 0;
                 do
@@ -302,7 +302,7 @@ void SceneManagerBattle::Tick()
         }
         else if(controller->IsKeyPressed(Configuration::MoveUp))
         {
-            if(m_targetType == BattleEnums::TargetEnemyTeamEntity)
+            if(m_targetType == BattleEnums::Target::EnemyTeamEntity)
             {
                 int nr = 0;
                 do
@@ -323,7 +323,7 @@ void SceneManagerBattle::Tick()
                     std::cout << "Missing Enemy to target" << std::endl;
                 }
             }
-            else if(m_targetType == BattleEnums::TargetOwnTeamEntity)
+            else if(m_targetType == BattleEnums::Target::OwnTeamEntity)
             {
                 int nr = 0;
                 do
@@ -348,12 +348,12 @@ void SceneManagerBattle::Tick()
 
         if(controller->IsKeyPressed(Configuration::Accept))
         {
-            if(m_targetType == BattleEnums::TargetOwnTeamEntity)
+            if(m_targetType == BattleEnums::Target::OwnTeamEntity)
                 m_lastHeroTargeted = m_targetEntity;
-            if(m_targetType == BattleEnums::TargetEnemyTeamEntity)
+            if(m_targetType == BattleEnums::Target::EnemyTeamEntity)
                 m_lastEnemyTargeted = m_targetEntity;
 
-            if(m_targetType == BattleEnums::TargetOwnTeamEntity || m_targetType == BattleEnums::TargetEnemyTeamEntity || m_targetType == BattleEnums::TargetSelf)
+            if(m_targetType == BattleEnums::Target::OwnTeamEntity || m_targetType == BattleEnums::Target::EnemyTeamEntity || m_targetType == BattleEnums::Target::Self)
             {
                 (*m_useOnTarget)(m_targetType, m_targetEntity);
             }
@@ -364,14 +364,14 @@ void SceneManagerBattle::Tick()
             delete m_useOnTarget;
             m_useOnTarget = nullptr;
             m_targetEntity = nullptr;
-            m_targetType = BattleEnums::TARGET_END;
+            m_targetType = BattleEnums::Target::COUNT;
         }
         else if(controller->IsKeyPressed(Configuration::Cancel))
         {
             delete m_useOnTarget;
             m_useOnTarget = nullptr;
             m_targetEntity = nullptr;
-            m_targetType = BattleEnums::TARGET_END;
+            m_targetType = BattleEnums::Target::COUNT;
         }
     }
     else if(m_next != nullptr && !m_nextFinished)
@@ -476,7 +476,7 @@ void SceneManagerBattle::ShowMenuForNext()
         auto it = m_next->GetSkillList()->begin();
         for(;it != m_next->GetSkillList()->end(); it++)
         {
-            if((*it)->GetDefaultTarget() != BattleEnums::TargetPassive)
+            if((*it)->GetDefaultTarget() != BattleEnums::Target::Passive)
             {
                 showSkills = true;
                 break;
@@ -590,8 +590,8 @@ void SceneManagerBattle::Finished()
     {
         PartyMember* member = activeParty->at(i).get();
         member->BattleFinished();
-        member->Heal(member->GetAttribute(BattleEnums::AttributeMaxHp) * m_restoreHpPercent);
-        member->RestoreMana(member->GetAttribute(BattleEnums::AttributeMaxMp) * m_restoreMpPercent);
+        member->Heal(member->GetAttribute(BattleEnums::Attribute::MaxHp) * m_restoreHpPercent);
+        member->RestoreMana(member->GetAttribute(BattleEnums::Attribute::MaxMp) * m_restoreMpPercent);
     }
 }
 
@@ -599,15 +599,15 @@ bool SceneManagerBattle::IsEntityTargeted(Entity* entity)
 {
     if(m_targetEntity == entity)
         return true;
-    if(m_targetType == BattleEnums::TargetAll)
+    if(m_targetType == BattleEnums::Target::All)
         return true;
     //Only Player controlled Entities are targeting someone
-    if(m_targetType == BattleEnums::TargetOwnTeam || m_targetType == BattleEnums::TargetOwnTeamRandomEntity)
+    if(m_targetType == BattleEnums::Target::OwnTeam || m_targetType == BattleEnums::Target::OwnTeamRandomEntity)
     {
         std::vector<std::shared_ptr<PartyMember> > * party = m_party->GetActivePartyMembers();
         return std::find_if(party->begin(), party->end(), [entity](std::shared_ptr<PartyMember> const & i){return i.get() == entity;} ) != party->end();
     }
-    if(m_targetType == BattleEnums::TargetEnemyTeam || m_targetType == BattleEnums::TargetEnemyTeamRandomEntity)
+    if(m_targetType == BattleEnums::Target::EnemyTeam || m_targetType == BattleEnums::Target::EnemyTeamRandomEntity)
     {
         return std::find(m_enemies.begin(), m_enemies.end(), entity) != m_enemies.end();
     }
@@ -696,7 +696,7 @@ void SceneManagerBattle::MoveSkillPosition(int from, int to)
     int fromId, toId;
     for(int i = 0; i < skills->size(); i++)
     {
-        if(skills->at(i)->GetSkillType() == Skill::Usable)
+        if(skills->at(i)->GetSkillType() == Skill::SkillType::Usable)
         {
             if(from == skillNr)
             {

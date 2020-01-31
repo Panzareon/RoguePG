@@ -1,6 +1,6 @@
 #include "Battle/PassiveSkill.h"
 
-PassiveSkill::PassiveSkill() : Skill(BattleEnums::TargetPassive), PassiveEffect(true, -1, this, true)
+PassiveSkill::PassiveSkill() : Skill(BattleEnums::Target::Passive), PassiveEffect(true, -1, this, true)
 {
     //ctor
 }
@@ -22,7 +22,7 @@ std::string PassiveSkill::GetLocalizedDescription()
 
 Skill::SkillType PassiveSkill::GetSkillType()
 {
-    return Passive;
+    return SkillType::Passive;
 }
 
 void PassiveSkill::AddEffect(EffectBase* eff, bool isPositive)

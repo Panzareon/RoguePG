@@ -12,7 +12,7 @@ Equipment::Equipment() : Item()
 {
     //ctor
     m_neededExpMultiplier = 20;
-    for(int i = 0; i < (int)BattleEnums::ATTACK_TYPE_END; i++)
+    for(int i = 0; i < (int)BattleEnums::AttackType::COUNT; i++)
     {
         m_typeResistance[(BattleEnums::AttackType)i] = 1.0f;
     }
@@ -22,7 +22,7 @@ Equipment::Equipment(int itemId, EquipmentPosition pos) : Item(itemId, Item::Ite
     //ctor
     m_position = pos;
     m_neededExpMultiplier = 20;
-    for(int i = 0; i < (int)BattleEnums::ATTACK_TYPE_END; i++)
+    for(int i = 0; i < (int)BattleEnums::AttackType::COUNT; i++)
     {
         m_typeResistance[(BattleEnums::AttackType)i] = 1.0f;
     }

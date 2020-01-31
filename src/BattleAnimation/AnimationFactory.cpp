@@ -20,20 +20,20 @@ AnimationFactory::AnimationList AnimationFactory::GetAnimationTypeFor(std::set<B
     {
         switch(*att->begin())
         {
-        case BattleEnums::AttackTypeFire:
-            return Fireball;
-        case BattleEnums::AttackTypeEarth:
-            return Earth;
-        case BattleEnums::AttackTypeWater:
-            return Water;
-        case BattleEnums::AttackTypeAir:
-            return Air;
-        case BattleEnums::AttackTypePhysical:
-            return Sword;
+        case BattleEnums::AttackType::Fire:
+            return AnimationList::Fireball;
+        case BattleEnums::AttackType::Earth:
+            return AnimationList::Earth;
+        case BattleEnums::AttackType::Water:
+            return AnimationList::Water;
+        case BattleEnums::AttackType::Air:
+            return AnimationList::Air;
+        case BattleEnums::AttackType::Physical:
+            return AnimationList::Sword;
         }
     }
     //Default return is Fireball
-    return Fireball;
+    return AnimationList::Fireball;
 }
 
 
@@ -83,7 +83,7 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
     Animation* ret;
     switch(anim)
     {
-    case Fireball:
+    case AnimationList::Fireball:
         {
             ret = new Animation(0.2f);
             AnimationPartSprite* part = new AnimationPartSprite(TextureList::FireballAnimation);
@@ -97,7 +97,7 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
             return ret;
         }
         break;
-    case Water:
+    case AnimationList::Water:
         {
             float yMovement = 50.0f;
             ret = new Animation(0.2f);
@@ -111,7 +111,7 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
             SoundController::GetInstance()->PlaySound(SoundController::Water);
             return ret;
         }
-    case Earth:
+    case AnimationList::Earth:
         {
             float yMovement = 75.0f;
             ret = new Animation(0.2f);
@@ -125,7 +125,7 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
             SoundController::GetInstance()->PlaySound(SoundController::Earth);
             return ret;
         }
-    case Air:
+    case AnimationList::Air:
         {
             float xMovement = -30.0f;
             ret = new Animation(0.2f);
@@ -139,7 +139,7 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
             SoundController::GetInstance()->PlaySound(SoundController::Wind);
             return ret;
         }
-    case Sword:
+    case AnimationList::Sword:
         {
             float yMovement = 75.0f;
             ret = new Animation(0.2f);

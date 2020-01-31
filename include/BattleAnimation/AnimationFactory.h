@@ -7,7 +7,7 @@
 class AnimationFactory
 {
     public:
-        enum AnimationList{
+        enum class AnimationList{
             Fireball,
             Water,
             Earth,

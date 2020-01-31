@@ -98,106 +98,106 @@ Item* ItemFactory::GetEquipment(Equipment::EquipmentPosition pos, int itemId)
     switch(itemId)
     {
     case 1:
-        retval->SetAttributeBuff(BattleEnums::AttributeStrength, mathHelper->GetRandomInt(6,3,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(3,0,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(3,0,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(3,0,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Strength, mathHelper->GetRandomInt(6,3,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Defense, mathHelper->GetRandomInt(3,0,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Speed, mathHelper->GetRandomInt(3,0,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MaxHp, mathHelper->GetRandomInt(3,0,true));
 
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(3,1,true));
         break;
 
     case 2:
-        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(6,3,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(6,3,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(6,3,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Defense, mathHelper->GetRandomInt(6,3,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MagicDefense, mathHelper->GetRandomInt(6,3,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MaxHp, mathHelper->GetRandomInt(6,3,true));
 
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(3,1,true));
         break;
 
     case 3:
-        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(3,0,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(6,3,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(6,3,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(6,3,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Defense, mathHelper->GetRandomInt(3,0,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MagicDefense, mathHelper->GetRandomInt(6,3,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MaxHp, mathHelper->GetRandomInt(6,3,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Speed, mathHelper->GetRandomInt(6,3,true));
 
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(3,1,true));
         break;
 
     case 4:
-        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(3,0,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxMp, mathHelper->GetRandomInt(6,3,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeInt, mathHelper->GetRandomInt(6,3,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(3,0,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MagicDefense, mathHelper->GetRandomInt(3,0,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MaxMp, mathHelper->GetRandomInt(6,3,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Int, mathHelper->GetRandomInt(6,3,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Speed, mathHelper->GetRandomInt(3,0,true));
 
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(3,1,true));
         break;
 
     case 101:
-        retval->SetAttributeBuff(BattleEnums::AttributeStrength, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(5,2,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(5,2,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Strength, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Defense, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Speed, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MaxHp, mathHelper->GetRandomInt(5,2,true));
 
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(4,2,true));
         break;
 
     case 102:
-        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Defense, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MagicDefense, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MaxHp, mathHelper->GetRandomInt(10,5,true));
 
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(4,2,true));
         break;
 
     case 103:
-        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(5,2,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Defense, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MagicDefense, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MaxHp, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Speed, mathHelper->GetRandomInt(10,5,true));
 
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(4,2,true));
         break;
 
     case 104:
-        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(5,2,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxMp, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeInt, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MagicDefense, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MaxMp, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Int, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Speed, mathHelper->GetRandomInt(5,2,true));
 
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(4,2,true));
         break;
 
     case 1001:
-        retval->SetAttributeBuff(BattleEnums::AttributeStrength, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(5,2,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(5,2,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Strength, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Defense, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Speed, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MaxHp, mathHelper->GetRandomInt(5,2,true));
 
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
         break;
 
     case 1101:
-        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Defense, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MagicDefense, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MaxHp, mathHelper->GetRandomInt(10,5,true));
 
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
         break;
 
     case 1201:
-        retval->SetAttributeBuff(BattleEnums::AttributeDefense, mathHelper->GetRandomInt(5,2,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxHp, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Defense, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MagicDefense, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MaxHp, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Speed, mathHelper->GetRandomInt(10,5,true));
 
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
         break;
 
     case 1301:
-        retval->SetAttributeBuff(BattleEnums::AttributeMagicDefense, mathHelper->GetRandomInt(5,2,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeMaxMp, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeInt, mathHelper->GetRandomInt(10,5,true));
-        retval->SetAttributeBuff(BattleEnums::AttributeSpeed, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MagicDefense, mathHelper->GetRandomInt(5,2,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::MaxMp, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Int, mathHelper->GetRandomInt(10,5,true));
+        retval->SetAttributeBuff(BattleEnums::Attribute::Speed, mathHelper->GetRandomInt(5,2,true));
 
         retval->AddSkillsToLearn(mathHelper->GetRandomInt(5,2,true));
         break;
@@ -243,24 +243,24 @@ void ItemFactory::LoadEquipment(Equipment::EquipmentPosition pos, int id, Equipm
     switch(id)
     {
     case 1:
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.7f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.1f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
-        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.09f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.005f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.005f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.09f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamEntity, 0.7f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamRandomEntity, 0.1f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeam, 0.01f);
+        gen->AddSkillTarget(BattleEnums::Target::Self, 0.09f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamEntity, 0.005f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamRandomEntity, 0.005f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeam, 0.09f);
 
-        gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.8f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.05f);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.5f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.2f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.3f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.5f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.5f, false);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Physical, 0.8f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Water, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Fire, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Earth, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Air, 0.05f);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffOffense, 0.5f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffDefense, 0.2f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Heal, 0.3f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Damage, 0.5f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Debuff, 0.5f, false);
 
         equipment->SetSkillStrength(10);
 
@@ -269,26 +269,26 @@ void ItemFactory::LoadEquipment(Equipment::EquipmentPosition pos, int id, Equipm
         break;
 
     case 2:
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.18f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.02f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.1f);
-        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.3f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.025f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.025f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.05f);
-        gen->AddSkillTarget(BattleEnums::TargetPassive, 0.3f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamEntity, 0.18f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamRandomEntity, 0.02f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeam, 0.1f);
+        gen->AddSkillTarget(BattleEnums::Target::Self, 0.3f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamEntity, 0.025f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamRandomEntity, 0.025f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeam, 0.05f);
+        gen->AddSkillTarget(BattleEnums::Target::Passive, 0.3f);
 
 
-        gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.8f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.05f);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.1f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.5f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.4f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Physical, 0.8f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Water, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Fire, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Earth, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Air, 0.05f);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffOffense, 0.1f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffDefense, 0.5f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Heal, 0.4f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Damage, 0.3f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Debuff, 0.7f, false);
 
         equipment->SetSkillStrength(10);
 
@@ -310,47 +310,47 @@ void ItemFactory::LoadEquipment(Equipment::EquipmentPosition pos, int id, Equipm
 
     case 3:
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.08f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.01f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.3f);
-        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.1f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.45f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.05f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.01f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamEntity, 0.08f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamRandomEntity, 0.01f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeam, 0.3f);
+        gen->AddSkillTarget(BattleEnums::Target::Self, 0.1f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamEntity, 0.45f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamRandomEntity, 0.05f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeam, 0.01f);
 
-        gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.35f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.25f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.3f);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.1f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.1f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.8f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Physical, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Water, 0.35f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Fire, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Earth, 0.25f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Air, 0.3f);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffOffense, 0.1f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffDefense, 0.1f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Heal, 0.8f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Damage, 0.3f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Debuff, 0.7f, false);
 
         equipment->SetSkillStrength(10);
         break;
 
     case 4:
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.55f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.05f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
-        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.09f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.005f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.005f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.29f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamEntity, 0.55f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamRandomEntity, 0.05f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeam, 0.01f);
+        gen->AddSkillTarget(BattleEnums::Target::Self, 0.09f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamEntity, 0.005f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamRandomEntity, 0.005f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeam, 0.29f);
 
-        gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.04f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.24f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.24f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.24f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.24f);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.7f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.3f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.7f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.3f, false);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Physical, 0.04f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Water, 0.24f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Fire, 0.24f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Earth, 0.24f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Air, 0.24f);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffOffense, 0.7f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Heal, 0.3f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Damage, 0.7f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Debuff, 0.3f, false);
 
         equipment->SetSkillStrength(10);
 
@@ -360,24 +360,24 @@ void ItemFactory::LoadEquipment(Equipment::EquipmentPosition pos, int id, Equipm
 
     case 101:
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.7f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.1f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
-        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.09f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.005f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.005f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.09f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamEntity, 0.7f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamRandomEntity, 0.1f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeam, 0.01f);
+        gen->AddSkillTarget(BattleEnums::Target::Self, 0.09f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamEntity, 0.005f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamRandomEntity, 0.005f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeam, 0.09f);
 
-        gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.8f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.05f);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.5f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.2f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.3f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.5f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.5f, false);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Physical, 0.8f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Water, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Fire, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Earth, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Air, 0.05f);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffOffense, 0.5f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffDefense, 0.2f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Heal, 0.3f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Damage, 0.5f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Debuff, 0.5f, false);
 
         equipment->SetSkillStrength(20);
 
@@ -387,25 +387,25 @@ void ItemFactory::LoadEquipment(Equipment::EquipmentPosition pos, int id, Equipm
 
     case 102:
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.2f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.05f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.1f);
-        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.3f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.025f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.025f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.05f);
-        gen->AddSkillTarget(BattleEnums::TargetPassive, 0.25f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamEntity, 0.2f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamRandomEntity, 0.05f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeam, 0.1f);
+        gen->AddSkillTarget(BattleEnums::Target::Self, 0.3f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamEntity, 0.025f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamRandomEntity, 0.025f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeam, 0.05f);
+        gen->AddSkillTarget(BattleEnums::Target::Passive, 0.25f);
 
-        gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.8f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.05f);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.1f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.5f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.4f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Physical, 0.8f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Water, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Fire, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Earth, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Air, 0.05f);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffOffense, 0.1f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffDefense, 0.5f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Heal, 0.4f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Damage, 0.3f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Debuff, 0.7f, false);
 
         equipment->SetSkillStrength(20);
 
@@ -426,47 +426,47 @@ void ItemFactory::LoadEquipment(Equipment::EquipmentPosition pos, int id, Equipm
 
     case 103:
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.08f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.01f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.3f);
-        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.1f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.48f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.02f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.01f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamEntity, 0.08f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamRandomEntity, 0.01f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeam, 0.3f);
+        gen->AddSkillTarget(BattleEnums::Target::Self, 0.1f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamEntity, 0.48f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamRandomEntity, 0.02f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeam, 0.01f);
 
-        gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.35f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.25f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.3f);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.1f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.1f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.8f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Physical, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Water, 0.35f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Fire, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Earth, 0.25f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Air, 0.3f);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffOffense, 0.1f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffDefense, 0.1f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Heal, 0.8f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Damage, 0.3f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Debuff, 0.7f, false);
 
         equipment->SetSkillStrength(20);
         break;
 
     case 104:
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.55f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.05f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
-        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.09f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.005f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.005f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.29f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamEntity, 0.55f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamRandomEntity, 0.05f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeam, 0.01f);
+        gen->AddSkillTarget(BattleEnums::Target::Self, 0.09f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamEntity, 0.005f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamRandomEntity, 0.005f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeam, 0.29f);
 
-        gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.04f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.24f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.24f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.24f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.24f);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.7f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.3f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.7f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.3f, false);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Physical, 0.04f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Water, 0.24f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Fire, 0.24f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Earth, 0.24f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Air, 0.24f);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffOffense, 0.7f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Heal, 0.3f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Damage, 0.7f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Debuff, 0.3f, false);
 
         equipment->SetSkillStrength(20);
 
@@ -476,30 +476,30 @@ void ItemFactory::LoadEquipment(Equipment::EquipmentPosition pos, int id, Equipm
 
     case 1001:
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.7f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.1f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
-        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.09f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.005f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.005f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.09f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamEntity, 0.7f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamRandomEntity, 0.1f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeam, 0.01f);
+        gen->AddSkillTarget(BattleEnums::Target::Self, 0.09f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamEntity, 0.005f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamRandomEntity, 0.005f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeam, 0.09f);
 
-        gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.4f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.5f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.05f);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.5f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.2f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.3f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.5f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.5f, false);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Physical, 0.4f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Fire, 0.5f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Earth, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Air, 0.05f);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffOffense, 0.5f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffDefense, 0.2f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Heal, 0.3f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Damage, 0.5f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Debuff, 0.5f, false);
 
         equipment->SetSkillStrength(30);
 
-        equipment->SetTypeResistance(BattleEnums::AttackTypeFire, 1.3f);
+        equipment->SetTypeResistance(BattleEnums::AttackType::Fire, 1.3f);
         //Physical attacks get additional type fire, if this item is equipped
         equipment->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
-                std::bind(&PassiveEffectFunctions::AddAttackType,std::placeholders::_1,std::placeholders::_2,BattleEnums::AttackTypeFire, true)));
+                std::bind(&PassiveEffectFunctions::AddAttackType,std::placeholders::_1,std::placeholders::_2,BattleEnums::AttackType::Fire, true)));
         //Physical attacks deal double damage
         equipment->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
                 std::bind(&PassiveEffectFunctions::MultiplyDmg,std::placeholders::_1,std::placeholders::_2,2.0f, true)));
@@ -507,28 +507,28 @@ void ItemFactory::LoadEquipment(Equipment::EquipmentPosition pos, int id, Equipm
 
     case 1101:
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.25f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.05f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.1f);
-        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.3f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.025f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.025f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.05f);
-        gen->AddSkillTarget(BattleEnums::TargetPassive, 0.2f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamEntity, 0.25f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamRandomEntity, 0.05f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeam, 0.1f);
+        gen->AddSkillTarget(BattleEnums::Target::Self, 0.3f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamEntity, 0.025f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamRandomEntity, 0.025f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeam, 0.05f);
+        gen->AddSkillTarget(BattleEnums::Target::Passive, 0.2f);
 
-        gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.4f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.5f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.05f);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.1f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.5f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.4f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Physical, 0.4f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Fire, 0.5f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Earth, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Air, 0.05f);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffOffense, 0.1f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffDefense, 0.5f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Heal, 0.4f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Damage, 0.3f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Debuff, 0.7f, false);
 
         equipment->SetSkillStrength(30);
 
-        equipment->SetTypeResistance(BattleEnums::AttackTypeFire, 2.0f);
+        equipment->SetTypeResistance(BattleEnums::AttackType::Fire, 2.0f);
 
         //Adding effect that reduces damage by 4
         {
@@ -547,24 +547,24 @@ void ItemFactory::LoadEquipment(Equipment::EquipmentPosition pos, int id, Equipm
 
     case 1201:
 
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.08f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.01f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.3f);
-        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.1f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.48f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.02f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.01f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamEntity, 0.08f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamRandomEntity, 0.01f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeam, 0.3f);
+        gen->AddSkillTarget(BattleEnums::Target::Self, 0.1f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamEntity, 0.48f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamRandomEntity, 0.02f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeam, 0.01f);
 
-        gen->AddSkillAttackType(BattleEnums::AttackTypePhysical, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeWater, 0.35f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeFire, 0.05f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeEarth, 0.25f);
-        gen->AddSkillAttackType(BattleEnums::AttackTypeAir, 0.3f);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.1f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffDefense, 0.1f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.8f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.3f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.7f, false);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Physical, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Water, 0.35f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Fire, 0.05f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Earth, 0.25f);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Air, 0.3f);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffOffense, 0.1f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffDefense, 0.1f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Heal, 0.8f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Damage, 0.3f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Debuff, 0.7f, false);
 
         equipment->SetSkillStrength(30);
 
@@ -574,24 +574,24 @@ void ItemFactory::LoadEquipment(Equipment::EquipmentPosition pos, int id, Equipm
         break;
 
     case 1301:
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamEntity, 0.55f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeamRandomEntity, 0.05f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeam, 0.01f);
-        gen->AddSkillTarget(BattleEnums::TargetSelf, 0.09f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamEntity, 0.005f);
-        gen->AddSkillTarget(BattleEnums::TargetOwnTeamRandomEntity, 0.005f);
-        gen->AddSkillTarget(BattleEnums::TargetEnemyTeam, 0.29f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamEntity, 0.55f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeamRandomEntity, 0.05f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeam, 0.01f);
+        gen->AddSkillTarget(BattleEnums::Target::Self, 0.09f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamEntity, 0.005f);
+        gen->AddSkillTarget(BattleEnums::Target::OwnTeamRandomEntity, 0.005f);
+        gen->AddSkillTarget(BattleEnums::Target::EnemyTeam, 0.29f);
 
-        gen->AddSkillAttackType(BattleEnums::AttackTypeFire, 1.0f);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeBuffOffense, 0.7f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeHeal, 0.3f, true);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDamage, 0.7f, false);
-        gen->AddSkillEffectType(BattleEnums::EffectTypeDebuff, 0.3f, false);
+        gen->AddSkillAttackType(BattleEnums::AttackType::Fire, 1.0f);
+        gen->AddSkillEffectType(BattleEnums::EffectType::BuffOffense, 0.7f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Heal, 0.3f, true);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Damage, 0.7f, false);
+        gen->AddSkillEffectType(BattleEnums::EffectType::Debuff, 0.3f, false);
 
         equipment->SetSkillStrength(30);
         //Magic attacks have additional Fire type if this item is equipped
         equipment->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
-                std::bind(&PassiveEffectFunctions::AddAttackType,std::placeholders::_1,std::placeholders::_2,BattleEnums::AttackTypeFire, false)));
+                std::bind(&PassiveEffectFunctions::AddAttackType,std::placeholders::_1,std::placeholders::_2,BattleEnums::AttackType::Fire, false)));
         //Magic attacks deal double damage
         equipment->AddAttack(new std::function<void(Attack* att, Entity* attacker)>(
                 std::bind(&PassiveEffectFunctions::MultiplyDmg,std::placeholders::_1,std::placeholders::_2,2.0f, false)));

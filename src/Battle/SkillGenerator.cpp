@@ -39,13 +39,13 @@ Skill* SkillGenerator::GetNewSkill(float strength)
 
     target = GetRandomTarget();
     bool positive = false;
-    if(target == BattleEnums::TargetOwnTeam || target == BattleEnums::TargetOwnTeamEntity || target == BattleEnums::TargetSelf ||  target == BattleEnums::TargetOwnTeamRandomEntity)
+    if(target == BattleEnums::Target::OwnTeam || target == BattleEnums::Target::OwnTeamEntity || target == BattleEnums::Target::Self ||  target == BattleEnums::Target::OwnTeamRandomEntity)
         positive = true;
-    if(target == BattleEnums::TargetPassive)
+    if(target == BattleEnums::Target::Passive)
     {
         Skill* newSkill = new PassiveSkill();
         float manaUse = 0.0f;
-        effectType = BattleEnums::EffectTypePassive;
+        effectType = BattleEnums::EffectType::Passive;
 
         int nrOfTries = 0;
         do

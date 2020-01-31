@@ -33,16 +33,16 @@ bool MapEventTile::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirect
     {
         switch(lookingDirection)
         {
-        case Enums::East:
+        case Enums::Direction::East:
             rect.left += TileMap::GetTileWidth();
             break;
-        case Enums::West:
+        case Enums::Direction::West:
             rect.left -= TileMap::GetTileWidth();
             break;
-        case Enums::North:
+        case Enums::Direction::North:
             rect.top -= TileMap::GetTileWidth();
             break;
-        case Enums::South:
+        case Enums::Direction::South:
             rect.top += TileMap::GetTileWidth();
             break;
         }

@@ -28,7 +28,7 @@ SceneManagerMoveable::~SceneManagerMoveable()
 
 void SceneManagerMoveable::Init()
 {
-    m_heroDirection = Enums::North;
+    m_heroDirection = Enums::Direction::North;
     m_minViewPosX = m_windowWidth / 2;
     m_minViewPosY = m_windowHeight / 2;
     m_minimapViewRange = 5;
@@ -146,33 +146,33 @@ void SceneManagerMoveable::Tick()
     if (controller->IsKeyPressed(Configuration::MoveLeft, false))
     {
         moveX -= MoveSpeed * controller->GetTickTimeSeconds();
-        newDirection = Enums::West;
+        newDirection = Enums::Direction::West;
         doChange = false;
     }
     if (controller->IsKeyPressed(Configuration::MoveRight, false))
     {
         moveX += MoveSpeed * controller->GetTickTimeSeconds();
-        if(doChange || m_heroDirection == Enums::East)
+        if(doChange || m_heroDirection == Enums::Direction::East)
         {
-            newDirection = Enums::East;
+            newDirection = Enums::Direction::East;
             doChange = false;
         }
     }
     if (controller->IsKeyPressed(Configuration::MoveUp, false))
     {
         moveY -= MoveSpeed * controller->GetTickTimeSeconds();
-        if(doChange || m_heroDirection == Enums::North)
+        if(doChange || m_heroDirection == Enums::Direction::North)
         {
-            newDirection = Enums::North;
+            newDirection = Enums::Direction::North;
             doChange = false;
         }
     }
     if (controller->IsKeyPressed(Configuration::MoveDown, false))
     {
         moveY += MoveSpeed * controller->GetTickTimeSeconds();
-        if(doChange || m_heroDirection == Enums::South)
+        if(doChange || m_heroDirection == Enums::Direction::South)
         {
-            newDirection = Enums::South;
+            newDirection = Enums::Direction::South;
             doChange = false;
         }
     }

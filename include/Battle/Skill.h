@@ -15,7 +15,7 @@ class EffectBase;
 class Skill: public virtual NamedItem
 {
     public:
-        enum SkillType{Usable, Passive};
+        enum class SkillType{Usable, Passive};
         Skill();
         Skill(BattleEnums::Target target);
         virtual ~Skill();

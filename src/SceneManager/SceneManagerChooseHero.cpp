@@ -153,7 +153,7 @@ void SceneManagerChooseHero::StartDungeon()
         {
             std::shared_ptr<PartyMember> member = partyMember->at(i);
             member->SetEquipment(Equipment::MainHand, std::static_pointer_cast<Equipment>(item));
-            member->Heal(member->GetAttribute(BattleEnums::AttributeMaxHp));
+            member->Heal(member->GetAttribute(BattleEnums::Attribute::MaxHp));
         }
 
     }

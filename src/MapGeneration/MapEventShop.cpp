@@ -200,8 +200,8 @@ void MapEventShop::Sleep()
         std::vector<std::shared_ptr<PartyMember> >* member = party->GetAllPartyMembers();
         for(int i = 0; i < member->size(); i++)
         {
-            member->at(i)->Heal(member->at(i)->GetAttribute(BattleEnums::AttributeMaxHp));
-            member->at(i)->RestoreMana(member->at(i)->GetAttribute(BattleEnums::AttributeMaxMp));
+            member->at(i)->Heal(member->at(i)->GetAttribute(BattleEnums::Attribute::MaxHp));
+            member->at(i)->RestoreMana(member->at(i)->GetAttribute(BattleEnums::Attribute::MaxMp));
         }
     }
     Quit();

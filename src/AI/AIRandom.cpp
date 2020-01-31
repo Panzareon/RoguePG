@@ -35,9 +35,9 @@ void AIRandom::UseNextSkill()
             }
         }
         BattleEnums::Target target = toUse->GetDefaultTarget();
-        if(target == BattleEnums::TargetEnemyTeamEntity)
+        if(target == BattleEnums::Target::EnemyTeamEntity)
             toUse->Use(m_entity, target, GetRandomEntity(m_entity->GetTeamId(), true));
-        else if(target == BattleEnums::TargetOwnTeamEntity)
+        else if(target == BattleEnums::Target::OwnTeamEntity)
             toUse->Use(m_entity, target, GetRandomEntity(m_entity->GetTeamId(), false));
         else
             toUse->Use(m_entity, target, nullptr);

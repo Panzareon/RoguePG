@@ -177,7 +177,7 @@ void SceneManagerEquipment::SelectMember(PartyMember* member)
     }
 
     //Get stats of member now
-    for(int i = 0; i < BattleEnums::ATTRIBUTE_END; i++)
+    for(int i = 0; i < (int)BattleEnums::Attribute::COUNT; i++)
     {
         m_memberStats[(BattleEnums::Attribute)i] = member->GetAttribute((BattleEnums::Attribute)i);
     }
@@ -314,7 +314,7 @@ void SceneManagerEquipment::UpdateMemberStats(bool selectedOnly)
         {
             mem = member->at(i).get();
             UpdateAttributeNode(mem, i);
-            for(int j = 0; j < BattleEnums::ATTRIBUTE_END; j++)
+            for(int j = 0; j < (int)BattleEnums::Attribute::COUNT; j++)
             {
                 int attributeValue = mem->GetAttribute((BattleEnums::Attribute)j);
                 if(mem == m_selectedMember.get() && attributeValue > m_memberStats[(BattleEnums::Attribute)j])

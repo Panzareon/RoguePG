@@ -3,16 +3,16 @@
 
 namespace BattleEnums
 {
-    enum Target{TargetOwnTeamEntity, TargetEnemyTeamEntity, TargetOwnTeam, TargetEnemyTeam, TargetSelf, TargetNone, TargetAll, TargetPassive, TargetOwnTeamRandomEntity, TargetEnemyTeamRandomEntity, TARGET_END};
-    enum AttackType{AttackTypePhysical, AttackTypeFire, AttackTypeWater, AttackTypeEarth, AttackTypeAir, ATTACK_TYPE_END};
-    enum EffectType{EffectTypeDamage, EffectTypeHeal, EffectTypeDebuff, EffectTypeBuff, EffectTypeBuffDefense, EffectTypeBuffOffense, EffectTypeBuffMagic, EffectTypeDebuffDefense, EffectTypeDebuffOffense, EffectTypeDebuffMagic, EffectTypePassive, EFFECT_TYPE_END};
-    enum Attribute{AttributeMaxHp, AttributeMaxMp, AttributeStrength, AttributeInt, AttributeDefense, AttributeMagicDefense, AttributeSpeed, ATTRIBUTE_END};
+    enum class Target{OwnTeamEntity, EnemyTeamEntity, OwnTeam, EnemyTeam, Self, None, All, Passive, OwnTeamRandomEntity, EnemyTeamRandomEntity, COUNT};
+    enum class AttackType{Physical, Fire, Water, Earth, Air, COUNT};
+    enum class EffectType{Damage, Heal, Debuff, Buff, BuffDefense, BuffOffense, BuffMagic, DebuffDefense, DebuffOffense, DebuffMagic, Passive, COUNT};
+    enum class Attribute{MaxHp, MaxMp, Strength, Int, Defense, MagicDefense, Speed, COUNT};
 }
 
 namespace Enums
 {
-    enum Direction {North, East, South, West};
-    enum EnemyTypes {EnemyBoss, EnemyChest, EnemyDefault};
-    enum GenerationType {Cave, Dungeon, ConnectedCaves};
+    enum class Direction {North, East, South, West};
+    enum class EnemyTypes {EnemyBoss, EnemyChest, EnemyDefault};
+    enum class GenerationType {Cave, Dungeon, ConnectedCaves};
 }
 #endif // ENUMS_H_INCLUDED

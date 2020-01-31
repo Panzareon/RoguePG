@@ -122,7 +122,7 @@ void PartyMember::LevelUp()
 {
     m_lvl++;
     std::default_random_engine* generator = GameController::getInstance()->GetRandomGenerator();
-    for(int i = 0; i < BattleEnums::ATTRIBUTE_END; i++)
+    for(int i = 0; i < (int)BattleEnums::Attribute::COUNT; i++)
     {
         float chance = m_chrClass->GetAttributePerLevel((BattleEnums::Attribute)i);
         std::normal_distribution<float> distribution(chance,0.5f);
@@ -187,18 +187,18 @@ CharacterClass* PartyMember::GetClass() const
 
 void PartyMember::SaveBeforeEquipping()
 {
-    m_missingHp = GetHp() / (float)GetAttribute(BattleEnums::AttributeMaxHp);
-    m_missingMp = GetMp() / (float)GetAttribute(BattleEnums::AttributeMaxMp);
+    m_missingHp = GetHp() / (float)GetAttribute(BattleEnums::Attribute::MaxHp);
+    m_missingMp = GetMp() / (float)GetAttribute(BattleEnums::Attribute::MaxMp);
     m_lastEquipment = m_equipment;
 }
 
 void PartyMember::ResetAfterEquipping()
 {
-    m_hp = GetAttribute(BattleEnums::AttributeMaxHp) * m_missingHp;
+    m_hp = GetAttribute(BattleEnums::Attribute::MaxHp) * m_missingHp;
     if(m_hp < 1 && m_missingHp > 0.0f)
         m_hp = 1;
 
-    m_mp = GetAttribute(BattleEnums::AttributeMaxMp) * m_missingMp;
+    m_mp = GetAttribute(BattleEnums::Attribute::MaxMp) * m_missingMp;
     if(m_mp < 0)
         m_mp = 0;
 

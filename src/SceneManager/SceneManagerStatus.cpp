@@ -131,7 +131,7 @@ SceneManagerStatus::SceneManagerStatus(SceneManagerBattle* battle, Entity* start
     int resistanceX = 173;
     int resistanceY = 152;
     int resistanceXDelta = 28;
-    for(int i = 0; i < BattleEnums::ATTACK_TYPE_END; i++)
+    for(int i = 0; i < (int)BattleEnums::AttackType::COUNT; i++)
     {
         BattleEnums::AttackType attackType = (BattleEnums::AttackType)i;
         sf::RectangleShape* rect = new sf::RectangleShape(sf::Vector2f(m_resistanceWidth, 0));
@@ -367,7 +367,7 @@ void SceneManagerStatus::ShowForEntity(Entity* entity)
         int skillNr = 0;
         for(int i = 0; i < skills->size(); i++)
         {
-            if(skills->at(i)->GetDefaultTarget() != BattleEnums::TargetPassive)
+            if(skills->at(i)->GetDefaultTarget() != BattleEnums::Target::Passive)
             {
                 m_skills->AddDisabledOption(localization->GetLocalization(skills->at(i)->GetName()), std::function<void()>(std::bind(&MenuFunctions::SetDescription,this, skills->at(i)->GetLocalizedDescription())));
                 m_skills->AddValueToOption(skillNr++, std::to_string(skills->at(i)->GetManaUse()));
@@ -406,7 +406,7 @@ void SceneManagerStatus::ShowForPartyMember(PartyMember* partyMember)
 void SceneManagerStatus::UpdateResistances(Entity* entity)
 {
 
-    for(int i = 0; i < BattleEnums::ATTACK_TYPE_END; i++)
+    for(int i = 0; i < (int)BattleEnums::AttackType::COUNT; i++)
     {
         BattleEnums::AttackType type = (BattleEnums::AttackType)i;
         if(entity != nullptr)
@@ -491,7 +491,7 @@ void SceneManagerStatus::MoveSkillPosition(int from, int to)
     int fromId, toId;
     for(int i = 0; i < skills->size(); i++)
     {
-        if(skills->at(i)->GetDefaultTarget() != BattleEnums::TargetPassive)
+        if(skills->at(i)->GetDefaultTarget() != BattleEnums::Target::Passive)
         {
             if(from == skillNr)
             {

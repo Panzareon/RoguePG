@@ -82,7 +82,7 @@ void EntityBarsNode::onDraw(sf::RenderTarget& target, const sf::Transform& trans
         if(m_showNumbers)
         {
             str = std::to_string(m_shownEntity->GetHp());
-            str += " / " + std::to_string(m_shownEntity->GetAttribute(BattleEnums::AttributeMaxHp));
+            str += " / " + std::to_string(m_shownEntity->GetAttribute(BattleEnums::Attribute::MaxHp));
         }
 
         DrawBar(target, transform, barWidth, sf::Color::Red , str);
@@ -100,7 +100,7 @@ void EntityBarsNode::onDraw(sf::RenderTarget& target, const sf::Transform& trans
         if(m_showNumbers)
         {
             str = std::to_string(m_shownEntity->GetMp());
-            str += " / " + std::to_string(m_shownEntity->GetAttribute(BattleEnums::AttributeMaxMp));
+            str += " / " + std::to_string(m_shownEntity->GetAttribute(BattleEnums::Attribute::MaxMp));
         }
 
         DrawBar(target, transform, barWidth, sf::Color::Blue, str);

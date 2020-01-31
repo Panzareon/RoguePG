@@ -92,7 +92,7 @@ bool MapGeneratorVillage::IsRoomFree(int x, int y, int width, int height)
 
 void MapGeneratorVillage::PlaceStreets()
 {
-    StartStreet(m_map->m_startX, m_map->m_startY, Enums::East);
+    StartStreet(m_map->m_startX, m_map->m_startY, Enums::Direction::East);
 
     for(int i = 0; i < m_doors.size(); i++)
     {
@@ -109,7 +109,7 @@ void MapGeneratorVillage::PlaceStreets()
         }
         StartStreet(m_doors[i].first, m_doors[i].second, (Enums::Direction)minDir);
     }
-    StartStreet(m_map->m_endX, m_map->m_endY, Enums::North);
+    StartStreet(m_map->m_endX, m_map->m_endY, Enums::Direction::North);
 }
 
 int MapGeneratorVillage::StartStreet(int xStart, int yStart, Enums::Direction dir, bool placeStreet)
@@ -129,16 +129,16 @@ int MapGeneratorVillage::StartStreet(int xStart, int yStart, Enums::Direction di
     {
         switch(dir)
         {
-        case Enums::East:
+        case Enums::Direction::East:
             x++;
             break;
-        case Enums::West:
+        case Enums::Direction::West:
             x--;
             break;
-        case Enums::North:
+        case Enums::Direction::North:
             y--;
             break;
-        case Enums::South:
+        case Enums::Direction::South:
             y++;
             break;
         }
@@ -163,16 +163,16 @@ int MapGeneratorVillage::StartStreet(int xStart, int yStart, Enums::Direction di
             y = yLast;
             switch(dir)
             {
-            case Enums::East:
+            case Enums::Direction::East:
                 y++;
                 break;
-            case Enums::West:
+            case Enums::Direction::West:
                 y--;
                 break;
-            case Enums::North:
+            case Enums::Direction::North:
                 x--;
                 break;
-            case Enums::South:
+            case Enums::Direction::South:
                 x++;
                 break;
             }
@@ -196,16 +196,16 @@ int MapGeneratorVillage::StartStreet(int xStart, int yStart, Enums::Direction di
                 y = yLast;
                 switch(dir)
                 {
-                case Enums::East:
+                case Enums::Direction::East:
                     y++;
                     break;
-                case Enums::West:
+                case Enums::Direction::West:
                     y--;
                     break;
-                case Enums::North:
+                case Enums::Direction::North:
                     x--;
                     break;
-                case Enums::South:
+                case Enums::Direction::South:
                     x++;
                     break;
                 }

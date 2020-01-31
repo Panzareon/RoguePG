@@ -58,19 +58,19 @@ float StrengthCalculation::GetValue(std::vector<float>* strength, BattleEnums::T
 
     value *= m_multiplyWith;
 
-    if(target == BattleEnums::TargetEnemyTeam || target == BattleEnums::TargetOwnTeam)
+    if(target == BattleEnums::Target::EnemyTeam || target == BattleEnums::Target::OwnTeam)
     {
         value *= TeamTargetMali;
     }
-    else if(target == BattleEnums::TargetAll)
+    else if(target == BattleEnums::Target::All)
     {
         value *= AllTargetMali;
     }
-    else if(target == BattleEnums::TargetSelf)
+    else if(target == BattleEnums::Target::Self)
     {
         value /= SelfTargetBoni;
     }
-    else if(target == BattleEnums::TargetOwnTeamRandomEntity || target == BattleEnums::TargetEnemyTeamRandomEntity)
+    else if(target == BattleEnums::Target::OwnTeamRandomEntity || target == BattleEnums::Target::EnemyTeamRandomEntity)
     {
         value /= RandomTargetBoni;
     }
@@ -80,19 +80,19 @@ float StrengthCalculation::GetValue(std::vector<float>* strength, BattleEnums::T
 
 std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEnums::Target target)
 {
-    if(target == BattleEnums::TargetEnemyTeam || target == BattleEnums::TargetOwnTeam)
+    if(target == BattleEnums::Target::EnemyTeam || target == BattleEnums::Target::OwnTeam)
     {
         value /= TeamTargetMali;
     }
-    else if(target == BattleEnums::TargetAll)
+    else if(target == BattleEnums::Target::All)
     {
         value /= AllTargetMali;
     }
-    else if(target == BattleEnums::TargetSelf)
+    else if(target == BattleEnums::Target::Self)
     {
         value *= SelfTargetBoni;
     }
-    else if(target == BattleEnums::TargetOwnTeamRandomEntity || target == BattleEnums::TargetEnemyTeamRandomEntity)
+    else if(target == BattleEnums::Target::OwnTeamRandomEntity || target == BattleEnums::Target::EnemyTeamRandomEntity)
     {
         value *= RandomTargetBoni;
     }

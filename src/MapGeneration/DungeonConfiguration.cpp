@@ -32,7 +32,7 @@ void DungeonConfiguration::Init()
     //Init all Enemies
     if(m_dungeonId == 1)
     {
-        m_generationType = Enums::Cave;
+        m_generationType = Enums::GenerationType::Cave;
         m_dungeonType = 0;
         m_mapFillNr = 0;
 
@@ -50,13 +50,13 @@ void DungeonConfiguration::Init()
             switch(rand() % 3)
             {
                 case 0:
-                    m_generationType = Enums::Cave;
+                    m_generationType = Enums::GenerationType::Cave;
                     break;
                 case 1:
-                    m_generationType = Enums::Dungeon;
+                    m_generationType = Enums::GenerationType::Dungeon;
                     break;
                 case 2:
-                    m_generationType = Enums::ConnectedCaves;
+                    m_generationType = Enums::GenerationType::ConnectedCaves;
                     break;
             }
             m_mapFillNr = rand() % 2;
@@ -73,10 +73,10 @@ void DungeonConfiguration::Init()
             switch(rand() % 2)
             {
                 case 0:
-                    m_generationType = Enums::Cave;
+                    m_generationType = Enums::GenerationType::Cave;
                     break;
                 case 1:
-                    m_generationType = Enums::ConnectedCaves;
+                    m_generationType = Enums::GenerationType::ConnectedCaves;
                     break;
             }
             m_mapFillNr = 0;
@@ -129,7 +129,7 @@ SceneManager* DungeonConfiguration::GetLevel(int id)
         if(m_dungeonType == 0)
         {
             wallAbove = true;
-            if(m_generationType == Enums::ConnectedCaves)
+            if(m_generationType == Enums::GenerationType::ConnectedCaves)
             {
                 wallAbove = false;
             }

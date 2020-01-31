@@ -35,13 +35,13 @@ void Skill::Use(Entity* user, BattleEnums::Target targetType, Entity* target)
     ((SceneManagerBattle*)GameController::getInstance()->GetActiveSceneManager())->SetDescription(local->GetLocalization(GetName()));
 
     std::vector<Entity*> targets;
-    if(targetType == BattleEnums::TargetEnemyTeamEntity || targetType == BattleEnums::TargetOwnTeamEntity)
+    if(targetType == BattleEnums::Target::EnemyTeamEntity || targetType == BattleEnums::Target::OwnTeamEntity)
     {
         if(target == nullptr)
             throw InvalidArgumentException("Targeted Entity cannot be null");
         targets.push_back(target);
     }
-    else if(targetType == BattleEnums::TargetSelf)
+    else if(targetType == BattleEnums::Target::Self)
     {
         targets.push_back(user);
     }
@@ -51,7 +51,7 @@ void Skill::Use(Entity* user, BattleEnums::Target targetType, Entity* target)
         std::vector<Entity*>* e = ((SceneManagerBattle*)GameController::getInstance()->GetActiveSceneManager())->GetEnemies();
         std::vector<std::shared_ptr<PartyMember> > * p = GameController::getInstance()->getParty()->GetActivePartyMembers();
         int teamId = user->GetTeamId();
-        if(targetType == BattleEnums::TargetAll)
+        if(targetType == BattleEnums::Target::All)
         {
             //add all that are not dead
             for(int i = 0; i < e->size(); i++)
@@ -65,7 +65,7 @@ void Skill::Use(Entity* user, BattleEnums::Target targetType, Entity* target)
                     targets.push_back(p->at(i).get());
             }
         }
-        else if(targetType == BattleEnums::TargetEnemyTeam || targetType == BattleEnums::TargetEnemyTeamRandomEntity)
+        else if(targetType == BattleEnums::Target::EnemyTeam || targetType == BattleEnums::Target::EnemyTeamRandomEntity)
         {
             //add all with different Team Id
             for(int i = 0; i < e->size(); i++)
@@ -79,7 +79,7 @@ void Skill::Use(Entity* user, BattleEnums::Target targetType, Entity* target)
                     targets.push_back(p->at(i).get());
             }
         }
-        else if(targetType == BattleEnums::TargetOwnTeam || targetType == BattleEnums::TargetOwnTeamRandomEntity)
+        else if(targetType == BattleEnums::Target::OwnTeam || targetType == BattleEnums::Target::OwnTeamRandomEntity)
         {
             //add all with same Team Id
             for(int i = 0; i < e->size(); i++)
@@ -94,7 +94,7 @@ void Skill::Use(Entity* user, BattleEnums::Target targetType, Entity* target)
             }
         }
 
-        if(targetType == BattleEnums::TargetEnemyTeamRandomEntity || targetType == BattleEnums::TargetOwnTeamRandomEntity)
+        if(targetType == BattleEnums::Target::EnemyTeamRandomEntity || targetType == BattleEnums::Target::OwnTeamRandomEntity)
         {
             //Remove all but one random target from the targets vector
             if(targets.size() > 1)
@@ -139,7 +139,7 @@ std::string Skill::GetLocalizedDescription()
 {
     Localization* localization = Localization::GetInstance();
     std::string toLocalize("effect.target.");
-    toLocalize += std::to_string(m_defaultTarget);
+    toLocalize += std::to_string((int)m_defaultTarget);
     std::string retval = localization->GetLocalization(toLocalize);
     for(int i = 0; i < m_effects.size(); i++)
     {
@@ -155,7 +155,7 @@ std::vector<EffectBase*>* Skill::GetEffects()
 
 Skill::SkillType Skill::GetSkillType()
 {
-    return Usable;
+    return SkillType::Usable;
 }
 
 void Skill::AddEffect(EffectBase* eff, bool isPositive)

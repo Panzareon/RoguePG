@@ -53,13 +53,13 @@ void AnimatedNode::SetDirection(Enums::Direction direction)
     int textureDeltaY = 0;
     switch(direction)
     {
-    case Enums::East:
+    case Enums::Direction::East:
         textureDeltaY = 1;
         break;
-    case Enums::South:
+    case Enums::Direction::South:
         textureDeltaY = 2;
         break;
-    case Enums::West:
+    case Enums::Direction::West:
         textureDeltaY = 3;
         break;
     }

@@ -69,15 +69,15 @@ void SceneManagerDungeon::Generate(int tileWidth, int tileHeight, Enums::Generat
 
     switch(type)
     {
-    case Enums::Cave:
+    case Enums::GenerationType::Cave:
         if(tileHeight > 200 || tileWidth > 200)
             m_generator.FasterCellularAutomata(0.45f);
         else
             m_generator.CellularAutomata(0.45f);
         break;
-    case Enums::Dungeon:
+    case Enums::GenerationType::Dungeon:
         m_generator.ConnectedRoomsRectagle(10,8, tileHeight * tileWidth / 160, 3);
-    case Enums::ConnectedCaves:
+    case Enums::GenerationType::ConnectedCaves:
         m_generator.ConnectedRooms(9, 9, tileHeight * tileWidth / 160, 6);
     }
 
@@ -166,8 +166,8 @@ void SceneManagerDungeon::Generate(int tileWidth, int tileHeight, Enums::Generat
     if(!loadSaved)
     {
         //Place Boss at Stairs
-        MapEventEnemy* mapEvent = new MapEventEnemy(0.0f, Enums::EnemyBoss);
-        SpawnEnemy(mapEvent, Enums::EnemyBoss, m_map.m_endX * TileMap::GetTileWidth(), m_map.m_endY * TileMap::GetTileWidth());
+        MapEventEnemy* mapEvent = new MapEventEnemy(0.0f, Enums::EnemyTypes::EnemyBoss);
+        SpawnEnemy(mapEvent, Enums::EnemyTypes::EnemyBoss, m_map.m_endX * TileMap::GetTileWidth(), m_map.m_endY * TileMap::GetTileWidth());
         m_events.push_back(std::unique_ptr<MapEvent>(mapEvent));
 
         int nrEnemies = m_map.GetWidth() * m_map.GetHeight() / 300;
@@ -220,7 +220,7 @@ void SceneManagerDungeon::SpawnEnemy()
     }
     while(m_map.GetRoomNr(pos->first, pos->second) == playerRoomNumber && nrTries < 10);
 
-    SpawnEnemy(pos->first, pos->second, 110.0f, 220.0f, 4, Enums::EnemyDefault);
+    SpawnEnemy(pos->first, pos->second, 110.0f, 220.0f, 4, Enums::EnemyTypes::EnemyDefault);
 
     m_timeToNextSpawn = rand()%10 + 10;
 }
@@ -239,7 +239,7 @@ void SceneManagerDungeon::PlaceChest(bool loadSaved)
     //Add a maximum number of tries to prevent endless loop
     //For the first 100 try to find a dead end to put the chest into
     int nrTries = 0;
-    bool placed;
+    bool placed = false;
     do
     {
         nrTries++;
@@ -276,7 +276,7 @@ void SceneManagerDungeon::PlaceChest(bool loadSaved)
             pos->second -=1;
         }
 
-        SpawnEnemy(pos->first,pos->second, 0.0f, 256.0f,2, Enums::EnemyChest);
+        SpawnEnemy(pos->first,pos->second, 0.0f, 256.0f,2, Enums::EnemyTypes::EnemyChest);
     }
 }
 
@@ -308,11 +308,11 @@ void SceneManagerDungeon::SpawnEnemy(MapEventEnemy* event, Enums::EnemyTypes typ
     Texture* tex;
     switch(type)
     {
-    case Enums::EnemyDefault:
-    case Enums::EnemyChest:
+    case Enums::EnemyTypes::EnemyDefault:
+    case Enums::EnemyTypes::EnemyChest:
         tex = TextureList::getTexture(TextureList::EnemySpriteSheet);
         break;
-    case Enums::EnemyBoss:
+    case Enums::EnemyTypes::EnemyBoss:
         tex = TextureList::getTexture(TextureList::BossSpriteSheet);
         break;
     default:
@@ -323,11 +323,11 @@ void SceneManagerDungeon::SpawnEnemy(MapEventEnemy* event, Enums::EnemyTypes typ
     Node* enemy = new AnimatedNode(&sprite, tex->GetNumberAnimationSteps());
     switch(type)
     {
-    case Enums::EnemyDefault:
-    case Enums::EnemyChest:
+    case Enums::EnemyTypes::EnemyDefault:
+    case Enums::EnemyTypes::EnemyChest:
         enemy->setBoundingBox(sf::FloatRect(4.0f,16.0f,20.0f,16.0f));
         break;
-    case Enums::EnemyBoss:
+    case Enums::EnemyTypes::EnemyBoss:
         enemy->setBoundingBox(sf::FloatRect(0.0f,0.0f,32.0f,32.0f));
     }
     m_eventLayer->addChild(enemy);
@@ -342,7 +342,7 @@ void SceneManagerDungeon::SpawnEnemy(MapEventEnemy* event, Enums::EnemyTypes typ
     Entity* e;
     switch(type)
     {
-    case Enums::EnemyDefault:
+    case Enums::EnemyTypes::EnemyDefault:
         for(int i = 0; i < m_dungeonConfig->GetNrEnemies(); i++)
         {
             e = m_dungeonConfig->GetDungeonEnemy(m_lvlId);
@@ -350,7 +350,7 @@ void SceneManagerDungeon::SpawnEnemy(MapEventEnemy* event, Enums::EnemyTypes typ
             enemies->push_back(e);
         }
         break;
-    case Enums::EnemyBoss:
+    case Enums::EnemyTypes::EnemyBoss:
         {
             int nrAdds = 0;
             for(; nrAdds < m_dungeonConfig->GetNrBossAdds() / 2; nrAdds++)
@@ -370,7 +370,7 @@ void SceneManagerDungeon::SpawnEnemy(MapEventEnemy* event, Enums::EnemyTypes typ
             }
         }
         break;
-    case Enums::EnemyChest:
+    case Enums::EnemyTypes::EnemyChest:
         for(int i = 0; i < m_dungeonConfig->GetNrEnemies() + 1; i++)
         {
             e = m_dungeonConfig->GetDungeonEnemy(m_lvlId + 2);

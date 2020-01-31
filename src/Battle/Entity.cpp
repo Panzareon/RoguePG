@@ -17,12 +17,12 @@ Entity::Entity(int exp)
 
     m_AI = new AIRandom(this);
     //Setting attribute values to default: 0
-    for(int i = 0; i < BattleEnums::ATTRIBUTE_END; i++)
+    for(int i = 0; i < (int)BattleEnums::Attribute::COUNT; i++)
     {
         m_attributes.insert(std::pair<BattleEnums::Attribute, int>((BattleEnums::Attribute)i, 0));
     }
     //Setting default resistances to 1
-    for(int i = 0; i < BattleEnums::ATTACK_TYPE_END; i++)
+    for(int i = 0; i < (int)BattleEnums::AttackType::COUNT; i++)
     {
         m_resistances.insert(std::pair<BattleEnums::AttackType, float>((BattleEnums::AttackType)i, 1.0f));
     }
@@ -57,22 +57,22 @@ void Entity::AttackWasEffective()
 void Entity::AttackEntity(Entity* target)
 {
     //TODO: play actual Attack animation (get from Weapon)
-    Animation* newAnim = AnimationFactory::GetAnimation(AnimationFactory::Sword, target);
+    Animation* newAnim = AnimationFactory::GetAnimation(AnimationFactory::AnimationList::Sword, target);
     GameController::getInstance()->GetActiveSceneManager()->AddAnimation(newAnim);
     //TODO: maybe change base Attack dmg
     int attack = 1;
     bool isPhysical = IsAttackPhysical();
     if(isPhysical)
     {
-        attack *= GetAttribute(BattleEnums::AttributeStrength);
+        attack *= GetAttribute(BattleEnums::Attribute::Strength);
     }
     else
     {
-        attack *= GetAttribute(BattleEnums::AttributeInt);
+        attack *= GetAttribute(BattleEnums::Attribute::Int);
     }
     Attack att(attack, isPhysical, target);
     //TODO: Get Attack Type from weapon
-    att.m_type.insert(BattleEnums::AttackTypePhysical);
+    att.m_type.insert(BattleEnums::AttackType::Physical);
     AttackEntity(target, &att);
 }
 
@@ -95,11 +95,11 @@ void Entity::GetHit(Attack* attack, Entity* attacker)
     float defense;
     if(attack->m_physical)
     {
-        defense = GetAttribute(BattleEnums::AttributeDefense);
+        defense = GetAttribute(BattleEnums::Attribute::Defense);
     }
     else
     {
-        defense = GetAttribute(BattleEnums::AttributeMagicDefense);
+        defense = GetAttribute(BattleEnums::Attribute::MagicDefense);
     }
     float baseDmg = attack->m_dmg / std::sqrt(defense);
     float dmg = baseDmg;
@@ -151,7 +151,7 @@ void Entity::Heal(int hp)
     {
         int healAmount = hp;
         m_hp += hp;
-        int maxHp = GetAttribute(BattleEnums::AttributeMaxHp);
+        int maxHp = GetAttribute(BattleEnums::Attribute::MaxHp);
         if(m_hp > maxHp)
         {
             healAmount -= m_hp - maxHp;
@@ -170,7 +170,7 @@ void Entity::Heal(int hp)
 void Entity::RestoreMana(int mp)
 {
     m_mp += mp;
-    int maxMp = GetAttribute(BattleEnums::AttributeMaxMp);
+    int maxMp = GetAttribute(BattleEnums::Attribute::MaxMp);
     if(m_mp > maxMp)
     {
         m_mp = maxMp;
@@ -238,7 +238,7 @@ bool Entity::IsDead()
 void Entity::AddSkill(Skill* skill)
 {
     std::shared_ptr<Skill> sk = std::shared_ptr<Skill>(skill);
-    if(skill->GetSkillType() == Skill::Passive)
+    if(skill->GetSkillType() == Skill::SkillType::Passive)
     {
         AddPassiveEffect(std::static_pointer_cast<PassiveSkill>(sk));
     }
@@ -247,7 +247,7 @@ void Entity::AddSkill(Skill* skill)
 
 void Entity::AddSkill(std::shared_ptr<Skill> skill)
 {
-    if(skill->GetSkillType() == Skill::Passive)
+    if(skill->GetSkillType() == Skill::SkillType::Passive)
     {
         AddPassiveEffect((PassiveSkill*) skill.get());
     }
@@ -308,11 +308,11 @@ int Entity::GetAttribute(BattleEnums::Attribute attr)
 void Entity::InitAttribute(BattleEnums::Attribute attr, int value)
 {
     m_attributes[attr] = value;
-    if(attr == BattleEnums::AttributeMaxHp)
+    if(attr == BattleEnums::Attribute::MaxHp)
     {
         m_hp = value;
     }
-    else if(attr == BattleEnums::AttributeMaxMp)
+    else if(attr == BattleEnums::Attribute::MaxMp)
     {
         m_mp = value;
     }
@@ -320,18 +320,18 @@ void Entity::InitAttribute(BattleEnums::Attribute attr, int value)
 
 void Entity::InitAllAttributes(int maxHp, int maxMp, int strength, int intelligence, int defense, int magicDefense, int speed)
 {
-    InitAttribute(BattleEnums::AttributeMaxHp, maxHp);
-    InitAttribute(BattleEnums::AttributeMaxMp, maxMp);
-    InitAttribute(BattleEnums::AttributeStrength, strength);
-    InitAttribute(BattleEnums::AttributeInt, intelligence);
-    InitAttribute(BattleEnums::AttributeDefense, defense);
-    InitAttribute(BattleEnums::AttributeMagicDefense, magicDefense);
-    InitAttribute(BattleEnums::AttributeSpeed, speed);
+    InitAttribute(BattleEnums::Attribute::MaxHp, maxHp);
+    InitAttribute(BattleEnums::Attribute::MaxMp, maxMp);
+    InitAttribute(BattleEnums::Attribute::Strength, strength);
+    InitAttribute(BattleEnums::Attribute::Int, intelligence);
+    InitAttribute(BattleEnums::Attribute::Defense, defense);
+    InitAttribute(BattleEnums::Attribute::MagicDefense, magicDefense);
+    InitAttribute(BattleEnums::Attribute::Speed, speed);
 }
 
 void Entity::PassTime(float Time)
 {
-    m_toNextAttack -= Time * GetAttribute(BattleEnums::AttributeSpeed);
+    m_toNextAttack -= Time * GetAttribute(BattleEnums::Attribute::Speed);
 }
 
 void Entity::StartBattle()
@@ -371,7 +371,7 @@ void Entity::FinishedTurn()
 
 float Entity::GetTimeToNextAttack()
 {
-    return m_toNextAttack / GetAttribute(BattleEnums::AttributeSpeed);
+    return m_toNextAttack / GetAttribute(BattleEnums::Attribute::Speed);
 }
 Entity::ControllType Entity::GetControllType()
 {
@@ -439,7 +439,7 @@ void Entity::SetMp(int mp)
 
 float Entity::GetHpPercent()
 {
-    float maxHp = (float)GetAttribute(BattleEnums::AttributeMaxHp);
+    float maxHp = (float)GetAttribute(BattleEnums::Attribute::MaxHp);
     if(maxHp == 0.0f)
         return 0.0f;
     return (float)GetHp() / maxHp;
@@ -447,7 +447,7 @@ float Entity::GetHpPercent()
 
 float Entity::GetMpPercent()
 {
-    float maxMp = (float)GetAttribute(BattleEnums::AttributeMaxMp);
+    float maxMp = (float)GetAttribute(BattleEnums::Attribute::MaxMp);
     if(maxMp == 0.0f)
         return 0.0f;
     return (float)GetMp() / maxMp;
@@ -455,10 +455,10 @@ float Entity::GetMpPercent()
 
 void Entity::CheckMaxValues()
 {
-    float maxHp = (float)GetAttribute(BattleEnums::AttributeMaxHp);
+    float maxHp = (float)GetAttribute(BattleEnums::Attribute::MaxHp);
     if(maxHp < GetHp())
         m_hp = maxHp;
-    float maxMp = (float)GetAttribute(BattleEnums::AttributeMaxMp);
+    float maxMp = (float)GetAttribute(BattleEnums::Attribute::MaxMp);
     if(maxMp < GetMp())
         m_mp = maxMp;
 }

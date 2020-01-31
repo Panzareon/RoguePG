@@ -14,7 +14,7 @@ Effect::~Effect()
 }
 void Effect::UseEffectOn(Entity* user, std::vector<Entity* >* targets)
 {
-    if(m_defaultTarget == BattleEnums::TargetSelf)
+    if(m_defaultTarget == BattleEnums::Target::Self)
     {
         std::vector<Entity* >* target = new std::vector<Entity* >(1, user);
         //Use the Effect
