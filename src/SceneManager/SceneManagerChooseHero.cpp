@@ -1,4 +1,4 @@
-#include "SceneManagerChooseHero.h"
+#include "SceneManager/SceneManagerChooseHero.h"
 #include "SceneGraph/DrawableNode.h"
 #include "Party/CharacterClass.h"
 #include "Controller/Localization.h"

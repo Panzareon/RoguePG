@@ -1,9 +1,9 @@
-#include "EffectBase.h"
+#include "Battle/EffectBase.h"
 #include "Battle/EffectFactoryBase.h"
 #include <sstream>
 #include "Controller/Localization.h"
 #include "Exception/InvalidFunctionException.h"
-#include "Entity.h"
+#include "Battle/Entity.h"
 
 EffectBase::EffectBase(EffectFactoryBase* factory, std::vector<float> *strength, float value, BattleEnums::Target target)
 {

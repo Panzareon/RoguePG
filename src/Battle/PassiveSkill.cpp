@@ -1,4 +1,4 @@
-#include "PassiveSkill.h"
+#include "Battle/PassiveSkill.h"
 
 PassiveSkill::PassiveSkill() : Skill(BattleEnums::TargetPassive), PassiveEffect(true, -1, this, true)
 {

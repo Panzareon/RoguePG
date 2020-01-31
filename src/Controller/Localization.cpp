@@ -6,7 +6,7 @@ std::string format(std::string& str, std::vector<float>* values)
 {
     std::stringstream out;
     out.precision(3);
-    size_t pos;
+    size_t pos{};
     while (pos != str.npos)
     {
         pos = str.find_first_of('%');
@@ -59,7 +59,7 @@ std::string formatWithStrings(std::string& str, std::vector<std::string>* values
 {
     std::stringstream out;
     out.precision(2);
-    size_t pos;
+    size_t pos{};
     while (pos != str.npos)
     {
         pos = str.find_first_of('%');

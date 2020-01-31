@@ -12,6 +12,7 @@
 #include "Controller/GameController.h"
 #include "Battle/EnemyFactory.h"
 #include "MapGeneration/DungeonConfiguration.h"
+#include "Exception/InvalidArgumentException.h"
 
 #include <iostream>
 
@@ -313,6 +314,8 @@ void SceneManagerDungeon::SpawnEnemy(MapEventEnemy* event, Enums::EnemyTypes typ
         break;
     case Enums::EnemyBoss:
         tex = TextureList::getTexture(TextureList::BossSpriteSheet);
+    default:
+        throw new InvalidArgumentException("The given type is not valid");
     }
     sprite.setTexture(*tex);
     sprite.setTextureRect(sf::IntRect(0,0,32,32));

@@ -1,4 +1,4 @@
-#include "NamedItem.h"
+#include "Controller/NamedItem.h"
 
 NamedItem::NamedItem()
 {

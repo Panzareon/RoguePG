@@ -6,8 +6,8 @@
 #include "Battle/EffectFactory.h"
 #include "Battle/EffectFactoryPassive.h"
 #include <random>
-#include "GameController.h"
-#include "SceneManagerStatus.h"
+#include "Controller/GameController.h"
+#include "SceneManager/SceneManagerStatus.h"
 
 namespace PassiveEffectFunctions
 {

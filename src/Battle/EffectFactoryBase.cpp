@@ -1,4 +1,4 @@
-#include "EffectFactoryBase.h"
+#include "Battle/EffectFactoryBase.h"
 
 EffectFactoryBase::EffectFactoryBase(int id, float chance)
 {

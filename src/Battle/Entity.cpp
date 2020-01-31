@@ -6,7 +6,7 @@
 #include "SceneGraph/TextureList.h"
 #include "BattleAnimation/AnimationFactory.h"
 #include "Controller/GameController.h"
-#include "PassiveSkill.h"
+#include "Battle/PassiveSkill.h"
 
 Entity::Entity(int exp)
 {

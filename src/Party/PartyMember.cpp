@@ -4,8 +4,8 @@
 #include "Party/Equipment.h"
 #include "Controller/NameGenerator.h"
 #include <iostream>
-#include "SceneManagerMessage.h"
-#include "Localization.h"
+#include "SceneManager/SceneManagerMessage.h"
+#include "Controller/Localization.h"
 
 PartyMember::PartyMember()
 {

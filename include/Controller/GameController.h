@@ -8,6 +8,7 @@
 #include "Controller/Configuration.h"
 #include "MapGeneration/DungeonConfiguration.h"
 #include "PersistentProgress.h"
+#include <random>
 
 class GameController
 {

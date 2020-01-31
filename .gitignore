@@ -5,3 +5,7 @@ SFML-2.3.2
 RoguePG.depend
 RoguePG.layout
 /crash.log
+.vs
+Debug
+RoguePG.vcxproj.filters
+RoguePG.vcxproj.user

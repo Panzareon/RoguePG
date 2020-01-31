@@ -1,8 +1,8 @@
 #include "Party/ItemFactory.h"
 #include "Exception/InvalidArgumentException.h"
 #include "Controller/MathHelper.h"
-#include "Localization.h"
-#include "PassiveEffect.h"
+#include "Controller/Localization.h"
+#include "Battle/PassiveEffect.h"
 
 namespace PassiveEffectFunctions
 {

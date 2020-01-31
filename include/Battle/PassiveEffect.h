@@ -31,7 +31,7 @@ class PassiveEffect: public IPassiveEffect
 
         virtual bool IsStillActive();
         virtual bool StaysAfterBattle();
-        virtual bool SetDuration(int duration);
+        virtual void SetDuration(int duration);
 
         virtual int GetActivationPriority();
         void SetActivationPriority(int prio);

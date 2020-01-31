@@ -5,7 +5,7 @@
 #include "MapGeneration/MapFillDungeon.h"
 #include "MapGeneration/MapFillIceDungeon.h"
 #include "MapGeneration/MapFillDungeon2.h"
-#include "Localization.h"
+#include "Controller/Localization.h"
 
 DungeonConfiguration::DungeonConfiguration()
 {

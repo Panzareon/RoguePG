@@ -1144,7 +1144,7 @@ std::pair<int,int>* MapGeneratorDungeon::GetFreePosition(bool deadEnd)
     }
     int i = rand() % roomsSize + 1;
     int nr = 0;
-    std::pair<int,int>* pos;
+    std::pair<int,int>* pos = nullptr;
     //100 tries to find free space
     while(nr < 100)
     {

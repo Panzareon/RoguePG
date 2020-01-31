@@ -1,5 +1,5 @@
-#include "EffectFactoryPassive.h"
-#include "EffectPassive.h"
+#include "Battle/EffectFactoryPassive.h"
+#include "Battle/EffectPassive.h"
 
 EffectFactoryPassive::EffectFactoryPassive(std::function<void(std::vector<float>* strength, PassiveEffect* addTo)>* func, int id, float chance) : EffectFactoryBase(id, chance)
 {

@@ -1,10 +1,10 @@
-#include "SceneManagerStatus.h"
+#include "SceneManager/SceneManagerStatus.h"
 #include "Controller/GameController.h"
 #include "Controller/Configuration.h"
 #include "SceneGraph/DrawableNode.h"
 #include "Controller/Localization.h"
 #include "Party/CharacterClass.h"
-#include "SceneManagerBattle.h"
+#include "SceneManager/SceneManagerBattle.h"
 
 namespace MenuFunctions
 {

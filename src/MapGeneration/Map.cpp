@@ -194,7 +194,7 @@ bool Map::DoesCollide(sf::Rect<float> rect)
 
 bool Map::DoesCollide(unsigned int fromX, unsigned int fromY, unsigned int toX, unsigned int toY)
 {
-    if(abs(fromX - toX) > abs(fromY - toY))
+    if(abs((int)fromX - (int)toX) > abs((int)fromY - (int)toY))
     {
         if(fromX > toX)
         {
@@ -210,8 +210,8 @@ bool Map::DoesCollide(unsigned int fromX, unsigned int fromY, unsigned int toX, 
         if(fromY > toY)
             yStep = -1;
 
-        int dX = abs(toX - fromX);
-        int dY = abs(toY - fromY);
+        int dX = abs((int)toX - (int)fromX);
+        int dY = abs((int)toY - (int)fromY);
         int fehler = dX / 2;
         int y = fromY;
         for(int x = fromX; x <= toX; x++)
@@ -244,8 +244,8 @@ bool Map::DoesCollide(unsigned int fromX, unsigned int fromY, unsigned int toX, 
         if(fromX > toX)
             xStep = -1;
 
-        int dX = abs(toX - fromX);
-        int dY = abs(toY - fromY);
+        int dX = abs((int)toX - (int)fromX);
+        int dY = abs((int)toY - (int)fromY);
         int fehler = dY / 2;
         int x = fromX;
         for(int y = fromY; y <= toY; y++)

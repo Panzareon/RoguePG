@@ -1,6 +1,6 @@
 #include "Battle/PassiveEffect.h"
 #include "Battle/EffectBase.h"
-#include "Localization.h"
+#include "Controller/Localization.h"
 
 PassiveEffect::PassiveEffect(bool buff, int duration, NamedItem* causingEffect, bool staysAfterBattle)
 {
@@ -152,7 +152,7 @@ bool PassiveEffect::StaysAfterBattle()
     return m_staysAfterBattle;
 }
 
-bool PassiveEffect::SetDuration(int duration)
+void PassiveEffect::SetDuration(int duration)
 {
     m_duration = duration;
 }

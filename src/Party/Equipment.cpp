@@ -3,8 +3,8 @@
 #include "Party/PartyMember.h"
 #include "Battle/Skill.h"
 #include "Controller/Localization.h"
-#include "SceneManagerMessage.h"
-#include "GameController.h"
+#include "SceneManager/SceneManagerMessage.h"
+#include "Controller/GameController.h"
 
 #include <iostream>
 

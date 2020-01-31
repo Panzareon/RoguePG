@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{5EDB28BF-D59A-414E-970E-53D9D184EA69}</ProjectGuid>
+    <RootNamespace>RoguePG</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>SFML-2.3.2\include;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\AI\AIBase.cpp" />
+    <ClCompile Include="src\AI\AIRandom.cpp" />
+    <ClCompile Include="src\BattleAnimation\Animation.cpp" />
+    <ClCompile Include="src\BattleAnimation\AnimationFactory.cpp" />
+    <ClCompile Include="src\BattleAnimation\AnimationPart.cpp" />
+    <ClCompile Include="src\BattleAnimation\AnimationPartSprite.cpp" />
+    <ClCompile Include="src\BattleAnimation\AnimationPartText.cpp" />
+    <ClCompile Include="src\BattleAnimation\AnimationPartWithNode.cpp" />
+    <ClCompile Include="src\Battle\Attack.cpp" />
+    <ClCompile Include="src\Battle\Effect.cpp" />
+    <ClCompile Include="src\Battle\EffectBase.cpp" />
+    <ClCompile Include="src\Battle\EffectFactory.cpp" />
+    <ClCompile Include="src\Battle\EffectFactoryBase.cpp" />
+    <ClCompile Include="src\Battle\EffectFactoryList.cpp" />
+    <ClCompile Include="src\Battle\EffectFactoryPassive.cpp" />
+    <ClCompile Include="src\Battle\EffectPassive.cpp" />
+    <ClCompile Include="src\Battle\EnemyFactory.cpp" />
+    <ClCompile Include="src\Battle\Entity.cpp" />
+    <ClCompile Include="src\Battle\IPassiveEffect.cpp" />
+    <ClCompile Include="src\Battle\PassiveEffect.cpp" />
+    <ClCompile Include="src\Battle\PassiveSkill.cpp" />
+    <ClCompile Include="src\Battle\Skill.cpp" />
+    <ClCompile Include="src\Battle\SkillGenerator.cpp" />
+    <ClCompile Include="src\Battle\StrengthCalculation.cpp" />
+    <ClCompile Include="src\Controller\Configuration.cpp" />
+    <ClCompile Include="src\Controller\FileConfig.cpp" />
+    <ClCompile Include="src\Controller\GameController.cpp" />
+    <ClCompile Include="src\Controller\Localization.cpp" />
+    <ClCompile Include="src\Controller\MathHelper.cpp" />
+    <ClCompile Include="src\Controller\MusicController.cpp" />
+    <ClCompile Include="src\Controller\NamedItem.cpp" />
+    <ClCompile Include="src\Controller\NameGenerator.cpp" />
+    <ClCompile Include="src\Controller\PersistentProgress.cpp" />
+    <ClCompile Include="src\Controller\ShaderList.cpp" />
+    <ClCompile Include="src\Controller\SoundController.cpp" />
+    <ClCompile Include="src\Exception\GenericException.cpp" />
+    <ClCompile Include="src\Exception\InvalidArgumentException.cpp" />
+    <ClCompile Include="src\Exception\InvalidFunctionException.cpp" />
+    <ClCompile Include="src\MapGeneration\DungeonConfiguration.cpp" />
+    <ClCompile Include="src\MapGeneration\FillItem.cpp" />
+    <ClCompile Include="src\MapGeneration\Map.cpp" />
+    <ClCompile Include="src\MapGeneration\MapEvent.cpp" />
+    <ClCompile Include="src\MapGeneration\MapEventChest.cpp" />
+    <ClCompile Include="src\MapGeneration\MapEventDungeonEntrance.cpp" />
+    <ClCompile Include="src\MapGeneration\MapEventEnemy.cpp" />
+    <ClCompile Include="src\MapGeneration\MapEventHero.cpp" />
+    <ClCompile Include="src\MapGeneration\MapEventShop.cpp" />
+    <ClCompile Include="src\MapGeneration\MapEventStairs.cpp" />
+    <ClCompile Include="src\MapGeneration\MapEventTile.cpp" />
+    <ClCompile Include="src\MapGeneration\MapFill.cpp" />
+    <ClCompile Include="src\MapGeneration\MapFillDungeon.cpp" />
+    <ClCompile Include="src\MapGeneration\MapFillDungeon2.cpp" />
+    <ClCompile Include="src\MapGeneration\MapFillIceDungeon.cpp" />
+    <ClCompile Include="src\MapGeneration\MapFillVillage.cpp" />
+    <ClCompile Include="src\MapGeneration\MapGeneratorDungeon.cpp" />
+    <ClCompile Include="src\MapGeneration\MapGeneratorUtil.cpp" />
+    <ClCompile Include="src\MapGeneration\MapGeneratorVillage.cpp" />
+    <ClCompile Include="src\MapGeneration\MapRoom.cpp" />
+    <ClCompile Include="src\MapGeneration\TileMap.cpp" />
+    <ClCompile Include="src\Party\CharacterClass.cpp" />
+    <ClCompile Include="src\Party\Equipment.cpp" />
+    <ClCompile Include="src\Party\Item.cpp" />
+    <ClCompile Include="src\Party\ItemFactory.cpp" />
+    <ClCompile Include="src\Party\Party.cpp" />
+    <ClCompile Include="src\Party\PartyMember.cpp" />
+    <ClCompile Include="src\SceneGraph\AnimatedNode.cpp" />
+    <ClCompile Include="src\SceneGraph\DrawableNode.cpp" />
+    <ClCompile Include="src\SceneGraph\EntityBarsNode.cpp" />
+    <ClCompile Include="src\SceneGraph\EntityNode.cpp" />
+    <ClCompile Include="src\SceneGraph\MenuNode.cpp" />
+    <ClCompile Include="src\SceneGraph\MenuNodeOption.cpp" />
+    <ClCompile Include="src\SceneGraph\Node.cpp" />
+    <ClCompile Include="src\SceneGraph\TextNode.cpp" />
+    <ClCompile Include="src\SceneGraph\Texture.cpp" />
+    <ClCompile Include="src\SceneGraph\TextureList.cpp" />
+    <ClCompile Include="src\SceneManager\AttributeNodesDisplay.cpp" />
+    <ClCompile Include="src\SceneManager\SceneManager.cpp" />
+    <ClCompile Include="src\SceneManager\SceneManagerBattle.cpp" />
+    <ClCompile Include="src\SceneManager\SceneManagerChooseHero.cpp" />
+    <ClCompile Include="src\SceneManager\SceneManagerDungeon.cpp" />
+    <ClCompile Include="src\SceneManager\SceneManagerEquipment.cpp" />
+    <ClCompile Include="src\SceneManager\SceneManagerGameMenu.cpp" />
+    <ClCompile Include="src\SceneManager\SceneManagerGameOver.cpp" />
+    <ClCompile Include="src\SceneManager\SceneManagerMainMenu.cpp" />
+    <ClCompile Include="src\SceneManager\SceneManagerMessage.cpp" />
+    <ClCompile Include="src\SceneManager\SceneManagerMoveable.cpp" />
+    <ClCompile Include="src\SceneManager\SceneManagerOptions.cpp" />
+    <ClCompile Include="src\SceneManager\SceneManagerStatus.cpp" />
+    <ClCompile Include="src\SceneManager\SceneManagerVillage.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\SceneGraph\MenuNodeItems.tpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\AI\AIBase.h" />
+    <ClInclude Include="include\AI\AIRandom.h" />
+    <ClInclude Include="include\BattleAnimation\Animation.h" />
+    <ClInclude Include="include\BattleAnimation\AnimationFactory.h" />
+    <ClInclude Include="include\BattleAnimation\AnimationPart.h" />
+    <ClInclude Include="include\BattleAnimation\AnimationPartSprite.h" />
+    <ClInclude Include="include\BattleAnimation\AnimationPartText.h" />
+    <ClInclude Include="include\BattleAnimation\AnimationPartWithNode.h" />
+    <ClInclude Include="include\Battle\Attack.h" />
+    <ClInclude Include="include\Battle\Effect.h" />
+    <ClInclude Include="include\Battle\EffectBase.h" />
+    <ClInclude Include="include\Battle\EffectFactory.h" />
+    <ClInclude Include="include\Battle\EffectFactoryBase.h" />
+    <ClInclude Include="include\Battle\EffectFactoryList.h" />
+    <ClInclude Include="include\Battle\EffectFactoryPassive.h" />
+    <ClInclude Include="include\Battle\EffectPassive.h" />
+    <ClInclude Include="include\Battle\EnemyFactory.h" />
+    <ClInclude Include="include\Battle\Entity.h" />
+    <ClInclude Include="include\Battle\IPassiveEffect.h" />
+    <ClInclude Include="include\Battle\PassiveEffect.h" />
+    <ClInclude Include="include\Battle\PassiveSkill.h" />
+    <ClInclude Include="include\Battle\Skill.h" />
+    <ClInclude Include="include\Battle\SkillGenerator.h" />
+    <ClInclude Include="include\Battle\StrengthCalculation.h" />
+    <ClInclude Include="include\Controller\Configuration.h" />
+    <ClInclude Include="include\Controller\Enums.h" />
+    <ClInclude Include="include\Controller\FileConfig.h" />
+    <ClInclude Include="include\Controller\GameController.h" />
+    <ClInclude Include="include\Controller\Localization.h" />
+    <ClInclude Include="include\Controller\MathHelper.h" />
+    <ClInclude Include="include\Controller\MusicController.h" />
+    <ClInclude Include="include\Controller\NamedItem.h" />
+    <ClInclude Include="include\Controller\NameGenerator.h" />
+    <ClInclude Include="include\Controller\PersistentProgress.h" />
+    <ClInclude Include="include\Controller\ShaderList.h" />
+    <ClInclude Include="include\Controller\SoundController.h" />
+    <ClInclude Include="include\Exception\GenericException.h" />
+    <ClInclude Include="include\Exception\InvalidArgumentException.h" />
+    <ClInclude Include="include\Exception\InvalidFunctionException.h" />
+    <ClInclude Include="include\MapGeneration\DungeonConfiguration.h" />
+    <ClInclude Include="include\MapGeneration\FillItem.h" />
+    <ClInclude Include="include\MapGeneration\Map.h" />
+    <ClInclude Include="include\MapGeneration\MapEvent.h" />
+    <ClInclude Include="include\MapGeneration\MapEventChest.h" />
+    <ClInclude Include="include\MapGeneration\MapEventDungeonEntrance.h" />
+    <ClInclude Include="include\MapGeneration\MapEventEnemy.h" />
+    <ClInclude Include="include\MapGeneration\MapEventHero.h" />
+    <ClInclude Include="include\MapGeneration\MapEventShop.h" />
+    <ClInclude Include="include\MapGeneration\MapEventStairs.h" />
+    <ClInclude Include="include\MapGeneration\MapEventTile.h" />
+    <ClInclude Include="include\MapGeneration\MapFill.h" />
+    <ClInclude Include="include\MapGeneration\MapFillDungeon.h" />
+    <ClInclude Include="include\MapGeneration\MapFillDungeon2.h" />
+    <ClInclude Include="include\MapGeneration\MapFillIceDungeon.h" />
+    <ClInclude Include="include\MapGeneration\MapFillVillage.h" />
+    <ClInclude Include="include\MapGeneration\MapGeneratorDungeon.h" />
+    <ClInclude Include="include\MapGeneration\MapGeneratorUtil.h" />
+    <ClInclude Include="include\MapGeneration\MapGeneratorVillage.h" />
+    <ClInclude Include="include\MapGeneration\MapRoom.h" />
+    <ClInclude Include="include\MapGeneration\TileMap.h" />
+    <ClInclude Include="include\Party\CharacterClass.h" />
+    <ClInclude Include="include\Party\Equipment.h" />
+    <ClInclude Include="include\Party\Item.h" />
+    <ClInclude Include="include\Party\ItemFactory.h" />
+    <ClInclude Include="include\Party\Party.h" />
+    <ClInclude Include="include\Party\PartyMember.h" />
+    <ClInclude Include="include\SceneGraph\AnimatedNode.h" />
+    <ClInclude Include="include\SceneGraph\DrawableNode.h" />
+    <ClInclude Include="include\SceneGraph\EntityBarsNode.h" />
+    <ClInclude Include="include\SceneGraph\EntityNode.h" />
+    <ClInclude Include="include\SceneGraph\MenuNode.h" />
+    <ClInclude Include="include\SceneGraph\MenuNodeItems.h" />
+    <ClInclude Include="include\SceneGraph\MenuNodeOption.h" />
+    <ClInclude Include="include\SceneGraph\Node.h" />
+    <ClInclude Include="include\SceneGraph\TextNode.h" />
+    <ClInclude Include="include\SceneGraph\Texture.h" />
+    <ClInclude Include="include\SceneGraph\TextureList.h" />
+    <ClInclude Include="include\SceneManager\AttributeNodesDisplay.h" />
+    <ClInclude Include="include\SceneManager\SceneManager.h" />
+    <ClInclude Include="include\SceneManager\SceneManagerBattle.h" />
+    <ClInclude Include="include\SceneManager\SceneManagerChooseHero.h" />
+    <ClInclude Include="include\SceneManager\SceneManagerDungeon.h" />
+    <ClInclude Include="include\SceneManager\SceneManagerEquipment.h" />
+    <ClInclude Include="include\SceneManager\SceneManagerGameMenu.h" />
+    <ClInclude Include="include\SceneManager\SceneManagerGameOver.h" />
+    <ClInclude Include="include\SceneManager\SceneManagerMainMenu.h" />
+    <ClInclude Include="include\SceneManager\SceneManagerMessage.h" />
+    <ClInclude Include="include\SceneManager\SceneManagerMoveable.h" />
+    <ClInclude Include="include\SceneManager\SceneManagerOptions.h" />
+    <ClInclude Include="include\SceneManager\SceneManagerStatus.h" />
+    <ClInclude Include="include\SceneManager\SceneManagerVillage.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

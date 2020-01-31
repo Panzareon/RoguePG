@@ -3,6 +3,7 @@
 
 #include <string>
 #include "SceneGraph/Node.h"
+#include <functional>
 
 class MenuNodeOption
 {

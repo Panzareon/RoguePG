@@ -1,4 +1,4 @@
-#include "AttributeNodesDisplay.h"
+#include "SceneManager/AttributeNodesDisplay.h"
 
 AttributeNodesDisplay::AttributeNodesDisplay()
 {

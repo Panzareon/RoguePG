@@ -1,4 +1,4 @@
-#include "EffectPassive.h"
+#include "Battle/EffectPassive.h"
 
 EffectPassive::EffectPassive(EffectFactoryBase* factory, std::function<void(std::vector<float>* strength, PassiveEffect* addTo)>* func, std::vector<float> *strength, float value, BattleEnums::Target target)
                 :EffectBase(factory,strength,value,target)

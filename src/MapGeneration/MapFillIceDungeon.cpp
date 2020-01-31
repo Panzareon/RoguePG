@@ -1,4 +1,4 @@
-#include "MapFillIceDungeon.h"
+#include "MapGeneration/MapFillIceDungeon.h"
 
 MapFillIceDungeon::MapFillIceDungeon()
 {

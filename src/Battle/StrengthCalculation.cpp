@@ -139,7 +139,7 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
 
     //calculate random values and check if for the last a correct is still possible
     bool finished;
-    float retVal[m_minValue.size()];
+    std::vector<float>* retVal = new std::vector<float>();
     float calculatedValue;
     int lastValueId = m_minValue.size() - 1;
     do
@@ -149,26 +149,26 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
         for(int i = 0; i < lastValueId; i++)
         {
             if(m_step[i] == 0.0f)
-                retVal[i] = m_minValue[i] + (m_maxValue[i] - m_minValue[i]) * ((float)std::rand() / RAND_MAX);
+                (*retVal)[i] = m_minValue[i] + (m_maxValue[i] - m_minValue[i]) * ((float)std::rand() / RAND_MAX);
             else
             {
                 int steps = (m_maxValue[i] - m_minValue[i]) / m_step[i] + 1;
-                retVal[i] = m_minValue[i] + m_step[i] * (std::rand() % steps);
+                (*retVal)[i] = m_minValue[i] + m_step[i] * (std::rand() % steps);
             }
 
             if(i == 0)
             {
-                calculatedValue = retVal[i] * m_multiply[i];
+                calculatedValue = (*retVal)[i] * m_multiply[i];
             }
             else
             {
                 switch(m_combiningType[i])
                 {
                     case MULTIPLY:
-                        calculatedValue *= retVal[i] * m_multiply[i];
+                        calculatedValue *= (*retVal)[i] * m_multiply[i];
                         break;
                     case ADD:
-                        calculatedValue += retVal[i] * m_multiply[i];
+                        calculatedValue += (*retVal)[i] * m_multiply[i];
                         break;
                 }
             }
@@ -177,14 +177,14 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
         switch(m_combiningType[lastValueId])
         {
             case MULTIPLY:
-                retVal[lastValueId] = (value / calculatedValue) / m_multiply[lastValueId];
+                (*retVal)[lastValueId] = (value / calculatedValue) / m_multiply[lastValueId];
                 break;
             case ADD:
-                retVal[lastValueId] = (value - calculatedValue) / m_multiply[lastValueId];
+                (*retVal)[lastValueId] = (value - calculatedValue) / m_multiply[lastValueId];
                 break;
         }
 
-        if(retVal[lastValueId] < m_minValue[lastValueId] || retVal[lastValueId] > m_maxValue[lastValueId])
+        if((*retVal)[lastValueId] < m_minValue[lastValueId] || (*retVal)[lastValueId] > m_maxValue[lastValueId])
         {
             finished = false;
         }
@@ -193,13 +193,13 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
     if(m_step[lastValueId] != 0.0f)
     {
         //Check which Step ist closest to given Value
-        int steps = (int)(retVal[lastValueId] - m_minValue[lastValueId]) / m_step[lastValueId];
+        int steps = (int)((*retVal)[lastValueId] - m_minValue[lastValueId]) / m_step[lastValueId];
         float lowerValue = m_minValue[lastValueId] + steps * m_step[lastValueId];
         float upperValue = lowerValue + m_step[lastValueId];
-        if(retVal[lastValueId] - lowerValue < upperValue - retVal[lastValueId])
-            retVal[lastValueId] = lowerValue;
+        if((*retVal)[lastValueId] - lowerValue < upperValue - (*retVal)[lastValueId])
+            (*retVal)[lastValueId] = lowerValue;
         else
-            retVal[lastValueId] = upperValue;
+            (*retVal)[lastValueId] = upperValue;
     }
-    return new std::vector<float>(retVal, retVal + m_minValue.size());
+    return retVal;
 }

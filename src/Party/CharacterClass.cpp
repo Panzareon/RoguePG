@@ -3,7 +3,7 @@
 #include "Battle/EffectFactoryList.h"
 #include <random>
 #include "Party/PartyMember.h"
-#include "GameController.h"
+#include "Controller/GameController.h"
 #include "Battle/PassiveSkill.h"
 
 std::vector<CharacterClass*>* CharacterClass::m_classes = nullptr;

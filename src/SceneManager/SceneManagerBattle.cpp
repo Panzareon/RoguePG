@@ -7,7 +7,7 @@
 #include "Controller/Localization.h"
 #include "SceneGraph/MenuNodeItems.h"
 #include "SceneGraph/EntityNode.h"
-#include "SceneManagerStatus.h"
+#include "SceneManager/SceneManagerStatus.h"
 #include <iostream>
 
 namespace BattleFunctions
