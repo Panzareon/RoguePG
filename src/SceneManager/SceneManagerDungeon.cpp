@@ -314,6 +314,7 @@ void SceneManagerDungeon::SpawnEnemy(MapEventEnemy* event, Enums::EnemyTypes typ
         break;
     case Enums::EnemyBoss:
         tex = TextureList::getTexture(TextureList::BossSpriteSheet);
+        break;
     default:
         throw new InvalidArgumentException("The given type is not valid");
     }

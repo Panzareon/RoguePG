@@ -139,7 +139,7 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
 
     //calculate random values and check if for the last a correct is still possible
     bool finished;
-    std::vector<float>* retVal = new std::vector<float>();
+    std::vector<float>* retVal = new std::vector<float>(m_minValue.size());
     float calculatedValue;
     int lastValueId = m_minValue.size() - 1;
     do
