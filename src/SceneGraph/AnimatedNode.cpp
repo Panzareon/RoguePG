@@ -42,7 +42,7 @@ void AnimatedNode::onDraw(sf::RenderTarget& target, const sf::Transform& transfo
     if(sf::Shader::isAvailable())
     {
         rs.shader = m_shader;
-        m_shader->setParameter("frameId", (float((int)(m_elapsedSeconds*m_framesPerSecond) % m_numberFrames));
+        m_shader->setParameter("frameId", (float((int)(m_elapsedSeconds*m_framesPerSecond) % m_numberFrames)));
         m_shader->setParameter("numberFrames", (float)m_numberFrames);
     }
     target.draw(m_sprite, rs);
