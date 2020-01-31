@@ -23,133 +23,133 @@ Texture* TextureList::getTexture(TextureFiles file)
         int AnimationSteps = 1;
         switch(file)
         {
-        case DungeonTileMap:
+        case TextureFiles::DungeonTileMap:
             filename = "TileMap.png";
             break;
-        case DebugTileMap:
+        case TextureFiles::DebugTileMap:
             filename = "TileMap-Test.png";
             break;
 
 
 
-        case HeroSpriteSheet:
+        case TextureFiles::HeroSpriteSheet:
             filename = "hero.png";
             AnimationSteps = 3;
             break;
-        case EnemySpriteSheet:
+        case TextureFiles::EnemySpriteSheet:
             filename = "enemy.png";
             AnimationSteps = 3;
             break;
-        case BossSpriteSheet:
+        case TextureFiles::BossSpriteSheet:
             filename = "boss.png";
             AnimationSteps = 3;
             break;
 
 
-        case BatBattleSprite:
+        case TextureFiles::BatBattleSprite:
             filename = "bat.png";
             break;
-        case DeadWizardBattleSprite:
+        case TextureFiles::DeadWizardBattleSprite:
             filename = "deadWizard.png";
             break;
-        case StoneGolemBattleSprite:
+        case TextureFiles::StoneGolemBattleSprite:
             filename = "stone-golem.png";
             break;
-        case WindEyeBattleSprite:
+        case TextureFiles::WindEyeBattleSprite:
             filename = "wind-eye.png";
             break;
-        case WaterSlimeBattleSprite:
+        case TextureFiles::WaterSlimeBattleSprite:
             filename = "water-slime.png";
             break;
-        case IceGolemBattleSprite:
+        case TextureFiles::IceGolemBattleSprite:
             filename = "ice-golem.png";
             break;
-        case IceSpiritBattleSprite:
+        case TextureFiles::IceSpiritBattleSprite:
             filename = "ice-spirit.png";
             break;
 
 
-        case MageBattleSprite:
+        case TextureFiles::MageBattleSprite:
             filename = "mage.png";
             break;
-        case BarbarianBattleSprite:
+        case TextureFiles::BarbarianBattleSprite:
             filename = "barbarian.png";
             break;
-        case PaladinBattleSprite:
+        case TextureFiles::PaladinBattleSprite:
             filename = "paladin.png";
             break;
-        case ThiefBattleSprite:
+        case TextureFiles::ThiefBattleSprite:
             filename = "thief.png";
             break;
-        case ClericBattleSprite:
+        case TextureFiles::ClericBattleSprite:
             filename = "cleric.png";
             break;
-        case WizardBattleSprite:
+        case TextureFiles::WizardBattleSprite:
             filename = "wizard.png";
             break;
-        case VampireBattleSprite:
+        case TextureFiles::VampireBattleSprite:
             filename = "vampire.png";
             break;
-        case DefaultBattleSprite:
+        case TextureFiles::DefaultBattleSprite:
             filename = "rogue.png";
             break;
 
-        case LockedCharacter:
+        case TextureFiles::LockedCharacter:
             filename = "lock.png";
             break;
 
-        case TargetCursor:
+        case TextureFiles::TargetCursor:
             filename = "target.png";
             break;
-        case TimeArrow:
+        case TextureFiles::TimeArrow:
             filename = "time_arrow.png";
             break;
 
-        case FireballAnimation:
+        case TextureFiles::FireballAnimation:
             filename = "fireball.png";
             break;
-        case WaterAnimation:
+        case TextureFiles::WaterAnimation:
             filename = "water.png";
             break;
-        case EarthAnimation:
+        case TextureFiles::EarthAnimation:
             filename = "stone.png";
             break;
-        case AirAnimation:
+        case TextureFiles::AirAnimation:
             filename = "wind.png";
             break;
-        case SwordAnimation:
+        case TextureFiles::SwordAnimation:
             filename = "sword.png";
             break;
 
 
-        case DungeonBattleBackground:
+        case TextureFiles::DungeonBattleBackground:
             filename = "battle-background.png";
             break;
 
 
-        case GameOverScreen:
+        case TextureFiles::GameOverScreen:
             filename = "game-over.png";
             break;
-        case InGameMenu:
+        case TextureFiles::InGameMenu:
             filename = "menu.png";
             break;
-        case InGameMenuSelected:
+        case TextureFiles::InGameMenuSelected:
             filename = "menu-selected.png";
             break;
-        case EquipmentMenu:
+        case TextureFiles::EquipmentMenu:
             filename = "equipment-menu.png";
             break;
-        case EquipmentSelected:
+        case TextureFiles::EquipmentSelected:
             filename = "equipment-selected.png";
             break;
-        case StatusMenu:
+        case TextureFiles::StatusMenu:
             filename = "status-menu.png";
             break;
-        case DescriptionBox:
+        case TextureFiles::DescriptionBox:
             filename = "description-box.png";
             break;
 
-        case MinimapHero:
+        case TextureFiles::MinimapHero:
             filename = "hero-minimap.png";
             AnimationSteps = 2;
             break;

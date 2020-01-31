@@ -36,7 +36,7 @@ void PartyMember::SetCharacterClass(CharacterClass* chrClass)
 void PartyMember::Init()
 {
     Analyze();
-    m_controllTypeAtm = Entity::ControllUser;
+    m_controllTypeAtm = Entity::ControllType::User;
     m_exp = 0;
     m_lvl = 1;
     m_neededExpMultiplier = 10.0f;
@@ -44,7 +44,7 @@ void PartyMember::Init()
     std::string name = NameGenerator::GetInstance()->GetCapitalizedName(5, 10);
     SetName(name);
 
-    for(int i = 0; i < Equipment::EQUIPMENT_POSITION_END; i++)
+    for(int i = 0; i < (int)Equipment::EquipmentPosition::EQUIPMENT_POSITION_END; i++)
     {
         m_equipment[(Equipment::EquipmentPosition)i] = nullptr;
     }

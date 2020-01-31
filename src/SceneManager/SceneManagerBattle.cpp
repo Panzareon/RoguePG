@@ -107,7 +107,7 @@ SceneManagerBattle::SceneManagerBattle()
     //Build Scene Graph
     SetMemberStats();
     m_mainNode = new Node();
-    sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::DungeonBattleBackground));
+    sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::TextureFiles::DungeonBattleBackground));
     m_background = new DrawableNode(backgroundSprite);
     m_mainNode->addChild(m_background);
     m_eventLayer = new Node();
@@ -121,7 +121,7 @@ SceneManagerBattle::SceneManagerBattle()
     m_mainNode->addChild(m_description);
     m_mainMenu->SetPadding(5,0);
 
-    sf::Sprite* timeArrow = new sf::Sprite(*TextureList::getTexture(TextureList::TimeArrow));
+    sf::Sprite* timeArrow = new sf::Sprite(*TextureList::getTexture(TextureList::TextureFiles::TimeArrow));
     m_timeDisplay = new DrawableNode(timeArrow);
     m_timeDisplay->moveNode(20.0f, 50.0f);
     m_gui->addChild(m_timeDisplay, 0);
@@ -377,7 +377,7 @@ void SceneManagerBattle::Tick()
     else if(m_next != nullptr && !m_nextFinished)
     {
         m_next->CalculateMove(this);
-        if(m_next->GetControllType() == Entity::ControllUser)
+        if(m_next->GetControllType() == Entity::ControllType::User)
         {
             //Check controlls for gui
             m_mainMenu->CheckKeyboardInput();
@@ -449,7 +449,7 @@ void SceneManagerBattle::CalculateNext()
         m_next = next;
         PassTime(smallestNext);
         m_next->StartTurn();
-        if(m_next->GetControllType() == Entity::ControllUser)
+        if(m_next->GetControllType() == Entity::ControllType::User)
         {
             //Show menu
             ShowMenuForNext();
@@ -613,7 +613,7 @@ bool SceneManagerBattle::IsEntityTargeted(Entity* entity)
     }
 
     //Target the Entity that acts next
-    if(m_useOnTarget == nullptr && m_animationList.size() == 0 && m_next == entity && entity->GetControllType() == Entity::ControllUser)
+    if(m_useOnTarget == nullptr && m_animationList.size() == 0 && m_next == entity && entity->GetControllType() == Entity::ControllType::User)
         return true;
     return false;
 }
@@ -654,7 +654,7 @@ void SceneManagerBattle::UpdatePlayerSprites()
 void SceneManagerBattle::AddSpriteForEntity(Entity* entity, bool hpBar)
 {
     //Adding Cursor if Entity is targeted
-    sf::Sprite* target = new sf::Sprite(*TextureList::getTexture(TextureList::TargetCursor));
+    sf::Sprite* target = new sf::Sprite(*TextureList::getTexture(TextureList::TextureFiles::TargetCursor));
     DrawableNode* targetNode = new DrawableNode(target);
     //Moving Cursor
     sf::Transform targetTransform;
@@ -686,7 +686,7 @@ void SceneManagerBattle::SetDescription(std::string str)
 }
 SceneManager::SceneManagerType SceneManagerBattle::GetType()
 {
-    return TypeBattle;
+    return SceneManagerType::Battle;
 }
 
 void SceneManagerBattle::MoveSkillPosition(int from, int to)

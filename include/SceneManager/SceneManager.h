@@ -8,7 +8,7 @@
 class SceneManager
 {
     public:
-        enum SceneManagerType {TypeBattle, TypeMainMenu, TypeVillage, TypeMenu, TypeDefault};
+        enum class SceneManagerType {Battle, MainMenu, Village, Menu, Default};
         SceneManager();
         virtual ~SceneManager();
         virtual void NextTick();

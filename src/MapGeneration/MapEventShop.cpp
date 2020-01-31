@@ -75,7 +75,7 @@ void MapEventShop::Restock()
                 random -= itInner->first;
                 if(random <= 0.0f)
                 {
-                    m_sellItems.insert(std::pair<int, Item*>(itInner->second.first, ItemFactory::GetInstance()->GetEquipment(Equipment::MainHand, itInner->second.second)));
+                    m_sellItems.insert(std::pair<int, Item*>(itInner->second.first, ItemFactory::GetInstance()->GetEquipment(Equipment::EquipmentPosition::MainHand, itInner->second.second)));
                     return;
                 }
             }

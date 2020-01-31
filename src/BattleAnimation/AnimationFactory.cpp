@@ -86,7 +86,7 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
     case AnimationList::Fireball:
         {
             ret = new Animation(0.2f);
-            AnimationPartSprite* part = new AnimationPartSprite(TextureList::FireballAnimation);
+            AnimationPartSprite* part = new AnimationPartSprite(TextureList::TextureFiles::FireballAnimation);
             sf::FloatRect spriteBounds = part->GetSprite()->getLocalBounds();
             startTransform.translate((startPos.width - spriteBounds.width) / 2, (startPos.height - spriteBounds.height) / 2);
             part->SetTiming(0.0f, 0.2f);
@@ -101,7 +101,7 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
         {
             float yMovement = 50.0f;
             ret = new Animation(0.2f);
-            AnimationPartSprite* part = new AnimationPartSprite(TextureList::WaterAnimation);
+            AnimationPartSprite* part = new AnimationPartSprite(TextureList::TextureFiles::WaterAnimation);
             sf::FloatRect spriteBounds = part->GetSprite()->getLocalBounds();
             startTransform.translate((startPos.width - spriteBounds.width) / 2, (startPos.height - spriteBounds.height) / 2 - yMovement);
             part->SetTiming(0.0f, 0.2f);
@@ -115,7 +115,7 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
         {
             float yMovement = 75.0f;
             ret = new Animation(0.2f);
-            AnimationPartSprite* part = new AnimationPartSprite(TextureList::EarthAnimation);
+            AnimationPartSprite* part = new AnimationPartSprite(TextureList::TextureFiles::EarthAnimation);
             sf::FloatRect spriteBounds = part->GetSprite()->getLocalBounds();
             startTransform.translate((startPos.width - spriteBounds.width) / 2, (startPos.height - spriteBounds.height) / 2 - yMovement);
             part->SetTiming(0.0f, 0.2f);
@@ -129,7 +129,7 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
         {
             float xMovement = -30.0f;
             ret = new Animation(0.2f);
-            AnimationPartSprite* part = new AnimationPartSprite(TextureList::AirAnimation);
+            AnimationPartSprite* part = new AnimationPartSprite(TextureList::TextureFiles::AirAnimation);
             sf::FloatRect spriteBounds = part->GetSprite()->getLocalBounds();
             startTransform.translate((startPos.width - spriteBounds.width) / 2 - xMovement, (startPos.height - spriteBounds.height) / 2);
             part->SetTiming(0.0f, 0.2f);
@@ -143,7 +143,7 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect star
         {
             float yMovement = 75.0f;
             ret = new Animation(0.2f);
-            AnimationPartSprite* part = new AnimationPartSprite(TextureList::SwordAnimation);
+            AnimationPartSprite* part = new AnimationPartSprite(TextureList::TextureFiles::SwordAnimation);
             sf::FloatRect spriteBounds = part->GetSprite()->getLocalBounds();
             startTransform.translate((startPos.width - spriteBounds.width) / 2, (startPos.height - spriteBounds.height) / 2 - yMovement);
             part->SetTiming(0.0f, 0.2f);

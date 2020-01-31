@@ -46,7 +46,7 @@ SceneManagerGameMenu::SceneManagerGameMenu()
 
 
     //Set Background
-    sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::InGameMenu));
+    sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::TextureFiles::InGameMenu));
     DrawableNode* background = new DrawableNode(backgroundSprite);
     int x = GameController::getInstance()->GetWindowWidth() - backgroundSprite->getLocalBounds().width;
     x /= 2;
@@ -92,7 +92,7 @@ SceneManagerGameMenu::SceneManagerGameMenu()
     m_mainMenu->SetBackgroundColor(sf::Color::Transparent);
     m_mainMenu->SetForegroundColor(sf::Color::Black);
     m_mainMenu->SetOutlineColor(sf::Color::Transparent);
-    m_mainMenu->SetSelectedTexture(TextureList::getTexture(TextureList::InGameMenuSelected));
+    m_mainMenu->SetSelectedTexture(TextureList::getTexture(TextureList::TextureFiles::InGameMenuSelected));
     m_mainMenu->SetFontSize(50);
     m_mainMenu->SetSpacing(29);
     m_finished = false;
@@ -136,10 +136,10 @@ void SceneManagerGameMenu::Tick()
 void SceneManagerGameMenu::Quit()
 {
     //Quit to Main menu
-    GameController::getInstance()->QuitTo(SceneManager::TypeMainMenu);
+    GameController::getInstance()->QuitTo(SceneManager::SceneManagerType::MainMenu);
 }
 
 SceneManager::SceneManagerType SceneManagerGameMenu::GetType()
 {
-    return TypeMenu;
+    return SceneManagerType::Menu;
 }

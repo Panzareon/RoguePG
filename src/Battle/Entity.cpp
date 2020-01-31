@@ -11,7 +11,7 @@
 Entity::Entity(int exp)
 {
     //ctor
-    m_controllTypeAtm = Entity::ControllAI;
+    m_controllTypeAtm = Entity::ControllType::AI;
     m_teamId = -1;
     m_lastAttackWasEffective = false;
 
@@ -28,7 +28,7 @@ Entity::Entity(int exp)
     }
 
     m_battleSprite = new sf::Sprite();
-    SetBattleSprite(TextureList::DefaultBattleSprite);
+    SetBattleSprite(TextureList::TextureFiles::DefaultBattleSprite);
 
     m_toNextAttack = 1.0f;
 
@@ -121,7 +121,7 @@ void Entity::GetHit(Attack* attack, Entity* attacker)
         //resisted Attack
         color = sf::Color::Blue;
     }
-    int finalDmg = dmg;
+    int finalDmg = std::floorf(dmg);
     if(finalDmg < 1)
         finalDmg = 1;
 
@@ -185,7 +185,7 @@ int Entity::GetNeededMana(int baseMp)
     {
         fMp = iter->second->GetNeededMP(fMp);
     }
-    return fMp;
+    return std::floorf(fMp);
 }
 
 bool Entity::CanCastSkill(Skill* skill)
@@ -391,7 +391,7 @@ std::multimap<int, std::shared_ptr<IPassiveEffect>>* Entity::GetPassiveEffects()
 void Entity::CalculateMove(SceneManagerBattle* sm)
 {
     //Check if controlled by AI
-    if(m_controllTypeAtm == Entity::ControllAI)
+    if(m_controllTypeAtm == Entity::ControllType::AI)
     {
         m_AI->UseNextSkill();
         sm->TurnIsFinished();

@@ -8,7 +8,7 @@ class TextureList
 {
     public:
         //List of Texture file names
-        enum TextureFiles{
+        enum class TextureFiles{
             DungeonTileMap,DebugTileMap,
 
             HeroSpriteSheet,

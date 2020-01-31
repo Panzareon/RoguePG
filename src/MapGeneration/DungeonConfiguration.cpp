@@ -36,11 +36,11 @@ void DungeonConfiguration::Init()
         m_dungeonType = 0;
         m_mapFillNr = 0;
 
-        m_enemies[EnemyFactory::EnemyListBat] = 10.0f;
-        m_enemies[EnemyFactory::EnemyListWaterSlime] = 3.0f;
+        m_enemies[EnemyFactory::EnemyList::Bat] = 10.0f;
+        m_enemies[EnemyFactory::EnemyList::WaterSlime] = 3.0f;
 
-        m_bosses[EnemyFactory::EnemyListDeadWizard] = 3.0f;
-        m_bosses[EnemyFactory::EnemyListStoneGolem] = 10.0f;
+        m_bosses[EnemyFactory::EnemyList::DeadWizard] = 3.0f;
+        m_bosses[EnemyFactory::EnemyList::StoneGolem] = 10.0f;
     }
     else
     {
@@ -60,12 +60,12 @@ void DungeonConfiguration::Init()
                     break;
             }
             m_mapFillNr = rand() % 2;
-            m_enemies[EnemyFactory::EnemyListBat] = 3.0f;
-            m_enemies[EnemyFactory::EnemyListWaterSlime] = 5.0f;
-            m_enemies[EnemyFactory::EnemyListWindEye] = 10.0f;
-            m_enemies[EnemyFactory::EnemyListStoneGolem] = 7.0f;
+            m_enemies[EnemyFactory::EnemyList::Bat] = 3.0f;
+            m_enemies[EnemyFactory::EnemyList::WaterSlime] = 5.0f;
+            m_enemies[EnemyFactory::EnemyList::WindEye] = 10.0f;
+            m_enemies[EnemyFactory::EnemyList::StoneGolem] = 7.0f;
 
-            m_bosses[EnemyFactory::EnemyListDeadWizard] = 10.0f;
+            m_bosses[EnemyFactory::EnemyList::DeadWizard] = 10.0f;
         }
         else
         {
@@ -80,12 +80,12 @@ void DungeonConfiguration::Init()
                     break;
             }
             m_mapFillNr = 0;
-            m_enemies[EnemyFactory::EnemyListWaterSlime] = 5.0f;
-            m_enemies[EnemyFactory::EnemyListStoneGolem] = 7.0f;
-            m_enemies[EnemyFactory::EnemyListIceSpirit] = 15.0f;
+            m_enemies[EnemyFactory::EnemyList::WaterSlime] = 5.0f;
+            m_enemies[EnemyFactory::EnemyList::StoneGolem] = 7.0f;
+            m_enemies[EnemyFactory::EnemyList::IceSpirit] = 15.0f;
 
-            m_bosses[EnemyFactory::EnemyListDeadWizard] = 3.0f;
-            m_bosses[EnemyFactory::EnemyListIceGolem] = 10.0f;
+            m_bosses[EnemyFactory::EnemyList::DeadWizard] = 3.0f;
+            m_bosses[EnemyFactory::EnemyList::IceGolem] = 10.0f;
         }
     }
 
@@ -189,7 +189,7 @@ std::string DungeonConfiguration::ClearedDungeon()
     int nrCleared = progress->GetNrDungeonsCleared();
     if(m_dungeonId == 1)
     {
-        for(int i = 0; i < CharacterClass::CHARACTER_CLASS_END; i++)
+        for(int i = 0; i < (int)CharacterClass::CharacterClassEnum::COUNT; i++)
         {
             CharacterClass::CharacterClassEnum asEnum = (CharacterClass::CharacterClassEnum)i;
             if(!progress->IsClassUnlocked(asEnum))

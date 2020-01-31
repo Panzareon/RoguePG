@@ -43,7 +43,7 @@ class MapEventShop : public MapEventTile
             archive(cereal::base_class<MapEventTile>( this ), m_type, m_innPrice, sellItems);
             for(auto it = sellItems.begin(); it != sellItems.end(); it++)
             {
-                m_sellItems.insert(std::pair<int, Item*>(it->first, ItemFactory::GetInstance()->GetEquipment(Equipment::MainHand, it->second)));
+                m_sellItems.insert(std::pair<int, Item*>(it->first, ItemFactory::GetInstance()->GetEquipment(Equipment::EquipmentPosition::MainHand, it->second)));
             }
         }
 

@@ -9,7 +9,7 @@ PersistentProgress::PersistentProgress()
     m_shopLevel = 1;
     m_shopNrItems = 1;
     m_nrDungeonsCleared = 0;
-    m_unlockedClasses.insert(CharacterClass::CharacterClassPaladin);
+    m_unlockedClasses.insert(CharacterClass::CharacterClassEnum::Paladin);
 }
 
 PersistentProgress::~PersistentProgress()

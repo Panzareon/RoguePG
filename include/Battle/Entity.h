@@ -17,7 +17,7 @@ class SceneManagerBattle;
 class Entity
 {
     public:
-        enum ControllType{ControllAI, ControllUser};
+        enum class ControllType{AI, User};
         Entity(int exp = 0);
         virtual ~Entity();
 

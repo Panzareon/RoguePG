@@ -20,13 +20,13 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
 
     switch(type)
     {
-    case EnemyListBat:
+    case EnemyList::Bat:
     {
         //Exp to give after Battle
         ret = new Entity(10 + lvl);
         ret->SetName(localization->GetLocalization("enemy.bat"));
         ret->InitAllAttributes(8 + lvl,9 + lvl,5 + lvl,2 + lvl/3,9 + lvl,6 + lvl/2,9 + lvl);
-        ret->SetBattleSprite(TextureList::BatBattleSprite);
+        ret->SetBattleSprite(TextureList::TextureFiles::BatBattleSprite);
         ret->SetResistance(BattleEnums::AttackType::Physical, 0.9f);
         ret->SetResistance(BattleEnums::AttackType::Fire, 0.7f);
         BattleEnums::Target target = BattleEnums::Target::EnemyTeamEntity;
@@ -35,14 +35,14 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         ret->AddSkill(sk);
         break;
     }
-    case EnemyListDeadWizard:
+    case EnemyList::DeadWizard:
     {
 
         //Exp to give after Battle
         ret = new Entity(20 + lvl);
         ret->SetName(localization->GetLocalization("enemy.dead_wizard"));
         ret->InitAllAttributes(18 + lvl*2,35 + lvl*3,7 + lvl/2,14 + lvl,11 + lvl/2,15 + lvl,14 + lvl/2);
-        ret->SetBattleSprite(TextureList::DeadWizardBattleSprite);
+        ret->SetBattleSprite(TextureList::TextureFiles::DeadWizardBattleSprite);
         ret->SetResistance(BattleEnums::AttackType::Fire, 0.7f);
         BattleEnums::Target target = BattleEnums::Target::EnemyTeamEntity;
         Skill* sk = new Skill(target);
@@ -50,14 +50,14 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         ret->AddSkill(sk);
         break;
     }
-    case EnemyListStoneGolem:
+    case EnemyList::StoneGolem:
     {
 
         //Exp to give after Battle
         ret = new Entity(15 + lvl);
         ret->SetName(localization->GetLocalization("enemy.stone_golem"));
         ret->InitAllAttributes(18 + lvl*2,10 + lvl,5 + lvl,5 + lvl/2,8 + lvl,7 + lvl,10 + lvl);
-        ret->SetBattleSprite(TextureList::StoneGolemBattleSprite);
+        ret->SetBattleSprite(TextureList::TextureFiles::StoneGolemBattleSprite);
         ret->SetResistance(BattleEnums::AttackType::Physical, 2.0f);
         ret->SetResistance(BattleEnums::AttackType::Earth, 1.5f);
         ret->SetResistance(BattleEnums::AttackType::Water, 0.7f);
@@ -69,14 +69,14 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         ret->AddSkill(sk);
         break;
     }
-    case EnemyListWindEye:
+    case EnemyList::WindEye:
     {
 
         //Exp to give after Battle
         ret = new Entity(10 + lvl);
         ret->SetName(localization->GetLocalization("enemy.wind_eye"));
         ret->InitAllAttributes(10 + lvl,9 + lvl,5 + lvl,12 + lvl,6 + lvl/2,9 + lvl,9 + lvl);
-        ret->SetBattleSprite(TextureList::WindEyeBattleSprite);
+        ret->SetBattleSprite(TextureList::TextureFiles::WindEyeBattleSprite);
         ret->SetResistance(BattleEnums::AttackType::Physical, 0.9f);
         ret->SetResistance(BattleEnums::AttackType::Earth, 0.7f);
         ret->SetResistance(BattleEnums::AttackType::Fire, 0.9f);
@@ -87,14 +87,14 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         ret->AddSkill(sk);
         break;
     }
-    case EnemyListWaterSlime:
+    case EnemyList::WaterSlime:
     {
 
         //Exp to give after Battle
         ret = new Entity(10 + lvl);
         ret->SetName(localization->GetLocalization("enemy.water_slime"));
         ret->InitAllAttributes(7 + lvl*3,9 + lvl,3 + lvl/3,3 + lvl*2,6 + lvl*2,3 + lvl/3,7 + lvl);
-        ret->SetBattleSprite(TextureList::WaterSlimeBattleSprite);
+        ret->SetBattleSprite(TextureList::TextureFiles::WaterSlimeBattleSprite);
         ret->SetResistance(BattleEnums::AttackType::Physical, 1.5f);
         ret->SetResistance(BattleEnums::AttackType::Earth, 1.3f);
         ret->SetResistance(BattleEnums::AttackType::Water, 1.3f);
@@ -106,14 +106,14 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         ret->AddSkill(sk);
         break;
     }
-    case EnemyListIceGolem:
+    case EnemyList::IceGolem:
     {
 
         //Exp to give after Battle
         ret = new Entity(20 + lvl);
         ret->SetName(localization->GetLocalization("enemy.ice_golem"));
         ret->InitAllAttributes(30 + lvl*3,35 + lvl*3,10 + lvl,7 + lvl/2,12 + lvl,20 + lvl*2,7 + lvl/2);
-        ret->SetBattleSprite(TextureList::IceGolemBattleSprite);
+        ret->SetBattleSprite(TextureList::TextureFiles::IceGolemBattleSprite);
         ret->SetResistance(BattleEnums::AttackType::Physical, 1.5f);
         ret->SetResistance(BattleEnums::AttackType::Water, 1.5f);
         ret->SetResistance(BattleEnums::AttackType::Fire, 0.5f);
@@ -124,14 +124,14 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         ret->AddSkill(sk);
         break;
     }
-    case EnemyListIceSpirit:
+    case EnemyList::IceSpirit:
     {
 
         //Exp to give after Battle
         ret = new Entity(10 + lvl);
         ret->SetName(localization->GetLocalization("enemy.ice_spirit"));
         ret->InitAllAttributes(10 + lvl*2,25 + lvl*2,7 + lvl,9 + lvl,8 + lvl,16 + lvl*2,8 + lvl);
-        ret->SetBattleSprite(TextureList::IceSpiritBattleSprite);
+        ret->SetBattleSprite(TextureList::TextureFiles::IceSpiritBattleSprite);
         ret->SetResistance(BattleEnums::AttackType::Physical, 1.5f);
         ret->SetResistance(BattleEnums::AttackType::Water, 1.5f);
         ret->SetResistance(BattleEnums::AttackType::Fire, 0.5f);
@@ -151,7 +151,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
     if(ret == nullptr)
     {
         std::string msg = "Cannot create Enemy with Type: ";
-        msg.append(std::to_string(type));
+        msg.append(std::to_string((int)type));
         throw InvalidArgumentException(msg);
     }
     return ret;

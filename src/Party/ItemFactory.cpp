@@ -17,20 +17,20 @@ ItemFactory* ItemFactory::m_instance = nullptr;
 ItemFactory::ItemFactory()
 {
     //ctor
-    m_equipmentIds[Equipment::MainHand][StartingItem].push_back(1);
-    m_equipmentIds[Equipment::MainHand][StartingItem].push_back(2);
-    m_equipmentIds[Equipment::MainHand][StartingItem].push_back(3);
-    m_equipmentIds[Equipment::MainHand][StartingItem].push_back(4);
+    m_equipmentIds[Equipment::EquipmentPosition::MainHand][StartingItem].push_back(1);
+    m_equipmentIds[Equipment::EquipmentPosition::MainHand][StartingItem].push_back(2);
+    m_equipmentIds[Equipment::EquipmentPosition::MainHand][StartingItem].push_back(3);
+    m_equipmentIds[Equipment::EquipmentPosition::MainHand][StartingItem].push_back(4);
 
-    m_equipmentIds[Equipment::MainHand][BaseItem].push_back(101);
-    m_equipmentIds[Equipment::MainHand][BaseItem].push_back(102);
-    m_equipmentIds[Equipment::MainHand][BaseItem].push_back(103);
-    m_equipmentIds[Equipment::MainHand][BaseItem].push_back(104);
+    m_equipmentIds[Equipment::EquipmentPosition::MainHand][BaseItem].push_back(101);
+    m_equipmentIds[Equipment::EquipmentPosition::MainHand][BaseItem].push_back(102);
+    m_equipmentIds[Equipment::EquipmentPosition::MainHand][BaseItem].push_back(103);
+    m_equipmentIds[Equipment::EquipmentPosition::MainHand][BaseItem].push_back(104);
 
-    m_equipmentIds[Equipment::MainHand][SpecialItem].push_back(1001);
-    m_equipmentIds[Equipment::MainHand][SpecialItem].push_back(1101);
-    m_equipmentIds[Equipment::MainHand][SpecialItem].push_back(1201);
-    m_equipmentIds[Equipment::MainHand][SpecialItem].push_back(1301);
+    m_equipmentIds[Equipment::EquipmentPosition::MainHand][SpecialItem].push_back(1001);
+    m_equipmentIds[Equipment::EquipmentPosition::MainHand][SpecialItem].push_back(1101);
+    m_equipmentIds[Equipment::EquipmentPosition::MainHand][SpecialItem].push_back(1201);
+    m_equipmentIds[Equipment::EquipmentPosition::MainHand][SpecialItem].push_back(1301);
     //TODO: init all ItemIds
 }
 
@@ -58,7 +58,7 @@ Item* ItemFactory::GetRandomItem(Item::ItemType type, ItemRarity rarity)
 
 Item* ItemFactory::GetRandomEquipment(ItemRarity rarity)
 {
-    int random = rand() % Equipment::EQUIPMENT_POSITION_END;
+    int random = rand() % (int)Equipment::EquipmentPosition::EQUIPMENT_POSITION_END;
     return GetRandomEquipment((Equipment::EquipmentPosition) random, rarity);
 }
 

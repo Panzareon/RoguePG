@@ -23,7 +23,7 @@ SceneManagerChooseHero::SceneManagerChooseHero()
 
     int xPos = 50;
     int yPos = selectHero->getBoundingBox().height + 50.0f;
-    for(int i = 0; i < CharacterClass::CHARACTER_CLASS_END; i++)
+    for(int i = 0; i < (int)CharacterClass::CharacterClassEnum::COUNT; i++)
     {
         CharacterClass::CharacterClassEnum classEnum = (CharacterClass::CharacterClassEnum)i;
         bool available = progress->IsClassUnlocked(classEnum);
@@ -38,7 +38,7 @@ SceneManagerChooseHero::SceneManagerChooseHero()
         }
         else
         {
-            classSprite->setTexture(*TextureList::getTexture(TextureList::LockedCharacter));
+            classSprite->setTexture(*TextureList::getTexture(TextureList::TextureFiles::LockedCharacter));
         }
         DrawableNode* sprite = new DrawableNode(classSprite);
         sprite->setBoundingBox(classSprite->getLocalBounds());
@@ -48,13 +48,13 @@ SceneManagerChooseHero::SceneManagerChooseHero()
         m_gui->addChild(sprite);
     }
 
-    sf::Sprite* targetSprite = new sf::Sprite(*TextureList::getTexture(TextureList::TargetCursor));
+    sf::Sprite* targetSprite = new sf::Sprite(*TextureList::getTexture(TextureList::TextureFiles::TargetCursor));
     m_cursor = new DrawableNode(targetSprite);
     m_cursor->setBoundingBox(targetSprite->getLocalBounds());
     m_gui->addChild(m_cursor);
 
 
-    sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::DescriptionBox));
+    sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::TextureFiles::DescriptionBox));
     Node* background = new DrawableNode(backgroundSprite);
     int x = GameController::getInstance()->GetWindowWidth() - backgroundSprite->getLocalBounds().width;
     x /= 2;
@@ -147,12 +147,12 @@ void SceneManagerChooseHero::StartDungeon()
     ItemFactory* itemFactory = ItemFactory::GetInstance();
     for(int i = 0; i < 3; i++)
     {
-        Equipment* equipment = (Equipment*)itemFactory->GetRandomEquipment(Equipment::MainHand, ItemFactory::StartingItem);
+        Equipment* equipment = (Equipment*)itemFactory->GetRandomEquipment(Equipment::EquipmentPosition::MainHand, ItemFactory::StartingItem);
         std::shared_ptr<Item> item = party->AddItem(equipment);
         if(partyMember->size() > i)
         {
             std::shared_ptr<PartyMember> member = partyMember->at(i);
-            member->SetEquipment(Equipment::MainHand, std::static_pointer_cast<Equipment>(item));
+            member->SetEquipment(Equipment::EquipmentPosition::MainHand, std::static_pointer_cast<Equipment>(item));
             member->Heal(member->GetAttribute(BattleEnums::Attribute::MaxHp));
         }
 
@@ -164,7 +164,7 @@ void SceneManagerChooseHero::StartDungeon()
 void SceneManagerChooseHero::ChooseNext()
 {
     m_selected++;
-    if(m_selected >= CharacterClass::CHARACTER_CLASS_END)
+    if(m_selected >= (int)CharacterClass::CharacterClassEnum::COUNT)
         m_selected = 0;
     ShowForCharacterClass();
 }
@@ -173,7 +173,7 @@ void SceneManagerChooseHero::ChoosePrev()
 {
     m_selected--;
     if(m_selected < 0)
-        m_selected = CharacterClass::CHARACTER_CLASS_END - 1;
+        m_selected = (int)CharacterClass::CharacterClassEnum::COUNT - 1;
     ShowForCharacterClass();
 }
 

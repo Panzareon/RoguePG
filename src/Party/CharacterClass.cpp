@@ -31,11 +31,11 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
     if(m_classes == nullptr)
     {
         m_classes = new std::vector<CharacterClass*>;
-        m_classes->resize(CHARACTER_CLASS_END);
+        m_classes->resize((int)CharacterClassEnum::COUNT);
         CharacterClass * newClass;
         SkillGenerator* skillGenerator;
         //TODO: initialize Character Classes
-        newClass = new CharacterClass(CharacterClassMage, 1.0f, TextureList::MageBattleSprite);
+        newClass = new CharacterClass(CharacterClassEnum::Mage, 1.0f, TextureList::TextureFiles::MageBattleSprite);
 
         newClass->SetBaseAttribute(BattleEnums::Attribute::MaxHp, 10);
         newClass->SetBaseAttribute(BattleEnums::Attribute::MaxMp, 15);
@@ -68,10 +68,10 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         skillGenerator->AddSkillEffectType(BattleEnums::EffectType::Debuff, 0.2f, false);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectType::Buff, 1.0f, true);
 
-        m_classes->at(CharacterClassMage) = newClass;
+        m_classes->at((int)CharacterClassEnum::Mage) = newClass;
 
 
-        newClass = new CharacterClass(CharacterClassBarbarian, 0.0f, TextureList::BarbarianBattleSprite);
+        newClass = new CharacterClass(CharacterClassEnum::Barbarian, 0.0f, TextureList::TextureFiles::BarbarianBattleSprite);
 
         newClass->SetBaseAttribute(BattleEnums::Attribute::MaxHp, 15);
         newClass->SetBaseAttribute(BattleEnums::Attribute::MaxMp, 7);
@@ -87,10 +87,10 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         newClass->SetAttributePerLevel(BattleEnums::Attribute::Strength, 1.3f);
         newClass->SetAttributePerLevel(BattleEnums::Attribute::Int, 0.7f);
 
-        m_classes->at(CharacterClassBarbarian) = newClass;
+        m_classes->at((int)CharacterClassEnum::Barbarian) = newClass;
 
 
-        newClass = new CharacterClass(CharacterClassPaladin, 0.5f, TextureList::PaladinBattleSprite);
+        newClass = new CharacterClass(CharacterClassEnum::Paladin, 0.5f, TextureList::TextureFiles::PaladinBattleSprite);
 
         newClass->SetBaseAttribute(BattleEnums::Attribute::MaxHp, 13);
         newClass->SetBaseAttribute(BattleEnums::Attribute::MaxMp, 15);
@@ -126,9 +126,9 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         skillGenerator->AddSkillEffectType(BattleEnums::EffectType::Damage, 0.3f, false);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectType::Debuff, 0.7f, false);
 
-        m_classes->at(CharacterClassPaladin) = newClass;
+        m_classes->at((int)CharacterClassEnum::Paladin) = newClass;
 
-        newClass = new CharacterClass(CharacterClassThief, 0.3f, TextureList::ThiefBattleSprite);
+        newClass = new CharacterClass(CharacterClassEnum::Thief, 0.3f, TextureList::TextureFiles::ThiefBattleSprite);
 
         newClass->SetBaseAttribute(BattleEnums::Attribute::MaxHp, 8);
         newClass->SetBaseAttribute(BattleEnums::Attribute::MaxMp, 10);
@@ -162,10 +162,10 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         skillGenerator->AddSkillEffectType(BattleEnums::EffectType::Damage, 0.5f, false);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectType::Debuff, 0.5f, false);
 
-        m_classes->at(CharacterClassThief) = newClass;
+        m_classes->at((int)CharacterClassEnum::Thief) = newClass;
 
 
-        newClass = new CharacterClass(CharacterClassCleric, 1.0f, TextureList::ClericBattleSprite);
+        newClass = new CharacterClass(CharacterClassEnum::Cleric, 1.0f, TextureList::TextureFiles::ClericBattleSprite);
 
         newClass->SetBaseAttribute(BattleEnums::Attribute::MaxHp, 15);
         newClass->SetBaseAttribute(BattleEnums::Attribute::MaxMp, 15);
@@ -200,10 +200,10 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         skillGenerator->AddSkillEffectType(BattleEnums::EffectType::Damage, 0.3f, false);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectType::Debuff, 0.7f, false);
 
-        m_classes->at(CharacterClassCleric) = newClass;
+        m_classes->at((int)CharacterClassEnum::Cleric) = newClass;
 
 
-        newClass = new CharacterClass(CharacterClassWizard, 1.0f, TextureList::WizardBattleSprite);
+        newClass = new CharacterClass(CharacterClassEnum::Wizard, 1.0f, TextureList::TextureFiles::WizardBattleSprite);
 
         newClass->SetBaseAttribute(BattleEnums::Attribute::MaxHp, 15);
         newClass->SetBaseAttribute(BattleEnums::Attribute::MaxMp, 0);
@@ -238,9 +238,9 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         skillGenerator->AddSkillEffectType(BattleEnums::EffectType::Damage, 0.8f, false);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectType::Debuff, 0.2f, false);
 
-        m_classes->at(CharacterClassWizard) = newClass;
+        m_classes->at((int)CharacterClassEnum::Wizard) = newClass;
 
-        newClass = new CharacterClass(CharacterClassVampire, 0.3f, TextureList::VampireBattleSprite);
+        newClass = new CharacterClass(CharacterClassEnum::Vampire, 0.3f, TextureList::TextureFiles::VampireBattleSprite);
 
         newClass->SetBaseAttribute(BattleEnums::Attribute::MaxHp, 20);
         newClass->SetBaseAttribute(BattleEnums::Attribute::MaxMp, 0);
@@ -276,20 +276,20 @@ CharacterClass* CharacterClass::GetCharacterClass(CharacterClassEnum chrClass)
         skillGenerator->AddSkillEffectType(BattleEnums::EffectType::Damage, 0.8f, false);
         skillGenerator->AddSkillEffectType(BattleEnums::EffectType::Debuff, 0.2f, false);
 
-        m_classes->at(CharacterClassVampire) = newClass;
+        m_classes->at((int)CharacterClassEnum::Vampire) = newClass;
 
 
 
         //finished Initializing Character Classes
     }
-    if(chrClass >= 0 && chrClass < CHARACTER_CLASS_END)
+    if((int)chrClass >= 0 && chrClass < CharacterClassEnum::COUNT)
     {
-        return m_classes->at(chrClass);
+        return m_classes->at((int)chrClass);
     }
     else
     {
         std::string msg("No Character Class with id ");
-        msg.append(std::to_string(chrClass));
+        msg.append(std::to_string((int)chrClass));
         throw InvalidArgumentException(msg);
     }
 }
@@ -302,7 +302,7 @@ CharacterClass* CharacterClass::GetRandomCharacterClass()
     while(nrOfTries < 1000)
     {
         nrOfTries++;
-        retVal = (CharacterClassEnum)(rand() % CHARACTER_CLASS_END);
+        retVal = (CharacterClassEnum)(rand() % (int)CharacterClassEnum::COUNT);
         if(progress->IsClassUnlocked(retVal))
         {
             break;
@@ -321,7 +321,7 @@ PartyMember* CharacterClass::GetNewPartyMember()
     ret->SetBattleSprite(m_battleSprite);
 
     //Add special Character cases here
-    if(m_classType == CharacterClassWizard)
+    if(m_classType == CharacterClassEnum::Wizard)
     {
         //Add Passive Skill to not use MP
         PassiveSkill* sk = new PassiveSkill();
@@ -330,7 +330,7 @@ PartyMember* CharacterClass::GetNewPartyMember()
         sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(100103)->GetEffectWithStrength(strength, BattleEnums::Target::Passive),true);
         ret->AddSkill(sk);
     }
-    else if(m_classType == CharacterClassVampire)
+    else if(m_classType == CharacterClassEnum::Vampire)
     {
         //Add Passive Skill that skills cost less
         PassiveSkill* sk = new PassiveSkill();
@@ -383,19 +383,19 @@ std::string CharacterClass::GetName()
 {
     switch(m_classType)
     {
-    case CharacterClassMage:
+    case CharacterClassEnum::Mage:
         return "character_class.mage";
-    case CharacterClassBarbarian:
+    case CharacterClassEnum::Barbarian:
         return "character_class.barbarian";
-    case CharacterClassPaladin:
+    case CharacterClassEnum::Paladin:
         return "character_class.paladin";
-    case CharacterClassThief:
+    case CharacterClassEnum::Thief:
         return "character_class.thief";
-    case CharacterClassCleric:
+    case CharacterClassEnum::Cleric:
         return "character_class.cleric";
-    case CharacterClassWizard:
+    case CharacterClassEnum::Wizard:
         return "character_class.wizard";
-    case CharacterClassVampire:
+    case CharacterClassEnum::Vampire:
         return "character_class.vampire";
     }
     return "character_class.unknown";

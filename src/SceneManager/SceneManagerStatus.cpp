@@ -87,7 +87,7 @@ SceneManagerStatus::SceneManagerStatus(SceneManagerBattle* battle, Entity* start
         }
     }
 
-    sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::StatusMenu));
+    sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::TextureFiles::StatusMenu));
     Node* background = new DrawableNode(backgroundSprite);
     int x = GameController::getInstance()->GetWindowWidth() - backgroundSprite->getLocalBounds().width;
     x /= 2;
@@ -128,9 +128,9 @@ SceneManagerStatus::SceneManagerStatus(SceneManagerBattle* battle, Entity* start
     expNode->moveNode(1.0f,1.0f);
     expBackgroundNode->addChild(expNode);
 
-    int resistanceX = 173;
-    int resistanceY = 152;
-    int resistanceXDelta = 28;
+    float resistanceX = 173.0f;
+    float resistanceY = 152.0f;
+    float resistanceXDelta = 28.0f;
     for(int i = 0; i < (int)BattleEnums::AttackType::COUNT; i++)
     {
         BattleEnums::AttackType attackType = (BattleEnums::AttackType)i;
@@ -516,5 +516,5 @@ void SceneManagerStatus::MoveSkillPosition(int from, int to)
 
 SceneManager::SceneManagerType SceneManagerStatus::GetType()
 {
-    return TypeMenu;
+    return SceneManagerType::Menu;
 }

@@ -310,10 +310,10 @@ void SceneManagerDungeon::SpawnEnemy(MapEventEnemy* event, Enums::EnemyTypes typ
     {
     case Enums::EnemyTypes::EnemyDefault:
     case Enums::EnemyTypes::EnemyChest:
-        tex = TextureList::getTexture(TextureList::EnemySpriteSheet);
+        tex = TextureList::getTexture(TextureList::TextureFiles::EnemySpriteSheet);
         break;
     case Enums::EnemyTypes::EnemyBoss:
-        tex = TextureList::getTexture(TextureList::BossSpriteSheet);
+        tex = TextureList::getTexture(TextureList::TextureFiles::BossSpriteSheet);
         break;
     default:
         throw new InvalidArgumentException("The given type is not valid");
@@ -387,7 +387,7 @@ void SceneManagerDungeon::PlaceHeroSprite(MapEventHero* event)
 {
     //Display player sprite
     sf::Sprite* sprite = new sf::Sprite();
-    Texture* tex = TextureList::getTexture(TextureList::HeroSpriteSheet);
+    Texture* tex = TextureList::getTexture(TextureList::TextureFiles::HeroSpriteSheet);
     sprite->setTexture(*tex);
     sprite->setTextureRect(sf::IntRect(0,0,32,32));
     Node* hero = new DrawableNode(sprite);

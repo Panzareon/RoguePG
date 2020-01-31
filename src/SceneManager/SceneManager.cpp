@@ -150,6 +150,6 @@ bool SceneManager::PausesSceneManagerBelow()
 
 SceneManager::SceneManagerType SceneManager::GetType()
 {
-    return TypeDefault;
+    return SceneManagerType::Default;
 }
 

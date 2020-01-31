@@ -9,7 +9,7 @@ SceneManagerGameOver::SceneManagerGameOver()
     //ctor
     m_finished = false;
 
-    sf::Sprite* s = new sf::Sprite(*TextureList::getTexture(TextureList::GameOverScreen));
+    sf::Sprite* s = new sf::Sprite(*TextureList::getTexture(TextureList::TextureFiles::GameOverScreen));
     DrawableNode* screen = new DrawableNode(s);
     m_gui->addChild(screen);
 }

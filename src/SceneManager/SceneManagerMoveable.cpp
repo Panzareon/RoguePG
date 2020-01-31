@@ -48,13 +48,13 @@ void SceneManagerMoveable::Init()
 
 
 
-    m_tileMap->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
-    m_tileMapItems->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
-    m_tileMapAboveHero->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
-    m_tileMapAboveWall->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
-    m_tileMapWallDecoration->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
-    m_tileMapBelowGround->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
-    m_tileMapBelowGroundDecoration->setTexture(TextureList::getTexture(TextureList::DungeonTileMap));
+    m_tileMap->setTexture(TextureList::getTexture(TextureList::TextureFiles::DungeonTileMap));
+    m_tileMapItems->setTexture(TextureList::getTexture(TextureList::TextureFiles::DungeonTileMap));
+    m_tileMapAboveHero->setTexture(TextureList::getTexture(TextureList::TextureFiles::DungeonTileMap));
+    m_tileMapAboveWall->setTexture(TextureList::getTexture(TextureList::TextureFiles::DungeonTileMap));
+    m_tileMapWallDecoration->setTexture(TextureList::getTexture(TextureList::TextureFiles::DungeonTileMap));
+    m_tileMapBelowGround->setTexture(TextureList::getTexture(TextureList::TextureFiles::DungeonTileMap));
+    m_tileMapBelowGroundDecoration->setTexture(TextureList::getTexture(TextureList::TextureFiles::DungeonTileMap));
 
 
     //Build Scene Graph
@@ -76,7 +76,7 @@ void SceneManagerMoveable::Init()
     #ifdef DEBUG_FLAG
 
     m_tileMapRoomNumber = new TileMap();
-    m_tileMapRoomNumber->setTexture(TextureList::getTexture(TextureList::DebugTileMap));
+    m_tileMapRoomNumber->setTexture(TextureList::getTexture(TextureList::TextureFiles::DebugTileMap));
     m_roomNumberNode = new DrawableNode(m_tileMapRoomNumber);
     m_roomNumberNode->setVisibility(false);
     m_belowHero->addChild(m_roomNumberNode);
@@ -92,7 +92,7 @@ void SceneManagerMoveable::Init()
 
     //Add Hero
     sf::Sprite hero;
-    Texture* tex = TextureList::getTexture(TextureList::HeroSpriteSheet);
+    Texture* tex = TextureList::getTexture(TextureList::TextureFiles::HeroSpriteSheet);
     hero.setTexture(*tex);
     hero.setTextureRect(sf::IntRect(0,0,32,36));
     m_hero = new AnimatedNode(&hero, tex->GetNumberAnimationSteps());
@@ -117,7 +117,7 @@ void SceneManagerMoveable::Init()
     m_gui->addChild(m_minimapNode);
     m_minimapNode->addChild(minimap);
     sf::Sprite minimapHero;
-    tex = TextureList::getTexture(TextureList::MinimapHero);
+    tex = TextureList::getTexture(TextureList::TextureFiles::MinimapHero);
     minimapHero.setTexture(*tex);
     minimapHero.setTextureRect(sf::IntRect(0,0,2,2));
     m_minimapPlayer = new AnimatedNode(&minimapHero, tex->GetNumberAnimationSteps());

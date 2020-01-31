@@ -61,12 +61,12 @@ namespace ControllerFunctions
 {
     void QuitToVillage()
     {
-        GameController::getInstance()->QuitTo(SceneManager::TypeVillage);
+        GameController::getInstance()->QuitTo(SceneManager::SceneManagerType::Village);
     }
 }
 
 GameController* GameController::m_instance = 0;
-GameController::GameController() : m_randomGenerator(time(NULL))
+GameController::GameController() : m_randomGenerator((unsigned int)time(NULL))
 {
     //ctor
     LoadProgress();
@@ -273,7 +273,7 @@ void GameController::GotoPreviousLevel()
     else
     {
         //exit Dungeon
-        QuitTo(SceneManager::TypeVillage);
+        QuitTo(SceneManager::SceneManagerType::Village);
         m_levelId = 0;
     }
 }
@@ -373,7 +373,7 @@ void GameController::GameOver()
     //Only show Game over if not in Main Menu
     if(m_gameOver && m_sceneManager.size() > 1)
     {
-        m_quitTo = SceneManager::TypeMainMenu;
+        m_quitTo = SceneManager::SceneManagerType::MainMenu;
         ToQuitScreen();
         //display Game Over screen
         SceneManagerGameOver* gameOver = new SceneManagerGameOver();

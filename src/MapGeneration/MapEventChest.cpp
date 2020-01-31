@@ -37,7 +37,7 @@ void MapEventChest::Activate()
             {
                 rarity = ItemFactory::BaseItem;
             }
-            Item* item = ItemFactory::GetInstance()->GetRandomEquipment(Equipment::MainHand, rarity);
+            Item* item = ItemFactory::GetInstance()->GetRandomEquipment(Equipment::EquipmentPosition::MainHand, rarity);
             controller->getParty()->AddItem(item);
             //Receive message
             std::string toDisplay;

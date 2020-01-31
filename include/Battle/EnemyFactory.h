@@ -7,14 +7,14 @@
 class EnemyFactory
 {
     public:
-        enum EnemyList{
-            EnemyListBat,
-            EnemyListDeadWizard,
-            EnemyListStoneGolem,
-            EnemyListWindEye,
-            EnemyListWaterSlime,
-            EnemyListIceGolem,
-            EnemyListIceSpirit
+        enum class EnemyList{
+            Bat,
+            DeadWizard,
+            StoneGolem,
+            WindEye,
+            WaterSlime,
+            IceGolem,
+            IceSpirit
 
         };
         EnemyFactory();

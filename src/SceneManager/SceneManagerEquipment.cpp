@@ -62,7 +62,7 @@ SceneManagerEquipment::SceneManagerEquipment()
     m_maxShownHeroes = 3;
     m_finished = false;
 
-    sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::EquipmentMenu));
+    sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::TextureFiles::EquipmentMenu));
     m_background = new DrawableNode(backgroundSprite);
     int x = GameController::getInstance()->GetWindowWidth() - backgroundSprite->getLocalBounds().width;
     x /= 2;
@@ -91,7 +91,7 @@ SceneManagerEquipment::SceneManagerEquipment()
     m_mainMenu->SetBackgroundColor(sf::Color::Transparent);
     m_mainMenu->SetForegroundColor(sf::Color::Black);
     m_mainMenu->SetOutlineColor(sf::Color::Transparent);
-    m_mainMenu->SetSelectedTexture(TextureList::getTexture(TextureList::EquipmentSelected));
+    m_mainMenu->SetSelectedTexture(TextureList::getTexture(TextureList::TextureFiles::EquipmentSelected));
     m_mainMenu->SetFontSize(30);
     m_mainMenu->SetSpacing(74);
     m_mainMenu->SetVisibleWithSubmenu(true);
@@ -156,7 +156,7 @@ void SceneManagerEquipment::SelectMember(PartyMember* member)
     m_equipmentItems->SetFontSize(20);
     m_equipmentItems->SetSpacing(5);
     //For now only Weapons
-    m_pos = Equipment::MainHand;
+    m_pos = Equipment::EquipmentPosition::MainHand;
     std::shared_ptr<Equipment> equip;
     m_equipmentItems->CallOnCancel(std::function<void()>(std::bind(&MenuFunctions::Equip,this,member->GetEquipment(m_pos))));
     Localization* loc = Localization::GetInstance();
@@ -220,16 +220,16 @@ void SceneManagerEquipment::SelectEquipment(std::shared_ptr<Equipment> equipment
         if(equipment->IsEquipped())
         {
             std::shared_ptr<PartyMember> lastEquiped = equipment->GetEquipTarget();
-            lastEquiped->SetEquipment(Equipment::MainHand, nullptr);
+            lastEquiped->SetEquipment(Equipment::EquipmentPosition::MainHand, nullptr);
         }
-        m_selectedMember->SetEquipment(Equipment::MainHand, equipment);
+        m_selectedMember->SetEquipment(Equipment::EquipmentPosition::MainHand, equipment);
         UpdateMemberStats(true);
 
         m_equipmentDescription->SetText( Localization::GetInstance()->GetLocalization(equipment->GetDescription()));
     }
     else
     {
-        m_selectedMember->SetEquipment(Equipment::MainHand, equipment);
+        m_selectedMember->SetEquipment(Equipment::EquipmentPosition::MainHand, equipment);
         if(m_equipmentSkills != nullptr)
         {
             m_equipmentSkills->setVisibility(false);

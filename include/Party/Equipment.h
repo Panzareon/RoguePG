@@ -19,7 +19,7 @@ class Skill;
 class Equipment : public IPassiveEffect, public Item
 {
     public:
-        enum EquipmentPosition{MainHand, SideHand, Helmet, Armor, Ring, EQUIPMENT_POSITION_END};
+        enum class EquipmentPosition{MainHand, SideHand, Helmet, Armor, Ring, EQUIPMENT_POSITION_END};
         Equipment();
         Equipment(int ItemId, EquipmentPosition pos);
 

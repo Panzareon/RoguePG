@@ -48,7 +48,7 @@ SceneManagerOptions::SceneManagerOptions()
     m_musicRect = nullptr;
 
     //Set Background
-    sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::InGameMenu));
+    sf::Sprite* backgroundSprite = new sf::Sprite(*TextureList::getTexture(TextureList::TextureFiles::InGameMenu));
     DrawableNode* background = new DrawableNode(backgroundSprite);
     int x = GameController::getInstance()->GetWindowWidth() - backgroundSprite->getLocalBounds().width;
     x /= 2;
@@ -73,7 +73,7 @@ SceneManagerOptions::SceneManagerOptions()
     m_mainMenu->SetBackgroundColor(sf::Color::Transparent);
     m_mainMenu->SetForegroundColor(sf::Color::Black);
     m_mainMenu->SetOutlineColor(sf::Color::Transparent);
-    m_mainMenu->SetSelectedTexture(TextureList::getTexture(TextureList::InGameMenuSelected));
+    m_mainMenu->SetSelectedTexture(TextureList::getTexture(TextureList::TextureFiles::InGameMenuSelected));
     m_mainMenu->SetFontSize(45);
     m_mainMenu->SetSpacing(34);
 }
@@ -247,6 +247,6 @@ void SceneManagerOptions::SetSfxRect()
 
 SceneManager::SceneManagerType SceneManagerOptions::GetType()
 {
-    return TypeMenu;
+    return SceneManagerType::Menu;
 }
 

@@ -105,5 +105,5 @@ void SceneManagerVillage::AddShops(bool loadSaved)
 
 SceneManager::SceneManagerType SceneManagerVillage::GetType()
 {
-    return TypeVillage;
+    return SceneManagerType::Village;
 }
