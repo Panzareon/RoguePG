@@ -11,14 +11,14 @@
 
 int main()
 {
-    srand(time(NULL));
+    srand((int)time(NULL));
     GameController* controller = GameController::getInstance();
     int width = controller->GetWindowWidth();
     int height = controller->GetWindowHeight();
 
     Localization* local = Localization::GetInstance();
     sf::RenderWindow window(sf::VideoMode(width, height), local->GetLocalization("main.window.title"));
-    sf::View view(sf::FloatRect(0,0,width,height));
+    sf::View view(sf::FloatRect(0,0, (float)width,(float)height));
     window.setView(view);
     window.setVerticalSyncEnabled(true);
     controller->SetRenderTarget(&window);

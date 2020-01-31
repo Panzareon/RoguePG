@@ -6,10 +6,18 @@
 #include "MapGeneration/MapFillIceDungeon.h"
 #include "MapGeneration/MapFillDungeon2.h"
 #include "Controller/Localization.h"
+#include "Exception/GenericException.h"
 
 DungeonConfiguration::DungeonConfiguration()
 {
-
+    m_nrLevels = 0;
+    m_seed = 0;
+    m_dungeonId = 0;
+    m_bossesSumChance = 0;
+    m_enemiesSumChance = 0;
+    m_generationType = Enums::GenerationType::Cave;
+    m_dungeonType = 0;
+    m_mapFillNr = 0;
 }
 
 DungeonConfiguration::DungeonConfiguration(int nrLevels, unsigned int seed, int dungeonId)
@@ -110,7 +118,6 @@ void DungeonConfiguration::PlayMusic()
 SceneManager* DungeonConfiguration::GetLevel(int id)
 {
     //create next Level
-    SceneManagerDungeon* sceneManager;
     bool wallAbove;
     MapFillDungeon* mf;
     int width, height;
@@ -292,6 +299,8 @@ Entity* DungeonConfiguration::GetDungeonEnemy(int lvl)
             return EnemyFactory::GetEntity(it->first, lvl + 3 * (m_dungeonId - 1));
         }
     }
+
+    throw new GenericException("While generating an enemy, the chances didn't add up correctly.");
 }
 
 Entity* DungeonConfiguration::GetDungeonBoss(int lvl)
@@ -306,4 +315,6 @@ Entity* DungeonConfiguration::GetDungeonBoss(int lvl)
             return EnemyFactory::GetEntity(it->first,  lvl + 3 * (m_dungeonId - 1));
         }
     }
+
+    throw new GenericException("While generating a boss, the chances didn't add up correctly.");
 }

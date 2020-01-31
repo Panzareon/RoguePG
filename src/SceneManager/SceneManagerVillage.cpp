@@ -5,7 +5,7 @@
 
 SceneManagerVillage::SceneManagerVillage()
 {
-
+    m_seed = 0;
 }
 
 

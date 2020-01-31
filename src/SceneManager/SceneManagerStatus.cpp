@@ -488,7 +488,7 @@ void SceneManagerStatus::MoveSkillPosition(int from, int to)
     }
     std::vector<std::shared_ptr<Skill>>* skills = m_selectedEntity->GetSkillList();
     int skillNr = 0;
-    int fromId, toId;
+    int fromId = -1, toId = -1;
     for(int i = 0; i < skills->size(); i++)
     {
         if(skills->at(i)->GetDefaultTarget() != BattleEnums::Target::Passive)
@@ -504,6 +504,11 @@ void SceneManagerStatus::MoveSkillPosition(int from, int to)
 
             skillNr++;
         }
+    }
+
+    if (fromId == -1 || toId == -1)
+    {
+        return;
     }
 
     if(skillNr > fromId && skillNr > toId)

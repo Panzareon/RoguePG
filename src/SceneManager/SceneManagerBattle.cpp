@@ -117,7 +117,7 @@ SceneManagerBattle::SceneManagerBattle()
     m_description->moveNode(20.0f, GameController::getInstance()->GetWindowHeight() - 64.0f);
     m_description->SetColor(sf::Color::Black);
     m_description->SetFontSize(20);
-    m_description->SetMaxLength(GameController::getInstance()->GetWindowWidth() - 40.0f);
+    m_description->SetMaxLength(GameController::getInstance()->GetWindowWidth() - 40);
     m_mainNode->addChild(m_description);
     m_mainMenu->SetPadding(5,0);
 
@@ -145,12 +145,17 @@ SceneManagerBattle::SceneManagerBattle()
     m_restoreMpPercent = 0.25f;
     m_expGiven = false;
     m_finished = false;
+    m_nextFinished = false;
+    m_dontInterpolate = nullptr;
+    m_targetNr = 0;
+    m_targetEntity = nullptr;
+    m_targetType = BattleEnums::Target::OwnTeamEntity;
 
     //Setting Startpositions for teams
     //TODO: for more than 2 teams?
     m_entityNodes.resize(2);
     m_posPerTeam.push_back(sf::Vector2f(100,150));
-    m_posPerTeam.push_back(sf::Vector2f(GameController::getInstance()->GetWindowWidth() - 100,155));
+    m_posPerTeam.push_back(sf::Vector2f((float)(GameController::getInstance()->GetWindowWidth() - 100), 155.0f));
     m_posChangePerTeam.push_back(sf::Vector2f(40,40));
     m_posChangePerTeam.push_back(sf::Vector2f(-40,40));
 
@@ -590,8 +595,8 @@ void SceneManagerBattle::Finished()
     {
         PartyMember* member = activeParty->at(i).get();
         member->BattleFinished();
-        member->Heal(member->GetAttribute(BattleEnums::Attribute::MaxHp) * m_restoreHpPercent);
-        member->RestoreMana(member->GetAttribute(BattleEnums::Attribute::MaxMp) * m_restoreMpPercent);
+        member->Heal((int)((float)member->GetAttribute(BattleEnums::Attribute::MaxHp) * m_restoreHpPercent));
+        member->RestoreMana((int)((float)member->GetAttribute(BattleEnums::Attribute::MaxMp) * m_restoreMpPercent));
     }
 }
 
@@ -693,7 +698,7 @@ void SceneManagerBattle::MoveSkillPosition(int from, int to)
 {
     std::vector<std::shared_ptr<Skill>>* skills = m_next->GetSkillList();
     int skillNr = 0;
-    int fromId, toId;
+    int fromId = -1, toId = -1;
     for(int i = 0; i < skills->size(); i++)
     {
         if(skills->at(i)->GetSkillType() == Skill::SkillType::Usable)
@@ -709,6 +714,11 @@ void SceneManagerBattle::MoveSkillPosition(int from, int to)
 
             skillNr++;
         }
+    }
+
+    if (fromId == -1 || toId == -1)
+    {
+        return;
     }
 
     std::shared_ptr<Skill> temp = skills->at(fromId);
