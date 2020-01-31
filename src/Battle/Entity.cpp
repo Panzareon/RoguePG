@@ -95,11 +95,11 @@ void Entity::GetHit(Attack* attack, Entity* attacker)
     float defense;
     if(attack->m_physical)
     {
-        defense = GetAttribute(BattleEnums::Attribute::Defense);
+        defense = (float)GetAttribute(BattleEnums::Attribute::Defense);
     }
     else
     {
-        defense = GetAttribute(BattleEnums::Attribute::MagicDefense);
+        defense = (float)GetAttribute(BattleEnums::Attribute::MagicDefense);
     }
     float baseDmg = attack->m_dmg / std::sqrt(defense);
     float dmg = baseDmg;
@@ -121,7 +121,7 @@ void Entity::GetHit(Attack* attack, Entity* attacker)
         //resisted Attack
         color = sf::Color::Blue;
     }
-    int finalDmg = std::floorf(dmg);
+    int finalDmg = (int)std::floorf(dmg);
     if(finalDmg < 1)
         finalDmg = 1;
 
@@ -180,12 +180,12 @@ void Entity::RestoreMana(int mp)
 
 int Entity::GetNeededMana(int baseMp)
 {
-    float fMp = baseMp;
+    float fMp = (float)baseMp;
     for(auto iter = m_passiveEffects.begin(); iter != m_passiveEffects.end(); iter++)
     {
         fMp = iter->second->GetNeededMP(fMp);
     }
-    return std::floorf(fMp);
+    return (int)std::floorf(fMp);
 }
 
 bool Entity::CanCastSkill(Skill* skill)
@@ -455,10 +455,10 @@ float Entity::GetMpPercent()
 
 void Entity::CheckMaxValues()
 {
-    float maxHp = (float)GetAttribute(BattleEnums::Attribute::MaxHp);
+    int maxHp = GetAttribute(BattleEnums::Attribute::MaxHp);
     if(maxHp < GetHp())
         m_hp = maxHp;
-    float maxMp = (float)GetAttribute(BattleEnums::Attribute::MaxMp);
+    int maxMp = GetAttribute(BattleEnums::Attribute::MaxMp);
     if(maxMp < GetMp())
         m_mp = maxMp;
 }

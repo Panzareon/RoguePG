@@ -21,7 +21,7 @@ int MathHelper::GetRandomInt(int max, int min, bool gauss)
     {
         std::normal_distribution<float> distribution((max + min)/2.0f, (max - min)/ 4.0f);
         float retval = distribution(*m_randomGenerator);
-        int ret = std::round(retval);
+        int ret = (int)std::roundf(retval);
         if(ret < min)
             return min;
         if(ret > max)

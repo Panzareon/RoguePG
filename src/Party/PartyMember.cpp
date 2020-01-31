@@ -60,7 +60,7 @@ void PartyMember::AddExp(int ammount)
     }
     if(newAmmount > 0)
     {
-        m_exp += newAmmount;
+        m_exp += (int)newAmmount;
         //Add Exp to Equipment
         for(auto iter = m_passiveEffects.begin(); iter != m_passiveEffects.end(); iter++)
         {

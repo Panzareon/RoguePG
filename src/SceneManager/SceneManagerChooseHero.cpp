@@ -44,7 +44,7 @@ SceneManagerChooseHero::SceneManagerChooseHero()
         sprite->setBoundingBox(classSprite->getLocalBounds());
         m_classNodes.push_back(sprite);
         sprite->moveNode(xPos, yPos);
-        xPos += classSprite->getLocalBounds().width + 30.0f;
+        xPos += (int)classSprite->getLocalBounds().width + 30;
         m_gui->addChild(sprite);
     }
 

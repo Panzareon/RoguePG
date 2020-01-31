@@ -39,6 +39,8 @@ std::string MusicController::GetFile(MusicFiles music)
     {
     case Cave:
         return "music/cave.ogg";
+    default:
+        throw new InvalidArgumentException("Invalid MusicFile given to load.");
     }
 }
 

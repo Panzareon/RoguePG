@@ -31,7 +31,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         ret->SetResistance(BattleEnums::AttackType::Fire, 0.7f);
         BattleEnums::Target target = BattleEnums::Target::EnemyTeamEntity;
         Skill* sk = new Skill(target);
-        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(4)->GetEffectWithValue(2 + lvl,target),true);
+        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(4)->GetEffectWithValue((float)(2 + lvl),target),true);
         ret->AddSkill(sk);
         break;
     }
@@ -46,7 +46,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         ret->SetResistance(BattleEnums::AttackType::Fire, 0.7f);
         BattleEnums::Target target = BattleEnums::Target::EnemyTeamEntity;
         Skill* sk = new Skill(target);
-        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(1)->GetEffectWithValue(10 + lvl,target),true);
+        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(1)->GetEffectWithValue((float)(10 + lvl),target),true);
         ret->AddSkill(sk);
         break;
     }
@@ -56,7 +56,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         //Exp to give after Battle
         ret = new Entity(15 + lvl);
         ret->SetName(localization->GetLocalization("enemy.stone_golem"));
-        ret->InitAllAttributes(18 + lvl*2,10 + lvl,5 + lvl,5 + lvl/2,8 + lvl,7 + lvl,10 + lvl);
+        ret->InitAllAttributes(18 + lvl*2,10 + lvl,5 + lvl,5 + lvl/2,8 + lvl,7 + lvl, 10 + lvl);
         ret->SetBattleSprite(TextureList::TextureFiles::StoneGolemBattleSprite);
         ret->SetResistance(BattleEnums::AttackType::Physical, 2.0f);
         ret->SetResistance(BattleEnums::AttackType::Earth, 1.5f);
@@ -65,7 +65,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         ret->SetResistance(BattleEnums::AttackType::Air, 1.2f);
         BattleEnums::Target target = BattleEnums::Target::EnemyTeam;
         Skill* sk = new Skill(target);
-        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(1)->GetEffectWithValue(4 + lvl,target),true);
+        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(1)->GetEffectWithValue((float)(4 + lvl),target),true);
         ret->AddSkill(sk);
         break;
     }
@@ -83,7 +83,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         ret->SetResistance(BattleEnums::AttackType::Air, 1.3f);
         BattleEnums::Target target = BattleEnums::Target::EnemyTeamEntity;
         Skill* sk = new Skill(target);
-        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(2)->GetEffectWithValue(6 + lvl,target),true);
+        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(2)->GetEffectWithValue((float)(6 + lvl),target),true);
         ret->AddSkill(sk);
         break;
     }
@@ -102,7 +102,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         ret->SetResistance(BattleEnums::AttackType::Air, 1.2f);
         BattleEnums::Target target = BattleEnums::Target::EnemyTeamEntity;
         Skill* sk = new Skill(target);
-        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(3)->GetEffectWithValue(3 + lvl,target),true);
+        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(3)->GetEffectWithValue((float)(3 + lvl),target),true);
         ret->AddSkill(sk);
         break;
     }
@@ -120,7 +120,7 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         ret->SetResistance(BattleEnums::AttackType::Air, 1.3f);
         BattleEnums::Target target = BattleEnums::Target::EnemyTeam;
         Skill* sk = new Skill(target);
-        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(3)->GetEffectWithValue(4 + lvl,target),true);
+        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(3)->GetEffectWithValue((float)(4 + lvl),target),true);
         ret->AddSkill(sk);
         break;
     }
@@ -138,11 +138,11 @@ Entity* EnemyFactory::GetEntity(EnemyList type, int lvl)
         ret->SetResistance(BattleEnums::AttackType::Air, 1.3f);
         BattleEnums::Target target = BattleEnums::Target::EnemyTeamEntity;
         Skill* sk = new Skill(target);
-        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(3)->GetEffectWithValue(4 + lvl,target),true);
+        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(3)->GetEffectWithValue((float)(4 + lvl),target),true);
         ret->AddSkill(sk);
         target = BattleEnums::Target::EnemyTeamEntity;
         sk = new Skill(target);
-        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(10005)->GetEffectWithValue(4 + lvl,target),true);
+        sk->AddEffect(EffectFactoryList::GetInstance()->getWithId(10005)->GetEffectWithValue((float)(4 + lvl),target),true);
         ret->AddSkill(sk);
         break;
     }

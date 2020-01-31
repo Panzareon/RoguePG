@@ -23,11 +23,11 @@ void MapEventDungeonEntrance::Activate()
     DungeonConfiguration * config;
     if(dungeonId == 0)
     {
-        config = new DungeonConfiguration(2, time(NULL), dungeonId + 1);
+        config = new DungeonConfiguration(2, (unsigned int)time(NULL), dungeonId + 1);
     }
     else
     {
-        config = new DungeonConfiguration(3, time(NULL), dungeonId + 1);
+        config = new DungeonConfiguration(3, (unsigned int)time(NULL), dungeonId + 1);
     }
     config->PlayMusic();
     controller->SetDungeonConfiguration(config);

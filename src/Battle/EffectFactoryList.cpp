@@ -76,8 +76,8 @@ namespace PassiveEffectFunctions
         else
         {
             //No longer prevents damage
-            baseAmount -= preventAmount->at(0);
-            preventAmount->at(0) = 0;
+            baseAmount -= (int)preventAmount->at(0);
+            preventAmount->at(0) = 0.0f;
             effect->SetDuration(0);
         }
 
@@ -114,7 +114,7 @@ namespace EffectFunctions
     {
         for(unsigned int i = 0; i < targets->size(); i++)
         {
-            Attack att(strength->at(0) + user->GetAttribute(BattleEnums::Attribute::Int), false, targets->at(i), type);
+            Attack att((int)strength->at(0) + user->GetAttribute(BattleEnums::Attribute::Int), false, targets->at(i), type);
             user->AttackEntity(targets->at(i), &att);
         }
     }
@@ -124,7 +124,7 @@ namespace EffectFunctions
     {
         for(unsigned int i = 0; i < targets->size(); i++)
         {
-            Attack att(strength->at(0) + user->GetAttribute(BattleEnums::Attribute::Strength), true, targets->at(i), type);
+            Attack att((int)strength->at(0) + user->GetAttribute(BattleEnums::Attribute::Strength), true, targets->at(i), type);
             user->AttackEntity(targets->at(i), &att);
         }
     }
@@ -135,12 +135,12 @@ namespace EffectFunctions
         int dmgAmmount = 0;
         for(unsigned int i = 0; i < targets->size(); i++)
         {
-            Attack att(strength->at(0) + user->GetAttribute(BattleEnums::Attribute::Int), false, targets->at(i), type);
+            Attack att((int)strength->at(0) + user->GetAttribute(BattleEnums::Attribute::Int), false, targets->at(i), type);
             user->AttackEntity(targets->at(i), &att);
             dmgAmmount += att.m_finalDmg;
         }
 
-        int heal = std::ceil(dmgAmmount * strength->at(1));
+        int heal = (int)std::ceil(dmgAmmount * strength->at(1));
         user->Heal(heal);
     }
 
@@ -150,12 +150,12 @@ namespace EffectFunctions
         int dmgAmmount = 0;
         for(unsigned int i = 0; i < targets->size(); i++)
         {
-            Attack att(strength->at(0) + user->GetAttribute(BattleEnums::Attribute::Strength), true, targets->at(i), type);
+            Attack att((int)strength->at(0) + user->GetAttribute(BattleEnums::Attribute::Strength), true, targets->at(i), type);
             user->AttackEntity(targets->at(i), &att);
             dmgAmmount += att.m_finalDmg;
         }
 
-        int heal = std::ceil(dmgAmmount * strength->at(1));
+        int heal = (int)std::ceil(dmgAmmount * strength->at(1));
         user->Heal(heal);
     }
 
@@ -164,7 +164,7 @@ namespace EffectFunctions
     {
         for(unsigned int i = 0; i < targets->size(); i++)
         {
-            targets->at(i)->Heal(strength->at(0));
+            targets->at(i)->Heal((int)strength->at(0));
         }
     }
 
@@ -451,7 +451,7 @@ EffectFactoryList::EffectFactoryList()
     //Base Damage
     calc->AddStrengthValue(3.0f, 100.0f);
     //Everything from 5% to 300% of Damage dealt heal
-    calc->AddStrengthValue(0.05f, 3.0f, 0.0f, 10.0f, StrengthCalculation::ADD);
+    calc->AddStrengthValue(0.05f, 3.0f, 0.0f, 10.0f, StrengthCalculation::CombiningType::ADD);
     calc->SetMultiplier(1.0f);
     newEffect->AddAttackType(BattleEnums::AttackType::Fire);
     newEffect->AddEffectType(BattleEnums::EffectType::Damage);
@@ -464,7 +464,7 @@ EffectFactoryList::EffectFactoryList()
     //Base Damage
     calc->AddStrengthValue(3.0f, 100.0f);
     //Everything from 5% to 300% of Damage dealt heal
-    calc->AddStrengthValue(0.05f, 3.0f, 0.0f, 10.0f, StrengthCalculation::ADD);
+    calc->AddStrengthValue(0.05f, 3.0f, 0.0f, 10.0f, StrengthCalculation::CombiningType::ADD);
     calc->SetMultiplier(1.0f);
     newEffect->AddAttackType(BattleEnums::AttackType::Air);
     newEffect->AddEffectType(BattleEnums::EffectType::Damage);
@@ -477,7 +477,7 @@ EffectFactoryList::EffectFactoryList()
     //Base Damage
     calc->AddStrengthValue(3.0f, 100.0f);
     //Everything from 5% to 300% of Damage dealt heal
-    calc->AddStrengthValue(0.05f, 3.0f, 0.0f, 10.0f, StrengthCalculation::ADD);
+    calc->AddStrengthValue(0.05f, 3.0f, 0.0f, 10.0f, StrengthCalculation::CombiningType::ADD);
     calc->SetMultiplier(1.0f);
     newEffect->AddAttackType(BattleEnums::AttackType::Water);
     newEffect->AddEffectType(BattleEnums::EffectType::Damage);
@@ -490,7 +490,7 @@ EffectFactoryList::EffectFactoryList()
     //Base Damage
     calc->AddStrengthValue(3.0f, 100.0f);
     //Everything from 5% to 300% of Damage dealt heal
-    calc->AddStrengthValue(0.05f, 3.0f, 0.0f, 10.0f, StrengthCalculation::ADD);
+    calc->AddStrengthValue(0.05f, 3.0f, 0.0f, 10.0f, StrengthCalculation::CombiningType::ADD);
     calc->SetMultiplier(1.0f);
     newEffect->AddAttackType(BattleEnums::AttackType::Earth);
     newEffect->AddEffectType(BattleEnums::EffectType::Damage);
@@ -503,7 +503,7 @@ EffectFactoryList::EffectFactoryList()
     //Base Damage
     calc->AddStrengthValue(3.0f, 100.0f);
     //Everything from 5% to 300% of Damage dealt heal
-    calc->AddStrengthValue(0.05f, 3.0f, 0.0f, 10.0f, StrengthCalculation::ADD);
+    calc->AddStrengthValue(0.05f, 3.0f, 0.0f, 10.0f, StrengthCalculation::CombiningType::ADD);
     calc->SetMultiplier(1.0f);
     newEffect->AddAttackType(BattleEnums::AttackType::Physical);
     newEffect->AddEffectType(BattleEnums::EffectType::Damage);
@@ -925,7 +925,7 @@ EffectFactoryList::EffectFactoryList()
 
     //Heal on turn
     passiveFunc = new std::function<void(std::vector<float>* strength, PassiveEffect* target)>(&PassiveSkillEffectFunctions::HealAfterTurn);
-    newEffect = new EffectFactoryPassive(passiveFunc, 100002, 0.4);
+    newEffect = new EffectFactoryPassive(passiveFunc, 100002, 0.4f);
     calc = newEffect->GetStrengthCalculation();
     //Everything from 1 to 300 hp heal
     calc->AddStrengthValue(1.0f, 300.0f, 1.0f);

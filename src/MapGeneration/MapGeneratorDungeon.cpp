@@ -35,7 +35,7 @@ void MapGeneratorDungeon::Init(Map* map, unsigned int seed)
     m_map->AddCollidingType(MapFillDungeon::BlockingItem);
 
     if(seed == 0)
-        std::srand(std::time(0));
+        std::srand((unsigned int)std::time(0));
     else
         std::srand(seed);
 }
@@ -1054,7 +1054,7 @@ void MapGeneratorDungeon::PlaceStartingAndEndPosition()
             }
         }
 
-        int maxNr = nr;
+        size_t maxNr = nr;
         //is there a place for starting and end Position
         if(nr < 2)
         {
@@ -1126,7 +1126,7 @@ void MapGeneratorDungeon::PlaceStartingAndEndPosition()
 std::pair<int,int>* MapGeneratorDungeon::GetFreePosition(bool deadEnd)
 {
     std::map<int,MapRoom>* rooms = m_map->GetAllRooms();
-    int roomsSize = rooms->size();
+    size_t roomsSize = rooms->size();
     if(deadEnd)
     {
         roomsSize = 0;

@@ -402,7 +402,7 @@ void SceneManagerEquipment::SetEquipmentSkillMenu(std::shared_ptr<Equipment> equ
     bool showLearning = learnedHeight < skills->size();
     if(skills->size() < learnedHeight)
     {
-        learnedHeight = skills->size();
+        learnedHeight = (int)skills->size();
     }
     learnedHeight *= height;
     m_equipmentSkillLearned->setSize(sf::Vector2f(width,learnedHeight));

@@ -10,6 +10,7 @@ float StrengthCalculation::AllTargetMali = 6.0f;
 StrengthCalculation::StrengthCalculation()
 {
     //ctor
+    m_multiplyWith = 0.0f;
 }
 
 StrengthCalculation::~StrengthCalculation()
@@ -46,10 +47,10 @@ float StrengthCalculation::GetValue(std::vector<float>* strength, BattleEnums::T
         {
             switch(m_combiningType[i])
             {
-                case MULTIPLY:
+                case CombiningType::MULTIPLY:
                     value *= strength->at(i) * m_multiply[i];
                     break;
-                case ADD:
+                case CombiningType::ADD:
                     value += strength->at(i) * m_multiply[i];
                     break;
             }
@@ -115,11 +116,11 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
         {
             switch(m_combiningType[i])
             {
-                case MULTIPLY:
+                case CombiningType::MULTIPLY:
                         minV *= m_minValue[i] * m_multiply[i];
                         maxV *= m_maxValue[i] * m_multiply[i];
                     break;
-                case ADD:
+                case CombiningType::ADD:
                         minV += m_minValue[i] * m_multiply[i];
                         maxV += m_maxValue[i] * m_multiply[i];
                     break;
@@ -141,18 +142,18 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
     bool finished;
     std::vector<float>* retVal = new std::vector<float>(m_minValue.size());
     float calculatedValue;
-    int lastValueId = m_minValue.size() - 1;
+    size_t lastValueId = m_minValue.size() - 1;
     do
     {
         finished = true;
         calculatedValue = 1;
-        for(int i = 0; i < lastValueId; i++)
+        for(size_t i = 0; i < lastValueId; i++)
         {
             if(m_step[i] == 0.0f)
                 (*retVal)[i] = m_minValue[i] + (m_maxValue[i] - m_minValue[i]) * ((float)std::rand() / RAND_MAX);
             else
             {
-                int steps = (m_maxValue[i] - m_minValue[i]) / m_step[i] + 1;
+                int steps = (int)((m_maxValue[i] - m_minValue[i]) / m_step[i]) + 1;
                 (*retVal)[i] = m_minValue[i] + m_step[i] * (std::rand() % steps);
             }
 
@@ -164,10 +165,10 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
             {
                 switch(m_combiningType[i])
                 {
-                    case MULTIPLY:
+                    case CombiningType::MULTIPLY:
                         calculatedValue *= (*retVal)[i] * m_multiply[i];
                         break;
-                    case ADD:
+                    case CombiningType::ADD:
                         calculatedValue += (*retVal)[i] * m_multiply[i];
                         break;
                 }
@@ -176,10 +177,10 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
 
         switch(m_combiningType[lastValueId])
         {
-            case MULTIPLY:
+            case CombiningType::MULTIPLY:
                 (*retVal)[lastValueId] = (value / calculatedValue) / m_multiply[lastValueId];
                 break;
-            case ADD:
+            case CombiningType::ADD:
                 (*retVal)[lastValueId] = (value - calculatedValue) / m_multiply[lastValueId];
                 break;
         }
@@ -192,8 +193,8 @@ std::vector<float>* StrengthCalculation::GetStrengthVector(float value, BattleEn
     while(!finished);
     if(m_step[lastValueId] != 0.0f)
     {
-        //Check which Step ist closest to given Value
-        int steps = (int)((*retVal)[lastValueId] - m_minValue[lastValueId]) / m_step[lastValueId];
+        //Check which Step is closest to given Value
+        int steps = (int)std::floor(((*retVal)[lastValueId] - m_minValue[lastValueId]) / m_step[lastValueId]);
         float lowerValue = m_minValue[lastValueId] + steps * m_step[lastValueId];
         float upperValue = lowerValue + m_step[lastValueId];
         if((*retVal)[lastValueId] - lowerValue < upperValue - (*retVal)[lastValueId])

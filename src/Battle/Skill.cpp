@@ -167,15 +167,15 @@ void Skill::AddEffect(EffectBase* eff, bool isPositive)
     if(isPositive)
         m_manaUseBase += eff->GetValue();
     else
-        m_manaUseBase -= 0.5 * eff->GetValue();
+        m_manaUseBase -= 0.5f * eff->GetValue();
 }
 
 int Skill::GetManaUse()
 {
-    return std::ceil(std::sqrt(m_manaUseBase));
+    return (int)std::ceilf(std::sqrt(m_manaUseBase));
 }
 
 int Skill::GetManaBase()
 {
-    return m_manaUseBase;
+    return (int)m_manaUseBase;
 }

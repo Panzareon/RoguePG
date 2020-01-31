@@ -60,7 +60,7 @@ bool MapEventEnemy::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirec
         if(m_timeSinceChange > m_maxTimeSinceChange){
             m_timeSinceChange = 0.0f;
             //Change Direction
-            float angle = (rand() % 4) / 2.0f * M_PI;
+            float angle = (rand() % 4) / 2.0f * (float)M_PI;
             m_xMove = cos(angle) * m_movementSpeed;
             m_yMove = sin(angle) * m_movementSpeed;
         }
@@ -75,14 +75,14 @@ bool MapEventEnemy::ActivateAt(sf::FloatRect rect, Enums::Direction lookingDirec
         yDist *= yDist;
         if(xDist + yDist < m_followDistanceSquared)
         {
-            float x1 = (rect.left + rect.width / 2) / TileMap::GetTileWidth();
-            float x2 = (enemyBB.left + enemyBB.width / 2) / TileMap::GetTileWidth();
-            float y1 = (rect.top + rect.height / 2) / TileMap::GetTileWidth();
-            float y2 = (enemyBB.top + enemyBB.height / 2) / TileMap::GetTileWidth();
+            unsigned int x1 = (unsigned int)((rect.left + rect.width / 2) / TileMap::GetTileWidth());
+            unsigned int x2 = (unsigned int)((enemyBB.left + enemyBB.width / 2) / TileMap::GetTileWidth());
+            unsigned int y1 = (unsigned int)((rect.top + rect.height / 2) / TileMap::GetTileWidth());
+            unsigned int y2 = (unsigned int)((enemyBB.top + enemyBB.height / 2) / TileMap::GetTileWidth());
             if(!m_map->DoesCollide(x1,y1,x2,y2))
             {
-                m_xMove = (x1 - x2);
-                m_yMove = (y1 - y2);
+                m_xMove = (float)(x1 - x2);
+                m_yMove = (float)(y1 - y2);
                 float length = sqrt(m_xMove * m_xMove + m_yMove * m_yMove);
                 //Prevent division by 0
                 if(length == 0.0f)

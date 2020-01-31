@@ -156,7 +156,7 @@ void MapEventShop::ShowInn()
     Party* party = GameController::getInstance()->getParty();
     Localization* localization = Localization::GetInstance();
     std::vector<float> neededMoney;
-    neededMoney.push_back(m_innPrice);
+    neededMoney.push_back((float)m_innPrice);
     SceneManagerMessage* sm = new SceneManagerMessage(localization->GetLocalizationWithFloats("menu.shop.inn", &neededMoney));
     m_node = new MenuNode(300);
     m_node->CancelAvailable(true);

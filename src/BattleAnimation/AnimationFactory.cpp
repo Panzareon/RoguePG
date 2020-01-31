@@ -54,25 +54,21 @@ Animation* AnimationFactory::GetAnimation(AnimationList anim, Entity* target)
 
 Animation* AnimationFactory::GetAnimation(AnimationList anim, std::vector<Entity* >* targets)
 {
-    switch(anim)
+    //start the animation in the middle of all given Entities
+    sf::FloatRect target;
+    target.width = 0.0f;
+    target.height = 0.0f;
+    target.left = 0.0f;
+    target.top = 0.0f;
+    for(auto it = targets->begin(); it != targets->end(); it++)
     {
-    default:
-        //start the animation in the middle of all given Entities
-        sf::FloatRect target;
-        target.width = 0.0f;
-        target.height = 0.0f;
-        target.left = 0.0f;
-        target.top = 0.0f;
-        for(auto it = targets->begin(); it != targets->end(); it++)
-        {
-            sf::FloatRect t = (*it)->GetNode()->getTransform().transformRect((*it)->GetBattleSprite()->getLocalBounds());
-            target.left += t.left + t.width / 2;
-            target.top += t.top + t.height / 2;
-        }
-        target.left /= targets->size();
-        target.top /= targets->size();
-        return GetAnimation(anim, target);
+        sf::FloatRect t = (*it)->GetNode()->getTransform().transformRect((*it)->GetBattleSprite()->getLocalBounds());
+        target.left += t.left + t.width / 2;
+        target.top += t.top + t.height / 2;
     }
+    target.left /= targets->size();
+    target.top /= targets->size();
+    return GetAnimation(anim, target);
 }
 
 Animation* AnimationFactory::GetAnimation(AnimationList anim, sf::FloatRect startPos)

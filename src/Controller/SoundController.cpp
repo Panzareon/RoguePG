@@ -67,7 +67,7 @@ void SoundController::PlaySound(Sounds sound)
     }
     if(newSound)
     {
-        PlaySound(sound, m_sounds.size());
+        PlaySound(sound, (int)m_sounds.size());
     }
 }
 

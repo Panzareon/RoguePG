@@ -273,7 +273,7 @@ bool MapFill::CanBlockBeFilled(int x, int y)
 
 void MapFill::FillWithItems(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, int index, int NrItems)
 {
-    int maxChance = 0.0f;
+    int maxChance = 0;
     for(unsigned int i = 0; i < m_chanceForTile[index].size(); i++)
     {
         maxChance += m_chanceForTile[index][i].GetChance();
@@ -316,7 +316,7 @@ void MapFill::FillWithItems(int LayerId, int LayerAboveHeroId, int LayerWallDeco
 
 bool MapFill::PlaceItemAt(int LayerId, int LayerAboveHeroId, int LayerWallDecoration, int index, int x, int y, bool checkPlacement)
 {
-    int maxChance = 0.0f;
+    int maxChance = 0;
     std::vector<FillItem>* test = &m_chanceForTile[index];
     for(unsigned int i = 0; i < m_chanceForTile[index].size(); i++)
     {

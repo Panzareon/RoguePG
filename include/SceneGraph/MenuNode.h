@@ -94,7 +94,7 @@ class MenuNode : public Node
 
         bool m_sortingAvailable;
         bool m_isMovingOption;
-        int m_startingPosition;
+        unsigned int m_startingPosition;
 
         bool m_visibleWithSubmenu;
 

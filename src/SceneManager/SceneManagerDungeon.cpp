@@ -222,7 +222,7 @@ void SceneManagerDungeon::SpawnEnemy()
 
     SpawnEnemy(pos->first, pos->second, 110.0f, 220.0f, 4, Enums::EnemyTypes::EnemyDefault);
 
-    m_timeToNextSpawn = rand()%10 + 10;
+    m_timeToNextSpawn = (float)(rand()%10 + 10);
 }
 
 void SceneManagerDungeon::SpawnEnemy(int x, int y, float movementSpeed, float followSpeed, int followRange, Enums::EnemyTypes type)

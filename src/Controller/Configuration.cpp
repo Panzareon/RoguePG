@@ -86,7 +86,7 @@ sf::Keyboard::Key Configuration::GetDefaultKey(Keys key)
 
 int Configuration::GetNumberKeys()
 {
-    return m_keys.size();
+    return (int)m_keys.size();
 }
 
 void Configuration::ResetLastKey()
@@ -143,6 +143,8 @@ std::string Configuration::KeyToString(Keys key)
         return "minimap";
     case Action:
         return "action";
+    default:
+        throw new InvalidArgumentException("The given key cannot be converted to string.");
     }
 }
 

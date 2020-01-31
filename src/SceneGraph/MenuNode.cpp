@@ -38,7 +38,7 @@ void MenuNode::UpdateBackground()
     m_height = m_maxShownNumber;
     if(m_maxShownNumber > m_options.size())
     {
-        m_height = m_options.size();
+        m_height = (unsigned int)m_options.size();
     }
     //TODO: save Shape as class member?
     m_background.setSize(sf::Vector2f(m_width, m_height* m_optionHeight));
@@ -214,7 +214,7 @@ void MenuNode::onDraw(sf::RenderTarget& target, const sf::Transform& transformBa
     target.draw(m_background, transform);
 
     //Background of selected option
-    int pos = m_selected - m_scrollPosition;
+    unsigned int pos = m_selected - m_scrollPosition;
     if(pos >= 0 && pos < m_maxShownNumber && m_showSelected)
     {
         //if Selected is visible
@@ -224,7 +224,7 @@ void MenuNode::onDraw(sf::RenderTarget& target, const sf::Transform& transformBa
             if(m_selected > m_startingPosition)
             {
                 //Show below the item if a option below the moving option is selected
-                transform.translate(0.0f, m_optionHeight);
+                transform.translate(0.0f, (float)m_optionHeight);
             }
             //Draw a line where the Option would land
             sf::RectangleShape selected(sf::Vector2f(m_width, 4.0f));
@@ -248,11 +248,11 @@ void MenuNode::onDraw(sf::RenderTarget& target, const sf::Transform& transformBa
     }
     sf::Font* font = Configuration::GetInstance()->GetFont();
     //all visible options
-    for(int i = 0; i < m_height; i++)
+    for(unsigned int i = 0; i < m_height; i++)
     {
         //draw text for m_scrollPosition + i at position i
         transform = transformBase;
-        transform.translate(m_paddingX, i*m_optionHeight + m_paddingY);
+        transform.translate((float)m_paddingX, (float)(i*m_optionHeight + m_paddingY));
 
         MenuNodeOption* option = m_options[m_scrollPosition+i];
         sf::Text text(option->GetName(), *font);

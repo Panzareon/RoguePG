@@ -318,7 +318,7 @@ void SceneManagerBattle::Tick()
                     }
                     else
                     {
-                        m_targetNr = m_enemies.size() - 1;
+                        m_targetNr = (unsigned int)m_enemies.size() - 1;
                     }
                     m_targetEntity = m_enemies[m_targetNr];
                 }
@@ -339,7 +339,7 @@ void SceneManagerBattle::Tick()
                     }
                     else
                     {
-                        m_targetNr = m_party->GetActivePartyMembers()->size() - 1;
+                        m_targetNr = (unsigned int)m_party->GetActivePartyMembers()->size() - 1;
                     }
                     m_targetEntity = m_party->GetActivePartyMembers()->at(m_targetNr).get();
                 }

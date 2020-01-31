@@ -186,7 +186,7 @@ std::string PassiveEffect::GetLocalizedDescription()
     if(m_duration > 0)
     {
         std::vector<float> values;
-        values.push_back(m_duration);
+        values.push_back((float)m_duration);
         retval += Localization::GetInstance()->GetLocalizationWithFloats("effect.duration", &values) + " ";
     }
 

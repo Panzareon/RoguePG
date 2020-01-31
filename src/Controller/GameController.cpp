@@ -147,7 +147,7 @@ void GameController::LoadSceneManagerBefore(SceneManager* newSm, SceneManager* s
 
 void GameController::LoadSceneManagerBefore(std::shared_ptr<SceneManager> newSm, SceneManager* sm)
 {
-    int i = 0;
+    size_t i = 0;
     if(sm == nullptr)
     {
         i = m_sceneManager.size() - 1;
@@ -190,14 +190,14 @@ void GameController::Tick()
     }
 
     //Tick all Scene Manager til the first one that does not pause the one below
-    for(int i = m_sceneManager.size() - 1; i >= 0; i--)
+    for(size_t i = m_sceneManager.size() - 1; i >= 0; i--)
     {
         m_sceneManager[i]->NextTick();
         if(m_sceneManager[i]->PausesSceneManagerBelow())
             break;
     }
-    int start = 0;
-    for(int i = m_sceneManager.size() - 1; i >= 0; i--)
+    size_t start = 0;
+    for(size_t i = m_sceneManager.size() - 1; i >= 0; i--)
     {
         if(!m_sceneManager[i]->IsTransparent())
         {
@@ -206,7 +206,7 @@ void GameController::Tick()
         }
     }
     GetRenderTarget()->clear();
-    for(int i = start; i < m_sceneManager.size(); i++)
+    for(size_t i = start; i < m_sceneManager.size(); i++)
     {
         m_sceneManager[i]->Draw();
     }

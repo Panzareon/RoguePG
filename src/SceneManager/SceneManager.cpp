@@ -13,8 +13,8 @@ SceneManager::SceneManager()
     m_windowHeight = controller->GetWindowHeight();
 
 
-    m_posx = m_windowWidth / 2;
-    m_posy = m_windowHeight / 2;
+    m_posx = m_windowWidth / 2.0f;
+    m_posy = m_windowHeight / 2.0f;
 
 
     m_animationNode = new Node();

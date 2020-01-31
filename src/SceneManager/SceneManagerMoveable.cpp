@@ -32,7 +32,7 @@ void SceneManagerMoveable::Init()
     m_minViewPosX = m_windowWidth / 2;
     m_minViewPosY = m_windowHeight / 2;
     m_minimapViewRange = 5;
-    m_heroMoved = TileMap::GetTileWidth();
+    m_heroMoved = (float)TileMap::GetTileWidth();
 
     m_maxViewPosX = m_map.GetWidth() * TileMap::GetTileWidth() - m_windowWidth / 2;
     m_maxViewPosY = m_map.GetHeight() * TileMap::GetTileWidth() - m_windowHeight / 2;
@@ -268,21 +268,21 @@ void SceneManagerMoveable::UpdateCamPosition()
     m_posy = heroBB.top;
 
     if(m_posx < m_minViewPosX)
-        m_posx = m_minViewPosX;
+        m_posx = (float)m_minViewPosX;
     else if(m_posx > m_maxViewPosX)
-        m_posx = m_maxViewPosX;
+        m_posx = (float)m_maxViewPosX;
     if(m_posy < m_minViewPosY)
-        m_posy = m_minViewPosY;
+        m_posy = (float)m_minViewPosY;
     else if(m_posy > m_maxViewPosY)
-        m_posy = m_maxViewPosY;
+        m_posy = (float)m_maxViewPosY;
 }
 
 void SceneManagerMoveable::UpdateMinimap()
 {
     int heroX,heroY;
     sf::FloatRect heroBB = m_hero->getGlobalBoundingBox();
-    heroX = (heroBB.left + heroBB.width/2.0f) / TileMap::GetTileWidth();
-    heroY = (heroBB.top + heroBB.height/2.0f) / TileMap::GetTileWidth();
+    heroX = (int)((heroBB.left + heroBB.width/2.0f) / TileMap::GetTileWidth());
+    heroY = (int)((heroBB.top + heroBB.height/2.0f) / TileMap::GetTileWidth());
 
     if(m_minimapNode->IsVisible())
     {

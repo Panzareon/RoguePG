@@ -181,9 +181,9 @@ bool Map::DoesCollide(unsigned int x, unsigned int y)
 
 bool Map::DoesCollide(sf::Rect<float> rect)
 {
-    for(int x = std::floor(rect.left / TileMap::GetTileWidth()); x <= std::floor((rect.left + rect.width) / TileMap::GetTileWidth()); x++)
+    for(int x = (int)std::floor(rect.left / TileMap::GetTileWidth()); x <= std::floor((rect.left + rect.width) / TileMap::GetTileWidth()); x++)
     {
-        for(int y = std::floor(rect.top / TileMap::GetTileWidth()); y <= std::floor((rect.top + rect.height) / TileMap::GetTileWidth()); y++)
+        for(int y = (int)std::floor(rect.top / TileMap::GetTileWidth()); y <= std::floor((rect.top + rect.height) / TileMap::GetTileWidth()); y++)
         {
             if(DoesCollide(x,y))
                 return true;
@@ -214,7 +214,7 @@ bool Map::DoesCollide(unsigned int fromX, unsigned int fromY, unsigned int toX, 
         int dY = abs((int)toY - (int)fromY);
         int fehler = dX / 2;
         int y = fromY;
-        for(int x = fromX; x <= toX; x++)
+        for(unsigned int x = fromX; x <= toX; x++)
         {
             if(DoesCollide(x,y))
                 return true;
@@ -248,7 +248,7 @@ bool Map::DoesCollide(unsigned int fromX, unsigned int fromY, unsigned int toX, 
         int dY = abs((int)toY - (int)fromY);
         int fehler = dY / 2;
         int x = fromX;
-        for(int y = fromY; y <= toY; y++)
+        for(unsigned int y = fromY; y <= toY; y++)
         {
             if(DoesCollide(x,y))
                 return true;
